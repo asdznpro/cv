@@ -1,0 +1,63 @@
+{
+	"data": [
+		{
+			"id": 1,
+			"info": [
+				{
+					"title": "Institution:",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_tpu-energy_color_28.svg",
+					"iconLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_tpu-energy_color_28_light.svg",
+					"value": "School of Energy & Power Engineering",
+					"href": "https://tpu.ru"
+				},
+				{
+					"title": "Education:",
+					"value": "Bachelor's Degree"
+				},
+				{
+					"title": "Field of Study:",
+					"value": "13.03.02 Electrical Power Engineering and Electrical Engineering"
+				},
+				{
+					"title": "Specialization:",
+					"value": "High Voltage Electrical Power Engineering and Electrical Engineering"
+				},
+				{
+					"title": "Years of Study:",
+					"value": "2021 — 2025"
+				}
+			]
+		},
+		{
+			"id": 2,
+			"info": [
+				{
+					"title": "Institution:",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_tpu-itr_color_28.svg",
+					"iconLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_tpu-itr_color_28_light.svg",
+					"value": "School of Computer Science & Robotics",
+					"href": "https://itr.tpu.ru"
+				},
+				{
+					"title": "Education:",
+					"value": "Professional Retraining"
+				},
+				{
+					"title": "Retraining Program:",
+					"value": "09.03.02 Information Systems and Technologies"
+				},
+				{
+					"title": "Specialization:",
+					"value": "Digital Design and Multimedia Technologies"
+				},
+				{
+					"title": "Years of Study:",
+					"value": "2023 — 2025"
+				}
+			]
+		}
+	],
+	"displayName": "Education",
+	"pathname": "education",
+	"id": "JhfxNJ6b-qWGUqT8F-pmM24dXb"
+}

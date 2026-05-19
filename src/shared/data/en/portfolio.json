@@ -1,0 +1,24 @@
+{
+	"data": [],
+	"tags": [
+		{
+			"name": "New",
+			"type": "new"
+		},
+		{
+			"name": "Graphic Design",
+			"type": "graphic-design"
+		},
+		{
+			"name": "UI/UX",
+			"type": "ui-ux"
+		},
+		{
+			"name": "Frontend",
+			"type": "frontend"
+		}
+	],
+	"displayName": "Portfolio",
+	"pathname": "portfolio",
+	"id": "gKZLTUvg-EB2QQB2Z-uyb59bgw"
+}

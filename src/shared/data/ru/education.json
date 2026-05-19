@@ -1,0 +1,63 @@
+{
+	"data": [
+		{
+			"id": 1,
+			"info": [
+				{
+					"title": "Учебное заведение:",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_tpu-energy_color_28.svg",
+					"iconLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_tpu-energy_color_28_light.svg",
+					"value": "НИ ТПУ ИШЭ ОЭЭ",
+					"href": "https://tpu.ru"
+				},
+				{
+					"title": "Образование:",
+					"value": "Высшее (бакалавр)"
+				},
+				{
+					"title": "Направление:",
+					"value": "13.03.02 Электроэнергетика и электротехника"
+				},
+				{
+					"title": "Профиль:",
+					"value": "Высоковольтные электроэнергетика и электротехника"
+				},
+				{
+					"title": "Годы обучения:",
+					"value": "2021 — 2025 гг."
+				}
+			]
+		},
+		{
+			"id": 2,
+			"info": [
+				{
+					"title": "Учебное заведение:",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_tpu-itr_color_28.svg",
+					"iconLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_tpu-itr_color_28_light.svg",
+					"value": "НИ ТПУ ИШИТР ОАР",
+					"href": "https://itr.tpu.ru"
+				},
+				{
+					"title": "Образование:",
+					"value": "Профессиональная переподготовка"
+				},
+				{
+					"title": "Программа профпереподготовки:",
+					"value": "09.03.02 Информационные системы и технологии"
+				},
+				{
+					"title": "Профиль:",
+					"value": "Цифровой дизайн и мультимедиа технологии"
+				},
+				{
+					"title": "Годы обучения:",
+					"value": "2023 — 2025 гг."
+				}
+			]
+		}
+	],
+	"displayName": "Образование",
+	"pathname": "education",
+	"id": "JhfxNJ6b-qWGUqT8F-pmM24dXb"
+}

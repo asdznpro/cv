@@ -1,0 +1,246 @@
+{
+	"data": [
+		{
+			"id": 1,
+			"client": [
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_tpu_color_28.svg",
+					"iconLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_tpu_color_28_light.svg",
+					"value": "Томский Пролитех",
+					"href": "https://tpu.ru"
+				}
+			],
+			"project": {
+				"fullName": "tpu.shop — интернет-магазин мерча Томского политеха",
+				"shortName": "tpu.shop",
+				"pathname": "tpu-shop",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/portfolio/preview/tpu-shop.png",
+				"date": "06.2022"
+			},
+			"tags": [
+				{
+					"name": "Новое",
+					"type": "new"
+				},
+				{
+					"name": "UI/UX",
+					"type": "ui-ux"
+				}
+			],
+			"awards": [
+				{
+					"id": 1,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/portfolio/awards/gb-bestitprojects-1022.png",
+					"href": "https://gb.ru/konkurs/bestitprojects/1022",
+					"name": "Конкурс на лучший IT-проект от GeekBrains",
+					"description": "Победитель конкурса на лучший IT-проект от образовательной платформы GeekBrains в номинации «Дизайн»"
+				}
+			]
+		},
+		{
+			"id": 2,
+			"client": [
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_sber_color_28.svg",
+					"value": "Сбер",
+					"href": "https://sber.ru"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_my-games_28.svg",
+					"value": "No Sleep Agency",
+					"href": "https://nosleepagency.ru"
+				}
+			],
+			"project": {
+				"fullName": "SberMegaMarket Hub — раздел на СберМегаМаркет и комьюнити, созданные специально для геймеров",
+				"shortName": "SberMegaMarket Hub",
+				"pathname": "sbermm",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/portfolio/preview/sbermm.png",
+				"date": "07.2023"
+			},
+			"tags": [
+				{
+					"name": "Графический дизайн",
+					"type": "graphic-design"
+				}
+			]
+		},
+		{
+			"id": 3,
+			"client": [
+				{
+					"id": "client",
+					"value": "No Sleep Agency",
+					"href": "https://nosleepagency.ru"
+				}
+			],
+			"project": {
+				"fullName": "RUSH B — Открывай бесплатные кейсы со скинами CS:GO",
+				"shortName": "RUSH B",
+				"pathname": "rushb",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/portfolio/preview/rushb.png",
+				"date": "09.2023"
+			},
+			"tags": [
+				{
+					"name": "Новое",
+					"type": "new"
+				},
+				{
+					"name": "UI/UX",
+					"type": "ui-ux"
+				},
+				{
+					"name": "Фронтенд",
+					"type": "frontend"
+				}
+			]
+		},
+		{
+			"id": 4,
+			"client": [
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_winline_color_28.svg",
+					"value": "Winline"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_metacorp_color_28.svg",
+					"value": "Metacorp"
+				}
+			],
+			"project": {
+				"fullName": "Winline EML 2022 — медийный турнир по CS:GO с участием про-игроков, блогеров, музыкантов и прочих звезд",
+				"shortName": "Winline EML 2022",
+				"pathname": "winline-eml-2022",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/portfolio/preview/winline-eml-2022.png",
+				"date": "11.2022"
+			},
+			"tags": [
+				{
+					"name": "Графический дизайн",
+					"type": "graphic-design"
+				}
+			]
+		},
+		{
+			"id": 5,
+			"client": [
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_vk_color_28.svg",
+					"value": "VK",
+					"href": "https://vk.company"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_vk-play_color_28.svg",
+					"value": "VK Play",
+					"href": "https://vkplay.ru"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_my-games_28.svg",
+					"iconLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_my-games_color_28.svg",
+					"value": "MY.GAMES",
+					"href": "https://my.games"
+				}
+			],
+			"project": {
+				"fullName": "Warface — многопользовательский онлайн-шутер нового поколения",
+				"shortName": "Warface",
+				"pathname": "warface",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/portfolio/preview/warface.png",
+				"date": "01.2023"
+			},
+			"tags": [
+				{
+					"name": "Графический дизайн",
+					"type": "graphic-design"
+				}
+			]
+		},
+		{
+			"id": 6,
+			"project": {
+				"fullName": "Как разрабатывал резюме — Curriculum Vitae",
+				"shortName": "Curriculum Vitae",
+				"pathname": "cv",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/portfolio/preview/cv.png",
+				"date": "02.2024"
+			},
+			"tags": [
+				{
+					"name": "Графический дизайн",
+					"type": "graphic-design"
+				},
+				{
+					"name": "UI/UX",
+					"type": "ui-ux"
+				},
+				{
+					"name": "Фронтенд",
+					"type": "frontend"
+				}
+			]
+		},
+		{
+			"id": 7,
+			"client": [
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_sber_color_28.svg",
+					"value": "Сбер",
+					"href": "https://sber.ru"
+				},
+				{
+					"id": "client",
+					"value": "No Sleep Agency",
+					"href": "https://nosleepagency.ru"
+				}
+			],
+			"project": {
+				"fullName": "Руководство по визуальному стилю для Gaming Hub",
+				"shortName": "Gaming Hub",
+				"pathname": "gaminghub",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/portfolio/preview/gaminghub.png",
+				"date": "01.2024"
+			},
+			"tags": [
+				{
+					"name": "Новое",
+					"type": "new"
+				},
+				{
+					"name": "Графический дизайн",
+					"type": "graphic-design"
+				}
+			]
+		}
+	],
+	"tags": [
+		{
+			"name": "Новое",
+			"type": "new"
+		},
+		{
+			"name": "Графический дизайн",
+			"type": "graphic-design"
+		},
+		{
+			"name": "UI/UX",
+			"type": "ui-ux"
+		},
+		{
+			"name": "Фронтенд",
+			"type": "frontend"
+		}
+	],
+	"displayName": "Портфолио",
+	"pathname": "portfolio",
+	"id": "gKZLTUvg-EB2QQB2Z-uyb59bgw"
+}

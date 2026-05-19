@@ -1,0 +1,30 @@
+{
+	"data": [
+		{
+			"name": "About",
+			"pathname": "about"
+		},
+		{
+			"name": "Experience",
+			"pathname": "experience"
+		},
+		{
+			"name": "Portfolio",
+			"pathname": "portfolio"
+		},
+		{
+			"name": "Hard Skills",
+			"pathname": "hard-skills"
+		},
+		{
+			"name": "Education",
+			"pathname": "education"
+		},
+		{
+			"name": "Contacts",
+			"pathname": "contacts"
+		}
+	],
+	"displayName": "Cv Map",
+	"id": "CT75txe6-ydnYZc6U-R3xwHrnY"
+}

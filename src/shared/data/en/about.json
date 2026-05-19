@@ -1,0 +1,45 @@
+{
+	"data": {
+		"fullName": "Andrew Sukhushin",
+		"firstName": "Andrew",
+		"lastName": "Sukhushin",
+		"photo": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/about/me.png",
+		"bio": [
+			"My name is Andrew, and I’m currently a student at Tomsk Polytechnic University. I have completed my third year, specializing in Electrical Power Engineering.",
+			"I started my journey as a Graphic Designer in 2018. During this period, I have mastered many tools, including Photoshop, Illustrator, Figma, and others. I have completed quite a few projects, designing for Warface, including VK and MY.GAMES, as well as for Sber. I participated in the first season of the Esports Media League organized by Winline and Metacorp — it was an amazing experience, but unfortunately, the second season didn’t happen.",
+			"I’m extremely proud of the legendary project for Warface — MYBONUS — a fintech service for gamers in partnership with VK. I worked on this project for over two years, and it provided me with valuable experience in design and marketing. I will never forget the development of the debit card in collaboration with Mail.ru Games and MY.GAMES.",
+			"For the past year, I have been actively studying frontend development. The foundation of my tech stack is React, of course, with the use of TypeScript — which is essential nowadays. I enjoy creating interactive and dynamic web applications that can effectively solve users' tasks. I am also starting to study backend and databases, including Nest.js and PostgreSQL, to be able to work with full-fledged projects.",
+			"In the future, I plan to continue developing in web development and graphic design, striving to make my projects not only beautiful but also functional and useful for users. It's also important to note my strengths — organization, attention to detail, and a constant desire to learn."
+ 		],
+		"brief": [
+			{
+				"title": "Citizenship:",
+				"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/countries/emblem-rf_28.svg",
+				"iconLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/countries/emblem-rf_light_28.svg",
+				"value": "Russian Federation"
+			},
+			{
+				"id": "birthday",
+				"title": "Birthday:",
+				"value": "2003-04-08"
+			},
+			{
+				"title": "Foreign languages:",
+				"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/countries/great-britain_rounded_28.svg",
+				"value": "English (B1 — intermediate)"
+			}
+		],
+		"possibleJobs": {
+			"title": "Possible Jobs",
+			"list": [
+				"Frontend Developer (React)",
+				"UX/UI Designer",
+				"Graphic Designer"
+			],
+			"caption": "*arranged in order of priority"
+		}
+	},
+	"displayName": "About",
+	"pathname": "about",
+	"id": "ta5JBzUU-mQBWYjXk-YH43gmLH"
+}

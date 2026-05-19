@@ -1,0 +1,280 @@
+{
+	"data": [
+		{
+			"id": 255,
+			"employerInfo": {
+				"name": "Virtus.pro",
+				"logo": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_virtus-pro_color_28.svg",
+				"preview": "...",
+				"website": "https://virtus.pro",
+				"shortDescription": "Киберспортивный клуб, основанный в 2003 году в России",
+				"fullDescription": "Киберспортивный клуб, основанный в 2003 году в России. Клуб является семикратным чемпионом международных турниров категории Major в Dota 2 и CS:GO, входит в топ-10 мира по выигранным призовым."
+			},
+			"pathname": "virtus-pro",
+			"labels": [
+				{
+					"id": "date",
+					"value": "С июня 2024"
+				},
+				{
+					"value": "Графический дизайнер"
+				}
+			],
+			"info": [
+				{
+					"title": "Годы работы:",
+					"value": "06.2024 — по настоящее время (меньше месяца)"
+				},
+				{
+					"title": "Должность:",
+					"value": "Графический дизайнер"
+				},
+				{
+					"title": "Форма занятости:",
+					"value": "Полная"
+				}
+			],
+			"execute": ["Чем я занимался?", "Чем я занимался?"],
+			"examples": ["link", "link", "link"]
+		},
+		{
+			"id": 125,
+			"employerInfo": {
+				"name": "Metacorp",
+				"logo": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_metacorp_color_28.svg",
+				"preview": "...",
+				"website": "https://metacorp.gg",
+				"shortDescription": "Медиахолдинг в сфере гейминга и киберспорта",
+				"fullDescription": "..."
+			},
+			"pathname": "metacorp",
+			"labels": [
+				{
+					"id": "date",
+					"value": "2 месяца"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_winline_color_28.svg",
+					"value": "Winline"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/eml.svg",
+					"value": "Winline EML 2022"
+				},
+				{
+					"value": "Графический дизайнер"
+				}
+			],
+			"info": [
+				{
+					"title": "Годы работы:",
+					"value": "11.2022 — 01.2023 (2 месяца)"
+				},
+				{
+					"title": "Должность:",
+					"value": "Графический дизайнер"
+				},
+				{
+					"title": "Форма занятости:",
+					"value": "Проектная"
+				}
+			],
+			"execute": ["Чем я занимался?", "Чем я занимался?"],
+			"examples": ["link", "link", "link"]
+		},
+		{
+			"id": 367,
+			"employerInfo": {
+				"name": "No Sleep Agency",
+				"logo": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/no-sleep-agency-full.svg",
+				"logoLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/no-sleep-agency-full_light.svg",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/experience/preview/nosleepagency.png",
+				"website": "https://nosleepagency.ru",
+				"shortDescription": "Молодое диджитал-агентство, энергетика которого воплощает яркие и нестандартные идеи в проекты",
+				"fullDescription": "..."
+			},
+			"pathname": "nosleepagency",
+			"labels": [
+				{
+					"id": "date",
+					"value": "С мая 2022"
+				},
+				{
+					"value": "Графический дизайнер"
+				},
+				{
+					"value": "UI/UX"
+				},
+				{
+					"value": "Фронтенд"
+				}
+			],
+			"info": [
+				{
+					"title": "Годы работы:",
+					"value": "05.2022 — по настоящее время (2 года 1 месяц)"
+				},
+				{
+					"title": "Должность:",
+					"value": "Графический дизайнер"
+				},
+				{
+					"title": "Форма занятости:",
+					"value": "Проектная"
+				}
+			],
+			"execute": ["Чем я занимался?", "Чем я занимался?"],
+			"examples": ["link", "link", "link"]
+		},
+		{
+			"id": 674,
+			"employerInfo": {
+				"name": "VK Esports",
+				"logo": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_vk_color_28.svg",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/experience/preview/warface.png",
+				"website": "https://vk.company",
+				"shortDescription": "Один из крупнейших технологических холдингов России",
+				"fullDescription": "Один из крупнейших технологических холдингов России, объединяющий коммуникационные, развлекательные и образовательные сервисы"
+			},
+			"pathname": "vk-esports",
+			"labels": [
+				{
+					"id": "date",
+					"value": "1 год 4 мес."
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_vk-play_color_28.svg",
+					"value": "VK Play",
+					"href": "https://vkplay.ru"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_my-games_28.svg",
+					"iconLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_my-games_color_28.svg",
+					"value": "MY.GAMES",
+					"href": "https://my.games"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/warface_light.svg",
+					"iconLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/warface.svg",
+					"value": "Warface",
+					"href": "https://ru.warface.com"
+				},
+				{
+					"value": "Графический дизайнер"
+				}
+			],
+			"info": [
+				{
+					"title": "Годы работы:",
+					"value": "10.2021 — 01.2023 (1 год 4 месяца)"
+				},
+				{
+					"title": "Должность:",
+					"value": "Графический дизайнер"
+				},
+				{
+					"title": "Форма занятости:",
+					"value": "Проектная"
+				}
+			],
+			"execute": ["Чем я занимался?", "Чем я занимался?"],
+			"examples": ["link", "link", "link"]
+		},
+		{
+			"id": 627,
+			"employerInfo": {
+				"name": "МГТВ",
+				"logo": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/mgtv-full.svg",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/experience/preview/mgtv.png",
+				"website": "https://tv.my.games",
+				"shortDescription": "Стриминговая студия MY.GAMES TV, которая освещает яркие события в Warface, PUBG, Skyforge, Conqueror's Blade, ArcheAge и других проектах",
+				"fullDescription": "..."
+			},
+			"pathname": "mgtv",
+			"labels": [
+				{
+					"id": "date",
+					"value": "1 год"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_my-games_28.svg",
+					"iconLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_my-games_color_28.svg",
+					"value": "MY.GAMES",
+					"href": "https://my.games"
+				},
+				{
+					"value": "Game Space c 2023"
+				},
+				{
+					"value": "Графический дизайнер"
+				}
+			],
+			"info": [
+				{
+					"title": "Годы работы:",
+					"value": "07.2020 — 07.2021 (1 год)"
+				},
+				{
+					"title": "Должность:",
+					"value": "Графический дизайнер"
+				},
+				{
+					"title": "Форма занятости:",
+					"value": "Проектная"
+				}
+			],
+			"execute": ["Чем я занимался?", "Чем я занимался?"],
+			"examples": ["link", "link", "link"]
+		},
+		{
+			"id": 574,
+			"employerInfo": {
+				"name": "MYBONUS",
+				"logo": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/mybonus.svg",
+				"logoLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/mybonus_light.svg",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/experience/preview/mybonus.png",
+				"shortDescription": "Финтех-сервис для геймеров в партнерстве с VK. Программа игровой лояльности для геймеров, в активе дебетовый карточный продукт вместе с банком Ренессанс Кредит и успешная интеграция с играми от Mail.ru Group",
+				"fullDescription": "..."
+			},
+			"pathname": "mybonus",
+			"labels": [
+				{
+					"id": "date",
+					"value": "2 года 6 мес."
+				},
+				{
+					"value": "Графический дизайнер"
+				},
+				{
+					"id": "project-closed",
+					"value": "Проект закрыт"
+				}
+			],
+			"info": [
+				{
+					"title": "Годы работы:",
+					"value": "09.2019 — 02.2022 (2 года 6 месяцев)"
+				},
+				{
+					"title": "Должность:",
+					"value": "Графический дизайнер"
+				},
+				{
+					"title": "Форма занятости:",
+					"value": "Проектная"
+				}
+			],
+			"execute": ["Чем я занимался?", "Чем я занимался?"],
+			"examples": ["link", "link", "link"]
+		}
+	],
+	"displayName": "Опыт работы",
+	"pathname": "experience",
+	"id": "6mskGYST-L8CZ8xRg-SuvhFPKm"
+}

@@ -1,0 +1,259 @@
+{
+	"data": [
+		{
+			"id": 1,
+			"employerInfo": {
+				"name": "Winline EML 2022",
+				"logo": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/eml.svg",
+				"preview": "...",
+				"shortDescription": "Joint tournament from the bookmaker company Winline and the gaming holding Metacorp",
+				"fullDescription": "Winline Esports Media League — joint tournament from the bookmaker company Winline and the gaming holding Metacorp. The event was attended by esports athletes, streamers, bloggers, artists, and other media personalities. The prize fund amounted to 10,000,000 RUB, which teams competed for in Moscow."
+			},
+			"pathname": "winline-eml-2022",
+			"labels": [
+				{
+					"id": "date",
+					"value": "2 months"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_winline_color_28.svg",
+					"value": "Winline"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_metacorp_color_28.svg",
+					"value": "Metacorp"
+				},
+				{
+					"value": "Graphic Designer"
+				}
+			],
+			"info": [
+				{
+					"title": "Years of Employment:",
+					"value": "11.2022 — 01.2023 (2 months)"
+				},
+				{
+					"title": "Position:",
+					"value": "Graphic Designer"
+				},
+				{
+					"title": "Employment Type:",
+					"value": "Project-based"
+				}
+			],
+			"execute": ["What did I do?", "What did I do?"],
+			"examples": ["link", "link", "link"],
+			"feedback": [
+				{
+					"id": 1,
+					"avatar": "https://sun6-21.userapi.com/s/v1/if2/xRc8xJfzXMvUx-_mcgtnbDOujxcQ4Z0KHRHr5JV18NTa7_pO-U6WHOlvVevSHh3v18bSJ2hvTFNEB0-ZDB4UaK5-.jpg?quality=95&crop=456,336,758,758&as=50x50,100x100,200x200,400x400&ava=1&u=4aYY40O598z1zOwh7ugWG-qveke5Ms6xzT0PTQna4Vc&cs=200x200",
+					"fullName": "Danil Serebryakov",
+					"jobTitle": "VK Community Manager, Astrum Ent. (ex. MY.GAMES)",
+					"value": "High-level ideation and semantic parsing of external countermeasures entails a process of implementing and modernizing new proposals. However, deep immersion requires defining and refining the system of mass participation. Undoubtedly, some features of internal politics are grouped into clusters of similar entities.",
+					"socialNetworks": [
+						{
+							"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_vk_color_28.svg",
+							"href": "https://vk.com/twinkl3"
+						},
+						{
+							"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_vk-workspace_color_28.svg",
+							"href": "https://vk.com/twinkl3"
+						},
+						{
+							"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_vk-mail_color_28.svg",
+							"href": "https://vk.com/twinkl3"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": 2,
+			"employerInfo": {
+				"name": "No Sleep Agency",
+				"logo": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/no-sleep-agency-full.svg",
+				"logoLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/no-sleep-agency-full_light.svg",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/experience/preview/nosleepagency.png",
+				"website": "https://nosleepagency.ru",
+				"shortDescription": "Young digital agency whose energy embodies bright and unconventional ideas into projects",
+				"fullDescription": "..."
+			},
+			"pathname": "nosleepagency",
+			"labels": [
+				{
+					"id": "date",
+					"value": "Since May 2022"
+				},
+				{
+					"value": "Graphic Designer"
+				},
+				{
+					"value": "UI/UX"
+				},
+				{
+					"value": "Frontend"
+				}
+			],
+			"info": [
+				{
+					"title": "Years of Employment:",
+					"value": "11.2022 — 01.2023 (2 months)"
+				},
+				{
+					"title": "Position:",
+					"value": "Graphic Designer"
+				},
+				{
+					"title": "Employment Type:",
+					"value": "Project-based"
+				}
+			],
+			"execute": ["What did I do?", "What did I do?"],
+			"examples": ["link", "link", "link"]
+		},
+		{
+			"id": 3,
+			"employerInfo": {
+				"name": "Warface",
+				"logo": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/warface.svg",
+				"logoLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/warface_light.svg",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/experience/preview/warface.png",
+				"website": "https://ru.warface.com",
+				"shortDescription": "Next-gen online shooter from the creators of Far Cry and Crysis",
+				"fullDescription": "..."
+			},
+			"pathname": "warface",
+			"labels": [
+				{
+					"id": "date",
+					"value": "1 year 7 months"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_vk_color_28.svg",
+					"value": "VK",
+					"href": "https://vk.company"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_my-games_28.svg",
+					"iconLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_my-games_color_28.svg",
+					"value": "MY.GAMES",
+					"href": "https://my.games"
+				},
+				{
+					"value": "Graphic Designer"
+				}
+			],
+			"info": [
+				{
+					"title": "Years of Employment:",
+					"value": "11.2022 — 01.2023 (2 months)"
+				},
+				{
+					"title": "Position:",
+					"value": "Graphic Designer"
+				},
+				{
+					"title": "Employment Type:",
+					"value": "Project-based"
+				}
+			],
+			"execute": ["What did I do?", "What did I do?"],
+			"examples": ["link", "link", "link"]
+		},
+		{
+			"id": 4,
+			"employerInfo": {
+				"name": "МГТВ",
+				"logo": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/mgtv-full.svg",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/experience/preview/mgtv.png",
+				"website": "https://tv.my.games",
+				"shortDescription": "MY.GAMES TV streaming studio that covers highlights in Warface, PUBG, Skyforge, Conqueror's Blade, ArcheAge, and other projects",
+				"fullDescription": "..."
+			},
+			"pathname": "mgtv",
+			"labels": [
+				{
+					"id": "date",
+					"value": "1 year"
+				},
+				{
+					"id": "client",
+					"icon": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_my-games_28.svg",
+					"iconLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_my-games_color_28.svg",
+					"value": "MY.GAMES",
+					"href": "https://my.games"
+				},
+				{
+					"value": "Game Space since 2023"
+				},
+				{
+					"value": "Graphic Designer"
+				}
+			],
+			"info": [
+				{
+					"title": "Years of Employment:",
+					"value": "11.2022 — 01.2023 (2 months)"
+				},
+				{
+					"title": "Position:",
+					"value": "Graphic Designer"
+				},
+				{
+					"title": "Employment Type:",
+					"value": "Project-based"
+				}
+			],
+			"execute": ["What did I do?", "What did I do?"],
+			"examples": ["link", "link", "link"]
+		},
+		{
+			"id": 5,
+			"employerInfo": {
+				"name": "MYBONUS",
+				"logo": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/mybonus.svg",
+				"logoLight": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/custom/mybonus_light.svg",
+				"preview": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/experience/preview/mybonus.png",
+				"shortDescription": "Fintech service for gamers in partnership with VK. Gaming loyalty program for gamers, with a debit card product in collaboration with Renaissance Credit Bank and successful integration with games from Mail.ru Group",
+				"fullDescription": "..."
+			},
+			"pathname": "mybonus",
+			"labels": [
+				{
+					"id": "date",
+					"value": "2 years 6 months"
+				},
+				{
+					"value": "Graphic Designer"
+				},
+				{
+					"id": "project-closed",
+					"value": "Project closed"
+				}
+			],
+			"info": [
+				{
+					"title": "Years of Employment:",
+					"value": "11.2022 — 01.2023 (2 months)"
+				},
+				{
+					"title": "Position:",
+					"value": "Graphic Designer"
+				},
+				{
+					"title": "Employment Type:",
+					"value": "Project-based"
+				}
+			],
+			"execute": ["What did I do?", "What did I do?"],
+			"examples": ["link", "link", "link"]
+		}
+	],
+	"displayName": "Work Experience",
+	"pathname": "experience",
+	"id": "6mskGYST-L8CZ8xRg-SuvhFPKm"
+}

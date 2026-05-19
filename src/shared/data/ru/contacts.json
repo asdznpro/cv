@@ -1,0 +1,42 @@
+{
+	"data": [
+		{
+			"name": "VK",
+			"href": "https://vk.com/asdznpro?utm_source=cv&utm_medium=website&utm_campaign=contacts&utm_content=href&utm_term=vk",
+			"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_vk_28.svg"
+		},
+		{
+			"name": "Telegram",
+			"href": "https://t.me/asdznpro?utm_source=cv&utm_medium=website&utm_campaign=contacts&utm_content=href&utm_term=telegram",
+			"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/symbol_telegram_28.svg"
+		},
+		{
+			"name": "VK Mail",
+			"href": "mailto:asdznpro@vk.com",
+			"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_vk-mail_28.svg"
+		},
+		{
+			"name": "Yandex",
+			"href": "https://yandex.ru/search/?text=%D0%90%D0%BD%D0%B4%D1%80%D0%B5%D0%B9+%D0%A1%D1%83%D1%85%D1%83%D1%88%D0%B8%D0%BD+%D0%93%D1%80%D0%B0%D1%84%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9+%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%D0%B5%D1%80&lr=67",
+			"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_yandex_28.svg"
+		},
+		{
+			"name": "GitHub",
+			"href": "https://github.com/asdzn?utm_source=cv&utm_medium=website&utm_campaign=contacts&utm_content=href&utm_term=github",
+			"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_github_28.svg"
+		},
+		{
+			"name": "GitLab",
+			"href": "https://gitlab.com/asdzn?utm_source=cv&utm_medium=website&utm_campaign=contacts&utm_content=href&utm_term=gitlab",
+			"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_gitlab_28.svg"
+		},
+		{
+			"name": "HeadHunter",
+			"href": "https://hh.ru/applicant/resumes/view?resume=1492c513ff09411f580039ed1f5150736b4d4e",
+			"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/products/logo_headhunter_28.svg"
+		}
+	],
+	"displayName": "Контакты",
+	"pathname": "contacts",
+	"id": "53mmfjVb-RVHADUeT-HZZkQVym"
+}

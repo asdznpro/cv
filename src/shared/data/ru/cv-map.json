@@ -1,0 +1,30 @@
+{
+	"data": [
+		{
+			"name": "Обо мне",
+			"pathname": "about"
+		},
+		{
+			"name": "Опыт работы",
+			"pathname": "experience"
+		},
+		{
+			"name": "Портфолио",
+			"pathname": "portfolio"
+		},
+		{
+			"name": "Проф. навыки",
+			"pathname": "hard-skills"
+		},
+		{
+			"name": "Образование",
+			"pathname": "education"
+		},
+		{
+			"name": "Контакты",
+			"pathname": "contacts"
+		}
+	],
+	"displayName": "Карта резюме",
+	"id": "CT75txe6-ydnYZc6U-R3xwHrnY"
+}

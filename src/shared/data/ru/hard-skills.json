@@ -1,0 +1,145 @@
+{
+	"data": [
+		{
+			"id": 1,
+			"jobTitle": "Графический & UI/UX дизайн",
+			"stack": [
+				{
+					"id": 1,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_photoshop_28.svg",
+					"name": "Photoshop",
+					"level": "High"
+				},
+				{
+					"id": 2,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_illustrator_28.svg",
+					"name": "Illustrator",
+					"level": "Middle"
+				},
+				{
+					"id": 3,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_figma_28.svg",
+					"name": "Figma",
+					"level": "High"
+				},
+				{
+					"id": 4,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_blender_28.svg",
+					"name": "Blender",
+					"level": "Base"
+				},
+				{
+					"id": 5,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_cinema-4d_28.svg",
+					"name": "Cinema 4D",
+					"level": "Base"
+				},
+				{
+					"id": 6,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_redshift_28.svg",
+					"name": "RedShift",
+					"level": "Base"
+				}
+			]
+		},
+		{
+			"id": 2,
+			"jobTitle": "Фронтенд",
+			"stack": [
+				{
+					"id": 1,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_after-effects_28.svg",
+					"name": "Вёрстка",
+					"level": "Middle"
+				},
+				{
+					"id": 2,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_after-effects_28.svg",
+					"name": "Браузеры и сеть",
+					"level": "Middle"
+				},
+				{
+					"id": 3,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_react_color_28.svg",
+					"name": "React",
+					"level": "Middle"
+				},
+				{
+					"id": 4,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_next-js_28.svg",
+					"name": "Next.js",
+					"level": "Base"
+				},
+				{
+					"id": 5,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_vue-js_color_28.svg",
+					"name": "Vue",
+					"level": "Base"
+				},
+				{
+					"id": 6,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_typescript_28.svg",
+					"name": "TypeScript",
+					"level": "Middle"
+				},
+				{
+					"id": 7,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_javascript_28.svg",
+					"name": "JavaScript",
+					"level": "Middle"
+				},
+				{
+					"id": 8,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_redux-toolkit_28.svg",
+					"name": "Redux Toolkit",
+					"level": "Base"
+				},
+				{
+					"id": 9,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_vite-js_28.svg",
+					"name": "Vite",
+					"level": "Middle"
+				},
+				{
+					"id": 10,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_git_28.svg",
+					"name": "Git",
+					"level": "Middle"
+				}
+			]
+		},
+		{
+			"id": 3,
+			"jobTitle": "Бэкенд",
+			"stack": [
+				{
+					"id": 1,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_nest-js_28.svg",
+					"name": "Nest.js",
+					"level": "Base"
+				}
+			]
+		},
+		{
+			"id": 4,
+			"jobTitle": "Другое",
+			"stack": [
+				{
+					"id": 1,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_after-effects_28.svg",
+					"name": "After Effects",
+					"level": "Base"
+				},
+				{
+					"id": 2,
+					"image": "https://asdznpro-cv.hb.ru-msk.vkcs.cloud/assets/icons/hard-skills/logo_premiere_28.svg",
+					"name": "Premiere Pro",
+					"level": "Base"
+				}
+			]
+		}
+	],
+	"displayName": "Проф. навыки",
+	"pathname": "hard-skills",
+	"id": "amsKnU4N-CMB7qy5e-gpnHdQBg"
+}
