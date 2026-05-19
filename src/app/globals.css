@@ -9,8 +9,14 @@
 @theme inline {
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
-	--font-sans: var(--font-geist-sans);
-	--font-mono: var(--font-geist-mono);
+
+	--font-sans: var(--font-tt-interphases-pro);
+	--font-mono: var(--font-tt-interphases-pro-mono);
+
+	--font-sans-var: var(--font-tt-interphases-pro-variable);
+	--font-mono-var: var(--font-tt-interphases-pro-mono-variable);
+
+	--font-condensed: var(--font-tt-interphases-pro-condensed);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,5 +29,4 @@
 body {
 	background: var(--background);
 	color: var(--foreground);
-	font-family: Arial, Helvetica, sans-serif;
 }

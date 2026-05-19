@@ -1,0 +1,448 @@
+/* TT Interphases Pro - Base */
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_Thin.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_Thin.woff') format('woff');
+	font-weight: 100;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_Thin_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_Thin_Italic.woff') format('woff');
+	font-weight: 100;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_ExtraLight.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_ExtraLight.woff') format('woff');
+	font-weight: 200;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_ExtraLight_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_ExtraLight_Italic.woff') format('woff');
+	font-weight: 200;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_Light.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_Light.woff') format('woff');
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_Light_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_Light_Italic.woff') format('woff');
+	font-weight: 300;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_Regular.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_Regular.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_Italic.woff') format('woff');
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_Medium.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_Medium.woff') format('woff');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_Medium_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_Medium_Italic.woff') format('woff');
+	font-weight: 500;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_DemiBold.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_DemiBold.woff') format('woff');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_DemiBold_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_DemiBold_Italic.woff') format('woff');
+	font-weight: 600;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_Bold.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_Bold.woff') format('woff');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_Bold_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_Bold_Italic.woff') format('woff');
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_ExtraBold.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_ExtraBold.woff') format('woff');
+	font-weight: 800;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_ExtraBold_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_ExtraBold_Italic.woff') format('woff');
+	font-weight: 800;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_Black.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_Black.woff') format('woff');
+	font-weight: 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro';
+	src:
+		url('/fonts/tt-interphases-pro/base/WOFF2/TT_Interphases_Pro_Trial_Black_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base/WOFF/TT_Interphases_Pro_Trial_Black_Italic.woff') format('woff');
+	font-weight: 900;
+	font-style: italic;
+	font-display: swap;
+}
+
+/* TT Interphases Pro - Base Variable */
+
+@font-face {
+	font-family: 'TT Interphases Pro Variable';
+	src:
+		url('/fonts/tt-interphases-pro/base-variable/WOFF2/TT_Interphases_Pro_Variable_Trial.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/base-variable/WOFF/TT_Interphases_Pro_Variable_Trial.woff') format('woff');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* TT Interphases Pro - Condensed */
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_Thin.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_Thin.woff') format('woff');
+	font-weight: 100;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_Thin_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_Thin_Italic.woff') format('woff');
+	font-weight: 100;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_ExtraLight.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_ExtraLight.woff') format('woff');
+	font-weight: 200;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_ExtraLight_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_ExtraLight_Italic.woff') format('woff');
+	font-weight: 200;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_Light.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_Light.woff') format('woff');
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_Light_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_Light_Italic.woff') format('woff');
+	font-weight: 300;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_Regular.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_Regular.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_Italic.woff') format('woff');
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_Medium.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_Medium.woff') format('woff');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_Medium_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_Medium_Italic.woff') format('woff');
+	font-weight: 500;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_DemiBold.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_DemiBold.woff') format('woff');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_DemiBold_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_DemiBold_Italic.woff') format('woff');
+	font-weight: 600;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_Bold.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_Bold.woff') format('woff');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_Bold_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_Bold_Italic.woff') format('woff');
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_ExtraBold.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_ExtraBold.woff') format('woff');
+	font-weight: 800;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_ExtraBold_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_ExtraBold_Italic.woff') format('woff');
+	font-weight: 800;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_Black.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_Black.woff') format('woff');
+	font-weight: 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Condensed';
+	src:
+		url('/fonts/tt-interphases-pro/condensed/WOFF2/TT_Interphases_Pro_Trial_Condensed_Black_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/condensed/WOFF/TT_Interphases_Pro_Trial_Condensed_Black_Italic.woff') format('woff');
+	font-weight: 900;
+	font-style: italic;
+	font-display: swap;
+}
+
+/* TT Interphases Pro - Mono */
+
+@font-face {
+	font-family: 'TT Interphases Pro Mono';
+	src:
+		url('/fonts/tt-interphases-pro/mono/WOFF2/TT_Interphases_Pro_Mono_Trial_Regular.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/mono/WOFF/TT_Interphases_Pro_Mono_Trial_Regular.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Mono';
+	src:
+		url('/fonts/tt-interphases-pro/mono/WOFF2/TT_Interphases_Pro_Mono_Trial_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/mono/WOFF/TT_Interphases_Pro_Mono_Trial_Italic.woff') format('woff');
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Mono';
+	src:
+		url('/fonts/tt-interphases-pro/mono/WOFF2/TT_Interphases_Pro_Mono_Trial_Bold.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/mono/WOFF/TT_Interphases_Pro_Mono_Trial_Bold.woff') format('woff');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Mono';
+	src:
+		url('/fonts/tt-interphases-pro/mono/WOFF2/TT_Interphases_Pro_Mono_Trial_Bold_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/mono/WOFF/TT_Interphases_Pro_Mono_Trial_Bold_Italic.woff') format('woff');
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
+
+/* TT Interphases Pro - Mono Variable */
+
+@font-face {
+	font-family: 'TT Interphases Pro Mono Variable';
+	src:
+		url('/fonts/tt-interphases-pro/mono-variable/WOFF2/TT_Interphases_Pro_Mono_Variable_Trial_Upright.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/mono-variable/WOFF/TT_Interphases_Pro_Mono_Variable_Trial_Upright.woff') format('woff');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'TT Interphases Pro Mono Variable';
+	src:
+		url('/fonts/tt-interphases-pro/mono-variable/WOFF2/TT_Interphases_Pro_Mono_Variable_Trial_Italic.woff2') format('woff2'),
+		url('/fonts/tt-interphases-pro/mono-variable/WOFF/TT_Interphases_Pro_Mono_Variable_Trial_Italic.woff') format('woff');
+	font-weight: 100 900;
+	font-style: italic;
+	font-display: swap;
+}
+
+/* Font variables */
+
+:root {
+	--font-tt-interphases-pro: 'TT Interphases Pro', Arial, Helvetica, sans-serif;
+	--font-tt-interphases-pro-variable: 'TT Interphases Pro Variable', Arial, Helvetica, sans-serif;
+	--font-tt-interphases-pro-condensed: 'TT Interphases Pro Condensed', Arial, Helvetica, sans-serif;
+	--font-tt-interphases-pro-mono: 'TT Interphases Pro Mono', monospace;
+	--font-tt-interphases-pro-mono-variable: 'TT Interphases Pro Mono Variable', monospace;
+}
