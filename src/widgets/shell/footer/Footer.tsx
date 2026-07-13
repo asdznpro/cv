@@ -60,7 +60,7 @@ const FOOTER_NAVIGATION = [
 
 export function Footer() {
 	return (
-		<footer className='mt-auto flex flex-col py-16 gap-16 bg-background border-t border-separator'>
+		<footer className='mt-auto w-full flex flex-col py-16 gap-16 bg-background border-t border-separator'>
 			<div className='mx-auto max-w-container w-full grid grid-cols-4 px-app gap-app'>
 				{FOOTER_NAVIGATION.map(item => (
 					<div key={item.label} className='flex flex-1 flex-col gap-6 text-sm'>

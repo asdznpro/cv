@@ -3,9 +3,7 @@ import { Lanyard } from 'widgets'
 export default function Home() {
 	return (
 		<>
-			{/* <span /> */}
-
-			<div className='w-full h-[76dvh] 0bg-accent/10'>
+			<div className='relative w-full h-dvh 0bg-accent/10'>
 				<div className='absolute inset-0'>
 					<Lanyard
 						position={[0, 0, 18]}
@@ -91,8 +89,6 @@ export default function Home() {
 					</p>
 				</div>
 			</section>
-
-			<span />
 		</>
 	)
 }

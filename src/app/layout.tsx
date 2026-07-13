@@ -35,12 +35,12 @@ export default function RootLayout({
 			<link rel='manifest' href='/favicon/site.webmanifest' />
 
 			<body className='isolate relative min-h-full flex flex-col'>
-				<div className='@container flex flex-col flex-1 min-w-0'>
-					<header className='sticky top-0 z-20'>
+				<div className='@container min-w-0 flex flex-col flex-1 items-center'>
+					<header className='fixed top-0 z-20 w-full'>
 						<Header />
 					</header>
 
-					<main className='overflow-x-clip flex flex-col flex-1 py-4 gap-24'>
+					<main className='overflow-x-clip w-full flex flex-col flex-1 pb-24 gap-24'>
 						{/* <ViewTransition name='main' update='page-update' default='none'> */}
 						{children}
 						{/* </ViewTransition> */}
