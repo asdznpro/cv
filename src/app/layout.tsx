@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 
-import './globals.css'
+import 'styles/globals.css'
+
+import { Header, Footer } from 'widgets'
 
 export const metadata: Metadata = {
 	title: 'Andrew S. / CV',
@@ -32,7 +34,21 @@ export default function RootLayout({
 			/>
 			<link rel='manifest' href='/favicon/site.webmanifest' />
 
-			<body className='min-h-full flex flex-col'>{children}</body>
+			<body className='isolate relative min-h-full flex flex-col'>
+				<div className='@container flex flex-col flex-1 min-w-0'>
+					<header className='sticky top-0 z-20'>
+						<Header />
+					</header>
+
+					<main className='overflow-x-clip flex flex-col flex-1 py-4 gap-24'>
+						{/* <ViewTransition name='main' update='page-update' default='none'> */}
+						{children}
+						{/* </ViewTransition> */}
+					</main>
+
+					<Footer />
+				</div>
+			</body>
 		</html>
 	)
 }

@@ -1,0 +1,45 @@
+/* View Transition */
+
+:root {
+	--page-exit: 180ms;
+	--page-enter: 220ms;
+}
+
+::view-transition-group(.page-update) {
+	animation: none;
+	overflow: clip;
+}
+
+::view-transition-image-pair(.page-update) {
+	isolation: isolate;
+}
+
+::view-transition-old(.page-update) {
+	animation: var(--page-exit) ease-out both page-slide-out;
+}
+
+::view-transition-new(.page-update) {
+	animation: var(--page-enter) ease-out var(--page-exit) both page-slide-in;
+}
+
+@keyframes page-slide-out {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-12px);
+	}
+}
+
+@keyframes page-slide-in {
+	from {
+		opacity: 0;
+		transform: translateY(12px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

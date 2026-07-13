@@ -1,71 +1,98 @@
+import { Lanyard } from 'widgets'
+
 export default function Home() {
 	return (
-		<div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black'>
-			<main className='flex flex-1 w-full max-w-2xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start text-balance'>
-				<div className='flex flex-col items-center gap-6 text-center sm:items-start sm:text-left'>
-					<h1 className='text-5xl font-condensed font-semibold leading-tight tracking-tight text-black dark:text-zinc-50 uppercase'>
+		<>
+			{/* <span /> */}
+
+			<div className='w-full h-[76dvh] 0bg-accent/10'>
+				<div className='absolute inset-0'>
+					<Lanyard
+						position={[0, 0, 18]}
+						gravity={[0, -40, 0]}
+						frontImage='/assets/lanyard/front.png'
+						backImage='/assets/lanyard/back.png'
+						lanyardImage='/assets/lanyard/band.png'
+						imageFit='cover'
+						lanyardWidth={0.6}
+					/>
+				</div>
+			</div>
+
+			<section
+				style={{ contentVisibility: 'auto', containIntrinsicSize: '640px' }}
+				className='mx-auto max-w-container w-full flex flex-col px-app gap-8'
+			>
+				<div className='flex flex-col gap-6'>
+					<h1 className='text-3xl font-semibold font-condensed tracking-tight'>
 						To get started, edit the page.tsx file.
 					</h1>
 
-					<h2 className='text-3xl font-condensed font-semibold leading-tight tracking-tight text-black dark:text-zinc-50'>
-						To get started, edit the page.tsx file.
-					</h2>
-
-					<p className='text-lg text-zinc-600 dark:text-zinc-400'>
+					<p className='text-lg text-foreground-secondary'>
 						Looking for a starting point or more instructions? Head over to{' '}
 						<a
+							target='_blank'
 							href='https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-							className='font-medium text-zinc-950 dark:text-zinc-50'
+							className='font-medium text-foreground hover:text-accent underline'
 						>
 							Templates
 						</a>{' '}
 						or the{' '}
 						<a
+							target='_blank'
 							href='https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-							className='font-medium text-zinc-950 dark:text-zinc-50'
+							className='font-medium text-foreground hover:text-accent underline'
 						>
 							Learning
 						</a>{' '}
 						center.
 					</p>
 
-					<p className='text-sm text-zinc-600 dark:text-zinc-400 font-condensed uppercase'>
-						Looking for a starting point or more instructions? Head over to{' '}
+					<p className='text-sm text-foreground-tertiary font-condensed uppercase tracking-tight'>
+						Продолжая использовать{' '}
 						<a
-							href='https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-							className='font-medium text-zinc-950 dark:text-zinc-50'
+							target='_blank'
+							href='/'
+							className='text-foreground-secondary hover:text-foreground underline'
 						>
-							Templates
-						</a>{' '}
-						or the{' '}
+							Lowtab.gg
+						</a>
+						, вы принимаете условия нашей{' '}
 						<a
-							href='https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-							className='font-medium text-zinc-950 dark:text-zinc-50'
+							href='/'
+							className='text-foreground-secondary hover:text-foreground underline'
 						>
-							Learning
-						</a>{' '}
-						center.
-					</p>
-
-					<p className='text-sm text-zinc-600 dark:text-zinc-400 font-mono tracking-tighter'>
-						Looking for a starting point or more instructions? Head over to{' '}
+							Политики конфиденциальности
+						</a>
+						{' и '}
 						<a
-							href='https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-							className='font-medium text-zinc-950 dark:text-zinc-50'
+							href='/'
+							className='text-foreground-secondary hover:text-foreground underline'
 						>
-							Templates
-						</a>{' '}
-						or the{' '}
+							Правил сервиса
+						</a>
+						, а также соглашаетесь на{' '}
 						<a
-							href='https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-							className='font-medium text-zinc-950 dark:text-zinc-50'
+							href='/'
+							className='text-foreground-secondary hover:text-foreground underline'
 						>
-							Learning
-						</a>{' '}
-						center.
+							обработку персональных данных
+						</a>
+						, применение{' '}
+						<a
+							href='/'
+							className='text-foreground-secondary hover:text-foreground underline'
+						>
+							файлов cookie
+						</a>
+						, средств аналитики и рекомендательных механизмов, необходимых для
+						корректной работы платформы, повышения удобства использования и
+						персонализации вашего пользовательского опыта.
 					</p>
 				</div>
-			</main>
-		</div>
+			</section>
+
+			<span />
+		</>
 	)
 }
