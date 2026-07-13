@@ -10,9 +10,10 @@ import {
 
 export function Header() {
 	return (
-		<div className='mx-auto max-w-container flex items-center p-app mt-app gap-app bg-background/80 border border-separator rounded-full backdrop-blur-3xl'>
-			<span className='w-full flex items-center gap-app'>
-				{/* <Button
+		<div className='mx-auto max-w-container flex items-center px-app mt-app'>
+			<div className='w-full flex items-center p-app gap-app bg-background/80 border border-separator rounded-full backdrop-blur-3xl'>
+				<span className='w-full flex items-center gap-app'>
+					{/* <Button
 					mode='soft'
 					appearance='neutral'
 					prefix={<Icon28MenuOutline width={18} height={18} />}
@@ -20,33 +21,34 @@ export function Header() {
 					iconOnly
 				/> */}
 
-				<Link href='/' className='flex'>
-					<Logo.Lockup />
-				</Link>
-			</span>
+					<Link href='/' className='flex'>
+						<Logo.Lockup />
+					</Link>
+				</span>
 
-			<span className='flex gap-1.5'>
-				{['About', 'Experience', 'Portfolio', 'Skills'].map(item => (
+				<span className='flex gap-1.5'>
+					{['About', 'Experience', 'Portfolio', 'Skills'].map(item => (
+						<Button
+							key={item}
+							mode={item === 'About' ? 'secondary' : 'ghost'}
+							appearance='neutral'
+							radius='rounded'
+						>
+							{item}
+						</Button>
+					))}
+				</span>
+
+				<span className='w-full flex justify-end gap-app'>
 					<Button
-						key={item}
-						mode={item === 'About' ? 'secondary' : 'ghost'}
 						appearance='neutral'
+						prefix={<Icon28HieroglyphCharacterOutline width={18} height={18} />}
 						radius='rounded'
 					>
-						{item}
+						RU
 					</Button>
-				))}
-			</span>
-
-			<span className='w-full flex justify-end gap-app'>
-				<Button
-					appearance='neutral'
-					prefix={<Icon28HieroglyphCharacterOutline width={18} height={18} />}
-					radius='rounded'
-				>
-					RU
-				</Button>
-			</span>
+				</span>
+			</div>
 		</div>
 	)
 }

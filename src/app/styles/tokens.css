@@ -135,7 +135,7 @@
 	--surface: var(--palette-kimberly-800);
 	--surface-secondary: var(--palette-kimberly-700);
 
-	--background: var(--palette-kimberly-900);
-	--background-secondary: var(--palette-kimberly-950);
+	--background: var(--palette-kimberly-950);
+	--background-secondary: var(--palette-kimberly-900);
 	--background-inverse: var(--palette-kimberly-50);
 }
