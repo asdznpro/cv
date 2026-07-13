@@ -5,7 +5,8 @@ import 'styles/globals.css'
 import { Header, Footer } from 'widgets'
 
 export const metadata: Metadata = {
-	title: 'Andrew S. / CV',
+	title:
+		'Andrew S. / CV — Graphic & UI/UX Designer / Frontend Developer (React.js)',
 	description:
 		'Full-cycle Designer & Developer with 7+ years in Gaming & Esports, turning product ideas from Figma concepts into scalable, production-ready features',
 }

@@ -11,7 +11,7 @@ import {
 export function Header() {
 	return (
 		<div className='mx-auto max-w-container flex items-center px-app mt-app'>
-			<div className='w-full flex items-center p-app gap-app bg-background/80 border border-separator rounded-full backdrop-blur-3xl'>
+			<div className='w-full flex items-center p-app gap-app bg-background border border-separator rounded-full backdrop-blur-3xl'>
 				<span className='w-full flex items-center gap-app'>
 					{/* <Button
 					mode='soft'

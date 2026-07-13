@@ -3,34 +3,36 @@ import { Lanyard, PixelBlast } from 'widgets'
 export default function Home() {
 	return (
 		<>
-			<div className='relative w-full h-dvh'>
-				<div className='absolute inset-2 overflow-hidden rounded-xl pointer-events-none'>
-					<Lanyard
-						position={[0, 0, 12]}
-						gravity={[0, -40, 0]}
-						frontImage='/assets/lanyard/front.png'
-						backImage='/assets/lanyard/back.png'
-						lanyardImage='/assets/lanyard/band.png'
-						imageFit='cover'
-						lanyardWidth={0.6}
-					/>
-				</div>
+			<div className='w-full h-dvh p-2'>
+				<div className='relative z-0 w-full h-full overflow-hidden rounded-xl border border-separator bg-blue-900'>
+					<div className='absolute inset-0'>
+						<Lanyard
+							position={[0, 0, 12]}
+							gravity={[0, -40, 0]}
+							frontImage='/assets/lanyard/front.png'
+							backImage='/assets/lanyard/back.png'
+							lanyardImage='/assets/lanyard/band.png'
+							imageFit='cover'
+							lanyardWidth={0.6}
+						/>
+					</div>
 
-				<div className='absolute inset-2 -z-10 overflow-hidden rounded-xl border border-separator bg-blue-950 pointer-events-none'>
-					<PixelBlast
-						variant='square'
-						pixelSize={2}
-						color='#1212ce'
-						patternScale={2}
-						patternDensity={1}
-						enableRipples={false}
-						rippleSpeed={0.3}
-						rippleThickness={0.1}
-						rippleIntensityScale={1.5}
-						speed={0.9}
-						transparent
-						edgeFade={0}
-					/>
+					<div className='absolute inset-0 -z-10'>
+						<PixelBlast
+							variant='square'
+							pixelSize={2}
+							color='#1212ce'
+							patternScale={1}
+							patternDensity={1.5}
+							enableRipples={false}
+							rippleSpeed={0.25}
+							rippleThickness={0.1}
+							rippleIntensityScale={3.5}
+							speed={0.9}
+							transparent
+							edgeFade={0}
+						/>
+					</div>
 				</div>
 			</div>
 
