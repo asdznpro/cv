@@ -7,7 +7,7 @@ export default function Home() {
 				<div className='relative z-0 w-full h-full overflow-hidden rounded-xl border border-separator bg-blue-900'>
 					<div className='absolute inset-0'>
 						<Lanyard
-							position={[0, 0, 12]}
+							position={[0, 0, 14]}
 							gravity={[0, -40, 0]}
 							frontImage='/assets/lanyard/front.png'
 							backImage='/assets/lanyard/back.png'
