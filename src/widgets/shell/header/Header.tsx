@@ -87,7 +87,7 @@ export function Header() {
 	useLockScroll({ enabled: isOpen })
 
 	useHotkeys('escape', () => setIsOpen(false), { enabled: isOpen })
-	useHotkeys('shift+v', event => {
+	useHotkeys('shift+f', event => {
 		event.preventDefault()
 		setIsOpen(value => !value)
 	})

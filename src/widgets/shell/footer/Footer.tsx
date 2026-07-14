@@ -27,7 +27,7 @@ export function Footer() {
 			<div className='mx-auto container w-full flex px-app gap-app text-xl text-foreground-tertiary'>
 				<span>&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV</span>
 
-				<span className='ml-auto'>v0.2.6-beta, 29.1.26</span>
+				<span className='ml-auto'>v2.0.0-beta, 15.7.26</span>
 			</div>
 		</footer>
 	)
