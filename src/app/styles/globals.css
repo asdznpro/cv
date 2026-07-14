@@ -22,6 +22,10 @@
 	}
 }
 
+html {
+	scrollbar-gutter: stable;
+}
+
 body {
 	background: var(--background);
 	color: var(--foreground);
@@ -46,7 +50,7 @@ body {
 
 @utility scrollbar {
 	scrollbar-width: thin;
-	scrollbar-color: var(--foreground-tertiary) transparent;
+	scrollbar-color: var(--foreground-tertiary) var(--background);
 }
 
 /* Animation */

@@ -6,7 +6,7 @@ import { Carousel } from 'ui/blocks'
 export default function Home() {
 	return (
 		<>
-			{/* <div className='w-full h-screen flex flex-col p-2 gap-2'>
+			<div className='w-full h-screen flex flex-col p-2 gap-2'>
 				<div className='relative z-0 w-full h-full rounded-xl border border-separator bg-blue-900 overflow-hidden'>
 					<div className='absolute inset-0'>
 						<Lanyard
@@ -78,11 +78,9 @@ export default function Home() {
 						</Carousel.Viewport>
 					</Carousel.Root>
 				</div>
-			</div> */}
+			</div>
 
-			<span />
-
-			{/* <section
+			<section
 				style={{ contentVisibility: 'auto', containIntrinsicSize: '640px' }}
 				className='mx-auto container w-full flex flex-col px-app gap-8'
 			>
@@ -153,7 +151,7 @@ export default function Home() {
 						персонализации вашего пользовательского опыта.
 					</p>
 				</div>
-			</section> */}
+			</section>
 
 			<span />
 		</>
