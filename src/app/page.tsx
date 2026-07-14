@@ -63,7 +63,7 @@ const TOOLKIT_LOGOS = [
 	},
 	{
 		image: '/assets/toolkit/telegram.svg',
-		name: 'Telegram Mini Apps',
+		name: 'Mini Apps',
 		label: true,
 	},
 	{
@@ -101,7 +101,6 @@ const TOOLKIT_LOGOS = [
 		name: 'Redux Toolkit',
 		label: true,
 	},
-
 	{
 		image: '/assets/toolkit/vite.svg',
 		name: 'Vite',
@@ -116,6 +115,16 @@ const TOOLKIT_LOGOS = [
 		image: '/assets/toolkit/motion.svg',
 		name: 'Motion',
 		label: false,
+	},
+	{
+		image: '/assets/toolkit/prisma.svg',
+		name: 'Prisma',
+		label: false,
+	},
+	{
+		image: '/assets/toolkit/tanstack.svg',
+		name: 'Tanstack',
+		label: true,
 	},
 ]
 
@@ -188,7 +197,7 @@ export default function Home() {
 									>
 										<span className='h-full flex items-center gap-3'>
 											<Image
-												className='max-w-48 w-full max-h-10 h-full object-contain'
+												className='max-w-52 w-full max-h-10 h-full object-contain'
 												src={logo.image}
 												alt={logo.name}
 												width={100}
