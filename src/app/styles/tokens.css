@@ -72,6 +72,18 @@
 	--palette-malachite-900: hsla(136, 84%, 6%, 1);
 	--palette-malachite-950: hsla(136, 84%, 2%, 1);
 
+	--palette-picton-blue-50: hsla(204, 84%, 92%, 1);
+	--palette-picton-blue-100: hsla(204, 84%, 84%, 1);
+	--palette-picton-blue-200: hsla(204, 84%, 72%, 1);
+	--palette-picton-blue-300: hsla(204, 84%, 60%, 1);
+	--palette-picton-blue-400: hsla(204, 84%, 44%, 1);
+	--palette-picton-blue-500: hsla(204, 84%, 32%, 1);
+	--palette-picton-blue-600: hsla(204, 84%, 20%, 1);
+	--palette-picton-blue-700: hsla(204, 84%, 12%, 1);
+	--palette-picton-blue-800: hsla(204, 84%, 8%, 1);
+	--palette-picton-blue-900: hsla(204, 84%, 6%, 1);
+	--palette-picton-blue-950: hsla(204, 84%, 2%, 1);
+
 	--palette-blue-50: hsla(240, 84%, 92%, 1);
 	--palette-blue-100: hsla(240, 84%, 84%, 1);
 	--palette-blue-200: hsla(240, 84%, 72%, 1);
@@ -114,16 +126,16 @@
 	--warning-secondary: var(--palette-gamboge-200);
 	--warning-tertiary: var(--palette-gamboge-400);
 
-	--info: var(--palette-lochmara-400);
-	--info-secondary: var(--palette-lochmara-300);
-	--info-tertiary: var(--palette-lochmara-500);
+	--info: var(--palette-picton-blue-300);
+	--info-secondary: var(--palette-picton-blue-200);
+	--info-tertiary: var(--palette-picton-blue-400);
 
 	--highlight: var(--palette-hollywood-cerise-300);
 	--highlight-secondary: var(--palette-hollywood-cerise-200);
 	--highlight-tertiary: var(--palette-hollywood-cerise-400);
 
-	--link: var(--palette-blue-200);
-	--link-secondary: var(--palette-blue-100);
+	--link: var(--palette-picton-blue-200);
+	--link-secondary: var(--palette-picton-blue-100);
 
 	--foreground: var(--palette-kimberly-50);
 	--foreground-secondary: var(--palette-kimberly-300);

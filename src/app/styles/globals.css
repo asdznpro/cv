@@ -95,15 +95,15 @@ a[target='_blank']:not(.root)::after {
 }
 
 .focus-ring-visible {
-	@apply focus-visible:outline-foreground-secondary/20;
+	@apply focus-visible:outline-foreground-secondary/40;
 }
 
 .focus-ring-within {
-	@apply focus-within:outline-foreground-secondary/20;
+	@apply focus-within:outline-foreground-secondary/40;
 }
 
 .group:focus-visible .focus-ring-group-visible {
-	@apply outline-foreground-secondary/20;
+	@apply outline-foreground-secondary/40;
 }
 
 /* Hover Accent Ring */

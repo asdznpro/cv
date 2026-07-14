@@ -72,6 +72,18 @@
 	--color-green-900: var(--palette-malachite-900);
 	--color-green-950: var(--palette-malachite-950);
 
+	--color-sky-50: var(--palette-picton-blue-50);
+	--color-sky-100: var(--palette-picton-blue-100);
+	--color-sky-200: var(--palette-picton-blue-200);
+	--color-sky-300: var(--palette-picton-blue-300);
+	--color-sky-400: var(--palette-picton-blue-400);
+	--color-sky-500: var(--palette-picton-blue-500);
+	--color-sky-600: var(--palette-picton-blue-600);
+	--color-sky-700: var(--palette-picton-blue-700);
+	--color-sky-800: var(--palette-picton-blue-800);
+	--color-sky-900: var(--palette-picton-blue-900);
+	--color-sky-950: var(--palette-picton-blue-950);
+
 	--color-blue-50: var(--palette-blue-50);
 	--color-blue-100: var(--palette-blue-100);
 	--color-blue-200: var(--palette-blue-200);

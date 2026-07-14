@@ -123,7 +123,10 @@ export function Header() {
 				<motion.div className='w-full h-full flex flex-col bg-background border border-separator rounded-4xl backdrop-blur-3xl overflow-hidden'>
 					<div className='w-full flex items-center p-2 gap-2'>
 						<span className='w-full flex gap-app'>
-							<Link href='/' className='flex'>
+							<Link
+								href='/'
+								className='flex rounded-full transition-all focus-ring-base focus-ring-visible'
+							>
 								<Logo.Sign width={44} height={44} />
 							</Link>
 						</span>
@@ -239,10 +242,10 @@ export function Header() {
 													href={item.href}
 													aria-current={isActive ? 'page' : undefined}
 													className={twMerge(
-														'w-full h-14 flex items-center px-4 rounded-lg transition-colors',
+														'w-full h-14 flex items-center px-4 rounded-lg transition-colors focus-ring-base focus-ring-visible',
 														isActive
 															? 'bg-surface text-foreground'
-															: 'text-foreground-secondary hover:bg-surface',
+															: 'text-foreground-secondary hover:bg-surface focus-visible:bg-surface',
 													)}
 												>
 													<span className='text-2xl font-medium font-condensed tracking-tight truncate'>
@@ -260,7 +263,7 @@ export function Header() {
 											target='_blank'
 											rel='noopener noreferrer'
 											className={twMerge(
-												'root relative w-full h-full flex items-end p-4 rounded-lg transition-colors',
+												'root relative w-full h-full flex items-end p-4 rounded-lg transition-colors focus-ring-base focus-ring-visible',
 												item.className,
 											)}
 										>
