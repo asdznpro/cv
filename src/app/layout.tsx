@@ -37,11 +37,11 @@ export default function RootLayout({
 
 			<body className='isolate relative min-h-full flex flex-col'>
 				<div className='@container min-w-0 flex flex-col flex-1 items-center'>
-					<header className='fixed top-0 z-20 w-full'>
+					{/* <header className='fixed top-0 z-20 w-full'>
 						<Header />
-					</header>
+					</header> */}
 
-					<main className='overflow-x-clip w-full flex flex-col flex-1 pb-24 gap-24'>
+					<main className='overflow-x-clip w-full flex flex-col flex-1 gap-24'>
 						{/* <ViewTransition name='main' update='page-update' default='none'> */}
 						{children}
 						{/* </ViewTransition> */}

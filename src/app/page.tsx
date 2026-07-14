@@ -3,7 +3,7 @@ import { Lanyard, PixelBlast } from 'widgets'
 export default function Home() {
 	return (
 		<>
-			<div className='w-full h-dvh p-2'>
+			<div className='w-full h-screen p-2'>
 				<div className='relative z-0 w-full h-full overflow-hidden rounded-xl border border-separator bg-blue-900'>
 					<div className='absolute inset-0'>
 						<Lanyard
@@ -21,13 +21,24 @@ export default function Home() {
 						<PixelBlast
 							variant='square'
 							pixelSize={2}
+							color='#ce1290'
+							patternScale={1}
+							patternDensity={1}
+							enableRipples={false}
+							speed={0.9}
+							transparent
+							edgeFade={0}
+						/>
+					</div>
+
+					<div className='absolute inset-0 -z-10'>
+						<PixelBlast
+							variant='square'
+							pixelSize={2}
 							color='#1212ce'
 							patternScale={1}
 							patternDensity={1.5}
 							enableRipples={false}
-							rippleSpeed={0.25}
-							rippleThickness={0.1}
-							rippleIntensityScale={3.5}
 							speed={0.9}
 							transparent
 							edgeFade={0}
@@ -36,9 +47,9 @@ export default function Home() {
 				</div>
 			</div>
 
-			<section
+			{/* <section
 				style={{ contentVisibility: 'auto', containIntrinsicSize: '640px' }}
-				className='mx-auto max-w-container w-full flex flex-col px-app gap-8'
+				className='mx-auto container w-full flex flex-col px-app gap-8'
 			>
 				<div className='flex flex-col gap-6'>
 					<h1 className='text-3xl font-semibold font-condensed tracking-tight'>
@@ -107,7 +118,9 @@ export default function Home() {
 						персонализации вашего пользовательского опыта.
 					</p>
 				</div>
-			</section>
+			</section> */}
+
+			{/* <span /> */}
 		</>
 	)
 }
