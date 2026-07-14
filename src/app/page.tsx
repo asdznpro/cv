@@ -1,10 +1,13 @@
+'use client'
+
 import { Lanyard, PixelBlast } from 'widgets'
+import { Carousel } from 'ui/blocks'
 
 export default function Home() {
 	return (
 		<>
-			<div className='w-full h-screen p-2'>
-				<div className='relative z-0 w-full h-full overflow-hidden rounded-xl border border-separator bg-blue-900'>
+			{/* <div className='w-full h-screen flex flex-col p-2 gap-2'>
+				<div className='relative z-0 w-full h-full rounded-xl border border-separator bg-blue-900 overflow-hidden'>
 					<div className='absolute inset-0'>
 						<Lanyard
 							position={[0, 0, 14]}
@@ -45,7 +48,39 @@ export default function Home() {
 						/>
 					</div>
 				</div>
-			</div>
+
+				<div className='relative z-0 w-full flex p-2 rounded-xl border border-separator bg-background overflow-hidden shrink-0'>
+					<Carousel.Root
+						options={{
+							align: 'center',
+							// containScroll: 'keepSnaps',
+							skipSnaps: true,
+							loop: true,
+						}}
+						autoScroll={{
+							speed: 1.5,
+							startDelay: 100,
+							stopOnInteraction: false,
+							stopOnMouseEnter: true,
+						}}
+					>
+						<Carousel.Viewport>
+							<Carousel.Content className='0gap-app mr-2'>
+								{[...Array(24)].map((_, index) => (
+									<Carousel.Item
+										key={index}
+										className='basis-auto mr-2 bg-surface p-4 rounded-sm'
+									>
+										<span className=''>Logotype {index}</span>
+									</Carousel.Item>
+								))}
+							</Carousel.Content>
+						</Carousel.Viewport>
+					</Carousel.Root>
+				</div>
+			</div> */}
+
+			<span />
 
 			{/* <section
 				style={{ contentVisibility: 'auto', containIntrinsicSize: '640px' }}
@@ -120,7 +155,7 @@ export default function Home() {
 				</div>
 			</section> */}
 
-			{/* <span /> */}
+			<span />
 		</>
 	)
 }

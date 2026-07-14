@@ -134,4 +134,18 @@
 	--color-background: var(--background);
 	--color-background-secondary: var(--background-secondary);
 	--color-background-inverse: var(--background-inverse);
+
+	/* Social */
+
+	--color-github: var(--social-github);
+	--color-github-secondary: var(--social-github-secondary);
+
+	--color-linkedin: var(--social-linkedin);
+	--color-linkedin-secondary: var(--social-linkedin-secondary);
+
+	--color-telegram: var(--social-telegram);
+	--color-telegram-secondary: var(--social-telegram-secondary);
+
+	--color-vk: var(--social-vk);
+	--color-vk-secondary: var(--social-vk-secondary);
 }
