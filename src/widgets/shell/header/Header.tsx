@@ -141,7 +141,7 @@ export function Header() {
 						>
 							<Link
 								href='/'
-								className='text-foreground-tertiary hover:text-foreground hover:underline transition-all'
+								className='text-foreground-tertiary hover:text-foreground transition-all'
 							>
 								CV
 							</Link>{' '}

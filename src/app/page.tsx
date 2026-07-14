@@ -1,7 +1,123 @@
 'use client'
 
+import Image from 'next/image'
+
 import { Lanyard, PixelBlast } from 'widgets'
 import { Carousel } from 'ui/blocks'
+
+const TOOLKIT_LOGOS = [
+	{
+		image: '/assets/toolkit/figma.svg',
+		name: 'Figma',
+		label: true,
+	},
+	{
+		image: '/assets/toolkit/adobe-cc.svg',
+		name: 'Creative Cloud',
+		label: true,
+	},
+	{
+		image: '/assets/toolkit/adobe-ps.svg',
+		name: 'Photoshop',
+		label: true,
+	},
+	{
+		image: '/assets/toolkit/adobe-ai.svg',
+		name: 'Illustrator',
+		label: true,
+	},
+	{
+		image: '/assets/toolkit/adobe-ae.svg',
+		name: 'After Effects',
+		label: true,
+	},
+	{
+		image: '/assets/toolkit/adobe-pr.svg',
+		name: 'Premiere Pro',
+		label: true,
+	},
+	{
+		image: '/assets/toolkit/docker.svg',
+		name: 'Docker',
+		label: false,
+	},
+	{
+		image: '/assets/toolkit/git.svg',
+		name: 'Git',
+		label: false,
+	},
+	{
+		image: '/assets/toolkit/github.svg',
+		name: 'GitHub',
+		label: false,
+	},
+	{
+		image: '/assets/toolkit/javascript.svg',
+		name: 'JavaScript',
+		label: true,
+	},
+	{
+		image: '/assets/toolkit/typescript.svg',
+		name: 'TypeScript',
+		label: true,
+	},
+	{
+		image: '/assets/toolkit/telegram.svg',
+		name: 'Telegram Mini Apps',
+		label: true,
+	},
+	{
+		image: '/assets/toolkit/react.svg',
+		name: 'React',
+		label: true,
+	},
+	{
+		image: '/assets/toolkit/vercel.svg',
+		name: 'Vercel',
+		label: false,
+	},
+	{
+		image: '/assets/toolkit/next-js.svg',
+		name: 'Next.js',
+		label: false,
+	},
+	{
+		image: '/assets/toolkit/nest-js.svg',
+		name: 'Nest.js',
+		label: true,
+	},
+	{
+		image: '/assets/toolkit/node-js.svg',
+		name: 'Node.js',
+		label: true,
+	},
+	{
+		image: '/assets/toolkit/tailwindcss.svg',
+		name: 'Tailwind CSS',
+		label: false,
+	},
+	{
+		image: '/assets/toolkit/redux-toolkit.svg',
+		name: 'Redux Toolkit',
+		label: true,
+	},
+
+	{
+		image: '/assets/toolkit/vite.svg',
+		name: 'Vite',
+		label: false,
+	},
+	{
+		image: '/assets/toolkit/storybook.svg',
+		name: 'Storybook',
+		label: false,
+	},
+	{
+		image: '/assets/toolkit/motion.svg',
+		name: 'Motion',
+		label: false,
+	},
+]
 
 export default function Home() {
 	return (
@@ -49,11 +165,10 @@ export default function Home() {
 					</div>
 				</div>
 
-				<div className='relative z-0 w-full flex p-2 rounded-xl border border-separator bg-background overflow-hidden shrink-0'>
+				<div className='relative z-0 w-full flex py-2 rounded-xl border border-separator bg-background overflow-hidden shrink-0'>
 					<Carousel.Root
 						options={{
 							align: 'center',
-							// containScroll: 'keepSnaps',
 							skipSnaps: true,
 							loop: true,
 						}}
@@ -65,13 +180,27 @@ export default function Home() {
 						}}
 					>
 						<Carousel.Viewport>
-							<Carousel.Content className='0gap-app mr-2'>
-								{[...Array(24)].map((_, index) => (
+							<Carousel.Content>
+								{TOOLKIT_LOGOS.map((logo, index) => (
 									<Carousel.Item
 										key={index}
-										className='basis-auto mr-2 bg-surface p-4 rounded-sm'
+										className='basis-auto mr-5 0bg-surface p-4 rounded-sm'
 									>
-										<span className=''>Logotype {index}</span>
+										<span className='h-full flex items-center gap-3'>
+											<Image
+												className='max-w-48 w-full max-h-10 h-full object-contain'
+												src={logo.image}
+												alt={logo.name}
+												width={100}
+												height={100}
+											/>
+
+											{logo.label && (
+												<span className='text-3xl font-semibold font-condensed tracking-tight whitespace-nowrap'>
+													{logo.name}
+												</span>
+											)}
+										</span>
 									</Carousel.Item>
 								))}
 							</Carousel.Content>

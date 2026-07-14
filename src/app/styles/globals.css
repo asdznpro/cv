@@ -82,10 +82,10 @@ a[target='_blank']:not(.root)::after {
 	background: currentColor;
 
 	mask:
-		url('/icons/external-link.svg') center / 1em no-repeat,
+		url('/assets/icons/external-link.svg') center / 1em no-repeat,
 		linear-gradient(#fff, #fff);
 	mask-composite: exclude; /* не везде стабильно */
-	-webkit-mask: url('/icons/external-link.svg') center / 1em no-repeat;
+	-webkit-mask: url('/assets/icons/external-link.svg') center / 1em no-repeat;
 }
 
 /* Focus Ring */
