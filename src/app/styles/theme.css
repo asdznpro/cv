@@ -36,18 +36,6 @@
 	--color-rose-900: var(--palette-alizarin-crimson-900);
 	--color-rose-950: var(--palette-alizarin-crimson-950);
 
-	--color-red-50: var(--palette-thunderbird-50);
-	--color-red-100: var(--palette-thunderbird-100);
-	--color-red-200: var(--palette-thunderbird-200);
-	--color-red-300: var(--palette-thunderbird-300);
-	--color-red-400: var(--palette-thunderbird-400);
-	--color-red-500: var(--palette-thunderbird-500);
-	--color-red-600: var(--palette-thunderbird-600);
-	--color-red-700: var(--palette-thunderbird-700);
-	--color-red-800: var(--palette-thunderbird-800);
-	--color-red-900: var(--palette-thunderbird-900);
-	--color-red-950: var(--palette-thunderbird-950);
-
 	--color-yellow-50: var(--palette-gamboge-50);
 	--color-yellow-100: var(--palette-gamboge-100);
 	--color-yellow-200: var(--palette-gamboge-200);

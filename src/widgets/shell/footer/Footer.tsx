@@ -24,10 +24,12 @@ export function Footer() {
 				</div>
 			</div> */}
 
-			<div className='mx-auto container w-full flex px-app gap-app text-xl text-foreground-tertiary'>
-				<span>&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV</span>
+			<div className='mx-auto container w-full flex flex-wrap px-app gap-app text-xl text-foreground-tertiary'>
+				<span className='mr-auto'>
+					&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV
+				</span>
 
-				<span className='ml-auto'>v2.1.3, 16.7.26</span>
+				<span>v2.1.7, 16.7.26</span>
 			</div>
 		</footer>
 	)

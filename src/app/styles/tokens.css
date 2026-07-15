@@ -36,18 +36,6 @@
 	--palette-alizarin-crimson-900: hsla(352, 84%, 6%, 1);
 	--palette-alizarin-crimson-950: hsla(352, 84%, 2%, 1);
 
-	--palette-thunderbird-50: hsla(4, 72%, 92%, 1);
-	--palette-thunderbird-100: hsla(4, 72%, 84%, 1);
-	--palette-thunderbird-200: hsla(4, 72%, 72%, 1);
-	--palette-thunderbird-300: hsla(4, 72%, 60%, 1);
-	--palette-thunderbird-400: hsla(4, 72%, 44%, 1);
-	--palette-thunderbird-500: hsla(4, 72%, 32%, 1);
-	--palette-thunderbird-600: hsla(4, 72%, 20%, 1);
-	--palette-thunderbird-700: hsla(4, 72%, 12%, 1);
-	--palette-thunderbird-800: hsla(4, 72%, 8%, 1);
-	--palette-thunderbird-900: hsla(4, 72%, 6%, 1);
-	--palette-thunderbird-950: hsla(4, 72%, 2%, 1);
-
 	--palette-gamboge-50: hsla(40, 92%, 92%, 1);
 	--palette-gamboge-100: hsla(40, 92%, 84%, 1);
 	--palette-gamboge-200: hsla(40, 92%, 72%, 1);
@@ -114,9 +102,9 @@
 	--accent-secondary: var(--palette-blue-200);
 	--accent-tertiary: var(--palette-blue-400);
 
-	--danger: var(--palette-thunderbird-400);
-	--danger-secondary: var(--palette-thunderbird-300);
-	--danger-tertiary: var(--palette-thunderbird-500);
+	--danger: var(--palette-alizarin-crimson-400);
+	--danger-secondary: var(--palette-alizarin-crimson-300);
+	--danger-tertiary: var(--palette-alizarin-crimson-500);
 
 	--success: var(--palette-malachite-300);
 	--success-secondary: var(--palette-malachite-200);
