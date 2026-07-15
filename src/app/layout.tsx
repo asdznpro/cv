@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
+import { ViewTransition } from 'react'
 
 import 'styles/globals.css'
 
@@ -20,6 +22,8 @@ export default function RootLayout({
 		<html lang='en' className='h-full antialiased scrollbar'>
 			<meta name='apple-mobile-web-app-title' content='Andrew S. / CV' />
 
+			<meta name='yandex-verification' content='506eca3509ce4857' />
+
 			<link
 				rel='icon'
 				type='image/png'
@@ -34,6 +38,43 @@ export default function RootLayout({
 				href='/favicon/apple-touch-icon.png'
 			/>
 			<link rel='manifest' href='/favicon/site.webmanifest' />
+
+			<Script
+				id='yandex-metrika'
+				strategy='afterInteractive'
+				dangerouslySetInnerHTML={{
+					__html: `
+			(function(m,e,t,r,i,k,a){
+				m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+				m[i].l=1*new Date();
+				for (var j=0;j<document.scripts.length;j++){
+					if(document.scripts[j].src===r){return;}
+				}
+				k=e.createElement(t),a=e.getElementsByTagName(t)[0],
+				k.async=1,k.src=r,a.parentNode.insertBefore(k,a);
+			})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+
+			ym(96347326,'init',{
+				webvisor:true,
+				clickmap:true,
+				referrer:document.referrer,
+				url:location.href,
+				accurateTrackBounce:true,
+				trackLinks:true
+			});
+		`,
+				}}
+			/>
+
+			<noscript>
+				<div>
+					<img
+						src='https://mc.yandex.ru/watch/96347326'
+						style={{ position: 'absolute', left: '-9999px' }}
+						alt=''
+					/>
+				</div>
+			</noscript>
 
 			<body className='isolate relative min-h-full flex flex-col'>
 				<div className='@container min-w-0 flex flex-1 flex-col items-center'>
