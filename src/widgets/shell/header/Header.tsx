@@ -57,7 +57,7 @@ const SOCIAL_ITEMS = [
 
 	{
 		label: 'Telegram',
-		href: 'https://t.me/asdznpro',
+		href: 'https://telegram.me/asdznpro',
 		icon: <Icon28LinkOutline width={20} height={20} />,
 		className: 'bg-telegram hover:bg-telegram-secondary',
 	},
