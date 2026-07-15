@@ -10,121 +10,145 @@ const TOOLKIT_LOGOS = [
 		image: '/assets/toolkit/figma.svg',
 		name: 'Figma',
 		label: true,
+		size: { width: 160, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/adobe-cc.svg',
 		name: 'Creative Cloud',
 		label: true,
+		size: { width: 160, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/adobe-ps.svg',
 		name: 'Photoshop',
 		label: true,
+		size: { width: 160, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/adobe-ai.svg',
 		name: 'Illustrator',
 		label: true,
+		size: { width: 160, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/adobe-ae.svg',
 		name: 'After Effects',
 		label: true,
+		size: { width: 160, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/adobe-pr.svg',
 		name: 'Premiere Pro',
 		label: true,
+		size: { width: 160, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/docker.svg',
 		name: 'Docker',
 		label: false,
+		size: { width: 746, height: 180 },
 	},
 	{
 		image: '/assets/toolkit/git.svg',
 		name: 'Git',
 		label: false,
+		size: { width: 380, height: 180 },
 	},
 	{
 		image: '/assets/toolkit/github.svg',
 		name: 'GitHub',
 		label: false,
+		size: { width: 699, height: 200 },
 	},
 	{
 		image: '/assets/toolkit/javascript.svg',
 		name: 'JavaScript',
 		label: true,
+		size: { width: 160, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/typescript.svg',
 		name: 'TypeScript',
 		label: true,
+		size: { width: 160, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/telegram.svg',
 		name: 'Mini Apps',
 		label: true,
+		size: { width: 160, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/react.svg',
 		name: 'React',
 		label: true,
+		size: { width: 178, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/vercel.svg',
 		name: 'Vercel',
 		label: false,
+		size: { width: 800, height: 240 },
 	},
 	{
 		image: '/assets/toolkit/next-js.svg',
 		name: 'Next.js',
 		label: false,
+		size: { width: 794, height: 260 },
 	},
 	{
 		image: '/assets/toolkit/nest-js.svg',
 		name: 'Nest.js',
 		label: true,
+		size: { width: 155, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/node-js.svg',
 		name: 'Node.js',
 		label: true,
+		size: { width: 142, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/tailwindcss.svg',
 		name: 'Tailwind CSS',
 		label: false,
+		size: { width: 1270, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/redux-toolkit.svg',
 		name: 'Redux Toolkit',
 		label: true,
+		size: { width: 169, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/vite.svg',
 		name: 'Vite',
 		label: false,
+		size: { width: 928, height: 280 },
 	},
 	{
 		image: '/assets/toolkit/storybook.svg',
 		name: 'Storybook',
 		label: false,
+		size: { width: 800, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/motion.svg',
 		name: 'Motion',
 		label: false,
+		size: { width: 450, height: 240 },
 	},
 	{
 		image: '/assets/toolkit/prisma.svg',
 		name: 'Prisma',
 		label: false,
+		size: { width: 531, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/tanstack.svg',
 		name: 'Tanstack',
 		label: true,
+		size: { width: 160, height: 160 },
 	},
 ]
 
@@ -200,8 +224,9 @@ export default function Home() {
 												className='max-w-52 w-full max-h-10 h-full object-contain'
 												src={logo.image}
 												alt={logo.name}
-												width={100}
-												height={100}
+												width={logo.size.width}
+												height={logo.size.height}
+												loading='eager'
 											/>
 
 											{logo.label && (

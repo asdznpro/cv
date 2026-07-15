@@ -50,14 +50,14 @@ const SOCIAL_ITEMS = [
 
 	{
 		label: 'LinkedIn',
-		href: 'https://www.linkedin.com/in/asdzn/',
+		href: 'https://www.linkedin.com/in/asdzn',
 		icon: <Icon28LinkOutline width={20} height={20} />,
 		className: 'bg-linkedin hover:bg-linkedin-secondary',
 	},
 
 	{
 		label: 'Telegram',
-		href: 'https://t.me/asdzn',
+		href: 'https://t.me/asdznpro',
 		icon: <Icon28LinkOutline width={20} height={20} />,
 		className: 'bg-telegram hover:bg-telegram-secondary',
 	},
@@ -87,7 +87,7 @@ export function Header() {
 	useLockScroll({ enabled: isOpen })
 
 	useHotkeys('escape', () => setIsOpen(false), { enabled: isOpen })
-	useHotkeys('shift+f', event => {
+	useHotkeys('shift+f, shift+а', event => {
 		event.preventDefault()
 		setIsOpen(value => !value)
 	})
@@ -109,6 +109,12 @@ export function Header() {
 			</AnimatePresence>
 
 			<motion.div
+				onClickCapture={event => {
+					const target = event.target
+					if (target instanceof Element && target.closest('a[href]')) {
+						setIsOpen(false)
+					}
+				}}
 				initial={false}
 				animate={{
 					maxWidth: isOpen ? '48rem' : '42rem',
@@ -211,12 +217,6 @@ export function Header() {
 							<motion.div
 								id='header-menu'
 								key='header-menu'
-								onClickCapture={event => {
-									const target = event.target
-									if (target instanceof Element && target.closest('a[href]')) {
-										setIsOpen(false)
-									}
-								}}
 								initial={{ height: 0 }}
 								animate={{ height: 'auto' }}
 								exit={{ height: 0 }}
@@ -231,7 +231,7 @@ export function Header() {
 							>
 								<Separator />
 
-								<div className='grid grid-cols-2 @lg:grid-cols-4 p-2 gap-2'>
+								<div className='grid grid-cols-2 @lg:grid-cols-4 p-2 gap-2 select-none'>
 									<nav className='col-span-2 row-span-2 flex flex-col gap-2'>
 										{NAV_ITEMS.map(item => {
 											const isActive = isActiveRoute(item.href)
