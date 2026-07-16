@@ -1,6 +1,7 @@
 export * from './badge'
 export * from './button'
 export * from './carousel'
+export * from './gauge'
 export * from './kbd'
 export * from './preview-card'
 export * from './separator'

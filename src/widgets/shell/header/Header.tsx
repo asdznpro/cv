@@ -1,12 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, ViewTransition } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 import { AnimatePresence, motion } from 'motion/react'
 import { useLockScroll, useHotkeys } from '@siberiacancode/reactuse'
 import { twMerge } from 'tailwind-merge'
+
+import { useBoot } from 'widgets'
 
 import { Badge, Button, Separator } from 'ui/blocks'
 import { Logo } from 'ui/brand'
@@ -72,6 +74,8 @@ const SOCIAL_ITEMS = [
 export function Header() {
 	const [isOpen, setIsOpen] = useState(false)
 
+	const { bootVisible } = useBoot()
+
 	// for navigation
 
 	const pathname = usePathname()
@@ -126,14 +130,16 @@ export function Header() {
 				}}
 				className='mx-auto h-full flex items-center p-app pointer-events-auto'
 			>
-				<motion.div className='w-full h-full flex flex-col bg-background border border-separator rounded-4xl backdrop-blur-3xl overflow-hidden'>
+				<motion.div className='w-full h-full flex flex-col bg-background border border-separator rounded-[31px] backdrop-blur-3xl overflow-hidden'>
 					<div className='w-full flex items-center p-2 gap-2'>
 						<span className='w-full flex gap-app'>
 							<Link
 								href='/'
 								className='flex rounded-full transition-all focus-ring-base focus-ring-visible'
 							>
-								<Logo.Sign width={44} height={44} />
+								<ViewTransition name='brand-logo'>
+									<Logo.Sign width={44} height={44} />
+								</ViewTransition>
 							</Link>
 						</span>
 
