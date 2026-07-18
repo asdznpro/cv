@@ -1,11 +1,19 @@
 'use client'
 
+import { FlickerSpinner } from 'ui/blocks'
 import { Hero } from 'widgets'
 
 export default function Home() {
 	return (
 		<>
 			<Hero />
+
+			<section
+				style={{ contentVisibility: 'auto', containIntrinsicSize: '640px' }}
+				className='mx-auto container w-full flex flex-col px-app gap-8'
+			>
+				<FlickerSpinner className='mx-auto' size={48} />
+			</section>
 
 			{/* <section
 				style={{ contentVisibility: 'auto', containIntrinsicSize: '640px' }}
@@ -78,9 +86,9 @@ export default function Home() {
 						персонализации вашего пользовательского опыта.
 					</p>
 				</div>
-			</section>
+			</section> */}
 
-			<span /> */}
+			<span />
 		</>
 	)
 }

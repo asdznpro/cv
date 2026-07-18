@@ -64,7 +64,7 @@ export function BootLoader() {
 							size='xl'
 							appearance='neutral'
 							value={value}
-							className='absolute inset-0 [&_[data-gauge-path]]:transition-none'
+							// className='absolute inset-0 [&_[data-gauge-path]]:transition-none'
 						/>
 
 						<ViewTransition name='brand-logo'>

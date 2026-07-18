@@ -22,7 +22,6 @@ export default function RootLayout({
 		<html lang='en' className='h-full antialiased scrollbar'>
 			<head>
 				<meta name='apple-mobile-web-app-title' content='Andrew S. / CV' />
-
 				<meta name='yandex-verification' content='506eca3509ce4857' />
 
 				<link
@@ -45,25 +44,25 @@ export default function RootLayout({
 					strategy='afterInteractive'
 					dangerouslySetInnerHTML={{
 						__html: `
-			(function(m,e,t,r,i,k,a){
-				m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-				m[i].l=1*new Date();
-				for (var j=0;j<document.scripts.length;j++){
-					if(document.scripts[j].src===r){return;}
-				}
-				k=e.createElement(t),a=e.getElementsByTagName(t)[0],
-				k.async=1,k.src=r,a.parentNode.insertBefore(k,a);
-			})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+							(function(m,e,t,r,i,k,a){
+								m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+								m[i].l=1*new Date();
+								for (var j=0;j<document.scripts.length;j++){
+									if(document.scripts[j].src===r){return;}
+								}
+								k=e.createElement(t),a=e.getElementsByTagName(t)[0],
+								k.async=1,k.src=r,a.parentNode.insertBefore(k,a);
+							})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
 
-			ym(96347326,'init',{
-				webvisor:true,
-				clickmap:true,
-				referrer:document.referrer,
-				url:location.href,
-				accurateTrackBounce:true,
-				trackLinks:true
-			});
-		`,
+							ym(96347326,'init',{
+								webvisor:true,
+								clickmap:true,
+								referrer:document.referrer,
+								url:location.href,
+								accurateTrackBounce:true,
+								trackLinks:true
+							});
+						`,
 					}}
 				/>
 
@@ -81,16 +80,16 @@ export default function RootLayout({
 			<body className='isolate relative min-h-full flex flex-col'>
 				<div className='@container min-w-0 flex flex-1 flex-col items-center'>
 					{/* <BootProvider> */}
-						{/* <BootLoader /> */}
-						<Header />
+					{/* <BootLoader /> */}
+					<Header />
 
-						<main className='overflow-x-clip w-full h-full flex flex-1 flex-col gap-24'>
-							{/* <ViewTransition name='main' update='page-update' default='none'> */}
-							{children}
-							{/* </ViewTransition> */}
-						</main>
+					<main className='overflow-x-clip w-full h-full flex flex-1 flex-col gap-24'>
+						{/* <ViewTransition name='main' update='page-update' default='none'> */}
+						{children}
+						{/* </ViewTransition> */}
+					</main>
 
-						<Footer />
+					<Footer />
 					{/* </BootProvider> */}
 				</div>
 			</body>

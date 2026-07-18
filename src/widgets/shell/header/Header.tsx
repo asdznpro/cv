@@ -137,9 +137,9 @@ export function Header() {
 								href='/'
 								className='flex rounded-full transition-all focus-ring-base focus-ring-visible'
 							>
-								<ViewTransition name='brand-logo'>
-									<Logo.Sign width={44} height={44} />
-								</ViewTransition>
+								{/* <ViewTransition name='brand-logo'> */}
+								<Logo.Sign width={44} height={44} />
+								{/* </ViewTransition> */}
 							</Link>
 						</span>
 

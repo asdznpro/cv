@@ -219,14 +219,20 @@ export function Hero() {
 									className='basis-auto mr-5 0bg-surface p-4 rounded-sm'
 								>
 									<span className='h-full flex items-center gap-3'>
-										<Image
-											className='max-w-52 w-full max-h-10 h-full object-contain'
-											src={logo.image}
-											alt={logo.name}
-											width={logo.size.width}
-											height={logo.size.height}
-											loading='eager'
-										/>
+										<span
+											className='inline-block max-w-52 h-10'
+											style={{
+												aspectRatio: `${logo.size.width} / ${logo.size.height}`,
+											}}
+										>
+											<Image
+												className='size-full object-contain'
+												src={logo.image}
+												alt={logo.name}
+												width={logo.size.width}
+												height={logo.size.height}
+											/>
+										</span>
 
 										{logo.label && (
 											<span className='text-3xl font-semibold font-condensed tracking-tight whitespace-nowrap'>
