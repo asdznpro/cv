@@ -122,8 +122,8 @@
 	--highlight-secondary: var(--palette-hollywood-cerise-200);
 	--highlight-tertiary: var(--palette-hollywood-cerise-400);
 
-	--link: var(--palette-picton-blue-200);
-	--link-secondary: var(--palette-picton-blue-100);
+	--link: var(--palette-blue-200);
+	--link-secondary: var(--palette-blue-100);
 
 	--foreground: var(--palette-kimberly-50);
 	--foreground-secondary: var(--palette-kimberly-300);
@@ -132,8 +132,8 @@
 
 	--separator: var(--palette-kimberly-600);
 
-	--surface: var(--palette-kimberly-800);
-	--surface-secondary: var(--palette-kimberly-700);
+	--surface: var(--palette-kimberly-900);
+	--surface-secondary: var(--palette-kimberly-800);
 
 	--background: var(--palette-kimberly-950);
 	--background-secondary: var(--palette-kimberly-900);

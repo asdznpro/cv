@@ -475,7 +475,7 @@ export function FlickerSpinner(props: SpinnerProps) {
 			<FlickerDotSpinner
 				grids={grids}
 				size={size}
-				onColor='var(--color-foreground)'
+				onColor='var(--color-foreground-secondary)'
 				offColor='var(--color-separator)'
 				variant='5x5'
 			/>

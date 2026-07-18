@@ -231,6 +231,7 @@ export function Hero() {
 												alt={logo.name}
 												width={logo.size.width}
 												height={logo.size.height}
+												loading='eager'
 											/>
 										</span>
 
