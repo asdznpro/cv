@@ -19,7 +19,7 @@ function ArticleItemRoot({
 	children,
 }: ArticleItemProps) {
 	const classNames = twMerge(
-		'relative group root flex flex-col gap-3 outline-none',
+		'relative group root flex flex-col gap-4 outline-none',
 		className,
 	)
 
@@ -48,14 +48,20 @@ function ArticleItemRoot({
 }
 
 function ArticleItemPreview({
-	ratio = '2:1',
+	ratio = '4:1',
 	src,
 	alt,
 	className,
 	children,
 }: PreviewCardProps) {
 	return (
-		<PreviewCard ratio={ratio} src={src} alt={alt} className={className}>
+		<PreviewCard
+			ratio={ratio}
+			src={src}
+			alt={alt}
+			className={className}
+			sizes='(max-width: 896px) 100vw, 896px'
+		>
 			{children}
 		</PreviewCard>
 	)
@@ -68,19 +74,19 @@ function ArticleItemInfo({
 	className,
 }: ArticleItemInfoProps) {
 	return (
-		<div className={twMerge('flex flex-1 flex-col gap-1', className)}>
-			{meta && (
+		<div className={twMerge('flex flex-1 flex-col gap-2', className)}>
+			{/* {meta && (
 				<p className='text-xs text-foreground-secondary font-medium font-condensed uppercase'>
 					{meta}
 				</p>
-			)}
+			)} */}
 
-			<h3 className='text-lg font-semibold font-condensed tracking-tight truncate transition-colors group-hover:text-accent group-focus-visible:text-accent'>
+			<h3 className='text-3xl font-semibold font-condensed tracking-tight truncate transition-colors group-hover:text-accent group-focus-visible:text-accent'>
 				{title}
 			</h3>
 
 			{subtitle && (
-				<p className='text-xs text-foreground-secondary line-clamp-3'>
+				<p className='text-lg text-foreground-secondary line-clamp-3'>
 					{subtitle}
 				</p>
 			)}

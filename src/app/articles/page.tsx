@@ -17,7 +17,7 @@ export default function Articles() {
 		<>
 			<span className='h-24' />
 
-			<section className='mx-auto max-w-container w-full flex flex-col px-app gap-10'>
+			<section className='mx-auto max-w-4xl w-full flex flex-col px-app gap-10'>
 				<div className='flex gap-app'>
 					<div className='flex flex-1 flex-col gap-3'>
 						<h1 className='text-5xl font-semibold font-condensed tracking-tight uppercase'>
@@ -34,13 +34,13 @@ export default function Articles() {
 					/>
 				</div>
 
-				<div className='grid grid-cols-1 @lg:grid-cols-2 @3xl:grid-cols-3 gap-x-app gap-y-8'>
+				<div className='flex flex-col gap-10'>
 					{ARTICLES_DATA.map(item => (
 						<ArticleItem
 							key={item.id}
 							{...(item.external_link
 								? { href: item.external_link, target: '_blank' }
-								: { to: `/articles/${item.id}` })}
+								: { to: `/articles/${item.slug}` })}
 						>
 							<ViewTransition
 								name={`article-preview-${item.id}`}
@@ -49,13 +49,13 @@ export default function Articles() {
 							>
 								<ArticleItem.Preview src={item.image} alt={item.title}>
 									<span className='z-1 absolute top-0 left-0 w-full flex p-2 gap-1.5 uppercase'>
-										<Badge size='md' radius='smooth'>
+										{/* <Badge size='md' radius='smooth'>
 											Valorant
 										</Badge>
 
 										<Badge size='md' appearance='neutral' radius='smooth'>
 											Esports
-										</Badge>
+										</Badge> */}
 
 										{item.external_link && (
 											<Badge

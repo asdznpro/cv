@@ -3,13 +3,13 @@ import { cva } from 'class-variance-authority'
 export const previewCardVariants = cva(
 	// base
 
-	[
-		'relative w-full inline-flex',
-	],
+	['relative w-full inline-flex'],
 
 	{
 		variants: {
 			ratio: {
+				'4:1': 'aspect-[4/1]',
+				'3:1': 'aspect-[3/1]',
 				'5:2': 'aspect-[5/2]',
 				'2:1': 'aspect-[2/1]',
 				video: 'aspect-video',
@@ -23,6 +23,8 @@ export const previewCardVariants = cva(
 				story: 'aspect-[1/2]',
 				'1:2': 'aspect-[1/2]',
 				'2:5': 'aspect-[2/5]',
+				'1:3': 'aspect-[1/3]',
+				'1:4': 'aspect-[1/4]',
 				auto: 'aspect-auto',
 			},
 		},

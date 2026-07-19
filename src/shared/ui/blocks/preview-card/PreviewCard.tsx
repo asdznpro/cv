@@ -28,6 +28,7 @@ export function PreviewCard(props: PreviewCardProps) {
 		alt,
 		className,
 		sizes = DEFAULT_SIZES,
+		quality,
 		priority,
 		...restProps
 	} = props
@@ -65,7 +66,7 @@ export function PreviewCard(props: PreviewCardProps) {
 			{...restProps}
 			className={twMerge('root', previewCardVariants({ ratio }), className)}
 		>
-			<div className='relative w-full h-full flex items-center justify-center text-foreground-tertiary bg-surface border border-separator rounded-lg overflow-hidden transition-all duration-100 ease-in focus-ring-base focus-ring-group-visible'>
+			<div className='relative w-full h-full flex items-center justify-center text-foreground-tertiary bg-surface border border-separator rounded-xl overflow-hidden transition-all duration-100 ease-in focus-ring-base focus-ring-group-visible'>
 				{children}
 
 				{showPlaceholder && (
@@ -93,12 +94,12 @@ export function PreviewCard(props: PreviewCardProps) {
 						fill
 						sizes={sizes}
 						priority={priority}
+						quality={quality}
 						className={twMerge(
 							'object-cover transition-all duration-500 ease-out group-hover:scale-110 group-focus-visible:scale-110 group-active:scale-105',
 							status === 'loaded' ? 'opacity-100' : 'opacity-0',
 						)}
 						onLoad={markLoaded}
-						// onLoadingComplete={markLoaded}
 						onError={markError}
 						loading='eager'
 					/>

@@ -3,6 +3,8 @@ export interface PreviewCardProps extends Omit<
 	'size'
 > {
 	ratio?:
+		| '4:1'
+		| '3:1'
 		| '5:2'
 		| '2:1'
 		| 'video'
@@ -16,8 +18,11 @@ export interface PreviewCardProps extends Omit<
 		| 'story'
 		| '1:2'
 		| '2:5'
+		| '1:3'
+		| '1:4'
 		| 'auto'
 		| undefined
 
+	quality?: number
 	priority?: boolean
 }

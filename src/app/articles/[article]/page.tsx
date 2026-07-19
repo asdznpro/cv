@@ -21,7 +21,7 @@ export default async function Article({
 }) {
 	const { article: slug } = await params
 
-	const article = ARTICLES_DATA.find(item => item.id === parseInt(slug))
+	const article = ARTICLES_DATA.find(item => item.slug === slug)
 
 	const { content } = await getMarkdown('example')
 
@@ -110,10 +110,10 @@ export default async function Article({
 						default='auto'
 					>
 						<PreviewCard
-							ratio='2:1'
+							ratio='3:1'
 							src={article.image}
 							alt={article.title}
-							sizes='(max-width: 896px) 100vw, 896px'
+							sizes='(max-width: 1240px) 100vw, 1240px'
 							priority
 						>
 							<span className='z-1 absolute top-0 left-0 w-full flex p-2 gap-1.5 uppercase'>
@@ -190,9 +190,8 @@ export default async function Article({
 
 				<section className='sticky bottom-4 col-span-full w-full flex justify-center'>
 					<Button
-						to='/blog'
+						to='/articles'
 						size='lg'
-						// mode='soft'
 						appearance='neutral'
 						prefix={<Icon28ArrowLeftOutline width={20} height={20} />}
 						radius='rounded'
