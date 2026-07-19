@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 
 import { getMarkdown } from 'lib/server'
-import { BLOG_POSTS } from 'shared/data'
+import { ARTICLES_DATA } from 'shared/data'
 
 import { Badge, Button, PreviewCard, Separator } from 'ui/blocks'
 import { MarkdownContent } from 'ui/markdown'
@@ -21,7 +21,7 @@ export default async function Article({
 }) {
 	const { article: slug } = await params
 
-	const article = BLOG_POSTS.find(item => item.id === parseInt(slug))
+	const article = ARTICLES_DATA.find(item => item.id === parseInt(slug))
 
 	const { content } = await getMarkdown('example')
 

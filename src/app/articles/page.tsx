@@ -2,7 +2,7 @@
 
 import { ViewTransition } from 'react'
 
-import { NewsItem } from 'widgets'
+import { ArticleItem } from 'widgets'
 import { Badge, Button } from 'ui/blocks'
 import {
 	Icon24ExternalLinkOutline,
@@ -10,9 +10,9 @@ import {
 	Icon28Play,
 } from '@vkontakte/icons'
 
-import { BLOG_POSTS } from 'shared/data'
+import { ARTICLES_DATA } from 'shared/data'
 
-export default function Blog() {
+export default function Articles() {
 	return (
 		<>
 			<span className='h-24' />
@@ -21,7 +21,7 @@ export default function Blog() {
 				<div className='flex gap-app'>
 					<div className='flex flex-1 flex-col gap-3'>
 						<h1 className='text-5xl font-semibold font-condensed tracking-tight uppercase'>
-							Blog
+							Articles
 						</h1>
 					</div>
 
@@ -35,19 +35,19 @@ export default function Blog() {
 				</div>
 
 				<div className='grid grid-cols-1 @lg:grid-cols-2 @3xl:grid-cols-3 gap-x-app gap-y-8'>
-					{BLOG_POSTS.map(item => (
-						<NewsItem
+					{ARTICLES_DATA.map(item => (
+						<ArticleItem
 							key={item.id}
 							{...(item.external_link
 								? { href: item.external_link, target: '_blank' }
-								: { to: `/blog/${item.id}` })}
+								: { to: `/articles/${item.id}` })}
 						>
 							<ViewTransition
 								name={`article-preview-${item.id}`}
 								share='page-share'
 								default='auto'
 							>
-								<NewsItem.Preview src={item.image} alt={item.title}>
+								<ArticleItem.Preview src={item.image} alt={item.title}>
 									<span className='z-1 absolute top-0 left-0 w-full flex p-2 gap-1.5 uppercase'>
 										<Badge size='md' radius='smooth'>
 											Valorant
@@ -80,15 +80,15 @@ export default function Blog() {
 											iconOnly
 										/>
 									)}
-								</NewsItem.Preview>
+								</ArticleItem.Preview>
 							</ViewTransition>
 
-							<NewsItem.Info
+							<ArticleItem.Info
 								meta='12 days ago'
 								title={item.title}
 								subtitle={item.description}
 							/>
-						</NewsItem>
+						</ArticleItem>
 					))}
 				</div>
 			</section>

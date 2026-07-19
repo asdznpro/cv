@@ -1,4 +1,4 @@
-export const BLOG_POSTS = [
+export const ARTICLES_DATA = [
 	{
 		id: 1,
 		title: 'Анонс игрового процесса на карте Summit – VALORANT',

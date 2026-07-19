@@ -1,1 +1,1 @@
-export * from './news-item'
+export * from './article-item'

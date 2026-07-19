@@ -1,1 +1,1 @@
-export * from './blog.data'
+export * from './articles.data'

@@ -8,7 +8,7 @@ import { twMerge } from 'tailwind-merge'
 import { previewCardVariants } from './preview-card.variants'
 import type { PreviewCardProps } from './PreviewCard.interface'
 
-import { Spinner } from 'ui/blocks'
+import { FlickerSpinner } from 'ui/blocks'
 
 import { Icon28PictureOutline } from '@vkontakte/icons'
 
@@ -76,7 +76,11 @@ export function PreviewCard(props: PreviewCardProps) {
 						)}
 						aria-hidden={status === 'loaded'}
 					>
-						{showSpinner ? <Spinner size={28} /> : <Icon28PictureOutline />}
+						{showSpinner ? (
+							<FlickerSpinner size={28} />
+						) : (
+							<Icon28PictureOutline />
+						)}
 					</div>
 				)}
 

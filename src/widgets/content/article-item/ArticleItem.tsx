@@ -4,17 +4,20 @@ import Link from 'next/link'
 
 import { twMerge } from 'tailwind-merge'
 
-import type { NewsItemProps, NewsItemInfoProps } from './NewsItem.interface'
+import type {
+	ArticleItemProps,
+	ArticleItemInfoProps,
+} from './ArticleItem.interface'
 
 import { PreviewCard, type PreviewCardProps } from 'ui/blocks'
 
-function NewsItemRoot({
+function ArticleItemRoot({
 	to,
 	href,
 	target,
 	className,
 	children,
-}: NewsItemProps) {
+}: ArticleItemProps) {
 	const classNames = twMerge(
 		'relative group root flex flex-col gap-3 outline-none',
 		className,
@@ -44,7 +47,7 @@ function NewsItemRoot({
 	return <article className={classNames}>{children}</article>
 }
 
-function NewsItemPreview({
+function ArticleItemPreview({
 	ratio = '2:1',
 	src,
 	alt,
@@ -58,7 +61,12 @@ function NewsItemPreview({
 	)
 }
 
-function NewsItemInfo({ meta, title, subtitle, className }: NewsItemInfoProps) {
+function ArticleItemInfo({
+	meta,
+	title,
+	subtitle,
+	className,
+}: ArticleItemInfoProps) {
 	return (
 		<div className={twMerge('flex flex-1 flex-col gap-1', className)}>
 			{meta && (
@@ -80,7 +88,7 @@ function NewsItemInfo({ meta, title, subtitle, className }: NewsItemInfoProps) {
 	)
 }
 
-export const NewsItem = Object.assign(NewsItemRoot, {
-	Preview: NewsItemPreview,
-	Info: NewsItemInfo,
+export const ArticleItem = Object.assign(ArticleItemRoot, {
+	Preview: ArticleItemPreview,
+	Info: ArticleItemInfo,
 })
