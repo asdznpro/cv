@@ -22,7 +22,7 @@ import {
 const NAV_ITEMS = [
 	{
 		label: 'About',
-		href: '/about',
+		href: '/articles/about',
 	},
 	{
 		label: 'Portfolio',
@@ -36,10 +36,10 @@ const NAV_ITEMS = [
 		label: 'Skills',
 		href: '/skills',
 	},
-	{
-		label: 'Contact',
-		href: '/contact',
-	},
+	// {
+	// 	label: 'Contact',
+	// 	href: '/contact',
+	// },
 ]
 
 const SOCIAL_ITEMS = [

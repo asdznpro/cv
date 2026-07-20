@@ -2,7 +2,13 @@
 
 import Image from 'next/image'
 
-import { Button, FlickerSpinner, Separator } from 'ui/blocks'
+import {
+	Badge,
+	Button,
+	FlickerSpinner,
+	PreviewCard,
+	Separator,
+} from 'ui/blocks'
 import { Hero } from 'widgets'
 
 import { EXPERIENCE_DATA } from 'shared/data'
@@ -34,6 +40,15 @@ export default function Home() {
 											height={200}
 										/>
 									</span>
+
+									{/* <PreviewCard
+										ratio='square'
+										src={item.company.logo}
+										alt={item.company.name}
+										width={200}
+										height={200}
+										className='w-24 h-24 outline-2 outline-accent outline-offset-6'
+									/> */}
 								</div>
 
 								<span className='absolute inset-0 -z-1 w-full h-full flex items-center justify-center'>
@@ -44,9 +59,7 @@ export default function Home() {
 							<div className='flex flex-1 flex-col pb-24 gap-8'>
 								<h3 className='text-5xl text-balance font-semibold font-condensed tracking-tight'>
 									{item.company.name} <br />{' '}
-									<span className='text-foreground-secondary'>
-										{item.roles.join(' / ')}
-									</span>
+									<span className='text-foreground-secondary'>{item.role}</span>
 								</h3>
 
 								<div className='flex flex-col bg-surface border border-separator rounded-xl'>
@@ -62,6 +75,14 @@ export default function Home() {
 										<p className='text-lg text-foreground-secondary'>
 											{item.summary}
 										</p>
+
+										<div className='flex flex-wrap gap-1.5'>
+											{item.tags.map(tag => (
+												<Badge key={tag} mode='secondary' appearance='neutral'>
+													{tag}
+												</Badge>
+											))}
+										</div>
 									</div>
 
 									<Separator />

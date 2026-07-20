@@ -35,7 +35,7 @@ export default function Articles() {
 				</div>
 
 				<div className='flex flex-col gap-10'>
-					{ARTICLES_DATA.map(item => (
+					{ARTICLES_DATA.sort((a, b) => b.priority - a.priority).map(item => (
 						<ArticleItem
 							key={item.id}
 							{...(item.external_link
