@@ -2,6 +2,7 @@
 
 import { twMerge } from 'tailwind-merge'
 import { useClipboard } from '@siberiacancode/reactuse'
+import { toast } from 'sonner'
 
 type HeadingAnchorProps = {
 	href?: string
@@ -32,6 +33,7 @@ export function HeadingAnchor({
 
 				const url = `${window.location.origin}${window.location.pathname}${href}`
 				await copy(url)
+				toast.success('Ссылка скопирована')
 
 				document
 					.getElementById(href.slice(1))

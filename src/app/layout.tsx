@@ -5,6 +5,7 @@ import { ViewTransition } from 'react'
 import 'styles/globals.css'
 
 import { Header, Footer, BootLoader, BootProvider } from 'widgets'
+import { Toaster } from 'ui/blocks'
 
 export const metadata: Metadata = {
 	title:
@@ -81,6 +82,8 @@ export default function RootLayout({
 				<div className='@container min-w-0 flex flex-1 flex-col items-center'>
 					{/* <BootProvider> */}
 					{/* <BootLoader /> */}
+
+					<Toaster />
 					<Header />
 
 					<main className='overflow-x-clip w-full h-full flex flex-1 flex-col gap-24'>

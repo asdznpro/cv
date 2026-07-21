@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { toast } from 'sonner'
 
 import {
 	Badge,
@@ -17,6 +18,64 @@ export default function Home() {
 	return (
 		<>
 			<Hero />
+
+			<section
+				// style={{ contentVisibility: 'auto', containIntrinsicSize: '640px' }}
+				className='mx-auto max-w-3xl w-full flex flex-col px-app gap-12'
+			>
+				<div className='flex flex-wrap gap-2'>
+					<Button onClick={() => toast.message('Message')} appearance='neutral'>
+						View Toast
+					</Button>
+					<Button
+						onClick={() =>
+							toast.message('Message', {
+								description:
+									'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+							})
+						}
+						appearance='neutral'
+					>
+						View Toast with Description
+					</Button>
+					<Button onClick={() => toast.success('Success')} appearance='success'>
+						View Toast
+					</Button>
+					<Button
+						onClick={() =>
+							toast.error('Error', {
+								description:
+									'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+							})
+						}
+						appearance='danger'
+					>
+						View Toast
+					</Button>
+					<Button onClick={() => toast.warning('Warning')} appearance='neutral'>
+						View Toast
+					</Button>
+					<Button onClick={() => toast.info('Info')}>View Toast</Button>
+					<Button
+						onClick={() =>
+							toast.message('Message', {
+								action: {
+									label: 'Action',
+									onClick: () => {
+										console.log('Action clicked')
+									},
+								},
+							})
+						}
+						appearance='neutral'
+					>
+						View Toast with Action
+					</Button>
+					<Button onClick={() => toast.loading('Loading for 10 seconds')}>
+						View Toast
+					</Button>
+				</div>
+			</section>
 
 			<section
 				// style={{ contentVisibility: 'auto', containIntrinsicSize: '640px' }}
