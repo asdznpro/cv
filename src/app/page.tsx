@@ -31,7 +31,7 @@ export default function Home() {
 						<div key={item.id} className='flex gap-12'>
 							<aside className='relative z-0 pb-24'>
 								<div className='sticky top-24'>
-									<span className='w-24 h-24 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden outline-2 outline-accent outline-offset-6'>
+									{/* <span className='w-24 h-24 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden outline-2 outline-accent outline-offset-6'>
 										<Image
 											className='w-full h-full object-cover'
 											src={item.company.logo}
@@ -39,16 +39,17 @@ export default function Home() {
 											width={200}
 											height={200}
 										/>
-									</span>
+									</span> */}
 
-									{/* <PreviewCard
+									<PreviewCard
 										ratio='square'
 										src={item.company.logo}
 										alt={item.company.name}
 										width={200}
 										height={200}
-										className='w-24 h-24 outline-2 outline-accent outline-offset-6'
-									/> */}
+										className='w-24 outline-2 outline-accent outline-offset-6'
+										radius='full'
+									/>
 								</div>
 
 								<span className='absolute inset-0 -z-1 w-full h-full flex items-center justify-center'>

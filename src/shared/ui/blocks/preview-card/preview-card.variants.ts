@@ -27,10 +27,17 @@ export const previewCardVariants = cva(
 				'1:4': 'aspect-[1/4]',
 				auto: 'aspect-auto',
 			},
+
+			radius: {
+				none: '[&>.in]:rounded-none rounded-none',
+				base: '[&>.in]:rounded-xl rounded-xl',
+				full: '[&>.in]:rounded-full rounded-full',
+			},
 		},
 
 		defaultVariants: {
 			ratio: 'video',
+			radius: 'base',
 		},
 	},
 )
