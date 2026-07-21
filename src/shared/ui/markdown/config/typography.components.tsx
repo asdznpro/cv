@@ -49,8 +49,8 @@ export const typographyComponents: Pick<
 	hr: ({ ...props }) => <hr {...props} className='border-separator my-6!' />,
 
 	table: ({ children }) => (
-		<div className='not-prose my-6! overflow-x-auto scrollbar rounded-lg border border-separator'>
-			<table className='w-full min-w-[640px] border-collapse text-sm'>
+		<div className='not-prose my-6! overflow-x-auto scrollbar rounded-xl border border-separator'>
+			<table className='w-full min-w-160 border-collapse text-sm'>
 				{children}
 			</table>
 		</div>

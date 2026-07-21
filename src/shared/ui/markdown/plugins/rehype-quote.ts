@@ -1,7 +1,7 @@
 import { visit } from 'unist-util-visit'
 import type { Root, Element } from 'hast'
 
-import { elementToText } from '../lib/hast.util'
+import { elementToText } from '../lib'
 import {
 	parseAttribution,
 	stripQuotes,

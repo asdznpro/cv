@@ -1,3 +1,5 @@
+import { PreviewCardProps } from 'ui/blocks'
+
 export type ImageVariant = 'framed' | 'plain'
 export type QuoteVariant = 'pull' | 'border'
 
@@ -16,6 +18,7 @@ export function parseTitle(title?: string) {
 	return {
 		variant: (attrs.variant === 'plain' ? 'plain' : 'framed') as ImageVariant,
 		caption: attrs.caption ?? '',
+		ratio: attrs.ratio as PreviewCardProps['ratio'] | undefined,
 	}
 }
 

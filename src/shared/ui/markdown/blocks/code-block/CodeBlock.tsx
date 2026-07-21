@@ -43,7 +43,7 @@ export function CodeBlock({ children }: { children: React.ReactNode }) {
 
 	return (
 		<div className='flex flex-col gap-4'>
-			<div className='relative overflow-hidden rounded-lg border border-separator bg-background'>
+			<div className='relative overflow-hidden rounded-xl border border-separator bg-background'>
 				{hasTitle && (
 					<div className='h-12 flex items-center justify-between gap-3 border-b border-separator bg-surface px-surface'>
 						<span className='flex min-w-0 items-center gap-2 text-foreground-secondary'>

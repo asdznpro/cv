@@ -65,13 +65,13 @@ export function QuoteBlock({
 	}
 
 	return (
-		<blockquote className='not-prose my-6! flex flex-col p-surface gap-surface bg-background border border-separator rounded-lg'>
+		<blockquote className='not-prose my-6! flex flex-col p-surface gap-surface bg-background border border-separator rounded-xl'>
 			<p className='relative m-0! text-2xl font-medium tracking-tight'>
 				{quote}
 
 				<span
 					aria-hidden='true'
-					className='absolute top-0 -left-surface w-[3px] h-full bg-accent rounded-r-full'
+					className='absolute top-0 -left-surface w-0.75 h-full bg-accent rounded-r-full'
 				/>
 			</p>
 

@@ -2,7 +2,9 @@ import type { Element as HastElement } from 'hast'
 import type { ExtraProps } from 'react-markdown'
 import type { ComponentPropsWithoutRef } from 'react'
 
-import { getImageCaption, getNodeDataProperty } from '../../lib/hast.util'
+import { PreviewCardProps } from 'ui/blocks'
+
+import { getImageCaption, getNodeDataProperty } from '../../lib'
 import { ImageBlock } from './ImageBlock'
 
 type FigureProps = ComponentPropsWithoutRef<'figure'> &
@@ -29,6 +31,15 @@ export function renderImageFigure({ node, ...props }: FigureProps) {
 					? 'plain'
 					: 'framed'
 			}
+			ratio={
+				getNodeDataProperty(
+					node?.properties,
+					'ratio',
+				) as PreviewCardProps['ratio']
+			}
+			masonry={Boolean(
+				node?.properties?.dataMasonryItem || 'data-masonry-item' in props,
+			)}
 		/>
 	)
 }

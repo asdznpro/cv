@@ -5,9 +5,11 @@ import {
 	renderCodeDiv,
 	renderCodeFigcaption,
 	renderCodeFigure,
-} from './blocks/code-block/code-block.mapper'
-import { renderImageFigure } from './blocks/image-block/image-block.mapper'
-import { renderQuoteBlock } from './blocks/quote-block/quote-block.mapper'
+	renderImageFigure,
+	renderQuoteBlock,
+	renderMasonryBlock,
+} from './blocks'
+
 import { typographyComponents } from './config/typography.components'
 
 export const markdownComponents: Components = {
@@ -15,7 +17,7 @@ export const markdownComponents: Components = {
 
 	blockquote: props => renderQuoteBlock(props),
 
-	div: props => renderCodeDiv(props),
+	div: props => renderMasonryBlock(props) ?? renderCodeDiv(props),
 
 	figure: props => {
 		const codeFigure = renderCodeFigure(props)

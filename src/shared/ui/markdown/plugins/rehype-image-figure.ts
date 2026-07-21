@@ -1,8 +1,7 @@
 import { visit } from 'unist-util-visit'
 import type { Root, Element, ElementContent } from 'hast'
 
-import { elementToText } from '../lib/hast.util'
-import { parseTitle } from '../lib/parse-title.util'
+import { elementToText, parseTitle } from '../lib'
 
 function isCaptionParagraph(node?: Element): node is Element {
 	if (!node || node.tagName !== 'p' || node.children.length === 0) return false
@@ -39,7 +38,7 @@ export function rehypeImageFigure() {
 			)
 			if (!img) return
 
-			const { variant, caption } = parseTitle(
+			const { variant, caption, ratio } = parseTitle(
 				String(img.properties?.title ?? ''),
 			)
 
@@ -82,6 +81,7 @@ export function rehypeImageFigure() {
 				properties: {
 					dataImageFigure: true,
 					dataVariant: variant,
+					dataRatio: ratio,
 				},
 				children: figureChildren,
 			}

@@ -156,6 +156,27 @@ vercel connect revoke-tokens slack/mybot --my-tokens
 vercel connect revoke-tokens slack/mybot --all-tokens
 ```
 
+masonry columns=2
+
+![Lobby](https://6ef4e6a1-9d49-47ac-bfed-170f67a815cf.selcdn.net/blog/wp-content/uploads/2026/06/MD-6288_red-1.png 'ratio=5:2')
+_A connector is attached to the projects and environments you choose, so you can run a separate connector for development, preview, and production instead of pointing one at all three_
+
+![HUD](https://6ef4e6a1-9d49-47ac-bfed-170f67a815cf.selcdn.net/blog/wp-content/uploads/2026/07/%D0%98%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5.jpeg 'ratio=4:5')
+
+![Key art](https://6ef4e6a1-9d49-47ac-bfed-170f67a815cf.selcdn.net/blog/wp-content/uploads/2026/07/day_off_2026.jpg)
+
+![HUD](https://6ef4e6a1-9d49-47ac-bfed-170f67a815cf.selcdn.net/blog/wp-content/uploads/2026/05/system-admin.jpg)
+
+![Lobby](https://6ef4e6a1-9d49-47ac-bfed-170f67a815cf.selcdn.net/blog/wp-content/uploads/2026/04/MD-6288-1.png)
+_Lobby concept_
+
+![Key art](/assets/articles/3.png)
+
+![Lobby](/assets/articles/1.png)
+_Lobby concept_
+
+![HUD](https://6ef4e6a1-9d49-47ac-bfed-170f67a815cf.selcdn.net/blog/wp-content/uploads/2025/08/MD-5197.png)
+
 ## Backends are back
 
 Your backend now ships the way your frontend does: one push, one preview, one platform. We can't wait to see what you build.
@@ -163,3 +184,33 @@ Your backend now ships the way your frontend does: one push, one preview, one pl
 Every cache fetch was performing three syscalls: `stat(.tar)`, which returned `ENOENT`, then `stat(.tar.zst)`, then `open(.tar.zst)`. Weird pattern.
 
 [Read the docs](https://vercel.com/docs/functions/container-images) or [deploy an example](https://vercel.com/templates) to get started.
+
+masonry columns=3
+
+![Lobby](https://6ef4e6a1-9d49-47ac-bfed-170f67a815cf.selcdn.net/blog/wp-content/uploads/2026/06/MD-6288_red-1.png 'ratio=4:5')
+_Lobby concept_
+
+![HUD](https://6ef4e6a1-9d49-47ac-bfed-170f67a815cf.selcdn.net/blog/wp-content/uploads/2026/07/%D0%98%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5.jpeg)
+
+![Key art](https://6ef4e6a1-9d49-47ac-bfed-170f67a815cf.selcdn.net/blog/wp-content/uploads/2026/07/day_off_2026.jpg 'ratio=3:2')
+
+![HUD](https://6ef4e6a1-9d49-47ac-bfed-170f67a815cf.selcdn.net/blog/wp-content/uploads/2026/05/system-admin.jpg 'ratio=story')
+
+![Lobby](https://6ef4e6a1-9d49-47ac-bfed-170f67a815cf.selcdn.net/blog/wp-content/uploads/2026/04/MD-6288-1.png 'ratio=square')
+_Lobby concept_
+
+![Key art](/assets/articles/3.png)
+
+![Lobby](/assets/articles/1.png)
+_Lobby concept_
+
+![HUD](https://6ef4e6a1-9d49-47ac-bfed-170f67a815cf.selcdn.net/blog/wp-content/uploads/2025/08/MD-5197.png)
+
+![Key art](/assets/articles/3.png 'ratio=4:5')
+
+## **Contain access by environment, and revoke it when you need to**
+
+A connector is attached to the projects and environments you choose:
+
+![Lobby](https://6ef4e6a1-9d49-47ac-bfed-170f67a815cf.selcdn.net/blog/wp-content/uploads/2026/06/MD-6288_red-1.png 'ratio=3:1')
+_A connector is attached to the projects_
