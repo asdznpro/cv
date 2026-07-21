@@ -1,9 +1,17 @@
+'use client'
+
+import { useId } from 'react'
 import Image from 'next/image'
+
 import { twMerge } from 'tailwind-merge'
+import { motion } from 'motion/react'
 
 import { Badge, PreviewCard, PreviewCardProps } from 'ui/blocks'
 
+import { useLightbox } from '../image-lightbox'
+
 type ImageBlockProps = {
+	id?: string
 	src: string
 	alt?: string
 	caption?: string
@@ -20,6 +28,11 @@ export function ImageBlock({
 	ratio,
 	masonry,
 }: ImageBlockProps) {
+	const reactId = useId()
+	const id = `md-img:${reactId}`
+
+	const { open, active } = useLightbox()
+
 	const normalizedSrc = src.startsWith('//') ? `https:${src}` : src
 	const isLocal =
 		normalizedSrc.startsWith('/') && !normalizedSrc.startsWith('//')
@@ -49,27 +62,48 @@ export function ImageBlock({
 				masonry ? 'my-0!' : 'my-6!',
 			)}
 		>
-			{variant === 'framed' ? (
-				<PreviewCard
-					ratio={ratio ?? 'video'}
-					src={src}
-					alt={alt}
-					sizes='(max-width: 768px) 100vw, 50vw'
+			<button
+				type='button'
+				onClick={() =>
+					open({
+						id,
+						src,
+						alt,
+						caption,
+						variant,
+						ratio: ratio ?? 'video',
+					})
+				}
+				className='contents cursor-zoom-in'
+			>
+				<motion.div
+					layoutId={id}
+					className={active?.id === id ? 'opacity-0' : 'opacity-100'}
+					transition={{ type: 'spring', stiffness: 300, damping: 30 }}
 				>
-					{masonry && caption && (
-						<Badge
-							className='z-1 absolute bottom-2 left-1/2 -translate-x-1/2 max-w-[calc(100%-1rem)] truncate pointer-events-none'
-							appearance='neutral'
-							size='md'
-							radius='smooth'
+					{variant === 'framed' ? (
+						<PreviewCard
+							ratio={ratio ?? 'video'}
+							src={src}
+							alt={alt}
+							sizes='(max-width: 768px) 100vw, 50vw'
 						>
-							{caption}
-						</Badge>
+							{masonry && caption && (
+								<Badge
+									className='z-1 absolute bottom-2 left-1/2 -translate-x-1/2 max-w-[calc(100%-1rem)] truncate pointer-events-none'
+									appearance='neutral'
+									size='md'
+									radius='smooth'
+								>
+									{caption}
+								</Badge>
+							)}
+						</PreviewCard>
+					) : (
+						image
 					)}
-				</PreviewCard>
-			) : (
-				image
-			)}
+				</motion.div>
+			</button>
 
 			{!masonry && caption && (
 				<figcaption className='text-center text-sm text-foreground-secondary'>

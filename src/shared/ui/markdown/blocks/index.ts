@@ -1,5 +1,6 @@
 export * from './code-block'
 export * from './image-block'
+export * from './image-lightbox'
 export * from './masonry-block'
 export * from './navigation'
 export * from './quote-block'
