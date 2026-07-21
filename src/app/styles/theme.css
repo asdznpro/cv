@@ -13,7 +13,7 @@
 	/* Palette */
 
 	--color-gray-50: var(--palette-kimberly-50);
-	--color-gray-100: var(--palette-baltic-sea-100);
+	--color-gray-100: var(--palette-kimberly-100);
 	--color-gray-200: var(--palette-kimberly-200);
 	--color-gray-300: var(--palette-kimberly-300);
 	--color-gray-400: var(--palette-kimberly-400);
@@ -148,4 +148,7 @@
 
 	--color-vk: var(--social-vk);
 	--color-vk-secondary: var(--social-vk-secondary);
+
+	--color-hh: var(--social-hh);
+	--color-hh-secondary: var(--social-hh-secondary);
 }

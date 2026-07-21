@@ -10,37 +10,37 @@ const SOCIAL_ITEMS = [
 		label: 'HH',
 		href: 'https://github.com/asdzn',
 		// icon: <Icon28LinkOutline width={20} height={20} />,
-		className: 'bg-github hover:bg-github-secondary',
+		className: 'text-white bg-hh hover:bg-hh-secondary',
 	},
 	{
 		label: 'GitHub',
 		href: 'https://github.com/asdzn',
 		// icon: <Icon28LinkOutline width={20} height={20} />,
-		className: 'bg-github hover:bg-github-secondary',
+		className: 'text-white bg-github hover:bg-github-secondary',
 	},
 	{
 		label: 'LinkedIn',
 		href: 'https://www.linkedin.com/in/asdzn',
 		// icon: <Icon28LinkOutline width={20} height={20} />,
-		className: 'bg-linkedin hover:bg-linkedin-secondary',
+		className: 'text-white bg-linkedin hover:bg-linkedin-secondary',
 	},
 	{
 		label: 'Telegram',
 		href: 'https://telegram.me/asdznpro',
 		// icon: <Icon28LinkOutline width={20} height={20} />,
-		className: 'bg-telegram hover:bg-telegram-secondary',
+		className: 'text-white bg-telegram hover:bg-telegram-secondary',
 	},
 	{
 		label: 'VK',
 		href: 'https://vk.com/asdzn',
 		// icon: <Icon28LinkOutline width={20} height={20} />,
-		className: 'bg-vk hover:bg-vk-secondary',
+		className: 'text-white bg-vk hover:bg-vk-secondary',
 	},
 	{
 		label: 'X',
 		href: 'https://github.com/asdzn',
 		// icon: <Icon28LinkOutline width={20} height={20} />,
-		className: 'bg-github hover:bg-github-secondary',
+		className: 'text-black bg-gray-50 hover:bg-gray-100',
 	},
 ]
 
@@ -88,7 +88,7 @@ export function Footer() {
 								prefix={<Icon28LinkOutline width={14} height={14} />}
 							/>
 
-							<span className='text-2xl text-white font-medium font-condensed tracking-tight truncate'>
+							<span className='text-2xl font-medium font-condensed tracking-tight truncate'>
 								{item.label}
 							</span>
 						</a>
