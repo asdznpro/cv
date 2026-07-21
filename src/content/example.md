@@ -1,3 +1,9 @@
+# Build knowledge agents without embeddings
+
+Был вовлечён в полный цикл визуальных материалов для одного из крупнейших киберспортивных брендов СНГ: бренд, мерч, event-графика и B2B-коммуникации для интеграций с Samsung, Winline, Яндекс Еда, FACEIT и другими партнёрами.
+
+---
+
 You have a server in a container. Maybe it's a Go service, a Rails app, a Spring Boot API, or a web server behind nginx. It speaks HTTP. It listens on a port. It just needs somewhere to run.
 
 Add a `Dockerfile.vercel` file to your project, and Vercel builds, stores, deploys, and autoscales the image on [Fluid compute](https://vercel.com/blog/introducing-fluid-compute), so you pay only for the CPU your code uses. No daemon to run locally, registry to set up, or cluster to babysit.

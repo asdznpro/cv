@@ -1,6 +1,7 @@
 import { ViewTransition } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { getMarkdown } from 'lib/server'
 import { getImagePalette } from 'lib/utils'
@@ -60,15 +61,35 @@ export default async function Article({
 							sizes='(max-width: 1240px) 100vw, 1240px'
 							priority
 						>
-							{/* <span className='z-1 absolute top-0 left-0 w-full flex p-2 gap-1.5 uppercase'>
-								<Badge size='md' radius='smooth'>
-									Valorant
-								</Badge>
+							<span className='z-1 absolute inset-0 mx-auto max-w-2xl w-full h-full'>
+								{/* <span className='z-1 absolute top-0 left-0 w-full flex p-2 gap-1.5 uppercase'>
+									<Badge size='md' radius='smooth'>
+										Valorant
+									</Badge>
 
-								<Badge size='md' appearance='neutral' radius='smooth'>
-									Esports
-								</Badge>
-							</span> */}
+									<Badge size='md' appearance='neutral' radius='smooth'>
+										Esports
+									</Badge>
+								</span> */}
+
+								{article.company && (
+									<ViewTransition
+										name={`article-preview-company-${article.id}`}
+										share='page-share'
+										default='auto'
+									>
+										<div className='z-1 absolute -bottom-6 right-0 w-32 h-32 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden'>
+											<Image
+												className='w-full h-full object-cover'
+												src={article.company.logo}
+												alt={article.company.name}
+												width={200}
+												height={200}
+											/>
+										</div>
+									</ViewTransition>
+								)}
+							</span>
 						</PreviewCard>
 					</ViewTransition>
 				</section>

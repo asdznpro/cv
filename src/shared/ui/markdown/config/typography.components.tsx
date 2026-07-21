@@ -18,7 +18,7 @@ export const typographyComponents: Pick<
 	| 'th'
 	| 'td'
 > = {
-	h1: ({ children }) => <h2 className='mt-12 mb-4 text-5xl'>{children}</h2>,
+	h1: ({ children }) => <h1 className='mt-12 mb-4 text-5xl'>{children}</h1>,
 	h2: ({ children }) => <h2 className='mt-12 mb-4 text-4xl'>{children}</h2>,
 	h3: ({ children }) => <h3 className='mt-12 mb-4 text-3xl'>{children}</h3>,
 	p: ({ children }) => <p className='my-0! text-lg'>{children}</p>,
@@ -46,7 +46,9 @@ export const typographyComponents: Pick<
 		</a>
 	),
 
-	hr: ({ ...props }) => <hr {...props} className='border-separator my-6!' />,
+	hr: ({ ...props }) => (
+		<hr {...props} className='mx-auto my-6! max-w-60 w-full border-separator' />
+	),
 
 	table: ({ children }) => (
 		<div className='not-prose my-6! overflow-x-auto scrollbar rounded-xl border border-separator'>

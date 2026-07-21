@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { ViewTransition } from 'react'
 
 import { ArticleItem } from 'widgets'
@@ -17,7 +18,7 @@ export default function Articles() {
 		<>
 			<span className='h-24' />
 
-			<section className='mx-auto max-w-4xl w-full flex flex-col px-app gap-10'>
+			<section className='mx-auto max-w-4xl w-full flex flex-col px-app gap-20'>
 				<div className='flex gap-app'>
 					<div className='flex flex-1 flex-col gap-3'>
 						<h1 className='text-5xl font-semibold font-condensed tracking-tight uppercase'>
@@ -80,11 +81,29 @@ export default function Articles() {
 											iconOnly
 										/>
 									)}
+
+									{item.company && (
+										<ViewTransition
+											name={`article-preview-company-${item.id}`}
+											share='page-share'
+											default='auto'
+										>
+											<div className='z-1 absolute -bottom-6 right-6 w-24 h-24 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden'>
+												<Image
+													className='w-full h-full object-cover'
+													src={item.company.logo}
+													alt={item.company.name}
+													width={200}
+													height={200}
+												/>
+											</div>
+										</ViewTransition>
+									)}
 								</ArticleItem.Preview>
 							</ViewTransition>
 
 							<ArticleItem.Info
-								meta='12 days ago'
+								meta={item.created_at}
 								title={item.title}
 								subtitle={item.description}
 							/>

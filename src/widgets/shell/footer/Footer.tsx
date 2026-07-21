@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import { twMerge } from 'tailwind-merge'
 
-import { Icon28LinkOutline } from '@vkontakte/icons'
+import { Icon28GlobeCrossOutline, Icon28LinkOutline } from '@vkontakte/icons'
 import { Badge } from 'ui/blocks'
 
 const SOCIAL_ITEMS = [
@@ -19,28 +19,31 @@ const SOCIAL_ITEMS = [
 		className: 'text-white bg-github hover:bg-github-secondary',
 	},
 	{
-		label: 'LinkedIn',
-		href: 'https://www.linkedin.com/in/asdzn',
-		// icon: <Icon28LinkOutline width={20} height={20} />,
-		className: 'text-white bg-linkedin hover:bg-linkedin-secondary',
-	},
-	{
-		label: 'Telegram',
-		href: 'https://telegram.me/asdznpro',
-		// icon: <Icon28LinkOutline width={20} height={20} />,
-		className: 'text-white bg-telegram hover:bg-telegram-secondary',
-	},
-	{
 		label: 'VK',
 		href: 'https://vk.com/asdzn',
 		// icon: <Icon28LinkOutline width={20} height={20} />,
 		className: 'text-white bg-vk hover:bg-vk-secondary',
 	},
 	{
+		label: 'Telegram',
+		href: 'https://telegram.me/asdznpro',
+		// icon: <Icon28LinkOutline width={20} height={20} />,
+		className: 'text-white bg-telegram hover:bg-telegram-secondary',
+		restrictedIn: ['RU'],
+	},
+	{
+		label: 'LinkedIn',
+		href: 'https://www.linkedin.com/in/asdzn',
+		// icon: <Icon28LinkOutline width={20} height={20} />,
+		className: 'text-white bg-linkedin hover:bg-linkedin-secondary',
+		restrictedIn: ['RU'],
+	},
+	{
 		label: 'X',
 		href: 'https://github.com/asdzn',
 		// icon: <Icon28LinkOutline width={20} height={20} />,
-		className: 'text-black bg-gray-50 hover:bg-gray-100',
+		className: 'text-black bg-gray-100 hover:bg-white',
+		restrictedIn: ['RU'],
 	},
 ]
 
@@ -81,12 +84,24 @@ export function Footer() {
 								item.className,
 							)}
 						>
-							<Badge
-								className='absolute top-2 right-2'
-								size='md'
-								appearance='neutral'
-								prefix={<Icon28LinkOutline width={14} height={14} />}
-							/>
+							<span className='absolute top-2 right-2 flex gap-1'>
+								{item.restrictedIn && (
+									<Badge
+										title='Может быть недоступен в РФ'
+										aria-label='Ограничен в РФ'
+										size='md'
+										appearance='neutral'
+										prefix={<Icon28GlobeCrossOutline width={14} height={14} />}
+										className='text-danger'
+									/>
+								)}
+
+								<Badge
+									size='md'
+									appearance='neutral'
+									prefix={<Icon28LinkOutline width={14} height={14} />}
+								/>
+							</span>
 
 							<span className='text-2xl font-medium font-condensed tracking-tight truncate'>
 								{item.label}

@@ -19,7 +19,7 @@ function ArticleItemRoot({
 	children,
 }: ArticleItemProps) {
 	const classNames = twMerge(
-		'relative group root flex flex-col gap-4 outline-none',
+		'relative group root flex flex-col gap-6 outline-none',
 		className,
 	)
 
@@ -86,7 +86,7 @@ function ArticleItemInfo({
 			</h3>
 
 			{subtitle && (
-				<p className='text-lg text-foreground-secondary line-clamp-3'>
+				<p className='text-lg text-foreground-secondary line-clamp-2'>
 					{subtitle}
 				</p>
 			)}

@@ -36,6 +36,7 @@
 .markdown .line.diff.add {
 	background: color-mix(in srgb, var(--success) 15%, transparent);
 }
+
 .markdown .line.diff.remove {
 	background: color-mix(in srgb, var(--danger) 15%, transparent);
 }
@@ -43,6 +44,7 @@
 .markdown :not(pre) > code {
 	/* prose-классы на article уже стилизуют inline */
 }
+
 .markdown pre code {
 	background: transparent;
 	padding: 0;
@@ -51,6 +53,7 @@
 	font-size: inherit;
 	color: inherit; /* Shiki inline color на span сработает */
 }
+
 .markdown code::before,
 .markdown code::after {
 	content: none;
