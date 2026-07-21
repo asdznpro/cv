@@ -27,6 +27,7 @@
     "meshline": "^3.3.1",
     "motion": "^12.42.2",
     "next": "16.2.6",
+    "node-vibrant": "^4.0.4",
     "postprocessing": "^6.39.2",
     "react": "19.2.4",
     "react-circular-progressbar": "^2.2.0",

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 
 import { getMarkdown } from 'lib/server'
+import { getImagePalette } from 'lib/utils'
 import { ARTICLES_DATA } from 'shared/data'
 
 import { Badge, Button, PreviewCard, Separator } from 'ui/blocks'
@@ -10,6 +11,7 @@ import { MarkdownContent } from 'ui/markdown'
 import {
 	Icon20ArrowTurnRightOutline,
 	Icon28ArrowLeftOutline,
+	Icon28ArrowUpOutline,
 	Icon28ChevronDownOutline,
 	Icon28CopyOutline,
 } from '@vkontakte/icons'
@@ -29,16 +31,49 @@ export default async function Article({
 		notFound()
 	}
 
+	const palette = await getImagePalette(article.image)
+
 	return (
 		<>
 			<span className='h-24' />
 
 			<section className='-z-10 absolute top-0 w-full flex justify-center pointer-events-none overflow-hidden'>
-				<span className='container w-full min-w-5xl h-80 bg-radial-[at_50%_0%] from-blue-600 to-transparent to-64% animate-[fade-in_500ms_ease-out] pointer-events-none' />
+				<span
+					className='container w-full min-w-5xl h-[clamp(20rem,50vh,40rem)] animate-[fade-in_500ms_ease-out] pointer-events-none'
+					style={{
+						background: `radial-gradient(at 50% 0%, color-mix(in srgb, ${palette.darkVibrant} 40%, var(--color-background)) 0%, transparent 64%)`,
+					}}
+				/>
 			</section>
 
-			<article className='mx-auto container w-full grid grid-cols-12 px-app gap-x-app gap-y-20'>
-				<section className='col-span-full @xl:col-span-6 col-start-1 @xl:col-start-4 w-full flex flex-col gap-10'>
+			<article className='mx-auto container w-full px-app flex flex-col items-center gap-x-app gap-y-20'>
+				<section className='max-w-7xl w-full'>
+					<ViewTransition
+						name={`article-preview-${article.id}`}
+						share='page-share'
+						default='auto'
+					>
+						<PreviewCard
+							ratio='4:1'
+							src={article.image}
+							alt={article.title}
+							sizes='(max-width: 1240px) 100vw, 1240px'
+							priority
+						>
+							{/* <span className='z-1 absolute top-0 left-0 w-full flex p-2 gap-1.5 uppercase'>
+								<Badge size='md' radius='smooth'>
+									Valorant
+								</Badge>
+
+								<Badge size='md' appearance='neutral' radius='smooth'>
+									Esports
+								</Badge>
+							</span> */}
+						</PreviewCard>
+					</ViewTransition>
+				</section>
+
+				<section className='max-w-2xl w-full flex flex-col gap-10'>
 					{/* <div className='flex gap-app'>
 						<Button
 							to='/news'
@@ -103,37 +138,11 @@ export default async function Article({
 					</header>
 				</section>
 
-				<section className='col-span-full @xl:col-span-8 col-start-1 @xl:col-start-3 w-full'>
-					<ViewTransition
-						name={`article-preview-${article.id}`}
-						share='page-share'
-						default='auto'
-					>
-						<PreviewCard
-							ratio='3:1'
-							src={article.image}
-							alt={article.title}
-							sizes='(max-width: 1240px) 100vw, 1240px'
-							priority
-						>
-							<span className='z-1 absolute top-0 left-0 w-full flex p-2 gap-1.5 uppercase'>
-								<Badge size='md' radius='smooth'>
-									Valorant
-								</Badge>
-
-								<Badge size='md' appearance='neutral' radius='smooth'>
-									Esports
-								</Badge>
-							</span>
-						</PreviewCard>
-					</ViewTransition>
-				</section>
-
-				<section className='col-span-full @xl:col-span-6 col-start-1 @xl:col-start-4 w-full flex flex-col gap-10'>
+				<section className='max-w-2xl w-full flex flex-col gap-10'>
 					<MarkdownContent>{content}</MarkdownContent>
 				</section>
 
-				<section className='col-span-full @xl:col-span-6 col-start-1 @xl:col-start-4 w-full flex flex-col gap-10'>
+				<section className='max-w-2xl w-full flex flex-col gap-10'>
 					<div className='flex gap-1.5'>
 						<Badge mode='outline' appearance='neutral'>
 							#valorant
@@ -188,7 +197,7 @@ export default async function Article({
 					</div>
 				</section>
 
-				<section className='sticky bottom-4 col-span-full w-full flex justify-center'>
+				<section className='sticky bottom-4 w-full flex justify-center gap-2'>
 					<Button
 						to='/articles'
 						size='lg'
@@ -196,8 +205,17 @@ export default async function Article({
 						prefix={<Icon28ArrowLeftOutline width={20} height={20} />}
 						radius='rounded'
 					>
-						Back to All News
+						Back to All Articles
 					</Button>
+
+					<Button
+						size='lg'
+						mode='soft'
+						appearance='neutral'
+						prefix={<Icon28ArrowUpOutline width={20} height={20} />}
+						radius='rounded'
+						iconOnly
+					/>
 				</section>
 			</article>
 

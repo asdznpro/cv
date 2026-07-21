@@ -97,7 +97,7 @@ export function Header() {
 	})
 
 	return (
-		<header className='fixed top-0 z-20 w-full max-h-screen pointer-events-none'>
+		<header className='fixed top-0 z-20 w-full max-h-screen p-app pointer-events-none'>
 			<AnimatePresence>
 				{isOpen && (
 					<motion.div
@@ -128,7 +128,7 @@ export function Header() {
 					stiffness: 300,
 					damping: 20,
 				}}
-				className='mx-auto h-full flex items-center p-app pointer-events-auto'
+				className='mx-auto w-full h-full flex items-center pointer-events-auto'
 			>
 				<motion.div className='w-full h-full flex flex-col bg-background border border-separator rounded-[31px] backdrop-blur-3xl overflow-hidden'>
 					<div className='w-full flex items-center p-2 gap-2'>
@@ -206,7 +206,11 @@ export function Header() {
 								prefix={
 									<motion.span
 										animate={{ rotate: isOpen ? 45 : 0 }}
-										transition={{ type: 'spring', stiffness: 400, damping: 24 }}
+										transition={{
+											type: 'spring',
+											stiffness: 400,
+											damping: 24,
+										}}
 										className='flex'
 									>
 										<Icon28AddOutline width={20} height={20} />

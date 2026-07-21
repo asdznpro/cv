@@ -62,11 +62,11 @@
 			"lib/*": ["./src/shared/lib/*"],
 			"lib": ["./src/shared/lib"],
 
-			"hooks/*": ["./src/shared/lib/hooks/*"],
-			"hooks": ["./src/shared/lib/hooks"],
+			// "hooks/*": ["./src/shared/lib/hooks/*"],
+			// "hooks": ["./src/shared/lib/hooks"],
 
-			"utils/*": ["./src/shared/lib/utils/*"],
-			"utils": ["./src/shared/lib/utils"],
+			// "utils/*": ["./src/shared/lib/utils/*"],
+			// "utils": ["./src/shared/lib/utils"],
 
 			// widgets
 
