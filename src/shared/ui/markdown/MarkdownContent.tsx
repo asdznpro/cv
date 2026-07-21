@@ -3,8 +3,9 @@ import remarkGfm from 'remark-gfm'
 
 import { twMerge } from 'tailwind-merge'
 
+import { HashScroll } from './blocks'
+import { markdownRehypePlugins } from './lib'
 import { markdownComponents } from './markdown.components'
-import { markdownRehypePlugins } from './lib/rehype-plugins'
 
 export async function MarkdownContent({ children }: { children: string }) {
 	return (
@@ -15,6 +16,8 @@ export async function MarkdownContent({ children }: { children: string }) {
 				'prose-pre:p-0 prose-pre:bg-transparent',
 			)}
 		>
+			<HashScroll />
+
 			<MarkdownAsync
 				remarkPlugins={[remarkGfm]}
 				rehypePlugins={markdownRehypePlugins}

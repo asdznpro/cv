@@ -1,5 +1,7 @@
 import type { Components } from 'react-markdown'
 
+import { HeadingAnchor } from '../blocks'
+
 export const typographyComponents: Pick<
 	Components,
 	| 'h1'
@@ -18,11 +20,23 @@ export const typographyComponents: Pick<
 	| 'th'
 	| 'td'
 > = {
-	h1: ({ children }) => <h1 className='mt-12 mb-4 text-5xl'>{children}</h1>,
-	h2: ({ children }) => <h2 className='mt-12 mb-4 text-4xl'>{children}</h2>,
-	h3: ({ children }) => <h3 className='mt-12 mb-4 text-3xl'>{children}</h3>,
-	p: ({ children }) => <p className='my-0! text-lg'>{children}</p>,
+	h1: ({ children, id }) => (
+		<h1 id={id} className='group mt-12 mb-4 text-5xl scroll-mt-28'>
+			{children}
+		</h1>
+	),
+	h2: ({ children, id }) => (
+		<h2 id={id} className='group mt-12 mb-4 text-4xl scroll-mt-28'>
+			{children}
+		</h2>
+	),
+	h3: ({ children, id }) => (
+		<h3 id={id} className='group mt-12 mb-4 text-3xl scroll-mt-28'>
+			{children}
+		</h3>
+	),
 
+	p: ({ children }) => <p className='my-0! text-lg'>{children}</p>,
 	strong: ({ children }) => (
 		<strong className='font-semibold'>{children}</strong>
 	),
@@ -34,17 +48,31 @@ export const typographyComponents: Pick<
 	),
 	li: ({ children }) => <li className='text-lg pl-1'>{children}</li>,
 
-	a: ({ href, children, ...props }) => (
-		<a
-			{...props}
-			href={href}
-			target={href?.startsWith('http') ? '_blank' : undefined}
-			rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-			className='underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded'
-		>
-			{children}
-		</a>
-	),
+	a: ({ href, className, children, ...props }) => {
+		const classNames = typeof className === 'string' ? className : ''
+		const isHeadingAnchor =
+			Boolean(href?.startsWith('#')) && classNames.includes('heading-anchor')
+
+		if (isHeadingAnchor) {
+			return (
+				<HeadingAnchor href={href} className={classNames}>
+					{children}
+				</HeadingAnchor>
+			)
+		}
+
+		return (
+			<a
+				{...props}
+				href={href}
+				target={href?.startsWith('http') ? '_blank' : undefined}
+				rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+				className='underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded'
+			>
+				{children}
+			</a>
+		)
+	},
 
 	hr: ({ ...props }) => (
 		<hr {...props} className='mx-auto my-6! max-w-60 w-full border-separator' />
