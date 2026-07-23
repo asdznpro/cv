@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { ViewTransition } from 'react'
 
 import 'styles/globals.css'
 
-import { Header, Footer, BootLoader, BootProvider } from 'widgets'
+import { BootLoader, BootProvider } from 'widgets'
 import { Toaster } from 'ui/blocks'
 
 export const metadata: Metadata = {
@@ -82,17 +81,10 @@ export default function RootLayout({
 				<div className='@container min-w-0 flex flex-1 flex-col items-center'>
 					{/* <BootProvider> */}
 					{/* <BootLoader /> */}
-
 					<Toaster />
-					<Header />
 
-					<main className='overflow-x-clip w-full h-full flex flex-1 flex-col gap-12 @2xl:gap-24'>
-						{/* <ViewTransition name='main' update='page-update' default='none'> */}
-						{children}
-						{/* </ViewTransition> */}
-					</main>
+					{children}
 
-					<Footer />
 					{/* </BootProvider> */}
 				</div>
 			</body>

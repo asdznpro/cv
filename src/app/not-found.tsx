@@ -19,7 +19,7 @@ export default function NotFound() {
 				</Button>
 			</section>
 
-			<span />
+			<span className='h-24' />
 		</>
 	)
 }
