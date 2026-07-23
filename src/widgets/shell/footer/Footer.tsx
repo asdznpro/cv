@@ -116,7 +116,7 @@ export function Footer() {
 					&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV
 				</span>
 
-				<span>v2.1.13, 21.7.26</span>
+				<span>v2.1.17, 24.7.26</span>
 			</div>
 		</footer>
 	)
