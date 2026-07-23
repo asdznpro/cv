@@ -26,26 +26,16 @@ export default function Home() {
 
 				<div className='flex flex-col'>
 					{EXPERIENCE_DATA.map(item => (
-						<div key={item.id} className='flex gap-12'>
-							<aside className='relative z-0 pb-24'>
+						<div key={item.id} className='flex gap-app @2xl:gap-12'>
+							<aside className='relative z-0 pb-12 @2xl:pb-24'>
 								<div className='sticky top-24'>
-									{/* <span className='w-24 h-24 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden outline-2 outline-accent outline-offset-6'>
-										<Image
-											className='w-full h-full object-cover'
-											src={item.company.logo}
-											alt={item.company.name}
-											width={200}
-											height={200}
-										/>
-									</span> */}
-
 									<PreviewCard
 										ratio='square'
 										src={item.company.logo}
 										alt={item.company.name}
 										width={200}
 										height={200}
-										className='w-24 outline-2 outline-accent outline-offset-6'
+										className='w-18 @2xl:w-24 0outline-2 outline-accent outline-offset-6'
 										radius='full'
 									/>
 								</div>
@@ -55,15 +45,15 @@ export default function Home() {
 								</span>
 							</aside>
 
-							<div className='flex flex-1 flex-col pb-24 gap-8'>
-								<h3 className='text-5xl text-balance font-semibold font-condensed tracking-tight'>
+							<div className='flex flex-1 flex-col pb-12 @2xl:pb-24 gap-app @2xl:gap-8'>
+								<h3 className='text-3xl @2xl:text-5xl text-balance font-semibold font-condensed tracking-tight'>
 									{item.company.name} <br />{' '}
 									<span className='text-foreground-secondary'>{item.role}</span>
 								</h3>
 
 								<div className='flex flex-col bg-surface border border-separator rounded-xl'>
 									<div className='flex flex-col gap-6 p-6'>
-										<p className='text-lg font-medium'>
+										<p className='text-base @2xl:text-lg font-medium'>
 											{item.employment.type}
 											<br />
 											{item.employment.start} —{' '}
@@ -71,7 +61,7 @@ export default function Home() {
 											{item.employment.duration})
 										</p>
 
-										<p className='text-lg text-foreground-secondary'>
+										<p className='text-base @2xl:text-lg text-foreground-secondary'>
 											{item.summary}
 										</p>
 

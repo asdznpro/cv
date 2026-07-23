@@ -5,6 +5,7 @@ import {
 	Canvas,
 	extend,
 	useFrame,
+	useThree,
 	type ThreeElement,
 	type ThreeEvent,
 } from '@react-three/fiber'
@@ -26,10 +27,6 @@ import {
 } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 import * as THREE from 'three'
-
-// replace with your own imports, see the usage snippet for details
-// import cardGLB from './card.glb'
-// import lanyard from './lanyard.png'
 
 extend({ MeshLineGeometry, MeshLineMaterial })
 
@@ -166,6 +163,8 @@ function Band({
 	lanyardImage = null,
 	lanyardWidth = 1,
 }: BandProps) {
+	const { size } = useThree()
+
 	const band = useRef<
 		THREE.Mesh<
 			InstanceType<typeof MeshLineGeometry>,
@@ -282,6 +281,8 @@ function Band({
 	}, [hovered, dragged])
 
 	useFrame((state, delta) => {
+		const dt = Math.min(delta, 1 / 30)
+
 		if (dragged && typeof dragged !== 'boolean') {
 			vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera)
 			dir.copy(vec).sub(state.camera.position).normalize()
@@ -293,6 +294,7 @@ function Band({
 				z: vec.z - dragged.z,
 			})
 		}
+
 		if (fixed.current) {
 			;[j1, j2].forEach(ref => {
 				const lerped = getLerped(ref.current)
@@ -302,7 +304,7 @@ function Band({
 				)
 				lerped.lerp(
 					ref.current.translation(),
-					delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)),
+					dt * (minSpeed + clampedDistance * (maxSpeed - minSpeed)),
 				)
 			})
 			curve.points[0].copy(j3.current.translation())
@@ -351,7 +353,7 @@ function Band({
 					<BallCollider args={[0.1]} />
 				</RigidBody>
 				<RigidBody
-					position={[2, 0, 0]}
+					position={[2, 2, 2]}
 					ref={card}
 					{...segmentProps}
 					type={dragged ? 'kinematicPosition' : 'dynamic'}
@@ -403,9 +405,14 @@ function Band({
 					useMap
 					map={texture}
 					repeat={[-4, 1]}
-					lineWidth={lanyardWidth}
+					lineWidth={lanyardWidth * (size.height / (isMobile ? 500 : 800))}
 				/>
 			</mesh>
 		</>
 	)
 }
+
+useGLTF.preload('/assets/lanyard/card.glb')
+useTexture.preload('/assets/lanyard/band.png')
+useTexture.preload('/assets/lanyard/front.png')
+useTexture.preload('/assets/lanyard/back.png')

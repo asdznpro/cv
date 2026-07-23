@@ -49,7 +49,7 @@ const SOCIAL_ITEMS = [
 
 export function Footer() {
 	return (
-		<footer className='mt-auto w-full flex flex-col py-16 gap-16 bg-background border-t border-separator'>
+		<footer className='mt-auto w-full flex flex-col py-12 @2xl:py-24 gap-12 bg-background border-t border-separator'>
 			{/* <div className='mx-auto container w-full flex flex-col px-app gap-app'>
 				<div className='flex flex-col p-surface gap-surface border border-separator rounded-lg'>
 					<p className='text-sm text-foreground-tertiary font-condensed uppercase tracking-tight'>
