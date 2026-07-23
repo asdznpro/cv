@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge'
 import type LogoProps from './Logo.interface'
 
 export function Sign(props: LogoProps) {
-	const { width = 36, height = 36, className } = props
+	const { size = 36, className } = props
 
 	return (
 		<span
@@ -11,7 +11,7 @@ export function Sign(props: LogoProps) {
 				'relative inline-block shrink-0 overflow-hidden rounded-full',
 				className,
 			)}
-			style={{ width, height }}
+			style={{ width: size, height: size }}
 		>
 			<span
 				aria-hidden
@@ -25,8 +25,8 @@ export function Sign(props: LogoProps) {
 			/>
 			<svg
 				className='relative block size-full'
-				width={width}
-				height={height}
+				width={size}
+				height={size}
 				viewBox='0 0 36 36'
 				fill='none'
 				xmlns='http://www.w3.org/2000/svg'

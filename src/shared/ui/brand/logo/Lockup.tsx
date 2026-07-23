@@ -1,16 +1,11 @@
 import type LogoProps from './Logo.interface'
 
 export function Lockup(props: LogoProps) {
-	const { width, height, className } = props
-
-	const computedStyle = {
-		width: width ? width : 134,
-		height: height ? height : 36,
-	}
+	const { width = 134, height = 36, className } = props
 
 	return (
 		<svg
-			style={computedStyle}
+			style={{ width, height }}
 			className={className}
 			width='134'
 			height='36'
@@ -109,6 +104,7 @@ export function Lockup(props: LogoProps) {
 					/>
 				</g>
 			</g>
+
 			<defs>
 				<clipPath id='paint0_angular_3_15_clip_path-7rqdri'>
 					<path d='M0 18C0 8.05888 8.05888 0 18 0C27.9411 0 36 8.05888 36 18C36 27.9411 27.9411 36 18 36C8.05888 36 0 27.9411 0 18Z' />

@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority'
 export const separatorVariants = cva(
 	// base
 
-	['bg-separator'],
+	['bg-separator shrink-0'],
 
 	{
 		variants: {
