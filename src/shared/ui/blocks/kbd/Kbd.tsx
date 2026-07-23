@@ -4,10 +4,13 @@ import { kbdVariants } from './kbd.variants'
 import type KbdProps from './Kbd.interface'
 
 export function Kbd(props: KbdProps) {
-	const { children, size, ...restProps } = props
+	const { children, size, radius, ...restProps } = props
 
 	return (
-		<kbd {...restProps} className={twMerge('root', kbdVariants({ size }))}>
+		<kbd
+			{...restProps}
+			className={twMerge('root', kbdVariants({ size, radius }))}
+		>
 			{children}
 		</kbd>
 	)

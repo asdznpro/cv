@@ -7,13 +7,14 @@ import { getMarkdown } from 'lib/server'
 import { getImagePalette } from 'lib/utils'
 import { ARTICLES_DATA } from 'shared/data'
 
+import { BackToTop } from 'widgets'
 import { Badge, Button, PreviewCard, Separator } from 'ui/blocks'
 import { MarkdownContent } from 'ui/markdown'
 import {
 	Icon20ArrowTurnRightOutline,
 	Icon28ArrowLeftOutline,
-	Icon28ArrowUpOutline,
 	Icon28ChevronDownOutline,
+	Icon28ChevronLeftCircle,
 	Icon28CopyOutline,
 } from '@vkontakte/icons'
 
@@ -145,17 +146,17 @@ export default async function Article({
 							</Badge>
 						</div>
 
-						<div className='flex flex-1 flex-col gap-6'>
-							<h2 className='text-5xl font-semibold font-condensed tracking-tight text-balance'>
+						{/* <div className='flex flex-1 flex-col gap-6'>
+							<h1 className='text-5xl font-semibold font-condensed tracking-tight text-balance'>
 								{article.title}
-							</h2>
+							</h1>
 
 							{article.description && (
 								<p className='text-sm text-foreground-secondary'>
 									{article.description}
 								</p>
 							)}
-						</div>
+						</div> */}
 					</header>
 				</section>
 
@@ -219,7 +220,7 @@ export default async function Article({
 				</section>
 
 				<section className='sticky bottom-4 w-full flex justify-center gap-2'>
-					<Button
+					{/* <Button
 						to='/articles'
 						size='lg'
 						appearance='neutral'
@@ -227,16 +228,9 @@ export default async function Article({
 						radius='rounded'
 					>
 						Back to All Articles
-					</Button>
+					</Button> */}
 
-					<Button
-						size='lg'
-						mode='soft'
-						appearance='neutral'
-						prefix={<Icon28ArrowUpOutline width={20} height={20} />}
-						radius='rounded'
-						iconOnly
-					/>
+					<BackToTop />
 				</section>
 			</article>
 
