@@ -43,7 +43,7 @@ const SOCIAL_ITEMS = [
 	},
 	{
 		label: 'X',
-		href: 'https://github.com/asdzn',
+		href: 'https://x.com/asdznpro',
 		// icon: <Icon28LinkOutline width={20} height={20} />,
 		// className: 'text-black bg-gray-100 hover:bg-white',
 		className: 'hover:text-black hover:bg-white',

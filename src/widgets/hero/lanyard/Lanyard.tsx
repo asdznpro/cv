@@ -405,7 +405,9 @@ function Band({
 					useMap
 					map={texture}
 					repeat={[-4, 1]}
-					lineWidth={lanyardWidth * (size.height / (isMobile ? 500 : 800))}
+					lineWidth={
+						isMobile ? lanyardWidth * (size.height / 500) : lanyardWidth
+					}
 				/>
 			</mesh>
 		</>

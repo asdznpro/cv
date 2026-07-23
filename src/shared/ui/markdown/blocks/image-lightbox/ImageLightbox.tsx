@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { createPortal } from 'react-dom'
 
-import { Badge, PreviewCard } from 'ui/blocks'
+import { Badge, Button, PreviewCard } from 'ui/blocks'
 import { useLightbox } from './LightboxProvider'
+import { Icon28CancelOutline } from '@vkontakte/icons'
 
 const AR: Record<string, number> = {
 	'4:1': 4 / 1,
@@ -41,36 +42,63 @@ export function ImageLightbox() {
 	return createPortal(
 		<AnimatePresence>
 			{active && (
-				<>
-					<motion.button
+				<motion.button
+					key='lightbox-backdrop'
+					type='button'
+					aria-label='Закрыть'
+					className='fixed inset-0 z-30 bg-background/80 cursor-pointer'
+					initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+					animate={{ opacity: 1, backdropFilter: 'blur(6px)' }}
+					exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+					transition={{ duration: 0.2 }}
+					onClick={close}
+				/>
+			)}
+
+			{active && (
+				<motion.div
+					key='lightbox-close'
+					className='fixed top-4 right-4 z-50'
+					initial={{ opacity: 0, scale: 0.9 }}
+					animate={{ opacity: 1, scale: 1 }}
+					exit={{ opacity: 0, scale: 0.9 }}
+					transition={{ duration: 0.2 }}
+				>
+					<Button
+						onClick={close}
 						type='button'
 						aria-label='Закрыть'
-						className='fixed inset-0 z-50 bg-background/80 cursor-pointer'
-						initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-						animate={{ opacity: 1, backdropFilter: 'blur(6px)' }}
-						exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-						transition={{ duration: 0.2 }}
-						onClick={close}
-					/>
+						appearance='neutral'
+						prefix={<Icon28CancelOutline width={18} height={18} />}
+						radius='rounded'
+					>
+						Esc
+					</Button>
+				</motion.div>
+			)}
 
-					<div className='fixed inset-0 z-50 flex items-center justify-center pointer-events-none'>
-						<motion.div
-							layoutId={active.id}
-							className='pointer-events-auto w-auto max-w-full'
-							transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-						>
-							{active.variant !== 'plain' ? (
-								<PreviewCard
-									ratio={active.ratio ?? 'video'}
-									src={active.src}
-									alt={active.alt}
-									sizes='90vw'
-									className='w-auto max-w-full max-h-full'
-									style={{
-										width: `min(calc(100vw - 2rem), calc(100vh - 2rem) * ${AR[active.ratio ?? 'video']})`,
-									}}
-								>
-									{/* {active.caption && (
+			{active && (
+				<div
+					key='lightbox-stage'
+					className='fixed inset-0 z-40 flex items-center justify-center pointer-events-none'
+				>
+					<motion.div
+						layoutId={active.id}
+						className='pointer-events-auto w-auto max-w-full'
+						transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+					>
+						{active.variant !== 'plain' ? (
+							<PreviewCard
+								ratio={active.ratio ?? 'video'}
+								src={active.src}
+								alt={active.alt}
+								sizes='90vw'
+								className='w-auto max-w-full max-h-full'
+								style={{
+									width: `min(calc(100vw - 2rem), calc(100vh - 2rem) * ${AR[active.ratio ?? 'video']})`,
+								}}
+							>
+								{/* {active.caption && (
 										<Badge
 											className='z-1 absolute bottom-2 left-1/2 -translate-x-1/2 max-w-[calc(100%-1rem)] truncate pointer-events-none'
 											appearance='neutral'
@@ -80,17 +108,16 @@ export function ImageLightbox() {
 											{active.caption}
 										</Badge>
 									)} */}
-								</PreviewCard>
-							) : (
-								<img
-									src={active.src}
-									alt={active.alt ?? ''}
-									className='h-auto w-full rounded-xl'
-								/>
-							)}
-						</motion.div>
-					</div>
-				</>
+							</PreviewCard>
+						) : (
+							<img
+								src={active.src}
+								alt={active.alt ?? ''}
+								className='h-auto w-full rounded-xl'
+							/>
+						)}
+					</motion.div>
+				</div>
 			)}
 		</AnimatePresence>,
 		document.body,
