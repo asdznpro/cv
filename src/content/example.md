@@ -1,5 +1,3 @@
-# Build knowledge agents without embeddings
-
 Был вовлечён в полный цикл визуальных материалов для одного из крупнейших киберспортивных брендов СНГ: бренд, мерч, event-графика и B2B-коммуникации для интеграций с Samsung, Winline, Яндекс Еда, FACEIT и другими партнёрами.
 
 ---
@@ -11,7 +9,7 @@ Add a `Dockerfile.vercel` file to your project, and Vercel builds, stores, deplo
 > Chat SDK is how one of our agents shows up in fifteen apps without building fifteen integrations.
 > — Gavriel Cohen, Co-founder and CEO, NanoClaw
 
-We built [Vercel Connect](https://vercel.com/connect) to solve this problem. Now in Public Beta, Vercel Connect replaces the stored token with runtime credential exchange. You register a connector once. When your agent has work to do, your app proves its identity to Vercel Connect and gets back a short-lived credential, scoped to thetask. Everything you used the token for still works. The agent just requests access each time instead of holding it.
+We built [Vercel Connect](https://vercel.com/connect) to solve this problem. Now in Public Beta, Vercel Connect replaces the stored token with runtime credential exchange. You register a connector once. When your agent has work to do, your app proves its identity to Vercel Connect and gets back a short-lived credential, scoped to the task. Everything you used the token for still works. The agent just requests access each time instead of holding it.
 
 > variant=pull
 > "The last thing we want is to rebuild our infrastructure every time a new model drops."

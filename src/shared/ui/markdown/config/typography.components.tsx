@@ -21,7 +21,7 @@ export const typographyComponents: Pick<
 	| 'td'
 > = {
 	h1: ({ children, id }) => (
-		<h1 id={id} className='group mt-12 mb-4 text-5xl scroll-mt-28'>
+		<h1 id={id} className='group not-first:mt-12 mb-4 text-5xl scroll-mt-28'>
 			{children}
 		</h1>
 	),

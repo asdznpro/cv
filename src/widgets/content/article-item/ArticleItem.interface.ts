@@ -5,6 +5,6 @@ export interface ArticleItemProps extends React.AllHTMLAttributes<HTMLElement> {
 }
 
 export interface ArticleItemInfoProps extends React.AllHTMLAttributes<HTMLElement> {
-	meta?: string
+	meta?: string[]
 	subtitle?: string
 }

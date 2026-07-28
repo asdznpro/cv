@@ -3,11 +3,11 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { getMarkdown } from 'lib/server'
+import { getMarkdown, getMarkdownToc } from 'lib/server'
 import { getImagePalette } from 'lib/utils'
 import { ARTICLES_DATA } from 'shared/data'
 
-import { BackToTop } from 'widgets'
+import { ArticleToc, BackToTop } from 'widgets'
 import { Badge, Button, PreviewCard, Separator } from 'ui/blocks'
 import { MarkdownContent } from 'ui/markdown'
 import {
@@ -28,6 +28,7 @@ export default async function Article({
 	const article = ARTICLES_DATA.find(item => item.slug === slug)
 
 	const { content } = await getMarkdown('example')
+	const toc = await getMarkdownToc(content)
 
 	if (!article) {
 		notFound()
@@ -37,18 +38,41 @@ export default async function Article({
 
 	return (
 		<>
-			<span className='h-24' />
-
 			<section className='-z-10 absolute top-0 w-full flex justify-center pointer-events-none overflow-hidden'>
 				<span
 					className='container w-full min-w-5xl h-[clamp(20rem,50vh,40rem)] animate-[fade-in_500ms_ease-out] pointer-events-none'
 					style={{
-						background: `radial-gradient(at 50% 0%, color-mix(in srgb, ${palette.darkVibrant} 40%, var(--color-background)) 0%, transparent 64%)`,
+						background: `radial-gradient(at 50% 0%, color-mix(in srgb, ${palette.vibrant} 40%, var(--color-background)) 0%, transparent 64%)`,
 					}}
 				/>
 			</section>
 
+			<span className='h-24' />
+
 			<article className='mx-auto container w-full px-app flex flex-col items-center gap-x-app gap-y-20'>
+				<section className='max-w-2xl w-full flex flex-col gap-10'>
+					<header className='flex flex-col gap-6'>
+						<div className='text-xl font-medium font-condensed'>
+							<Link href='/articles' className='text-foreground-tertiary'>
+								Articles
+							</Link>{' '}
+							<span className='text-foreground-tertiary select-none'>/</span>{' '}
+							<Link
+								href={`/articles?category=${article.category?.slug}`}
+								className=''
+							>
+								{article.category?.label}
+							</Link>
+						</div>
+
+						<div className='flex flex-1 flex-col gap-6'>
+							<h1 className='text-5xl font-medium font-condensed tracking-tight text-balance'>
+								{article.title}
+							</h1>
+						</div>
+					</header>
+				</section>
+
 				<section className='max-w-7xl w-full'>
 					<ViewTransition
 						name={`article-preview-${article.id}`}
@@ -95,91 +119,70 @@ export default async function Article({
 					</ViewTransition>
 				</section>
 
-				<section className='max-w-2xl w-full flex flex-col gap-10'>
-					{/* <div className='flex gap-app'>
-						<Button
-							to='/news'
-							mode='soft'
-							appearance='neutral'
-							prefix={<Icon28ArrowLeftOutline width={18} height={18} />}
-							radius='rounded'
-							iconOnly
-						/>
+				<section className='max-w-7xl w-full grid grid-cols-[1fr_auto_1fr] gap-10'>
+					<div className=''>
+						{/* <nav className='sticky top-28 w-full flex flex-col'>
+							{toc.map((item, index) => (
+								<a key={index} href={`#${item.id}`} className='flex gap-app'>
+									<aside className='relative z-0'>
+										<span className='w-7 h-7 flex items-center justify-center bg-surface border border-separator rounded-full text-foreground-secondary text-xs font-mono'>
+											{item.depth > 9 ? '0' + (index + 1) : index + 1}
+										</span>
 
-						<div className='flex flex-1 flex-col gap-3'>
-							<h2 className='text-3xl font-semibold font-condensed tracking-tight uppercase'>
-								{article.title}
-							</h2>
+										{index !== toc.length - 1 && (
+											<span className='absolute inset-0 -z-1 w-full h-full flex items-center justify-center'>
+												<Separator orientation='vertical' />
+											</span>
+										)}
+									</aside>
 
-							{article.description && (
-								<p className='text-sm text-foreground-secondary'>
-									{article.description}
-								</p>
-							)}
-						</div>
+									<div className='flex-1 pb-app'>
+										<span className='line-clamp-2 text-balance text-lg font-condensed font-medium'>
+											{item.title}
+										</span>
+									</div>
+								</a>
+							))}
+						</nav> */}
 
-						<Button
-							mode='soft'
-							appearance='neutral'
-							prefix={<Icon28CopyOutline width={18} height={18} />}
-							radius='rounded'
-							iconOnly
-						/>
-					</div> */}
-
-					<header className='flex flex-col gap-6'>
-						<div className='flex gap-1.5'>
-							<Badge mode='outline' appearance='neutral'>
-								30 Jun 2026
-							</Badge>
-
-							<Badge mode='outline' appearance='neutral'>
-								4 min read
-							</Badge>
-
-							<Badge
-								mode='outline'
-								appearance='neutral'
-								suffix={<Icon28ChevronDownOutline width={16} height={16} />}
-							>
-								Copy
-							</Badge>
-						</div>
-
-						{/* <div className='flex flex-1 flex-col gap-6'>
-							<h1 className='text-5xl font-semibold font-condensed tracking-tight text-balance'>
-								{article.title}
-							</h1>
-
-							{article.description && (
-								<p className='text-sm text-foreground-secondary'>
-									{article.description}
-								</p>
-							)}
-						</div> */}
-					</header>
-				</section>
-
-				<section className='max-w-2xl w-full flex flex-col gap-10'>
-					<MarkdownContent>{content}</MarkdownContent>
-				</section>
-
-				<section className='max-w-2xl w-full flex flex-col gap-10'>
-					<div className='flex gap-1.5'>
-						<Badge mode='outline' appearance='neutral'>
-							#valorant
-						</Badge>
-
-						<Badge mode='outline' appearance='neutral'>
-							#esports
-						</Badge>
-
-						<Badge mode='outline' appearance='neutral'>
-							#vct
-						</Badge>
+						<ArticleToc items={toc} />
 					</div>
 
-					<div className='flex flex-col border border-separator rounded-lg overflow-hidden'>
+					<section className='max-w-2xl w-full flex flex-col gap-10'>
+						<MarkdownContent>{content}</MarkdownContent>
+
+						<div className='flex gap-1.5'>
+							{article.tags.map(tag => (
+								<Badge
+									key={tag}
+									to={`/articles?tag=${tag}`}
+									mode='outline'
+									appearance='neutral'
+								>
+									#{tag}
+								</Badge>
+							))}
+						</div>
+					</section>
+
+					<div className=''>
+						<div className='flex flex-col 0gap-2 text-lg text-foreground-secondary font-condensed font-medium'>
+							<span className='w-fit flex'>30 Jun 2026</span>
+							<span className='w-fit flex'>4 min read</span>
+							<span className='w-fit flex items-center gap-1.5 hover:text-foreground transition-colors cursor-pointer'>
+								Copy{' '}
+								<Icon28ChevronLeftCircle
+									className='-rotate-90'
+									width={18}
+									height={18}
+								/>
+							</span>
+						</div>
+					</div>
+				</section>
+
+				<section className='max-w-2xl w-full flex flex-col gap-10'>
+					<div className='flex flex-col border border-separator rounded-xl overflow-hidden'>
 						<div className='flex flex-col p-surface gap-surface bg-surface'>
 							<span className='text-foreground-secondary font-medium'>
 								Возможно, вам будет интересно

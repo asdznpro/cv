@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { useHotkeys, useWindowScroll } from '@siberiacancode/reactuse'
 import { AnimatePresence, motion } from 'motion/react'
 
@@ -9,9 +10,13 @@ import { Icon28ArrowUpOutline } from '@vkontakte/icons'
 const SHOW_AFTER_PX = 400
 
 export function BackToTop() {
+	const [ready, setReady] = useState(false)
 	const windowScroll = useWindowScroll()
 	const { y } = windowScroll.watch()
-	const visible = y > SHOW_AFTER_PX
+	
+	useEffect(() => setReady(true), [])
+	
+	const visible = ready && y > SHOW_AFTER_PX
 
 	const scrollTop = () => {
 		windowScroll.scrollTo({ x: 0, y: 0, behavior: 'smooth' })

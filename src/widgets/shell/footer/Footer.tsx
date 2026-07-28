@@ -20,6 +20,14 @@ const SOCIAL_ITEMS = [
 		restrictedIn: ['RU'],
 	},
 	{
+		label: 'Telegram',
+		href: 'https://telegram.me/asdznpro',
+		// icon: <Icon28LinkOutline width={20} height={20} />,
+		// className: 'text-white bg-telegram hover:bg-telegram-secondary',
+		className: 'hover:text-white hover:bg-telegram',
+		restrictedIn: ['RU'],
+	},
+	{
 		label: 'GitHub',
 		href: 'https://github.com/asdzn',
 		// icon: <Icon28LinkOutline width={20} height={20} />,
@@ -33,29 +41,21 @@ const SOCIAL_ITEMS = [
 		// className: 'text-white bg-vk hover:bg-vk-secondary',
 		className: 'hover:text-white hover:bg-vk',
 	},
-	{
-		label: 'Telegram',
-		href: 'https://telegram.me/asdznpro',
-		// icon: <Icon28LinkOutline width={20} height={20} />,
-		// className: 'text-white bg-telegram hover:bg-telegram-secondary',
-		className: 'hover:text-white hover:bg-telegram',
-		restrictedIn: ['RU'],
-	},
-	{
-		label: 'X',
-		href: 'https://x.com/asdznpro',
-		// icon: <Icon28LinkOutline width={20} height={20} />,
-		// className: 'text-black bg-gray-100 hover:bg-white',
-		className: 'hover:text-black hover:bg-white',
-		restrictedIn: ['RU'],
-	},
+	// {
+	// 	label: 'X',
+	// 	href: 'https://x.com/asdznpro',
+	// 	// icon: <Icon28LinkOutline width={20} height={20} />,
+	// 	// className: 'text-black bg-gray-100 hover:bg-white',
+	// 	className: 'hover:text-black hover:bg-white',
+	// 	restrictedIn: ['RU'],
+	// },
 ]
 
 export function Footer() {
 	return (
 		<footer className='mt-auto w-full flex flex-col py-12 @2xl:py-24 gap-12 bg-background border-t border-separator'>
 			<div className='mx-auto max-w-6xl w-full flex flex-col px-app gap-app'>
-				<div className='grid grid-cols-2 @2xl:grid-cols-3 @5xl:grid-cols-6 gap-app'>
+				<div className='grid grid-cols-2 @5xl:grid-cols-5 gap-app'>
 					{SOCIAL_ITEMS.map((item, index) => (
 						<a
 							key={index + item.label}
@@ -65,7 +65,7 @@ export function Footer() {
 							className={twMerge(
 								'root relative w-full h-full flex items-end p-6 rounded-xl transition-colors focus-ring-base focus-ring-visible',
 								'text-foreground-secondary bg-surface-secondary',
-								index === 0 && 'col-span-2',
+								index === 0 && '@5xl:col-span-2',
 								item.className,
 							)}
 						>
@@ -101,7 +101,7 @@ export function Footer() {
 					&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV
 				</span>
 
-				<span>v2.1.17, 24.7.26</span>
+				<span>v2.1.18, 29.7.26</span>
 			</div>
 		</footer>
 	)
