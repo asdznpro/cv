@@ -75,15 +75,17 @@ function ArticleItemInfo({
 }: ArticleItemInfoProps) {
 	return (
 		<div className={twMerge('flex flex-1 flex-col gap-2', className)}>
-			{/* {meta && (
-				<p className='text-xs text-foreground-secondary font-medium font-condensed uppercase'>
-					{meta}
+			{meta && (
+				<p className='flex gap-2 text-lg text-foreground-secondary font-medium font-condensed uppercase'>
+					{meta.map(item => (
+						<span key={item}>{item}</span>
+					))}
 				</p>
-			)} */}
+			)}
 
-			<h3 className='text-3xl font-semibold font-condensed tracking-tight truncate transition-colors group-hover:text-accent group-focus-visible:text-accent'>
+			<h2 className='text-4xl font-semibold font-condensed tracking-tight truncate transition-colors group-hover:text-accent group-focus-visible:text-accent'>
 				{title}
-			</h3>
+			</h2>
 
 			{subtitle && (
 				<p className='text-lg text-foreground-secondary line-clamp-2'>

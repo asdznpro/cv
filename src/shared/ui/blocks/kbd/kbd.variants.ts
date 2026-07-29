@@ -16,10 +16,16 @@ export const kbdVariants = cva(
 				sm: 'h-5 min-h-5 min-w-5 px-1.5 text-xs rounded-xs',
 				md: 'h-6 min-h-6 min-w-6 px-2 text-sm rounded',
 			},
+			radius: {
+				smooth: '',
+				rounded: 'rounded-full',
+				none: 'rounded-none',
+			},
 		},
 
 		defaultVariants: {
 			size: 'md',
+			radius: 'rounded',
 		},
 	},
 )

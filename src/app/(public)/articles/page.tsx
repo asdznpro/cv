@@ -74,7 +74,7 @@ export default function Articles() {
 									{item.external_link && (
 										<Button
 											as='span'
-											className='z-1 absolute'
+											className='z-1 absolute inset-0'
 											appearance='neutral'
 											prefix={<Icon28Play width={18} height={18} />}
 											radius='rounded'
@@ -103,7 +103,7 @@ export default function Articles() {
 							</ViewTransition>
 
 							<ArticleItem.Info
-								meta={item.created_at}
+								meta={[item.created_at, item.category?.label]}
 								title={item.title}
 								subtitle={item.description}
 							/>

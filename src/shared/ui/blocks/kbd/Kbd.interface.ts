@@ -3,4 +3,5 @@ export default interface KbdProps extends Omit<
 	'size'
 > {
 	size?: 'md' | 'sm' | undefined
+	radius?: 'smooth' | 'rounded' | 'none' | undefined
 }

@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { createPortal } from 'react-dom'
 
-import { Badge, Button, PreviewCard } from 'ui/blocks'
-import { useLightbox } from './LightboxProvider'
+import { Badge, Button, Kbd, PreviewCard } from 'ui/blocks'
 import { Icon28CancelOutline } from '@vkontakte/icons'
+
+import { useLightbox } from './LightboxProvider'
 
 const AR: Record<string, number> = {
 	'4:1': 4 / 1,
@@ -68,11 +69,13 @@ export function ImageLightbox() {
 						onClick={close}
 						type='button'
 						aria-label='Закрыть'
+						mode='secondary'
 						appearance='neutral'
 						prefix={<Icon28CancelOutline width={18} height={18} />}
+						suffix={<Kbd size='sm'>Esc</Kbd>}
 						radius='rounded'
 					>
-						Esc
+						Close
 					</Button>
 				</motion.div>
 			)}

@@ -27,6 +27,7 @@
 
 html {
 	scrollbar-gutter: stable;
+	scroll-behavior: smooth;
 }
 
 body {
@@ -37,7 +38,6 @@ body {
 	font-variant-numeric: slashed-zero;
 
 	text-rendering: optimizelegibility;
-	scroll-behavior: smooth;
 }
 
 * {
