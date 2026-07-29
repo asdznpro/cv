@@ -1,13 +1,11 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'motion/react'
 
 import { useAdminShell, MIN } from '../shell'
 import { Button, Separator } from 'ui/blocks'
-import { Logo } from 'ui/brand'
 
 import {
 	Icon28PollSquareOutline,
@@ -81,13 +79,6 @@ export function Sidebar() {
 					style={{ width: clipLayout ? MIN : '100%' }}
 				>
 					<div className='flex flex-col p-surface gap-surface'>
-						{/* <Link
-							href='/'
-							className='w-fit flex rounded-full transition-all focus-ring-base focus-ring-visible'
-						>
-							<Logo.Sign size={44} />
-						</Link> */}
-
 						<Button
 							to='/'
 							size='lg'
