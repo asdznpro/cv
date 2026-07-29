@@ -1,4 +1,5 @@
 import { PixelBlast } from 'widgets'
+import { VkIdOneTap } from 'widgets/admin'
 import { Button, Separator } from 'ui/blocks'
 import { Icon28ArrowLeftOutline } from '@vkontakte/icons'
 
@@ -31,10 +32,8 @@ export default function Login() {
 							<span className='text-foreground-tertiary'>CV / Admin Panel</span>
 						</h1>
 
-						<div className='flex flex-col gap-3'>
-							<Button className='w-full' size='lg' radius='rounded'>
-								Continue with VK ID
-							</Button>
+						<div className='min-h-11 flex'>
+							<VkIdOneTap />
 						</div>
 					</div>
 				</div>

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import { Badge } from 'ui/blocks'
 import { Logo } from 'ui/brand'
 
 export default function PublicLayout({
@@ -27,7 +28,9 @@ export default function PublicLayout({
 			<footer className='mt-auto w-full flex flex-col py-12'>
 				<div className='mx-auto max-w-md w-full flex px-app text-xl text-blue-200'>
 					<span className='mx-auto'>
-						&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV
+						<Badge mode='secondary'>
+							&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV
+						</Badge>
 					</span>
 				</div>
 			</footer>
