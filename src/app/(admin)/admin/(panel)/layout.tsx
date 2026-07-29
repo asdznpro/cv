@@ -1,14 +1,16 @@
-'use client'
+import { getAdminSession } from 'lib/auth'
 
 import { AdminShellProvider, Header, Sidebar } from 'widgets/admin'
 
-export default function AdminLayout({
+export default async function AdminLayout({
 	children,
 }: {
 	children: React.ReactNode
 }) {
+	const user = await getAdminSession()
+
 	return (
-		<AdminShellProvider>
+		<AdminShellProvider user={user}>
 			<div className='w-full h-full flex flex-1'>
 				<Sidebar />
 

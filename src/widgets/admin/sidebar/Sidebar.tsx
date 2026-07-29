@@ -54,8 +54,11 @@ const NAV_ITEMS = [
 
 export function Sidebar() {
 	const pathname = usePathname()
-	const { open, clipLayout, widthMv, dimOpacity, onResizeStart } =
+	const { user, open, clipLayout, widthMv, dimOpacity, onResizeStart } =
 		useAdminShell()
+
+	const displayName =
+		[user?.firstName, user?.lastName].filter(Boolean).join(' ') || 'Admin'
 
 	const activeHref = NAV_ITEMS.map(item => item.href)
 		.filter(href => pathname === href || pathname.startsWith(`${href}/`))
@@ -119,17 +122,23 @@ export function Sidebar() {
 					<div className='flex flex-col p-surface gap-surface'>
 						<div className='flex items-center gap-surface'>
 							<div className='w-9 h-9 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden outline-2 outline-offset-3 outline-accent'>
-								<Image
-									className='w-full h-full object-cover'
-									src='https://sun4-1.vkuserphoto.ru/s/v1/ig2/n3nqzN5xnpFxjN4P_PorpYzxFrr0MPC0if18Ig6M-2hiazfI_HMUl3rGs2JxZeBkXDmdSq7adb_30etn94CM2gw6.jpg?quality=95&crop=588,413,1324,1324&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280&ava=1&u=NIn875gpgJ9l6ZE_kSrqoPNZtN80SrGXimwoD0q4YDE&cs=200x200'
-									alt=''
-									width={200}
-									height={200}
-								/>
+								{user?.avatar ? (
+									<Image
+										className='w-full h-full object-cover'
+										src={user.avatar}
+										alt={displayName}
+										width={200}
+										height={200}
+									/>
+								) : (
+									<span className='text-sm font-medium text-foreground-tertiary'>
+										{displayName.slice(0, 1)}
+									</span>
+								)}
 							</div>
 
 							<p className='flex-1 text-lg font-condensed font-medium truncate'>
-								Andrew S.
+								{displayName}
 							</p>
 
 							<Button

@@ -1,6 +1,7 @@
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
+import { cache } from 'react'
 
 import { ADMIN_SESSION_COOKIE, ADMIN_SESSION_MAX_AGE } from './constants'
 
@@ -73,12 +74,12 @@ export function clearAdminSessionCookie(response: NextResponse) {
 	})
 }
 
-export async function getAdminSession(): Promise<AdminSession | null> {
+export const getAdminSession = cache(async (): Promise<AdminSession | null> => {
 	const jar = await cookies()
 	const token = jar.get(ADMIN_SESSION_COOKIE)?.value
 	if (!token) return null
 	return verifyAdminSessionToken(token)
-}
+})
 
 export async function requireAdminSession(): Promise<AdminSession> {
 	const session = await getAdminSession()
