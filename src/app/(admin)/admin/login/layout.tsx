@@ -16,7 +16,7 @@ export default function PublicLayout({
 						href='/'
 						className='w-fit flex rounded-full transition-all focus-ring-base focus-ring-visible'
 					>
-						<Logo.Lockup width={194} height={52} />
+						<Logo.Lockup width={164} height={44} />
 					</Link>
 				</div>
 			</header>
@@ -28,7 +28,7 @@ export default function PublicLayout({
 			<footer className='mt-auto w-full flex flex-col py-12'>
 				<div className='mx-auto max-w-md w-full flex px-app text-xl text-blue-200'>
 					<span className='mx-auto'>
-						<Badge mode='secondary'>
+						<Badge mode='secondary' appearance='neutral'>
 							&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV
 						</Badge>
 					</span>
