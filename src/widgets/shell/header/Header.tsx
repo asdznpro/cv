@@ -30,7 +30,7 @@ const NAV_ITEMS = [
 	},
 	{
 		label: 'Experience',
-		href: '/experience',
+		href: '/articles?category=experience',
 	},
 	{
 		label: 'Skills',

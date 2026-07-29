@@ -53,10 +53,10 @@ export default async function Article({
 				<section className='max-w-2xl w-full flex flex-col gap-10'>
 					<header className='flex flex-col gap-6'>
 						<div className='text-xl font-medium font-condensed'>
-							<Link href='/articles' className='text-foreground-tertiary'>
+							<Link href='/articles' className='text-foreground-secondary'>
 								Articles
 							</Link>{' '}
-							<span className='text-foreground-tertiary select-none'>/</span>{' '}
+							<span className='text-foreground-secondary select-none'>/</span>{' '}
 							<Link
 								href={`/articles?category=${article.category?.slug}`}
 								className=''
@@ -69,6 +69,19 @@ export default async function Article({
 							<h1 className='text-5xl font-medium font-condensed tracking-tight text-balance'>
 								{article.title}
 							</h1>
+						</div>
+
+						<div className='flex gap-app text-lg text-foreground-secondary font-condensed font-medium'>
+							<span className='w-fit flex'>30 Jun 2026</span>
+							<span className='w-fit flex'>4 min read</span>
+							<span className='w-fit flex items-center gap-1.5 hover:text-foreground transition-colors cursor-pointer'>
+								Copy{' '}
+								<Icon28ChevronLeftCircle
+									className='-rotate-90'
+									width={18}
+									height={18}
+								/>
+							</span>
 						</div>
 					</header>
 				</section>
@@ -121,37 +134,13 @@ export default async function Article({
 
 				<section className='max-w-7xl w-full grid grid-cols-[1fr_auto_1fr] gap-10'>
 					<div className=''>
-						{/* <nav className='sticky top-28 w-full flex flex-col'>
-							{toc.map((item, index) => (
-								<a key={index} href={`#${item.id}`} className='flex gap-app'>
-									<aside className='relative z-0'>
-										<span className='w-7 h-7 flex items-center justify-center bg-surface border border-separator rounded-full text-foreground-secondary text-xs font-mono'>
-											{item.depth > 9 ? '0' + (index + 1) : index + 1}
-										</span>
-
-										{index !== toc.length - 1 && (
-											<span className='absolute inset-0 -z-1 w-full h-full flex items-center justify-center'>
-												<Separator orientation='vertical' />
-											</span>
-										)}
-									</aside>
-
-									<div className='flex-1 pb-app'>
-										<span className='line-clamp-2 text-balance text-lg font-condensed font-medium'>
-											{item.title}
-										</span>
-									</div>
-								</a>
-							))}
-						</nav> */}
-
 						<ArticleToc items={toc} />
 					</div>
 
 					<section className='max-w-2xl w-full flex flex-col gap-10'>
 						<MarkdownContent>{content}</MarkdownContent>
 
-						<div className='flex gap-1.5'>
+						{/* <div className='flex gap-1.5'>
 							{article.tags.map(tag => (
 								<Badge
 									key={tag}
@@ -162,10 +151,10 @@ export default async function Article({
 									#{tag}
 								</Badge>
 							))}
-						</div>
+						</div> */}
 					</section>
 
-					<div className=''>
+					{/* <div className=''>
 						<div className='flex flex-col 0gap-2 text-lg text-foreground-secondary font-condensed font-medium'>
 							<span className='w-fit flex'>30 Jun 2026</span>
 							<span className='w-fit flex'>4 min read</span>
@@ -178,7 +167,7 @@ export default async function Article({
 								/>
 							</span>
 						</div>
-					</div>
+					</div> */}
 				</section>
 
 				<section className='max-w-2xl w-full flex flex-col gap-10'>
@@ -219,6 +208,19 @@ export default async function Article({
 								</Link>
 							))}
 						</div>
+					</div>
+
+					<div className='flex gap-1.5'>
+						{article.tags.map(tag => (
+							<Badge
+								key={tag}
+								to={`/articles?tag=${tag}`}
+								mode='outline'
+								appearance='neutral'
+							>
+								#{tag}
+							</Badge>
+						))}
 					</div>
 				</section>
 
