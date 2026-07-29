@@ -7,19 +7,27 @@ import { AnimatePresence, motion } from 'motion/react'
 import { Button, Kbd } from 'ui/blocks'
 import { Icon28ArrowUpOutline } from '@vkontakte/icons'
 
-const SHOW_AFTER_PX = 400
+const SHOW_AFTER_PX = 440
 
 export function BackToTop() {
 	const [ready, setReady] = useState(false)
 	const windowScroll = useWindowScroll()
 	const { y } = windowScroll.watch()
-	
+
 	useEffect(() => setReady(true), [])
-	
+
 	const visible = ready && y > SHOW_AFTER_PX
 
 	const scrollTop = () => {
 		windowScroll.scrollTo({ x: 0, y: 0, behavior: 'smooth' })
+
+		if (window.location.hash) {
+			history.replaceState(
+				null,
+				'',
+				`${window.location.pathname}${window.location.search}`,
+			)
+		}
 	}
 
 	useHotkeys('shift+t, shift+е', event => {

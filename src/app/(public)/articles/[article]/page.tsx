@@ -49,10 +49,10 @@ export default async function Article({
 
 			<span className='h-24' />
 
-			<article className='mx-auto container w-full px-app flex flex-col items-center gap-x-app gap-y-20'>
-				<section className='max-w-2xl w-full flex flex-col gap-10'>
+			<article className='mx-auto container w-full px-app flex flex-col items-center gap-x-app gap-y-12'>
+				<section className='max-w-2xl w-full flex flex-col gap-12'>
 					<header className='flex flex-col gap-6'>
-						<div className='text-xl font-medium font-condensed'>
+						<nav className='text-xl font-medium font-condensed'>
 							<Link href='/articles' className='text-foreground-secondary'>
 								Articles
 							</Link>{' '}
@@ -63,7 +63,7 @@ export default async function Article({
 							>
 								{article.category?.label}
 							</Link>
-						</div>
+						</nav>
 
 						<div className='flex flex-1 flex-col gap-6'>
 							<h1 className='text-5xl font-medium font-condensed tracking-tight text-balance'>
@@ -71,7 +71,7 @@ export default async function Article({
 							</h1>
 						</div>
 
-						<div className='flex gap-app text-lg text-foreground-secondary font-condensed font-medium'>
+						{/* <div className='flex gap-app text-lg text-foreground-secondary font-condensed font-medium'>
 							<span className='w-fit flex'>30 Jun 2026</span>
 							<span className='w-fit flex'>4 min read</span>
 							<span className='w-fit flex items-center gap-1.5 hover:text-foreground transition-colors cursor-pointer'>
@@ -82,6 +82,24 @@ export default async function Article({
 									height={18}
 								/>
 							</span>
+						</div> */}
+
+						<div className='flex gap-1.5'>
+							<Badge mode='outline' appearance='neutral'>
+								{article.created_at}
+							</Badge>
+
+							<Badge mode='outline' appearance='neutral'>
+								4 min read
+							</Badge>
+
+							<Badge
+								mode='outline'
+								appearance='neutral'
+								suffix={<Icon28ChevronDownOutline width={16} height={16} />}
+							>
+								Copy
+							</Badge>
 						</div>
 					</header>
 				</section>
@@ -170,7 +188,7 @@ export default async function Article({
 					</div> */}
 				</section>
 
-				<section className='max-w-2xl w-full flex flex-col gap-10'>
+				<section className='max-w-2xl w-full flex flex-col gap-6'>
 					<div className='flex flex-col border border-separator rounded-xl overflow-hidden'>
 						<div className='flex flex-col p-surface gap-surface bg-surface'>
 							<span className='text-foreground-secondary font-medium'>

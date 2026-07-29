@@ -21,6 +21,10 @@ import {
 
 const NAV_ITEMS = [
 	{
+		label: 'Articles',
+		href: '/articles',
+	},
+	{
 		label: 'About',
 		href: '/articles/about',
 	},
