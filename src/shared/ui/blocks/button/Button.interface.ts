@@ -7,6 +7,7 @@ export default interface ButtonProps extends Omit<
 	mode?: 'primary' | 'soft' | 'secondary' | 'outline' | 'ghost' | undefined
 	appearance?: 'accent' | 'neutral' | 'danger' | 'success' | undefined
 	size?: 'lg' | 'md' | 'sm' | undefined
+	align?: 'center' | 'spread' | 'between'
 	radius?: 'smooth' | 'rounded' | 'none' | undefined
 
 	as?: 'button' | 'span' | undefined

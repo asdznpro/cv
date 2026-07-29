@@ -31,7 +31,24 @@ export const buttonVariants = cva(
 			size: {
 				sm: 'h-7 min-h-7 min-w-7 px-1 [&_.in]:gap-1 text-sm rounded-sm [--ring-radius:var(--radius-sm)]',
 				md: 'h-9 min-h-9 min-w-9 px-1.5 [&_.in]:gap-1 text-sm rounded-md [--ring-radius:var(--radius-md)]',
-				lg: 'h-11 min-h-11 min-w-11 px-2 [&_.in]:gap-1.5 text-base rounded-md [--ring-radius:var(--radius-md)]',
+				lg: 'h-11 min-h-11 min-w-11 px-2 [&_.in]:gap-2 text-base rounded-md [--ring-radius:var(--radius-md)]',
+			},
+			align: {
+				center: 'w-fit [&_.in]:flex [&_.in]:justify-center',
+				spread: [
+					'w-full',
+					'[&_.in]:grid [&_.in]:w-full [&_.in]:items-center',
+					'[&_.in]:grid-cols-[auto_1fr_auto_1fr_auto]',
+					'[&_.in:not(:has(.spacing))]:grid-cols-[1fr_auto_1fr]',
+					'[&_.prefix]:justify-self-start',
+					'[&_.content]:justify-self-center [&_.content]:min-w-0',
+					'[&_.suffix]:justify-self-end',
+				],
+				between: [
+					'w-full',
+					'[&_.in]:flex [&_.in]:w-full [&_.in]:justify-start',
+					'[&_.suffix]:ml-auto',
+				],
 			},
 			radius: {
 				none: 'rounded-none [--ring-radius:var(--radius-none)]',
@@ -169,6 +186,7 @@ export const buttonVariants = cva(
 			mode: 'primary',
 			appearance: 'accent',
 			size: 'md',
+			align: 'center',
 			radius: 'smooth',
 		},
 	},

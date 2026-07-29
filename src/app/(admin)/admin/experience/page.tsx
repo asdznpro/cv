@@ -1,4 +1,4 @@
-export default function Contact() {
+export default function Experience() {
 	return (
 		<>
 			<span className='h-24' />

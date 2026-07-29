@@ -17,6 +17,7 @@ export const Button = forwardRef<
 		mode,
 		appearance,
 		size,
+		align,
 		radius,
 		disabled,
 		as,
@@ -82,12 +83,13 @@ export const Button = forwardRef<
 					mode,
 					appearance,
 					size,
+					align,
 					radius,
 				}),
 				className,
 			)}
 		>
-			<span className='in min-w-0 flex items-center justify-center'>
+			<span className='in min-w-0 w-full items-center'>
 				{showSpacing && <span className='spacing w-0 h-full' />}
 
 				{prefix && <span className='prefix flex gap-0.5'>{prefix}</span>}
