@@ -14,17 +14,20 @@ import {
 	updateCompany,
 } from 'lib/companies'
 
-import { Badge, Button, Separator } from 'ui/blocks'
+import { Badge, Button, Kbd, Separator } from 'ui/blocks'
 import { Input } from 'ui/forms'
 import {
 	Icon24DeleteOutline,
 	Icon24DotsVertical,
 	Icon24PenOutline,
 	Icon28AddOutline,
-	Icon28CheckCircleOn,
+	Icon28InfoCircleOutline,
 	Icon28GlobeOutline,
 	Icon28HashtagOutline,
 	Icon28MoreHorizontal,
+	Icon28PictureOutline,
+	Icon28StickerOutline,
+	Icon28RotateLeftOutline,
 } from '@vkontakte/icons'
 
 type FormState = {
@@ -192,6 +195,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 									aria-label='Название'
 									required
 									disabled={pending}
+									prefix={<Icon28InfoCircleOutline width={20} height={20} />}
 								/>
 							</div>
 
@@ -199,6 +203,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 								<span className='text-sm text-foreground-secondary font-condensed uppercase tracking-tight'>
 									Slug
 								</span>
+
 								<Input
 									size='lg'
 									mode='secondary'
@@ -211,6 +216,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 									aria-label='Slug'
 									required
 									disabled={pending}
+									prefix={<Icon28HashtagOutline width={20} height={20} />}
 								/>
 							</div>
 
@@ -218,6 +224,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 								<span className='text-sm text-foreground-secondary font-condensed uppercase tracking-tight'>
 									Logo path
 								</span>
+
 								<Input
 									size='lg'
 									mode='secondary'
@@ -229,6 +236,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 									aria-label='Logo path'
 									required
 									disabled={pending}
+									prefix={<Icon28PictureOutline width={20} height={20} />}
 								/>
 							</div>
 
@@ -236,6 +244,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 								<span className='text-sm text-foreground-secondary font-condensed uppercase tracking-tight'>
 									Website
 								</span>
+
 								<Input
 									size='lg'
 									mode='secondary'
@@ -246,6 +255,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 									placeholder='https://virtus.pro'
 									aria-label='Website'
 									disabled={pending}
+									prefix={<Icon28GlobeOutline width={20} height={20} />}
 								/>
 							</div>
 
@@ -253,6 +263,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 								<span className='text-sm text-foreground-secondary font-condensed uppercase tracking-tight'>
 									Sticker path
 								</span>
+
 								<Input
 									size='lg'
 									mode='secondary'
@@ -266,6 +277,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 									placeholder='/assets/experience/sticker/vp.svg'
 									aria-label='Sticker path'
 									disabled={pending}
+									prefix={<Icon28StickerOutline width={20} height={20} />}
 								/>
 							</div>
 
@@ -273,6 +285,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 								<span className='text-sm text-foreground-secondary font-condensed uppercase tracking-tight'>
 									Sticker rotate
 								</span>
+
 								<Input
 									size='lg'
 									mode='secondary'
@@ -287,6 +300,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 									placeholder='-12'
 									aria-label='Sticker rotate'
 									disabled={pending}
+									prefix={<Icon28RotateLeftOutline width={20} height={20} />}
 								/>
 							</div>
 						</div>

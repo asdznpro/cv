@@ -2,6 +2,8 @@ export default interface KbdProps extends Omit<
 	React.AllHTMLAttributes<HTMLElement>,
 	'size'
 > {
-	size?: 'md' | 'sm' | undefined
-	radius?: 'smooth' | 'rounded' | 'none' | undefined
+	keys?: string[]
+	variant?: 'dark' | 'neutral'
+	size?: 'md' | 'sm'
+	radius?: 'smooth' | 'rounded' | 'none'
 }

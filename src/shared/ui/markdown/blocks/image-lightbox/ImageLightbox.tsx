@@ -72,7 +72,7 @@ export function ImageLightbox() {
 						mode='secondary'
 						appearance='neutral'
 						prefix={<Icon28CancelOutline width={18} height={18} />}
-						suffix={<Kbd size='sm'>Esc</Kbd>}
+						suffix={<Kbd size='sm' keys={['Esc']} radius='rounded' />}
 						radius='rounded'
 					>
 						Close

@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { motion } from 'motion/react'
 
 import { useAdminShell, MIN } from '../shell'
-import { Button, Separator } from 'ui/blocks'
+import { Button, Kbd, Separator } from 'ui/blocks'
 
 import {
 	Icon28PollSquareOutline,
@@ -18,6 +18,8 @@ import {
 	Icon28MoreHorizontal,
 	Icon28ArrowLeftOutline,
 	Icon28DocumentTextOutline,
+	Icon28SearchOutline,
+	Icon28ChevronRightOutline,
 } from '@vkontakte/icons'
 
 const NAV_ITEMS = [
@@ -131,10 +133,25 @@ export function Sidebar() {
 
 					<Separator />
 
-					<div className='scrollbar overflow-y-auto h-full flex flex-col p-2 gap-surface'>
+					<div className='scrollbar overflow-y-auto h-full flex flex-col p-2 gap-2'>
+						<Button
+							size='lg'
+							mode='soft'
+							appearance='neutral'
+							prefix={<Icon28SearchOutline width={20} height={20} />}
+							suffix={
+								<>
+									<Kbd keys={['Shift', 'F']} radius='smooth' />
+								</>
+							}
+							align='between'
+						>
+							Search
+						</Button>
+
 						{NAV_ITEMS.map(section => (
 							<div key={section.id} className='flex flex-col gap-2'>
-								<span className='px-4 py-2 text-xs text-foreground-secondary'>
+								<span className='px-4 pt-4 pb-2 text-xs text-foreground-secondary select-none'>
 									{section.label}
 								</span>
 
@@ -143,12 +160,12 @@ export function Sidebar() {
 										key={item.href}
 										to={item.href}
 										size='lg'
-										mode={isActiveRoute(item.href) ? 'secondary' : 'ghost'}
-										appearance='neutral'
+										mode={isActiveRoute(item.href) ? 'soft' : 'ghost'}
+										appearance={isActiveRoute(item.href) ? 'accent' : 'neutral'}
 										prefix={item.icon}
 										suffix={
 											isActiveRoute(item.href) && (
-												<Icon28ChevronRightCircle width={20} height={20} />
+												<Icon28ChevronRightOutline width={20} height={20} />
 											)
 										}
 										align='between'

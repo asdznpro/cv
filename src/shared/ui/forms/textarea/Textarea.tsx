@@ -75,7 +75,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 					<textarea
 						{...restProps}
 						ref={message.ref}
-						className='textarea resize-none scrollbar w-full rounded-xs appearance-none outline-none placeholder:text-foreground-tertiary disabled:placeholder:text-foreground-tertiary/60 disabled:text-foreground-secondary disabled:cursor-not-allowed'
+						className='textarea resize-none scrollbar w-full rounded-xs appearance-none outline-none placeholder:text-foreground-secondary disabled:placeholder:text-foreground-tertiary disabled:text-foreground-secondary disabled:cursor-not-allowed'
 					/>
 
 					{isResizable && !restProps.disabled && (

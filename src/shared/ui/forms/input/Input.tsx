@@ -40,7 +40,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 					<input
 						{...restProps}
 						ref={ref}
-						className='content w-full h-full px-0.5 rounded-xs appearance-none outline-none placeholder:text-foreground-tertiary disabled:placeholder:text-foreground-tertiary/60 disabled:text-foreground-secondary disabled:cursor-not-allowed'
+						className='content w-full h-full px-0.5 rounded-xs appearance-none outline-none placeholder:text-foreground-secondary disabled:placeholder:text-foreground-tertiary disabled:text-foreground-secondary disabled:cursor-not-allowed'
 					/>
 
 					{suffix && (

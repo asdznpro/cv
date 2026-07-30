@@ -133,7 +133,7 @@
 	--separator: var(--palette-kimberly-600);
 
 	--surface: color-mix(in srgb, var(--palette-kimberly-900) 40%, transparent);
-	--surface-secondary: var(--palette-kimberly-800);
+	--surface-secondary: var(--palette-kimberly-900);
 
 	--background: var(--palette-kimberly-950);
 	--background-inverse: var(--palette-kimberly-50);

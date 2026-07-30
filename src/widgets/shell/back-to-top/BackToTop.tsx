@@ -48,10 +48,11 @@ export function BackToTop() {
 					<Button
 						onClick={scrollTop}
 						size='lg'
-						mode='secondary'
 						appearance='neutral'
 						prefix={<Icon28ArrowUpOutline width={20} height={20} />}
-						suffix={<Kbd>Shift + T</Kbd>}
+						suffix={
+							<Kbd keys={['Shift', 'T']} variant='dark' radius='rounded' />
+						}
 						radius='rounded'
 					>
 						Back to Top

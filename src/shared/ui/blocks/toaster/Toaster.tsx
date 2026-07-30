@@ -32,7 +32,7 @@ export function Toaster() {
 				unstyled: true,
 				classNames: {
 					toast:
-						'w-80 flex p-surface gap-3 border border-separator rounded-[31px] backdrop-blur-xl',
+						'w-80 flex p-4 gap-3 border border-separator rounded-[31px]',
 					content: 'flex flex-1 flex-col gap-2 select-none',
 					title: 'text-xl font-condensed font-medium',
 					description: 'text-sm !text-foreground-secondary',
@@ -45,7 +45,7 @@ export function Toaster() {
 					error: 'text-danger',
 					warning: 'text-warning',
 					loading: '',
-					default: 'bg-surface',
+					default: 'bg-surface-secondary',
 					icon: 'relative w-7 h-7 m-0 flex items-center justify-center',
 				},
 			}}
