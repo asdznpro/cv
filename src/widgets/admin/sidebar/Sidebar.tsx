@@ -1,7 +1,7 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { motion } from 'motion/react'
 
 import { useAdminShell, MIN } from '../shell'
@@ -17,44 +17,71 @@ import {
 	Icon28WrenchOutline,
 	Icon28MoreHorizontal,
 	Icon28ArrowLeftOutline,
-	Icon28UserSquareOutline,
+	Icon28DocumentTextOutline,
 } from '@vkontakte/icons'
 
 const NAV_ITEMS = [
 	{
-		href: '/admin',
-		label: 'Overview',
-		icon: <Icon28PollSquareOutline width={20} height={20} />,
+		id: 'main',
+		label: 'Main',
+		items: [
+			{
+				href: '/admin',
+				label: 'Overview',
+				icon: <Icon28PollSquareOutline width={20} height={20} />,
+			},
+		],
 	},
+
 	{
-		href: '/admin/articles',
-		label: 'Articles',
-		icon: <Icon28ArticlesOutline width={20} height={20} />,
+		id: 'content',
+		label: 'Content',
+		items: [
+			{
+				href: '/admin/articles',
+				label: 'Articles',
+				icon: <Icon28ArticlesOutline width={20} height={20} />,
+			},
+			{
+				href: '/admin/images',
+				label: 'Images',
+				icon: <Icon28PictureStackOutline width={20} height={20} />,
+			},
+		],
 	},
+
 	{
-		href: '/admin/experience',
-		label: 'Experience',
-		icon: <Icon28WorkOutline width={20} height={20} />,
+		id: 'resume',
+		label: 'Resume',
+		items: [
+			{
+				href: '/admin/experience',
+				label: 'Experience',
+				icon: <Icon28WorkOutline width={20} height={20} />,
+			},
+			{
+				href: '/admin/companies',
+				label: 'Companies',
+				icon: <Icon28DocumentTextOutline width={20} height={20} />,
+			},
+			{
+				href: '/admin/skills',
+				label: 'Skills',
+				icon: <Icon28WrenchOutline width={20} height={20} />,
+			},
+		],
 	},
+
 	{
-		href: '/admin/companies',
-		label: 'Companies',
-		icon: <Icon28UserSquareOutline width={20} height={20} />,
-	},
-	{
-		href: '/admin/skills',
-		label: 'Skills',
-		icon: <Icon28WrenchOutline width={20} height={20} />,
-	},
-	{
-		href: '/admin/images',
-		label: 'Images',
-		icon: <Icon28PictureStackOutline width={20} height={20} />,
-	},
-	{
-		href: '/admin/settings',
-		label: 'Settings',
-		icon: <Icon28SettingsOutline width={20} height={20} />,
+		id: 'system',
+		label: 'System',
+		items: [
+			{
+				href: '/admin/settings',
+				label: 'Settings',
+				icon: <Icon28SettingsOutline width={20} height={20} />,
+			},
+		],
 	},
 ]
 
@@ -66,7 +93,9 @@ export function Sidebar() {
 	const displayName =
 		[user?.firstName, user?.lastName].filter(Boolean).join(' ') || 'Admin'
 
-	const activeHref = NAV_ITEMS.map(item => item.href)
+	const activeHref = NAV_ITEMS.flatMap(section =>
+		section.items.map(item => item.href),
+	)
 		.filter(href => pathname === href || pathname.startsWith(`${href}/`))
 		.sort((a, b) => b.length - a.length)[0]
 
@@ -87,7 +116,7 @@ export function Sidebar() {
 					className='flex h-full max-h-screen shrink-0 flex-col'
 					style={{ width: clipLayout ? MIN : '100%' }}
 				>
-					<div className='flex flex-col p-surface gap-surface'>
+					<div className='flex flex-col p-2 gap-surface'>
 						<Button
 							to='/'
 							size='lg'
@@ -102,24 +131,32 @@ export function Sidebar() {
 
 					<Separator />
 
-					<div className='scrollbar overflow-y-auto h-full flex flex-col p-surface gap-2'>
-						{NAV_ITEMS.map(item => (
-							<Button
-								key={item.href}
-								to={item.href}
-								size='lg'
-								mode={isActiveRoute(item.href) ? 'secondary' : 'ghost'}
-								appearance='neutral'
-								prefix={item.icon}
-								suffix={
-									isActiveRoute(item.href) && (
-										<Icon28ChevronRightCircle width={20} height={20} />
-									)
-								}
-								align='between'
-							>
-								{item.label}
-							</Button>
+					<div className='scrollbar overflow-y-auto h-full flex flex-col p-2 gap-surface'>
+						{NAV_ITEMS.map(section => (
+							<div key={section.id} className='flex flex-col gap-2'>
+								<span className='px-4 py-2 text-xs text-foreground-secondary'>
+									{section.label}
+								</span>
+
+								{section.items.map(item => (
+									<Button
+										key={item.href}
+										to={item.href}
+										size='lg'
+										mode={isActiveRoute(item.href) ? 'secondary' : 'ghost'}
+										appearance='neutral'
+										prefix={item.icon}
+										suffix={
+											isActiveRoute(item.href) && (
+												<Icon28ChevronRightCircle width={20} height={20} />
+											)
+										}
+										align='between'
+									>
+										{item.label}
+									</Button>
+								))}
+							</div>
 						))}
 					</div>
 
