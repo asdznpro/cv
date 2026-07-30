@@ -1,8 +1,10 @@
+'use client'
+
 import { Icon28HelpOutline } from '@vkontakte/icons'
 import Link from 'next/link'
 
 import { Button, Separator } from 'ui/blocks'
-import { Caption, FormItem, Input, Label, Textarea } from 'ui/forms'
+import { FormItem } from 'ui/forms'
 
 export default function Admin() {
 	return (
@@ -36,13 +38,14 @@ export default function Admin() {
 							</p>
 						</div>
 
-						<FormItem status='error' required>
-							<Label suffix={<Icon28HelpOutline width={20} height={20} />}>
+						<FormItem id='coupon-code' status='error' required>
+							<FormItem.Label
+								suffix={<Icon28HelpOutline width={20} height={20} />}
+							>
 								Coupon Code
-							</Label>
+							</FormItem.Label>
 
-							<Input
-								id='coupon-code'
+							<FormItem.Input
 								type='text'
 								placeholder='Enter coupon code'
 								suffix={
@@ -52,25 +55,26 @@ export default function Admin() {
 								}
 							/>
 
-							<Caption status='error'>This is an error</Caption>
+							<FormItem.Caption>This is an error</FormItem.Caption>
 						</FormItem>
 
-						<FormItem>
-							<Label>Description</Label>
+						<FormItem id='description' optional>
+							<FormItem.Label>Description</FormItem.Label>
 
-							<Textarea
-								id='description'
+							<FormItem.Textarea
 								placeholder='Enter description'
 								maxLength={100}
 								rows={3}
 								resize='none'
 							/>
 
-							<Caption prefix={<Icon28HelpOutline width={20} height={20} />}>
+							<FormItem.Caption
+								prefix={<Icon28HelpOutline width={20} height={20} />}
+							>
 								Lorem ipsum dolor sit amet consectetur adipisicing elit.
 								Quisquam, quos. Lorem ipsum dolor sit amet consectetur
 								adipisicing elit. Quisquam, quos.
-							</Caption>
+							</FormItem.Caption>
 						</FormItem>
 					</div>
 

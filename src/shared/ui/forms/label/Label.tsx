@@ -1,13 +1,31 @@
+'use client'
+
 import { twMerge } from 'tailwind-merge'
 
+import { useFormItem } from '../form-item/FormItem.context'
 import type { LabelProps } from './Label.interface'
 
 export function Label(props: LabelProps) {
-	const { children, prefix, suffix, className, ...restProps } = props
+	const formItem = useFormItem()
+
+	const {
+		children,
+		htmlFor,
+		prefix,
+		suffix,
+		required: requiredProp,
+		optional: optionalProp,
+		className,
+		...restProps
+	} = props
+
+	const required = requiredProp ?? formItem?.required ?? false
+	const optional = optionalProp ?? formItem?.optional ?? false
 
 	return (
-		<div
+		<label
 			{...restProps}
+			htmlFor={htmlFor ?? formItem?.id}
 			className={twMerge(
 				'root flex items-center gap-1.5',
 				'text-sm font-condensed font-medium tracking-tight',
@@ -21,13 +39,13 @@ export function Label(props: LabelProps) {
 			<span className='min-w-0 flex gap-1'>
 				<span className='truncate'>{children}</span>
 
-				<span className='text-foreground-secondary select-none'>
-					(optional)
-				</span>
-
-				{restProps.required && (
-					<span className='text-danger select-none'>*</span>
+				{optional && !required && (
+					<span className='text-foreground-secondary select-none'>
+						(optional)
+					</span>
 				)}
+
+				{required && <span className='text-danger select-none'>*</span>}
 			</span>
 
 			{suffix && (
@@ -35,6 +53,6 @@ export function Label(props: LabelProps) {
 					{suffix}
 				</span>
 			)}
-		</div>
+		</label>
 	)
 }
