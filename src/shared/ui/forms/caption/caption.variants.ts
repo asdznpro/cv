@@ -18,7 +18,7 @@ export const captionVariants = cva(
 			},
 			{
 				status: 'error',
-				class: 'text-danger',
+				class: 'text-danger font-medium',
 			},
 		],
 

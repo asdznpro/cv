@@ -8,6 +8,8 @@ import { useFormItem } from '../form-item/FormItem.context'
 import { inputVariants } from './input.variants'
 import type InputProps from './Input.interface'
 
+import { FieldSurface } from '../field-surface'
+
 export const Input = forwardRef<HTMLInputElement, InputProps>(
 	function Input(props, ref) {
 		const formItem = useFormItem()
@@ -41,7 +43,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 					className,
 				)}
 			>
-				<span className='in w-full h-full flex items-center justify-center py-1'>
+				<FieldSurface
+					mode={mode}
+					status={status}
+					radius={radius}
+					disabled={isDisabled}
+				/>
+
+				<span className='in relative w-full h-full flex items-center justify-center py-1'>
 					<span className='spacing w-0 h-full' />
 
 					{prefix && (

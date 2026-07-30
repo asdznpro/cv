@@ -9,6 +9,7 @@ import { useFormItem } from '../form-item/FormItem.context'
 import { textareaVariants } from './textarea.variants'
 import type TextareaProps from './Textarea.interface'
 
+import { FieldSurface } from '../field-surface'
 import { ExpandIndicator } from './ExpandIndicator'
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -93,7 +94,14 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 					className,
 				)}
 			>
-				<span className='in w-full h-full flex items-center justify-center'>
+				<FieldSurface
+					mode={mode}
+					status={status}
+					radius={radius}
+					disabled={isDisabled}
+				/>
+
+				<span className='in relative w-full h-full flex items-center justify-center'>
 					<textarea
 						{...restProps}
 						ref={setRefs}
@@ -103,7 +111,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 						aria-invalid={status === 'error' || undefined}
 						aria-required={isRequired || undefined}
 						aria-describedby={describedBy}
-						className='textarea resize-none scrollbar w-full rounded-xs appearance-none outline-none placeholder:text-foreground-secondary disabled:placeholder:text-foreground-tertiary disabled:text-foreground-secondary disabled:cursor-not-allowed'
+						className='textarea resize-none scrollbar-none w-full rounded-xs appearance-none outline-none placeholder:text-foreground-secondary disabled:placeholder:text-foreground-tertiary disabled:text-foreground-secondary disabled:cursor-not-allowed'
 					/>
 
 					{isResizable && !isDisabled && (

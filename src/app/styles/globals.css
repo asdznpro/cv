@@ -53,7 +53,7 @@ body {
 
 @utility scrollbar {
 	scrollbar-width: thin;
-	scrollbar-color: var(--foreground-tertiary) var(--background);
+	scrollbar-color: var(--foreground-tertiary) transparent;
 }
 
 /* Animation */

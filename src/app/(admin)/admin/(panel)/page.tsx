@@ -38,7 +38,7 @@ export default function Admin() {
 							</p>
 						</div>
 
-						<FormItem id='coupon-code' status='error' required>
+						<FormItem id='coupon-code' required>
 							<FormItem.Label
 								suffix={<Icon28HelpOutline width={20} height={20} />}
 							>
@@ -63,8 +63,8 @@ export default function Admin() {
 
 							<FormItem.Textarea
 								placeholder='Enter description'
-								maxLength={100}
 								rows={3}
+								maxLength={100}
 								resize='none'
 							/>
 
