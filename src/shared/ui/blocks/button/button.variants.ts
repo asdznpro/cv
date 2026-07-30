@@ -31,7 +31,7 @@ export const buttonVariants = cva(
 			size: {
 				sm: 'h-7 min-h-7 min-w-7 px-1 [&_.in]:gap-1 text-sm rounded-sm [--ring-radius:var(--radius-sm)]',
 				md: 'h-9 min-h-9 min-w-9 px-1.5 [&_.in]:gap-1 text-sm rounded-md [--ring-radius:var(--radius-md)]',
-				lg: 'h-11 min-h-11 min-w-11 px-2 [&_.in]:gap-2 text-base rounded-md [--ring-radius:var(--radius-md)]',
+				lg: 'h-11 min-h-11 min-w-11 px-2 [&_.in]:gap-1.5 text-base rounded-md [--ring-radius:var(--radius-md)]',
 			},
 			align: {
 				center: 'w-fit [&_.in]:flex [&_.in]:justify-center',
@@ -64,7 +64,7 @@ export const buttonVariants = cva(
 				mode: 'primary',
 				appearance: 'accent',
 				class:
-					'text-white bg-accent interactive-hover:hover:bg-accent-secondary hover-accent-ring',
+					'text-white bg-accent interactive-hover:hover:bg-accent-secondary 0hover-accent-ring',
 			},
 			{
 				mode: 'primary',

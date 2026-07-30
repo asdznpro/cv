@@ -1,28 +1,51 @@
 'use client'
 
-import { forwardRef } from 'react'
+import { forwardRef, useCallback } from 'react'
 
 import { useTextareaAutosize } from '@siberiacancode/reactuse'
 import { twMerge } from 'tailwind-merge'
 
+import { useFormItem } from '../form-item/FormItem.context'
 import { textareaVariants } from './textarea.variants'
 import type TextareaProps from './Textarea.interface'
 
+import { FieldSurface } from '../field-surface'
 import { ExpandIndicator } from './ExpandIndicator'
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 	function Textarea(props, ref) {
+		const formItem = useFormItem()
+
 		const {
-			status,
+			status: statusProp,
 			mode,
 			size,
 			radius,
 			resize = 'vertical',
 			className,
+			id,
+			disabled,
+			required,
 			...restProps
 		} = props
 
+		const status = statusProp ?? formItem?.status ?? 'default'
+		const isDisabled = disabled ?? formItem?.disabled ?? false
+		const isRequired = required ?? formItem?.required ?? false
+		const fieldId = id ?? formItem?.id
+		const describedBy =
+			formItem && status === 'error' ? formItem.captionId : undefined
+
 		const message = useTextareaAutosize()
+
+		const setRefs = useCallback(
+			(node: HTMLTextAreaElement | null) => {
+				message.ref.current = node as HTMLTextAreaElement
+				if (typeof ref === 'function') ref(node)
+				else if (ref) ref.current = node
+			},
+			[message.ref, ref],
+		)
 
 		const isResizable = resize !== 'none'
 
@@ -71,14 +94,27 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 					className,
 				)}
 			>
-				<span className='in w-full h-full flex items-center justify-center'>
+				<FieldSurface
+					mode={mode}
+					status={status}
+					radius={radius}
+					disabled={isDisabled}
+				/>
+
+				<span className='in relative w-full h-full flex items-center justify-center'>
 					<textarea
 						{...restProps}
-						ref={message.ref}
-						className='textarea resize-none scrollbar w-full rounded-xs appearance-none outline-none placeholder:text-foreground-secondary disabled:placeholder:text-foreground-tertiary disabled:text-foreground-secondary disabled:cursor-not-allowed'
+						ref={setRefs}
+						id={fieldId}
+						disabled={isDisabled}
+						required={isRequired}
+						aria-invalid={status === 'error' || undefined}
+						aria-required={isRequired || undefined}
+						aria-describedby={describedBy}
+						className='textarea resize-none scrollbar-none w-full rounded-xs appearance-none outline-none placeholder:text-foreground-secondary disabled:placeholder:text-foreground-tertiary disabled:text-foreground-secondary disabled:cursor-not-allowed'
 					/>
 
-					{isResizable && !restProps.disabled && (
+					{isResizable && !isDisabled && (
 						<span
 							onPointerDown={e => startResize(e, resize)}
 							className={twMerge(

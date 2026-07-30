@@ -30,7 +30,7 @@ export const previewCardVariants = cva(
 
 			radius: {
 				none: '[&>.in]:rounded-none rounded-none',
-				base: '[&>.in]:rounded-xl rounded-xl',
+				base: '[&>.in]:rounded-xl rounded-surface',
 				full: '[&>.in]:rounded-full rounded-full',
 			},
 		},

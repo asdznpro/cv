@@ -1,3 +1,4 @@
+export * from './companies'
 export * from './header'
 export * from './sidebar'
 export * from './shell'

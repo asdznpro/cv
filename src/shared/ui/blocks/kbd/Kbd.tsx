@@ -1,17 +1,38 @@
 import { twMerge } from 'tailwind-merge'
 
-import { kbdVariants } from './kbd.variants'
+import { kbdGroupRadiusClass, kbdVariants } from './kbd.variants'
 import type KbdProps from './Kbd.interface'
 
 export function Kbd(props: KbdProps) {
-	const { children, size, radius, ...restProps } = props
+	const {
+		keys,
+		variant,
+		size,
+		radius: radiusProp,
+		className,
+		...restProps
+	} = props
+	const list = keys ?? []
+	const radius = radiusProp ?? 'smooth'
+	const resolvedSize = size ?? 'md'
 
 	return (
-		<kbd
+		<span
 			{...restProps}
-			className={twMerge('root', kbdVariants({ size, radius }))}
+			className={twMerge('root flex items-center gap-0.5', className)}
 		>
-			{children}
-		</kbd>
+			{list.map((key, index) => (
+				<kbd
+					key={`${key}-${index}`}
+					className={twMerge(
+						kbdVariants({ variant, size: resolvedSize, radius }),
+						radius === 'rounded' &&
+							kbdGroupRadiusClass(resolvedSize, index, list.length),
+					)}
+				>
+					{key}
+				</kbd>
+			))}
+		</span>
 	)
 }

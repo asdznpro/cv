@@ -20,6 +20,8 @@ import {
 } from 'motion/react'
 import { useLocalStorage } from '@siberiacancode/reactuse'
 
+import type { AdminSession } from 'lib/auth'
+
 const MIN = 240
 const MAX = 420
 const DEFAULT = 280
@@ -37,6 +39,7 @@ type SidebarStorage = {
 }
 
 type AdminShellContextValue = {
+	user: AdminSession | null
 	ready: boolean
 	open: boolean
 	clipLayout: boolean
@@ -73,7 +76,13 @@ function readSidebarStorage(): SidebarStorage {
 	}
 }
 
-export function AdminShellProvider({ children }: { children: ReactNode }) {
+export function AdminShellProvider({
+	children,
+	user = null,
+}: {
+	children: ReactNode
+	user?: AdminSession | null
+}) {
 	const { set: setStored } = useLocalStorage<SidebarStorage>(STORAGE_KEY, {
 		open: true,
 		width: DEFAULT,
@@ -220,6 +229,7 @@ export function AdminShellProvider({ children }: { children: ReactNode }) {
 	return (
 		<AdminShellContext.Provider
 			value={{
+				user,
 				ready,
 				open,
 				clipLayout,

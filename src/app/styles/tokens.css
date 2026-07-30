@@ -1,9 +1,9 @@
 :root {
 	/* Layout */
 
-	--layout-container: calc(1088px + var(--layout-app) * 2);
-
 	--layout-surface: 1rem;
+	--layout-surface-radius: 0.625rem;
+
 	--layout-app: 1rem;
 
 	@media (width >= 48rem) {
@@ -132,11 +132,10 @@
 
 	--separator: var(--palette-kimberly-600);
 
-	--surface: var(--palette-kimberly-900);
-	--surface-secondary: var(--palette-kimberly-800);
+	--surface: color-mix(in srgb, var(--palette-kimberly-900) 40%, transparent);
+	--surface-secondary: var(--palette-kimberly-900);
 
 	--background: var(--palette-kimberly-950);
-	--background-secondary: var(--palette-kimberly-900);
 	--background-inverse: var(--palette-kimberly-50);
 
 	/* Social */

@@ -86,7 +86,7 @@ export default function Home() {
 									<span className='text-foreground-secondary'>{item.role}</span>
 								</h3>
 
-								<div className='flex flex-col bg-surface border border-separator rounded-xl'>
+								<div className='flex flex-col bg-surface border border-separator rounded-surface'>
 									<div className='flex flex-col gap-6 p-6'>
 										<p className='text-base @2xl:text-lg font-medium'>
 											{item.employment.type}
