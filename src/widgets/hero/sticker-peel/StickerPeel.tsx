@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, useMemo, CSSProperties } from 'react'
+import { useRef, useEffect, useMemo, useId, CSSProperties } from 'react'
 import { gsap } from 'gsap'
 import { Draggable } from 'gsap/Draggable'
 
@@ -61,6 +61,19 @@ const StickerPeel: React.FC<StickerPeelProps> = ({
 
 	const defaultPadding = 12
 	const boundsMode = bounds === true ? 'parent' : bounds
+
+	// Несколько StickerPeel на странице → одинаковые #pointLight ломают свет
+	// (url(#id) всегда резолвится в первый filter в DOM).
+	const uid = useId().replace(/:/g, '')
+	const filterIds = useMemo(
+		() => ({
+			pointLight: `sticker-pointLight-${uid}`,
+			pointLightFlipped: `sticker-pointLightFlipped-${uid}`,
+			dropShadow: `sticker-dropShadow-${uid}`,
+			expandAndFill: `sticker-expandAndFill-${uid}`,
+		}),
+		[uid],
+	)
 
 	useEffect(() => {
 		const target = dragTargetRef.current
@@ -246,7 +259,7 @@ const StickerPeel: React.FC<StickerPeelProps> = ({
 	const stickerMainStyle: CSSProperties = {
 		clipPath: `polygon(var(--sticker-start) var(--sticker-start), var(--sticker-end) var(--sticker-start), var(--sticker-end) var(--sticker-end), var(--sticker-start) var(--sticker-end))`,
 		transition: 'clip-path 0.4s ease-out',
-		filter: 'url(#dropShadow)',
+		filter: `url(#${filterIds.dropShadow})`,
 		willChange: 'clip-path, transform',
 	}
 
@@ -275,7 +288,7 @@ const StickerPeel: React.FC<StickerPeelProps> = ({
 
 	const shadowImageStyle: CSSProperties = {
 		...imageStyle,
-		filter: 'url(#expandAndFill)',
+		filter: `url(#${filterIds.expandAndFill})`,
 	}
 
 	return (
@@ -316,9 +329,9 @@ const StickerPeel: React.FC<StickerPeelProps> = ({
 				}}
 			/>
 
-			<svg width='0' height='0'>
+			<svg width='0' height='0' aria-hidden>
 				<defs>
-					<filter id='pointLight'>
+					<filter id={filterIds.pointLight}>
 						<feGaussianBlur stdDeviation='1' result='blur' />
 						<feSpecularLighting
 							result='spec'
@@ -333,7 +346,7 @@ const StickerPeel: React.FC<StickerPeelProps> = ({
 						<feComposite in='lit' in2='SourceAlpha' operator='in' />
 					</filter>
 
-					<filter id='pointLightFlipped'>
+					<filter id={filterIds.pointLightFlipped}>
 						<feGaussianBlur stdDeviation='10' result='blur' />
 						<feSpecularLighting
 							result='spec'
@@ -353,7 +366,7 @@ const StickerPeel: React.FC<StickerPeelProps> = ({
 						<feComposite in='lit' in2='SourceAlpha' operator='in' />
 					</filter>
 
-					<filter id='dropShadow'>
+					<filter id={filterIds.dropShadow}>
 						<feDropShadow
 							dx='2'
 							dy='4'
@@ -363,7 +376,7 @@ const StickerPeel: React.FC<StickerPeelProps> = ({
 						/>
 					</filter>
 
-					<filter id='expandAndFill'>
+					<filter id={filterIds.expandAndFill}>
 						<feOffset dx='0' dy='0' in='SourceAlpha' result='shape' />
 						<feFlood floodColor='rgb(179,179,179)' result='flood' />
 						<feComposite operator='in' in='flood' in2='shape' />
@@ -384,7 +397,7 @@ const StickerPeel: React.FC<StickerPeelProps> = ({
 				}}
 			>
 				<div className='sticker-main' style={stickerMainStyle}>
-					<div style={{ filter: 'url(#pointLight)' }}>
+					<div style={{ filter: `url(#${filterIds.pointLight})` }}>
 						<img
 							src={imageSrc}
 							alt=''
@@ -419,7 +432,7 @@ const StickerPeel: React.FC<StickerPeelProps> = ({
 					className='sticker-flap absolute w-full h-full left-0'
 					style={flapStyle}
 				>
-					<div style={{ filter: 'url(#pointLightFlipped)' }}>
+					<div style={{ filter: `url(#${filterIds.pointLightFlipped})` }}>
 						<img
 							src={imageSrc}
 							alt=''

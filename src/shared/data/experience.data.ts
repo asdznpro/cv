@@ -7,7 +7,7 @@ export const EXPERIENCE_DATA = [
 			name: 'Virtus.pro',
 			logo: '/assets/experience/avatar/vp.png',
 			sticker: {
-				image: '/assets/experience/sticker/vp.svg',
+				image: '/assets/sticker/vp.svg',
 				rotate: -12,
 			},
 			slug: 'vp',
@@ -37,7 +37,7 @@ export const EXPERIENCE_DATA = [
 			name: 'No Sleep Agency',
 			logo: '/assets/experience/avatar/nsa.png',
 			sticker: {
-				image: '/assets/experience/sticker/nsa.svg',
+				image: '/assets/sticker/nsa.svg',
 				rotate: 10,
 			},
 			slug: 'nsa',
@@ -69,11 +69,10 @@ export const EXPERIENCE_DATA = [
 			name: 'METACORP',
 			logo: '/assets/experience/avatar/metacorp.png',
 			sticker: {
-				image: '/assets/experience/sticker/metacorp.svg',
+				image: '/assets/sticker/winline-eml.svg',
 				rotate: -6,
 			},
 			slug: 'metacorp',
-			url: 'https://nosleepagency.ru',
 		},
 		employment: {
 			type: 'contract',
@@ -93,7 +92,7 @@ export const EXPERIENCE_DATA = [
 			name: 'VK Esports (Warface)',
 			logo: '/assets/experience/avatar/vk.png',
 			sticker: {
-				image: '/assets/experience/sticker/vk.svg',
+				image: '/assets/sticker/warface.svg',
 				rotate: 7,
 			},
 			slug: 'vk-esports',
@@ -117,7 +116,7 @@ export const EXPERIENCE_DATA = [
 			name: 'MYBONUS',
 			logo: '/assets/experience/avatar/mybonus.png',
 			sticker: {
-				image: '/assets/experience/sticker/mybonus.svg',
+				image: '/assets/sticker/mybonus.svg',
 				rotate: -12,
 			},
 			slug: 'mybonus',
