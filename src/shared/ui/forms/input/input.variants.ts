@@ -22,7 +22,6 @@ export const inputVariants = cva(
 			status: {
 				default: '',
 				error: '',
-				valid: '',
 			},
 			size: {
 				md: 'h-9 min-h-9 min-w-9 px-1.5 [&_.in]:gap-1 text-sm rounded-md',
@@ -45,11 +44,6 @@ export const inputVariants = cva(
 			},
 			{
 				mode: 'secondary',
-				status: 'valid',
-				class: '',
-			},
-			{
-				mode: 'secondary',
 				status: 'error',
 				class: 'border border-danger',
 			},
@@ -59,11 +53,6 @@ export const inputVariants = cva(
 			{
 				mode: 'outline',
 				status: 'default',
-				class: '',
-			},
-			{
-				mode: 'outline',
-				status: 'valid',
 				class: '',
 			},
 			{

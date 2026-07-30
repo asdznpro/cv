@@ -2,7 +2,7 @@ import { Icon28HelpOutline } from '@vkontakte/icons'
 import Link from 'next/link'
 
 import { Button, Separator } from 'ui/blocks'
-import { Input, Textarea } from 'ui/forms'
+import { Caption, FormItem, Input, Label, Textarea } from 'ui/forms'
 
 export default function Admin() {
 	return (
@@ -36,26 +36,42 @@ export default function Admin() {
 							</p>
 						</div>
 
-						<Input
-							className='w-full'
-							id='coupon-code'
-							type='text'
-							placeholder='Enter coupon code'
-							suffix={
-								<Button size='sm' mode='secondary' appearance='neutral'>
-									Apply Code
-								</Button>
-							}
-						/>
+						<FormItem status='error' required>
+							<Label suffix={<Icon28HelpOutline width={20} height={20} />}>
+								Coupon Code
+							</Label>
 
-						<Textarea
-							className='w-full'
-							id='description'
-							placeholder='Enter description'
-							maxLength={100}
-							rows={3}
-							resize='none'
-						/>
+							<Input
+								id='coupon-code'
+								type='text'
+								placeholder='Enter coupon code'
+								suffix={
+									<Button size='sm' mode='secondary' appearance='neutral'>
+										Apply Code
+									</Button>
+								}
+							/>
+
+							<Caption status='error'>This is an error</Caption>
+						</FormItem>
+
+						<FormItem>
+							<Label>Description</Label>
+
+							<Textarea
+								id='description'
+								placeholder='Enter description'
+								maxLength={100}
+								rows={3}
+								resize='none'
+							/>
+
+							<Caption prefix={<Icon28HelpOutline width={20} height={20} />}>
+								Lorem ipsum dolor sit amet consectetur adipisicing elit.
+								Quisquam, quos. Lorem ipsum dolor sit amet consectetur
+								adipisicing elit. Quisquam, quos.
+							</Caption>
+						</FormItem>
 					</div>
 
 					<Separator />
@@ -130,6 +146,7 @@ export default function Admin() {
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
 								Gift a Lowtab.gg Subscription
 							</h3>
+
 							<p className='text-sm text-foreground-secondary'>
 								If your hardware supports this feature we we automatically lay
 								of the processing to the hardware. Otherwise our built in
@@ -141,13 +158,51 @@ export default function Admin() {
 					</div>
 				</div>
 
+				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+					<div className='flex flex-col p-surface gap-surface'>
+						<div className='flex flex-1 flex-col gap-3'>
+							<h3 className='text-xl font-medium font-condensed tracking-tight'>
+								Privacy Policy
+							</h3>
+
+							<p className='text-sm text-foreground-secondary'>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+								volutpat, nunc vel ultrices sollicitudin, dolor eros volutpat
+								ex, et sagittis sem enim in eros. Curabitur eu consequat neque,
+								non finibus odio. Donec vitae tellus eu mauris feugiat
+								efficitur.
+							</p>
+						</div>
+					</div>
+
+					<Separator />
+
+					<div className='flex items-center p-surface gap-surface'>
+						<div className='flex flex-1 flex-col gap-3'>
+							<p className='text-sm text-foreground-secondary'>
+								Last updated: March 10, 2025
+							</p>
+						</div>
+
+						<div className='ml-auto flex gap-2'>
+							<Button type='button' mode='secondary' appearance='neutral'>
+								Decline
+							</Button>
+
+							<Button type='submit' appearance='neutral'>
+								Accept
+							</Button>
+						</div>
+					</div>
+				</div>
+
 				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
 					<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 						Account Management
 					</h2>
 				</div>
 
-				<div className='flex flex-col bg-background border border-separator rounded-surface outline-2 outline-offset-2 outline-danger '>
+				<div className='flex flex-col bg-surface border border-separator rounded-surface outline-2 outline-offset-2 outline-danger '>
 					<div className='flex p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>

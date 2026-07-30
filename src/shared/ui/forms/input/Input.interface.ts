@@ -1,9 +1,11 @@
+import { FieldStatus } from '../field-status.type'
+
 export default interface InputProps extends Omit<
 	React.AllHTMLAttributes<HTMLElement>,
 	'prefix' | 'size'
 > {
 	mode?: 'secondary' | 'outline' | undefined
-	status?: 'default' | 'error' | 'valid' | undefined
+	status?: FieldStatus
 	size?: 'lg' | 'md' | undefined
 
 	radius?: 'smooth' | 'rounded' | 'none' | undefined

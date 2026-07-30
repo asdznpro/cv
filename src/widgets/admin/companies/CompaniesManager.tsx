@@ -157,10 +157,6 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 				<h1 className='text-5xl font-medium font-condensed tracking-tight'>
 					Companies
 				</h1>
-
-				{/* <p className='text-foreground-secondary'>
-						Справочник для опыта работы и статей. Сейчас — только CRUD.
-					</p> */}
 			</div>
 
 			{showForm && (

@@ -22,7 +22,6 @@ export const textareaVariants = cva(
 			status: {
 				default: '',
 				error: '',
-				valid: '',
 			},
 			size: {
 				md: '[&_.textarea]:max-h-[116px] [&_.textarea]:min-h-9 [&_.textarea]:px-3 [&_.textarea]:py-2 text-sm rounded-md',
@@ -44,11 +43,6 @@ export const textareaVariants = cva(
 			},
 			{
 				mode: 'secondary',
-				status: 'valid',
-				class: '',
-			},
-			{
-				mode: 'secondary',
 				status: 'error',
 				class: 'border border-danger',
 			},
@@ -58,11 +52,6 @@ export const textareaVariants = cva(
 			{
 				mode: 'outline',
 				status: 'default',
-				class: '',
-			},
-			{
-				mode: 'outline',
-				status: 'valid',
 				class: '',
 			},
 			{

@@ -10,7 +10,6 @@ import { Button, Kbd, Separator } from 'ui/blocks'
 import {
 	Icon28PollSquareOutline,
 	Icon28ArticlesOutline,
-	Icon28ChevronRightCircle,
 	Icon28PictureStackOutline,
 	Icon28SettingsOutline,
 	Icon28WorkOutline,
@@ -20,6 +19,7 @@ import {
 	Icon28DocumentTextOutline,
 	Icon28SearchOutline,
 	Icon28ChevronRightOutline,
+	Icon28ChainOutline,
 } from '@vkontakte/icons'
 
 const NAV_ITEMS = [
@@ -78,6 +78,11 @@ const NAV_ITEMS = [
 		id: 'system',
 		label: 'System',
 		items: [
+			{
+				href: '/admin/links',
+				label: 'Short Links',
+				icon: <Icon28ChainOutline width={20} height={20} />,
+			},
 			{
 				href: '/admin/settings',
 				label: 'Settings',
