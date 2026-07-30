@@ -21,17 +21,26 @@ export const typographyComponents: Pick<
 	| 'td'
 > = {
 	h1: ({ children, id }) => (
-		<h1 id={id} className='group not-first-of-type:mt-12 mb-4 text-5xl scroll-mt-28'>
+		<h1
+			id={id}
+			className='group not-first-of-type:mt-12 mb-4 text-5xl scroll-mt-28'
+		>
 			{children}
 		</h1>
 	),
 	h2: ({ children, id }) => (
-		<h2 id={id} className='group not-first-of-type:mt-12 mb-4 text-4xl scroll-mt-28'>
+		<h2
+			id={id}
+			className='group not-first-of-type:mt-12 mb-4 text-4xl scroll-mt-28'
+		>
 			{children}
 		</h2>
 	),
 	h3: ({ children, id }) => (
-		<h3 id={id} className='group not-first-of-type:mt-12 mb-4 text-3xl scroll-mt-28'>
+		<h3
+			id={id}
+			className='group not-first-of-type:mt-12 mb-4 text-3xl scroll-mt-28'
+		>
 			{children}
 		</h3>
 	),
@@ -79,7 +88,7 @@ export const typographyComponents: Pick<
 	),
 
 	table: ({ children }) => (
-		<div className='not-prose my-6! overflow-x-auto scrollbar rounded-xl border border-separator'>
+		<div className='not-prose my-6! overflow-x-auto scrollbar rounded-surface border border-separator'>
 			<table className='w-full min-w-160 border-collapse text-sm'>
 				{children}
 			</table>

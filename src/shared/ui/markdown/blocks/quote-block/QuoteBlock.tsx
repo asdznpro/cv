@@ -65,7 +65,7 @@ export function QuoteBlock({
 	}
 
 	return (
-		<blockquote className='not-prose my-6! flex flex-col p-surface gap-surface bg-surface border border-separator rounded-xl'>
+		<blockquote className='not-prose my-6! flex flex-col p-surface gap-surface bg-surface border border-separator rounded-surface'>
 			<p className='relative m-0! text-2xl font-medium tracking-tight'>
 				{quote}
 

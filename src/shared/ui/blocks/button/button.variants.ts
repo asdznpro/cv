@@ -64,7 +64,7 @@ export const buttonVariants = cva(
 				mode: 'primary',
 				appearance: 'accent',
 				class:
-					'text-white bg-accent interactive-hover:hover:bg-accent-secondary hover-accent-ring',
+					'text-white bg-accent interactive-hover:hover:bg-accent-secondary 0hover-accent-ring',
 			},
 			{
 				mode: 'primary',

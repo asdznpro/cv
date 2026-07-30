@@ -17,7 +17,7 @@ export default async function AdminLayout({
 				<div className='relative min-w-0 w-full flex flex-col'>
 					<Header />
 
-					<main className='overflow-x-clip w-full h-full flex flex-1 flex-col gap-12 @2xl:gap-24'>
+					<main className='overflow-x-clip w-full h-full flex flex-1 flex-col gap-12 @2xl:gap-20'>
 						{children}
 					</main>
 				</div>

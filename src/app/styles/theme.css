@@ -1,8 +1,9 @@
 @theme inline {
 	/* Layout */
 
-	--spacing-container: var(--layout-container);
 	--spacing-surface: var(--layout-surface);
+	--radius-surface: var(--layout-surface-radius);
+
 	--spacing-app: var(--layout-app);
 
 	/* Font */
@@ -132,7 +133,6 @@
 	--color-surface-secondary: var(--surface-secondary);
 
 	--color-background: var(--background);
-	--color-background-secondary: var(--background-secondary);
 	--color-background-inverse: var(--background-inverse);
 
 	/* Social */

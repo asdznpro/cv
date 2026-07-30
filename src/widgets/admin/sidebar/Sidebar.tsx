@@ -17,6 +17,7 @@ import {
 	Icon28WrenchOutline,
 	Icon28MoreHorizontal,
 	Icon28ArrowLeftOutline,
+	Icon28UserSquareOutline,
 } from '@vkontakte/icons'
 
 const NAV_ITEMS = [
@@ -34,6 +35,11 @@ const NAV_ITEMS = [
 		href: '/admin/experience',
 		label: 'Experience',
 		icon: <Icon28WorkOutline width={20} height={20} />,
+	},
+	{
+		href: '/admin/companies',
+		label: 'Companies',
+		icon: <Icon28UserSquareOutline width={20} height={20} />,
 	},
 	{
 		href: '/admin/skills',
