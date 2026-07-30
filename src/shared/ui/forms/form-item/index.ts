@@ -14,11 +14,8 @@ type FormItemComponent = typeof FormItemRoot & {
 	Caption: typeof Caption
 }
 
-/**
- * Компаунд собираем в client-entry: иначе RSC-прокси
- * на FormItem теряет static-поля (.Label / .Input / …).
- */
 export const FormItem = FormItemRoot as FormItemComponent
+
 FormItem.Label = Label
 FormItem.Input = Input
 FormItem.Textarea = Textarea

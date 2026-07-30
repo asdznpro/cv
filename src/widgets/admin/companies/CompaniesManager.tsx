@@ -14,8 +14,8 @@ import {
 	updateCompany,
 } from 'lib/companies'
 
-import { Badge, Button, Kbd, Separator } from 'ui/blocks'
-import { Input } from 'ui/forms'
+import { Badge, Button, Separator } from 'ui/blocks'
+import { FormItem } from 'ui/forms'
 import {
 	Icon24DeleteOutline,
 	Icon24DotsVertical,
@@ -175,94 +175,72 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 						</div>
 
 						<div className='grid @2xl:grid-cols-2 gap-app'>
-							<div className='flex flex-col gap-2'>
-								<span className='text-sm text-foreground-secondary font-condensed uppercase tracking-tight'>
-									Название
-								</span>
-
-								<Input
-									size='lg'
+							<FormItem required>
+								<FormItem.Label>Название</FormItem.Label>
+								<FormItem.Input
+									aria-label='Название'
 									mode='secondary'
 									value={form.name}
 									onChange={event =>
 										onNameChange((event.target as HTMLInputElement).value)
 									}
-									placeholder='Virtus.pro'
-									aria-label='Название'
-									required
+									placeholder='Enter name'
 									disabled={pending}
 									prefix={<Icon28InfoCircleOutline width={20} height={20} />}
 								/>
-							</div>
+							</FormItem>
 
-							<div className='flex flex-col gap-2'>
-								<span className='text-sm text-foreground-secondary font-condensed uppercase tracking-tight'>
-									Slug
-								</span>
-
-								<Input
-									size='lg'
+							<FormItem required>
+								<FormItem.Label>Slug</FormItem.Label>
+								<FormItem.Input
+									aria-label='Slug'
 									mode='secondary'
 									value={form.slug}
 									onChange={event => {
 										setSlugTouched(true)
 										setField('slug', (event.target as HTMLInputElement).value)
 									}}
-									placeholder='vp'
-									aria-label='Slug'
-									required
+									placeholder='Enter slug'
 									disabled={pending}
 									prefix={<Icon28HashtagOutline width={20} height={20} />}
 								/>
-							</div>
+							</FormItem>
 
-							<div className='flex flex-col gap-2'>
-								<span className='text-sm text-foreground-secondary font-condensed uppercase tracking-tight'>
-									Logo path
-								</span>
-
-								<Input
-									size='lg'
+							<FormItem required>
+								<FormItem.Label>Logo path</FormItem.Label>
+								<FormItem.Input
+									aria-label='Logo path'
 									mode='secondary'
 									value={form.logo}
 									onChange={event =>
 										setField('logo', (event.target as HTMLInputElement).value)
 									}
-									placeholder='/assets/experience/avatar/vp.png'
-									aria-label='Logo path'
-									required
+									placeholder='Enter logo path'
 									disabled={pending}
 									prefix={<Icon28PictureOutline width={20} height={20} />}
 								/>
-							</div>
+							</FormItem>
 
-							<div className='flex flex-col gap-2'>
-								<span className='text-sm text-foreground-secondary font-condensed uppercase tracking-tight'>
-									Website
-								</span>
-
-								<Input
-									size='lg'
+							<FormItem optional>
+								<FormItem.Label>Website</FormItem.Label>
+								<FormItem.Input
+									aria-label='Website'
 									mode='secondary'
 									value={form.url}
 									onChange={event =>
 										setField('url', (event.target as HTMLInputElement).value)
 									}
-									placeholder='https://virtus.pro'
-									aria-label='Website'
+									placeholder='Enter website'
 									disabled={pending}
 									prefix={<Icon28GlobeOutline width={20} height={20} />}
 								/>
-							</div>
+							</FormItem>
 
-							<div className='flex flex-col gap-2'>
-								<span className='text-sm text-foreground-secondary font-condensed uppercase tracking-tight'>
-									Sticker path
-								</span>
-
-								<Input
-									size='lg'
+							<FormItem>
+								<FormItem.Label>Sticker path</FormItem.Label>
+								<FormItem.Input
 									mode='secondary'
+									aria-label='Sticker path'
 									value={form.sticker_image}
 									onChange={event =>
 										setField(
@@ -270,22 +248,18 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 											(event.target as HTMLInputElement).value,
 										)
 									}
-									placeholder='/assets/experience/sticker/vp.svg'
-									aria-label='Sticker path'
+									placeholder='Enter sticker path'
 									disabled={pending}
 									prefix={<Icon28StickerOutline width={20} height={20} />}
 								/>
-							</div>
+							</FormItem>
 
-							<div className='flex flex-col gap-2'>
-								<span className='text-sm text-foreground-secondary font-condensed uppercase tracking-tight'>
-									Sticker rotate
-								</span>
-
-								<Input
-									size='lg'
+							<FormItem>
+								<FormItem.Label>Sticker rotate</FormItem.Label>
+								<FormItem.Input
 									mode='secondary'
 									type='number'
+									aria-label='Sticker rotate'
 									value={form.sticker_rotate}
 									onChange={event =>
 										setField(
@@ -293,12 +267,11 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 											(event.target as HTMLInputElement).value,
 										)
 									}
-									placeholder='-12'
-									aria-label='Sticker rotate'
+									placeholder='Enter sticker rotate'
 									disabled={pending}
 									prefix={<Icon28RotateLeftOutline width={20} height={20} />}
 								/>
-							</div>
+							</FormItem>
 						</div>
 					</div>
 
@@ -387,23 +360,23 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 
 								<div className='flex gap-2'>
 									<Button
+										aria-label='Редактировать'
 										mode='soft'
 										appearance='neutral'
 										prefix={<Icon24PenOutline width={18} height={18} />}
 										onClick={() => openEdit(company)}
 										disabled={pending}
 										iconOnly
-										aria-label='Редактировать'
 									/>
 
 									<Button
+										aria-label='Удалить'
 										mode='soft'
 										appearance='danger'
 										prefix={<Icon24DeleteOutline width={18} height={18} />}
 										onClick={() => remove(company)}
 										disabled={pending}
 										iconOnly
-										aria-label='Удалить'
 									/>
 
 									<Button

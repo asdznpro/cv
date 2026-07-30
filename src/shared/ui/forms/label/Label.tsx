@@ -28,7 +28,7 @@ export function Label(props: LabelProps) {
 			htmlFor={htmlFor ?? formItem?.id}
 			className={twMerge(
 				'root flex items-center gap-1.5',
-				'text-sm font-condensed font-medium tracking-tight',
+				'text-sm font-condensed font-medium',
 				className,
 			)}
 		>
