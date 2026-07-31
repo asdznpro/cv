@@ -3,7 +3,7 @@
 import Link from 'next/link'
 
 import { Button, Separator } from 'ui/blocks'
-import { ContextCard, ContextCardGroup, Tooltip } from 'ui/floating'
+import { ContextCard, Tooltip } from 'ui/floating'
 import { FormItem } from 'ui/forms'
 
 import { Icon28HelpOutline } from '@vkontakte/icons'
@@ -231,7 +231,7 @@ export default function Admin() {
 								<Link
 									href='/'
 									target='_blank'
-									className='text-info hover:text-info-secondary underline transition-colors'
+									className='text-link hover:text-link-secondary underline transition-colors'
 								>
 									unintended side effects
 								</Link>

@@ -1,11 +1,12 @@
 'use client'
 
+import Link from 'next/link'
+
 import { useAdminShell } from '../shell'
 import { Button } from 'ui/blocks'
 
 import {
 	Icon28HorizontalRectangle2VerticalLeftOutline,
-	Icon28ArrowLeftOutline,
 	Icon28GlobeOutline,
 } from '@vkontakte/icons'
 
@@ -23,19 +24,26 @@ export function Header() {
 							mode='soft'
 							appearance='neutral'
 							prefix={
-								open ? (
-									<Icon28ArrowLeftOutline width={18} height={18} />
-								) : (
-									<Icon28HorizontalRectangle2VerticalLeftOutline
-										className='rotate-180'
-										width={18}
-										height={18}
-									/>
-								)
+								<Icon28HorizontalRectangle2VerticalLeftOutline
+									className='rotate-180'
+									width={18}
+									height={18}
+								/>
 							}
 							radius='rounded'
 							iconOnly
 						/>
+					</span>
+
+					<span className='text-xl font-medium font-condensed tracking-tight whitespace-nowrap'>
+						<Link
+							href='/admin'
+							className='text-foreground-tertiary hover:text-foreground transition-all'
+						>
+							Admin
+						</Link>{' '}
+						<span className='text-foreground-tertiary select-none'>/</span>{' '}
+						<span className='inline-block'>Overview</span>
 					</span>
 
 					<span className='w-full flex justify-end gap-2'>

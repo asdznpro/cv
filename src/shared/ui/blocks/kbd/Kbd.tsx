@@ -17,10 +17,7 @@ export function Kbd(props: KbdProps) {
 	const resolvedSize = size ?? 'md'
 
 	return (
-		<span
-			{...restProps}
-			className={twMerge('root flex items-center gap-0.5', className)}
-		>
+		<span {...restProps} className={twMerge('root flex gap-0.5', className)}>
 			{list.map((key, index) => (
 				<kbd
 					key={`${key}-${index}`}
