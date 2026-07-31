@@ -1,6 +1,7 @@
 import type { Placement } from '@floating-ui/react'
 
-import type { TooltipAlign, TooltipAppearance } from './tooltip.variants'
+import type { FloatingAlign } from '../lib'
+import type { TooltipAppearance } from './tooltip.variants'
 
 export default interface TooltipProps {
 	children: React.ReactNode
@@ -15,7 +16,7 @@ export default interface TooltipProps {
 	 * Box alignment along the cross axis (Geist `boxAlign`).
 	 * `start` / `end` → `*-start` / `*-end` placement.
 	 */
-	align?: TooltipAlign
+	align?: FloatingAlign
 	/**
 	 * Open delay. `true` / omitted → 150ms (Geist default).
 	 * `false` → immediate. number → custom ms.

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, type ReactNode } from 'react'
+import { useId, useRef, useState, type ReactNode } from 'react'
 import {
 	FloatingArrow,
 	FloatingPortal,
@@ -8,9 +8,11 @@ import {
 	autoUpdate,
 	flip,
 	offset,
+	safePolygon,
 	shift,
 	useDismiss,
 	useFloating,
+	useFocus,
 	useHover,
 	useInteractions,
 	useRole,
@@ -19,28 +21,89 @@ import {
 import { twMerge } from 'tailwind-merge'
 
 import { resolveFloatingPlacement } from '../lib'
-import { tooltipArrowFill, tooltipVariants } from './tooltip.variants'
-import type TooltipProps from './Tooltip.interface'
+import { useContextCardGroup } from './ContextCardGroup'
+import {
+	CONTEXT_CARD_ARROW_FILL,
+	contextCardVariants,
+} from './context-card.variants'
+import type ContextCardProps from './ContextCard.interface'
 
 const ARROW_HEIGHT = 7
 const ARROW_GAP = 4
 const DEFAULT_OPEN_DELAY = 150
 
-function resolveOpenDelay(delay: TooltipProps['delay']): number {
+function resolveOpenDelay(delay: ContextCardProps['delay']): number {
 	if (delay === false) return 0
 	if (typeof delay === 'number') return delay
 	return DEFAULT_OPEN_DELAY
 }
 
-export function Tooltip(props: TooltipProps) {
+export function ContextCard(props: ContextCardProps) {
+	const group = useContextCardGroup()
+
+	if (group) {
+		return <ContextCardTrigger {...props} />
+	}
+
+	return <ContextCardStandalone {...props} />
+}
+
+function ContextCardTrigger(props: ContextCardProps) {
 	const {
 		children,
-		text,
+		content,
 		placement = 'top',
-		delay = false,
-		tip = true,
-		appearance = 'neutral',
 		align = 'center',
+		tip = true,
+		className,
+	} = props
+
+	const group = useContextCardGroup()
+	const id = useId()
+	const referenceRef = useRef<HTMLSpanElement | null>(null)
+
+	if (!group) return null
+
+	const payload = {
+		content,
+		placement,
+		align,
+		tip,
+		className,
+	}
+
+	return (
+		<span
+			ref={referenceRef}
+			className='max-w-full inline-flex align-middle'
+			onMouseEnter={() => {
+				const el = referenceRef.current
+				if (el) group.activate(id, payload, el)
+			}}
+			onMouseLeave={() => group.deactivate(id)}
+			onFocusCapture={() => {
+				const el = referenceRef.current
+				if (el) group.activate(id, payload, el)
+			}}
+			onBlurCapture={event => {
+				const next = event.relatedTarget
+				if (next instanceof Node && event.currentTarget.contains(next)) return
+				group.deactivate(id)
+			}}
+		>
+			{children as ReactNode}
+		</span>
+	)
+}
+
+function ContextCardStandalone(props: ContextCardProps) {
+	const {
+		children,
+		content,
+		placement = 'top',
+		align = 'center',
+		delay,
+		tip = true,
 		className,
 		open: openProp,
 		defaultOpen = false,
@@ -76,25 +139,27 @@ export function Tooltip(props: TooltipProps) {
 				padding: 8,
 			}),
 			shift({ padding: 8 }),
-			...(tip ? [arrow({ element: arrowRef, padding: 6 })] : []),
+			...(tip ? [arrow({ element: arrowRef, padding: 8 })] : []),
 		],
 	})
 
 	const hover = useHover(context, {
-		move: false,
-		delay: { open: resolveOpenDelay(delay), close: 0 },
+		delay: { open: resolveOpenDelay(delay), close: 120 },
+		handleClose: safePolygon({ buffer: 1 }),
 	})
+	const focus = useFocus(context, { visibleOnly: true })
 	const dismiss = useDismiss(context)
-	const role = useRole(context, { role: 'tooltip' })
+	const role = useRole(context, { role: 'dialog' })
 
 	const { getReferenceProps, getFloatingProps } = useInteractions([
 		hover,
+		focus,
 		dismiss,
 		role,
 	])
 
 	const { isMounted, styles: transitionStyles } = useTransitionStyles(context, {
-		duration: { open: 120, close: 100 },
+		duration: { open: 140, close: 100 },
 		initial: {
 			opacity: 0,
 			transform: 'scale(0.92)',
@@ -102,13 +167,10 @@ export function Tooltip(props: TooltipProps) {
 	})
 
 	const referenceProps = getReferenceProps({
-		onFocusCapture: () => {
-			setIsOpen(true)
-		},
+		onFocusCapture: () => setIsOpen(true),
 		onBlurCapture: (event: React.FocusEvent<HTMLSpanElement>) => {
 			const next = event.relatedTarget
 			if (next instanceof Node && event.currentTarget.contains(next)) return
-			// Keep open while pointer still over the trigger
 			if (event.currentTarget.matches(':hover')) return
 			setIsOpen(false)
 		},
@@ -134,9 +196,9 @@ export function Tooltip(props: TooltipProps) {
 					>
 						<div
 							style={transitionStyles}
-							className={twMerge(tooltipVariants({ appearance }), className)}
+							className={twMerge(contextCardVariants(), className)}
 						>
-							{text}
+							<div className='flex flex-col p-3 gap-3'>{content}</div>
 
 							{tip && (
 								<FloatingArrow
@@ -145,7 +207,9 @@ export function Tooltip(props: TooltipProps) {
 									width={12}
 									height={ARROW_HEIGHT}
 									tipRadius={2}
-									fill={tooltipArrowFill[appearance]}
+									stroke='var(--separator)'
+									strokeWidth={1}
+									fill={CONTEXT_CARD_ARROW_FILL}
 								/>
 							)}
 						</div>

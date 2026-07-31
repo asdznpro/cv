@@ -3,7 +3,7 @@
 import Link from 'next/link'
 
 import { Button, Separator } from 'ui/blocks'
-import { Tooltip } from 'ui/floating'
+import { ContextCard, ContextCardGroup, Tooltip } from 'ui/floating'
 import { FormItem } from 'ui/forms'
 
 import { Icon28HelpOutline } from '@vkontakte/icons'
@@ -123,12 +123,12 @@ export default function Admin() {
 			</section>
 
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
-				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+				<div className='flex flex-wrap items-center gap-app not-first-of-type:pt-8 pb-3'>
 					<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 						Overview
 					</h2>
 
-					<Tooltip text='Why this exists — scope, limits, or constraints Why this exists — scope, limits, or constraints Why this exists — scope, limits, or constraints'>
+					<Tooltip text='Why this exists — scope, limits, or constraints'>
 						<Button
 							mode='ghost'
 							appearance='neutral'
@@ -137,14 +137,6 @@ export default function Admin() {
 							Help Button
 						</Button>
 					</Tooltip>
-
-					<Button
-						mode='ghost'
-						appearance='neutral'
-						prefix={<Icon28HelpOutline width={18} height={18} />}
-					>
-						Align End
-					</Button>
 				</div>
 
 				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
@@ -177,7 +169,9 @@ export default function Admin() {
 							</p>
 						</div>
 
-						<Button>Gift Subscription</Button>
+						<ContextCard content={<p>$14.99 per month</p>}>
+							<Button>Gift Subscription</Button>
+						</ContextCard>
 					</div>
 				</div>
 
@@ -225,7 +219,7 @@ export default function Admin() {
 					</h2>
 				</div>
 
-				<div className='flex flex-col bg-surface border border-separator rounded-surface outline-2 outline-offset-2 outline-danger '>
+				<div className='flex flex-col bg-surface border border-separator rounded-surface outline-2 outline-offset-2 outline-danger'>
 					<div className='flex p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
