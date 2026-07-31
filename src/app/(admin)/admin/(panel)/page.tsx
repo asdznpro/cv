@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 
+import { PixelBlast } from 'widgets'
+
 import { Button, Separator } from 'ui/blocks'
 import { ContextCard, Tooltip } from 'ui/floating'
 import { FormItem } from 'ui/forms'
@@ -26,7 +28,7 @@ export default function Admin() {
 					</p>
 				</div>
 
-				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+				<div className='flex flex-col bg-surface border border-separator rounded-surface backdrop-blur-3xl'>
 					<div className='flex flex-col p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
@@ -139,7 +141,7 @@ export default function Admin() {
 					</Tooltip>
 				</div>
 
-				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+				<div className='flex flex-col bg-surface border border-separator rounded-surface backdrop-blur-3xl'>
 					<div className='flex flex-col p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
@@ -175,7 +177,7 @@ export default function Admin() {
 					</div>
 				</div>
 
-				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+				<div className='flex flex-col bg-surface border border-separator rounded-surface backdrop-blur-3xl'>
 					<div className='flex flex-col p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
@@ -219,7 +221,7 @@ export default function Admin() {
 					</h2>
 				</div>
 
-				<div className='flex flex-col bg-surface border border-separator rounded-surface outline-2 outline-offset-2 outline-danger'>
+				<div className='flex flex-col bg-surface border border-separator rounded-surface backdrop-blur-3xl outline-2 outline-offset-2 outline-danger'>
 					<div className='flex p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
@@ -356,6 +358,23 @@ export default function Admin() {
 					</p>
 				</div>
 			</section>
+
+			<div className='-z-10 absolute inset-x-0 top-0 w-full h-1/4 flex flex-col'>
+				<div className='absolute inset-0 -z-8 bg-linear-to-b from-transparent to-background' />
+				<div className='absolute inset-0 -z-10'>
+					<PixelBlast
+						variant='square'
+						pixelSize={2}
+						color='#1212ce'
+						patternScale={1}
+						patternDensity={1}
+						enableRipples={false}
+						speed={0.9}
+						transparent
+						edgeFade={0}
+					/>
+				</div>
+			</div>
 
 			<span />
 		</>

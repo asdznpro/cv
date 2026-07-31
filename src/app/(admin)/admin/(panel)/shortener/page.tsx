@@ -47,6 +47,7 @@ export default function Shortener() {
 							<FormItem id='coupon-code'>
 								<FormItem.Input
 									size='md'
+									mode='outline'
 									type='text'
 									placeholder='go.asdzn.pro/example'
 									prefix={<Icon28ChainOutline width={18} height={18} />}
@@ -75,6 +76,7 @@ export default function Shortener() {
 							<FormItem id='coupon-code'>
 								<FormItem.Input
 									size='md'
+									mode='outline'
 									type='text'
 									placeholder='example'
 									prefix={<Icon28HashtagOutline width={18} height={18} />}
@@ -100,6 +102,7 @@ export default function Shortener() {
 							<FormItem id='coupon-code'>
 								<FormItem.Input
 									size='md'
+									mode='outline'
 									type='text'
 									value='go.asdzn.pro'
 									prefix={<Icon28GlobeOutline width={18} height={18} />}
@@ -133,7 +136,7 @@ export default function Shortener() {
 
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
 				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
-					<div className='flex flex-col gap-4'>
+					<div className='flex flex-col gap-3'>
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 							Shortened Links
 						</h2>

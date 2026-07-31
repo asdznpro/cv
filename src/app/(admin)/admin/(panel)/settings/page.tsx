@@ -23,7 +23,7 @@ export default function Settings() {
 
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
 				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
-					<div className='flex flex-col gap-4'>
+					<div className='flex flex-col gap-3'>
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 							Profile information
 						</h2>
@@ -82,7 +82,7 @@ export default function Settings() {
 				</div>
 
 				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
-					<div className='flex flex-col gap-4'>
+					<div className='flex flex-col gap-3'>
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 							Appearance
 						</h2>
@@ -147,7 +147,7 @@ export default function Settings() {
 				</div>
 
 				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
-					<div className='flex flex-col gap-4'>
+					<div className='flex flex-col gap-3'>
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 							Keyboard shortcuts
 						</h2>

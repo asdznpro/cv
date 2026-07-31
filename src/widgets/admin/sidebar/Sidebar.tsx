@@ -114,7 +114,7 @@ export function Sidebar() {
 		<>
 			<motion.aside
 				style={{ width: widthMv }}
-				className='0relative sticky top-0 flex shrink-0 h-screen justify-end overflow-hidden'
+				className='0relative sticky top-0 flex shrink-0 h-screen justify-end overflow-hidden bg-background'
 			>
 				<span
 					aria-hidden
