@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { createPortal } from 'react-dom'
 
-import { Badge, Button, Kbd, PreviewCard } from 'ui/blocks'
+import { Button, Kbd, PreviewCard } from 'ui/blocks'
+import { Backdrop } from 'ui/overlays'
 import { Icon28CancelOutline } from '@vkontakte/icons'
 
 import { useLightbox } from './LightboxProvider'
@@ -43,15 +44,10 @@ export function ImageLightbox() {
 	return createPortal(
 		<AnimatePresence>
 			{active && (
-				<motion.button
+				<Backdrop
 					key='lightbox-backdrop'
-					type='button'
-					aria-label='Закрыть'
-					className='fixed inset-0 z-30 bg-background/80 cursor-pointer'
-					initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-					animate={{ opacity: 1, backdropFilter: 'blur(6px)' }}
-					exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-					transition={{ duration: 0.2 }}
+					className='z-30'
+					aria-hidden
 					onClick={close}
 				/>
 			)}

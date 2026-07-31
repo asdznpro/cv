@@ -89,7 +89,7 @@ export function ArticleToc({ items, className }: ArticleTocProps) {
 									'w-7 h-7 flex items-center justify-center border rounded-full text-xs font-mono transition-colors focus-ring-base focus-ring-group-visible select-none',
 									active
 										? 'bg-accent border-accent text-white'
-										: 'bg-surface border-separator text-foreground-secondary',
+										: 'bg-surface-secondary border-separator text-foreground-secondary',
 								)}
 							>
 								{String(index + 1).padStart(2, '0')}
