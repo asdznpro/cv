@@ -1,10 +1,12 @@
 'use client'
 
-import { Icon28HelpOutline } from '@vkontakte/icons'
 import Link from 'next/link'
 
 import { Button, Separator } from 'ui/blocks'
+import { Tooltip } from 'ui/floating'
 import { FormItem } from 'ui/forms'
+
+import { Icon28HelpOutline } from '@vkontakte/icons'
 
 export default function Admin() {
 	return (
@@ -40,7 +42,14 @@ export default function Admin() {
 
 						<FormItem id='coupon-code' required>
 							<FormItem.Label
-								suffix={<Icon28HelpOutline width={20} height={20} />}
+								suffix={
+									<Tooltip
+										align='end'
+										text='Why this exists — scope, limits, or constraints'
+									>
+										<Icon28HelpOutline width={20} height={20} />
+									</Tooltip>
+								}
 							>
 								Coupon Code
 							</FormItem.Label>
@@ -119,12 +128,22 @@ export default function Admin() {
 						Overview
 					</h2>
 
+					<Tooltip text='Why this exists — scope, limits, or constraints Why this exists — scope, limits, or constraints Why this exists — scope, limits, or constraints'>
+						<Button
+							mode='ghost'
+							appearance='neutral'
+							prefix={<Icon28HelpOutline width={18} height={18} />}
+						>
+							Help Button
+						</Button>
+					</Tooltip>
+
 					<Button
 						mode='ghost'
 						appearance='neutral'
 						prefix={<Icon28HelpOutline width={18} height={18} />}
 					>
-						Help Button
+						Align End
 					</Button>
 				</div>
 
