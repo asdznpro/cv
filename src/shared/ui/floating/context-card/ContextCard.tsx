@@ -2,7 +2,6 @@
 
 import { useId, useRef, useState, type ReactNode } from 'react'
 import {
-	FloatingArrow,
 	FloatingPortal,
 	arrow,
 	autoUpdate,
@@ -20,6 +19,7 @@ import {
 } from '@floating-ui/react'
 import { twMerge } from 'tailwind-merge'
 
+import { Arrow, ARROW_OFFSET } from '../arrow'
 import { resolveFloatingPlacement } from '../lib'
 import { useContextCardGroup } from './ContextCardGroup'
 import {
@@ -28,7 +28,6 @@ import {
 } from './context-card.variants'
 import type ContextCardProps from './ContextCard.interface'
 
-const ARROW_HEIGHT = 7
 const ARROW_GAP = 4
 const DEFAULT_OPEN_DELAY = 150
 
@@ -133,7 +132,7 @@ function ContextCardStandalone(props: ContextCardProps) {
 		strategy: 'fixed',
 		whileElementsMounted: autoUpdate,
 		middleware: [
-			offset(tip ? ARROW_HEIGHT + ARROW_GAP : ARROW_GAP),
+			offset(tip ? ARROW_OFFSET + ARROW_GAP : ARROW_GAP),
 			flip({
 				fallbackAxisSideDirection: 'start',
 				padding: 8,
@@ -201,15 +200,12 @@ function ContextCardStandalone(props: ContextCardProps) {
 							<div className='flex flex-col p-3 gap-3'>{content}</div>
 
 							{tip && (
-								<FloatingArrow
+								<Arrow
 									ref={arrowRef}
 									context={context}
-									width={12}
-									height={ARROW_HEIGHT}
-									tipRadius={2}
-									stroke='var(--separator)'
-									strokeWidth={1}
+									mode='outline'
 									fill={CONTEXT_CARD_ARROW_FILL}
+									stroke='var(--separator)'
 								/>
 							)}
 						</div>

@@ -10,7 +10,6 @@ import {
 	useState,
 } from 'react'
 import {
-	FloatingArrow,
 	FloatingPortal,
 	arrow,
 	autoUpdate,
@@ -25,6 +24,7 @@ import {
 import { AnimatePresence, motion } from 'motion/react'
 import { twMerge } from 'tailwind-merge'
 
+import { Arrow, ARROW_OFFSET } from '../arrow'
 import { resolveFloatingPlacement } from '../lib'
 import {
 	CONTEXT_CARD_ARROW_FILL,
@@ -35,7 +35,6 @@ import type {
 	ContextCardGroupProps,
 } from './ContextCard.interface'
 
-const ARROW_HEIGHT = 7
 const ARROW_GAP = 4
 
 const SPRING = {
@@ -101,7 +100,7 @@ function ContextCardHost({
 			),
 			whileElementsMounted: autoUpdate,
 			middleware: [
-				offset(tip ? ARROW_HEIGHT + ARROW_GAP : ARROW_GAP),
+				offset(tip ? ARROW_OFFSET + ARROW_GAP : ARROW_GAP),
 				flip({
 					fallbackAxisSideDirection: 'start',
 					padding: 8,
@@ -190,15 +189,12 @@ function ContextCardHost({
 							</div>
 
 							{tip && (
-								<FloatingArrow
+								<Arrow
 									ref={arrowRef}
 									context={context}
-									width={12}
-									height={ARROW_HEIGHT}
-									tipRadius={1}
-									stroke='var(--separator)'
-									strokeWidth={1}
+									mode='outline'
 									fill={CONTEXT_CARD_ARROW_FILL}
+									stroke='var(--separator)'
 								/>
 							)}
 						</motion.div>

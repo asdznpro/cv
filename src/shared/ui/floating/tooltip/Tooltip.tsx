@@ -2,7 +2,6 @@
 
 import { useRef, useState, type ReactNode } from 'react'
 import {
-	FloatingArrow,
 	FloatingPortal,
 	arrow,
 	autoUpdate,
@@ -18,11 +17,11 @@ import {
 } from '@floating-ui/react'
 import { twMerge } from 'tailwind-merge'
 
+import { Arrow, ARROW_OFFSET } from '../arrow'
 import { resolveFloatingPlacement } from '../lib'
 import { tooltipArrowFill, tooltipVariants } from './tooltip.variants'
 import type TooltipProps from './Tooltip.interface'
 
-const ARROW_HEIGHT = 7
 const ARROW_GAP = 4
 const DEFAULT_OPEN_DELAY = 150
 
@@ -70,7 +69,7 @@ export function Tooltip(props: TooltipProps) {
 		strategy: 'fixed',
 		whileElementsMounted: autoUpdate,
 		middleware: [
-			offset(tip ? ARROW_HEIGHT + ARROW_GAP : ARROW_GAP),
+			offset(tip ? ARROW_OFFSET + ARROW_GAP : ARROW_GAP),
 			flip({
 				fallbackAxisSideDirection: 'start',
 				padding: 8,
@@ -108,11 +107,12 @@ export function Tooltip(props: TooltipProps) {
 		onBlurCapture: (event: React.FocusEvent<HTMLSpanElement>) => {
 			const next = event.relatedTarget
 			if (next instanceof Node && event.currentTarget.contains(next)) return
-			// Keep open while pointer still over the trigger
 			if (event.currentTarget.matches(':hover')) return
 			setIsOpen(false)
 		},
 	})
+
+	const fill = tooltipArrowFill[appearance]
 
 	return (
 		<>
@@ -139,13 +139,11 @@ export function Tooltip(props: TooltipProps) {
 							{text}
 
 							{tip && (
-								<FloatingArrow
+								<Arrow
 									ref={arrowRef}
 									context={context}
-									width={12}
-									height={ARROW_HEIGHT}
-									tipRadius={2}
-									fill={tooltipArrowFill[appearance]}
+									mode='plain'
+									fill={fill}
 								/>
 							)}
 						</div>
