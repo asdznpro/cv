@@ -3,6 +3,8 @@ import Script from 'next/script'
 
 import 'styles/globals.css'
 
+import { Providers } from 'providers'
+
 import { BootLoader, BootProvider } from 'widgets'
 import { Toaster } from 'ui/blocks'
 
@@ -19,7 +21,7 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang='en' className='h-full antialiased scrollbar'>
+		<html lang='en' className='h-full antialiased'>
 			<head>
 				<meta name='apple-mobile-web-app-title' content='Andrew S. / CV' />
 				<meta name='yandex-verification' content='506eca3509ce4857' />
@@ -82,13 +84,15 @@ export default function RootLayout({
 
 			<body className='isolate relative min-h-full flex flex-col'>
 				<div className='@container min-w-0 flex flex-1 flex-col items-center'>
-					{/* <BootProvider> */}
-					{/* <BootLoader /> */}
-					<Toaster />
+					<Providers>
+						{/* <BootProvider> */}
+						{/* <BootLoader /> */}
+						<Toaster />
 
-					{children}
+						{children}
 
-					{/* </BootProvider> */}
+						{/* </BootProvider> */}
+					</Providers>
 				</div>
 			</body>
 		</html>

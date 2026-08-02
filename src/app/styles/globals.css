@@ -43,17 +43,13 @@ body {
 * {
 	color-scheme: light dark;
 
+	scrollbar-width: thin;
+	scrollbar-color: var(--foreground-tertiary) transparent;
+
 	&::selection {
 		background: var(--accent);
 		color: white;
 	}
-}
-
-/* Scrollbar */
-
-@utility scrollbar {
-	scrollbar-width: thin;
-	scrollbar-color: var(--foreground-tertiary) transparent;
 }
 
 /* Animation */

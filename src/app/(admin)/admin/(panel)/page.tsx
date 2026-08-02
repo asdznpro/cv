@@ -7,10 +7,107 @@ import { PixelBlast } from 'widgets'
 import { Button, Separator } from 'ui/blocks'
 import { ContextCard, Tooltip } from 'ui/floating'
 import { FormItem } from 'ui/forms'
+import { useOverlay } from 'ui/overlays'
 
 import { Icon28HelpOutline } from '@vkontakte/icons'
 
 export default function Admin() {
+	const { open, close, closeAll } = useOverlay()
+
+	const openConfirmOverlay = () => {
+		open(
+			<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+				<div className='flex flex-col p-surface gap-surface'>
+					<div className='flex flex-1 flex-col gap-3'>
+						<h3 className='text-xl font-medium font-condensed tracking-tight'>
+							Confirm
+						</h3>
+
+						<p className='text-sm text-foreground-secondary'>
+							Second layer in the stack — Cancel pops back, Confirm closes all.
+						</p>
+					</div>
+
+					<div className='flex justify-end gap-2'>
+						<Button
+							type='button'
+							mode='secondary'
+							appearance='neutral'
+							onClick={() => close()}
+						>
+							Cancel
+						</Button>
+
+						<Button
+							type='button'
+							appearance='neutral'
+							onClick={() => closeAll()}
+						>
+							Confirm
+						</Button>
+					</div>
+				</div>
+			</div>,
+		)
+	}
+
+	const openPrivacyOverlay = () => {
+		open(
+			<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+				<div className='flex flex-col p-surface gap-surface'>
+					<div className='flex flex-1 flex-col gap-3'>
+						<h3 className='text-xl font-medium font-condensed tracking-tight'>
+							Privacy Policy
+						</h3>
+
+						<p className='text-sm text-foreground-secondary'>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+							volutpat, nunc vel ultrices sollicitudin, dolor eros volutpat ex,
+							et sagittis sem enim in eros. Curabitur eu consequat neque, non
+							finibus odio. Donec vitae tellus eu mauris feugiat efficitur.
+						</p>
+
+						<p className='text-sm text-foreground-secondary'>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+							volutpat, nunc vel ultrices sollicitudin, dolor eros volutpat ex,
+							et sagittis sem enim in eros. Curabitur eu consequat neque, non
+							finibus odio. Donec vitae tellus eu mauris feugiat efficitur.
+						</p>
+					</div>
+				</div>
+
+				<Separator />
+
+				<div className='flex items-center p-surface gap-surface'>
+					<div className='flex flex-1 flex-col gap-3'>
+						<p className='text-sm text-foreground-secondary'>
+							Last updated: March 10, 2025
+						</p>
+					</div>
+
+					<div className='ml-auto flex gap-2'>
+						<Button
+							type='button'
+							mode='secondary'
+							appearance='neutral'
+							onClick={() => close()}
+						>
+							Decline
+						</Button>
+
+						<Button
+							type='button'
+							appearance='neutral'
+							onClick={openConfirmOverlay}
+						>
+							Accept
+						</Button>
+					</div>
+				</div>
+			</div>,
+		)
+	}
+
 	return (
 		<>
 			<span />
@@ -26,9 +123,20 @@ export default function Admin() {
 						quos. Lorem ipsum dolor sit amet consectetur adipisicing elit.
 						Quisquam,
 					</p>
+
+					<div>
+						<Button
+							type='button'
+							mode='secondary'
+							appearance='neutral'
+							onClick={openPrivacyOverlay}
+						>
+							Open overlay
+						</Button>
+					</div>
 				</div>
 
-				<div className='flex flex-col bg-surface border border-separator rounded-surface backdrop-blur-3xl'>
+				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
 					<div className='flex flex-col p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
@@ -141,7 +249,7 @@ export default function Admin() {
 					</Tooltip>
 				</div>
 
-				<div className='flex flex-col bg-surface border border-separator rounded-surface backdrop-blur-3xl'>
+				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
 					<div className='flex flex-col p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
@@ -177,7 +285,7 @@ export default function Admin() {
 					</div>
 				</div>
 
-				<div className='flex flex-col bg-surface border border-separator rounded-surface backdrop-blur-3xl'>
+				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
 					<div className='flex flex-col p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
@@ -221,7 +329,7 @@ export default function Admin() {
 					</h2>
 				</div>
 
-				<div className='flex flex-col bg-surface border border-separator rounded-surface backdrop-blur-3xl outline-2 outline-offset-2 outline-danger'>
+				<div className='flex flex-col bg-surface border border-separator rounded-surface outline-2 outline-offset-2 outline-danger'>
 					<div className='flex p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
