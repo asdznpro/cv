@@ -228,11 +228,13 @@ export function CompanyFormDialog({
 
 			<Separator />
 
-			<div className='flex flex-col p-surface gap-surface'>
-				<div className='flex justify-end gap-2'>
+			<div className='flex @md/overlay:grid grid-cols-2 items-center p-surface gap-surface'>
+				<div className='col-start-2 flex flex-1 gap-2'>
 					<Button
 						onClick={onCancel}
+						className='flex-1'
 						type='button'
+						size='sm'
 						mode='secondary'
 						appearance='neutral'
 						disabled={pending}
@@ -240,7 +242,13 @@ export function CompanyFormDialog({
 						Cancel
 					</Button>
 
-					<Button type='submit' appearance='neutral' disabled={pending}>
+					<Button
+						className='flex-1'
+						type='submit'
+						size='sm'
+						appearance='neutral'
+						disabled={pending}
+					>
 						{editingId ? 'Save' : 'Create'}
 					</Button>
 				</div>

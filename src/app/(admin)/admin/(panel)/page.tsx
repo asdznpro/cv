@@ -195,19 +195,30 @@ export default function Admin() {
 
 					<Separator />
 
-					<div className='flex items-center p-surface gap-surface'>
+					<div className='flex flex-wrap items-center p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<p className='text-sm text-foreground-secondary'>
 								Last updated: March 10, 2025
 							</p>
 						</div>
 
-						<div className='ml-auto flex gap-2'>
-							<Button type='button' mode='secondary' appearance='neutral'>
+						<div className='ml-auto w-full @xl:w-2/5 flex gap-2'>
+							<Button
+								className='flex-1'
+								type='button'
+								size='sm'
+								mode='secondary'
+								appearance='neutral'
+							>
 								Decline
 							</Button>
 
-							<Button type='submit' appearance='neutral'>
+							<Button
+								className='flex-1'
+								type='submit'
+								size='sm'
+								appearance='neutral'
+							>
 								Accept
 							</Button>
 						</div>
@@ -367,11 +378,8 @@ export default function Admin() {
 						pixelSize={2}
 						color='#1212ce'
 						patternScale={1}
-						patternDensity={1}
-						enableRipples={false}
+						patternDensity={0.6}
 						speed={0.9}
-						transparent
-						edgeFade={0}
 					/>
 				</div>
 			</div>

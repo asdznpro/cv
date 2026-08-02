@@ -87,7 +87,11 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 					</p>
 				</div>
 
-				<CreateShortLinkForm />
+				<div className='relative flex'>
+					<CreateShortLinkForm />
+
+					<span className='-z-1 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 container w-[160%] aspect-square animate-[fade-in_500ms_ease-out] bg-radial from-accent/20 to-60% to-background pointer-events-none' />
+				</div>
 			</section>
 
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>

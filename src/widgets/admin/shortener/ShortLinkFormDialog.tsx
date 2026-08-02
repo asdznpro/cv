@@ -6,8 +6,8 @@ import { toast } from 'sonner'
 
 import {
 	SHORT_LINK_HOST,
-	type ShortLink,
 	updateShortLink,
+	type ShortLink,
 } from 'lib/short-links'
 
 import { Button, Separator } from 'ui/blocks'
@@ -145,11 +145,13 @@ export function ShortLinkFormDialog({
 
 			<Separator />
 
-			<div className='flex flex-col p-surface gap-surface'>
-				<div className='flex justify-end gap-2'>
+			<div className='flex items-center p-surface gap-surface'>
+				<div className='ml-auto w-full @md/overlay:w-2/5 flex gap-2'>
 					<Button
 						onClick={onCancel}
+						className='flex-1'
 						type='button'
+						size='sm'
 						mode='secondary'
 						appearance='neutral'
 						disabled={pending}
@@ -157,7 +159,13 @@ export function ShortLinkFormDialog({
 						Cancel
 					</Button>
 
-					<Button type='submit' appearance='neutral' disabled={pending}>
+					<Button
+						className='flex-1'
+						type='submit'
+						size='sm'
+						appearance='neutral'
+						disabled={pending}
+					>
 						Save
 					</Button>
 				</div>
