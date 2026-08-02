@@ -4,32 +4,32 @@ import { useTransition } from 'react'
 
 import { toast } from 'sonner'
 
-import { type Company, deleteCompany } from 'lib/companies'
+import { deleteShortLink, shortLinkHref, type ShortLink } from 'lib/short-links'
 
 import { Button } from 'ui/blocks'
 
-type DeleteCompanyDialogProps = {
-	company: Company
+type DeleteShortLinkDialogProps = {
+	link: ShortLink
 	onCancel: () => void
 	onSuccess: () => void
 }
 
-export function DeleteCompanyDialog({
-	company,
+export function DeleteShortLinkDialog({
+	link,
 	onCancel,
 	onSuccess,
-}: DeleteCompanyDialogProps) {
+}: DeleteShortLinkDialogProps) {
 	const [pending, startTransition] = useTransition()
 
 	function confirm() {
 		startTransition(async () => {
-			const result = await deleteCompany(company.id)
+			const result = await deleteShortLink(link.id)
 			if (!result.ok) {
 				toast.error(result.error)
 				return
 			}
 
-			toast.success('Компания удалена')
+			toast.success('Ссылка удалена')
 			onSuccess()
 		})
 	}
@@ -39,11 +39,11 @@ export function DeleteCompanyDialog({
 			<div className='flex flex-col p-surface gap-surface'>
 				<div className='flex flex-1 flex-col gap-3'>
 					<h3 className='text-xl font-medium font-condensed tracking-tight'>
-						Are you sure you want to delete this company?
+						Delete short link?
 					</h3>
 
 					<p className='text-sm text-foreground-secondary'>
-						«{company.name}» will be permanently deleted.
+						«{shortLinkHref(link.slug)}» will stop redirecting.
 					</p>
 				</div>
 

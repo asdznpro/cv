@@ -79,6 +79,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
 					<span className='spacing w-0 h-full' />
 				</span>
+
+				{isRequired && !formItem?.hasLabel && (
+					<span className='absolute -top-3 -right-1.5 text-danger select-none'>
+						*
+					</span>
+				)}
 			</span>
 		)
 	},
