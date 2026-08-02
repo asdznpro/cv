@@ -360,8 +360,9 @@ export default function Admin() {
 			</section>
 
 			<div className='-z-10 absolute inset-x-0 top-0 w-full h-1/4 flex flex-col'>
-				<div className='absolute inset-0 -z-8 bg-linear-to-b from-transparent to-background' />
-				<div className='absolute inset-0 -z-10'>
+				<div className='absolute inset-0 -z-8 bg-linear-to-b from-transparent 0from-20% to-background' />
+
+				<div className='absolute inset-0 -z-10 0bg-blue-900 0border-b border-separator'>
 					<PixelBlast
 						variant='square'
 						pixelSize={2}

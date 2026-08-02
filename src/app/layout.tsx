@@ -24,6 +24,9 @@ export default function RootLayout({
 				<meta name='apple-mobile-web-app-title' content='Andrew S. / CV' />
 				<meta name='yandex-verification' content='506eca3509ce4857' />
 
+				<meta name='msapplication-TileColor' content='#4343ef' />
+				<meta name='theme-color' content='#040406' />
+
 				<link
 					rel='icon'
 					type='image/png'

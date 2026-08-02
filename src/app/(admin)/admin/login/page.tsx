@@ -39,7 +39,7 @@ export default function Login() {
 				</div>
 			</section>
 
-			<div className='-z-10 fixed inset-0 w-full h-screen flex flex-col bg-blue-900'>
+			<div className='-z-10 fixed inset-0 w-full h-screen flex flex-col bg-blue-950/40'>
 				<div className='relative z-0 w-full h-full'>
 					<div className='absolute inset-0 -z-10'>
 						<PixelBlast

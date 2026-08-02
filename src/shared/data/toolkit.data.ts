@@ -143,4 +143,10 @@ export const TOOLKIT_LOGOS = [
 		label: true,
 		size: { width: 160, height: 160 },
 	},
+	{
+		image: '/assets/toolkit/cf_horizontal.svg',
+		name: 'Cloudflare',
+		label: false,
+		size: { width: 1100, height: 160 },
+	},
 ]

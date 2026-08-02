@@ -22,7 +22,7 @@ import {
 	Icon28ChainOutline,
 } from '@vkontakte/icons'
 
-const NAV_ITEMS = [
+export const NAV_ITEMS = [
 	{
 		id: 'main',
 		label: 'Main',
