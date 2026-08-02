@@ -15,6 +15,7 @@ import {
 	Icon28CalendarOutline,
 	Icon28ChainOutline,
 	Icon28CopyOutline,
+	Icon28UsersOutline,
 	Icon28ViewOutline,
 } from '@vkontakte/icons'
 
@@ -127,6 +128,15 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 												prefix={<Icon28ViewOutline width={14} height={14} />}
 											>
 												{link.clicks}
+											</Badge>
+
+											<Badge
+												size='md'
+												mode='soft'
+												appearance='neutral'
+												prefix={<Icon28UsersOutline width={14} height={14} />}
+											>
+												{link.unique_visitors ?? 0}
 											</Badge>
 
 											<Badge

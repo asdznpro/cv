@@ -55,7 +55,7 @@ export function FormItem(props: FormItemProps) {
 				{...restProps}
 				data-status={status}
 				data-disabled={disabled || undefined}
-				className={twMerge('root flex flex-col gap-3', className)}
+				className={twMerge('root flex flex-col gap-2', className)}
 			>
 				{children}
 			</div>

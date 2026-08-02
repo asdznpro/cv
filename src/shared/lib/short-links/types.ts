@@ -6,6 +6,7 @@ export type ShortLink = {
 	target_url: string
 	title: string | null
 	clicks: number
+	unique_visitors: number
 	created_at: string
 	updated_at: string
 }
