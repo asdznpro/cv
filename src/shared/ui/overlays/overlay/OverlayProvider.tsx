@@ -63,6 +63,7 @@ export function OverlayProvider({ children }: { children: ReactNode }) {
 	return (
 		<OverlayContext value={{ open, close, closeAll }}>
 			{children}
+
 			<OverlayPortal
 				stack={stack}
 				onDismiss={() => {

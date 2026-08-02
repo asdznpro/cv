@@ -11,11 +11,11 @@ export default function Settings() {
 
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-12'>
 				<div className='flex flex-col gap-4'>
-					<h1 className='text-5xl font-medium font-condensed tracking-tight'>
+					<h1 className='text-5xl text-balance font-medium font-condensed tracking-tight'>
 						Preferences
 					</h1>
 
-					<p className='text-foreground-secondary'>
+					<p className='text-foreground-secondary text-balance'>
 						Manage your account profile, connections, and dashboard experience
 					</p>
 				</div>

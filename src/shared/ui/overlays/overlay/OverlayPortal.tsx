@@ -53,7 +53,7 @@ export function OverlayPortal({ stack, onDismiss }: OverlayPortalProps) {
 							animate={{ opacity: 1, scale: 1 }}
 							exit={{ opacity: 0, scale: 0.96 }}
 							transition={TRANSITION}
-							className='pointer-events-auto w-full max-w-lg'
+							className='@container/overlay pointer-events-auto w-full max-w-lg'
 						>
 							{top.content}
 						</motion.div>
