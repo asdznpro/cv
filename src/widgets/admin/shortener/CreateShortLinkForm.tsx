@@ -72,7 +72,7 @@ export function CreateShortLinkForm() {
 			className='flex flex-col bg-surface border border-separator rounded-surface'
 			onSubmit={submitCreate}
 		>
-			<div className='flex p-surface gap-surface'>
+			<div className='flex flex-wrap p-surface gap-surface'>
 				<div className='flex flex-1 flex-col gap-3'>
 					<h3 className='text-xl font-medium font-condensed tracking-tight'>
 						Target URL
@@ -84,7 +84,7 @@ export function CreateShortLinkForm() {
 					</p>
 				</div>
 
-				<div className='w-2/5'>
+				<div className='w-full @xl:w-2/5'>
 					<FormItem id='short-target-url' required>
 						<FormItem.Input
 							size='md'
@@ -104,7 +104,7 @@ export function CreateShortLinkForm() {
 
 			<Separator />
 
-			<div className='flex p-surface gap-surface'>
+			<div className='flex flex-wrap p-surface gap-surface'>
 				<div className='flex flex-1 flex-col gap-3'>
 					<h3 className='text-xl font-medium font-condensed tracking-tight'>
 						Slug <span className='text-foreground-secondary'>(optional)</span>
@@ -116,7 +116,7 @@ export function CreateShortLinkForm() {
 					</p>
 				</div>
 
-				<div className='w-2/5'>
+				<div className='w-full @xl:w-2/5'>
 					<FormItem id='short-slug' optional>
 						<FormItem.Input
 							size='md'
@@ -139,7 +139,7 @@ export function CreateShortLinkForm() {
 
 			<Separator />
 
-			<div className='flex p-surface gap-surface'>
+			<div className='flex flex-wrap p-surface gap-surface'>
 				<div className='flex flex-1 flex-col gap-3'>
 					<h3 className='text-xl font-medium font-condensed tracking-tight'>
 						Title <span className='text-foreground-secondary'>(optional)</span>
@@ -150,7 +150,7 @@ export function CreateShortLinkForm() {
 					</p>
 				</div>
 
-				<div className='w-2/5'>
+				<div className='w-full @xl:w-2/5'>
 					<FormItem id='short-title' optional>
 						<FormItem.Input
 							size='md'
@@ -170,7 +170,7 @@ export function CreateShortLinkForm() {
 
 			<Separator />
 
-			<div className='flex p-surface gap-surface'>
+			<div className='flex flex-wrap p-surface gap-surface'>
 				<div className='flex flex-1 flex-col gap-3'>
 					<h3 className='text-xl font-medium font-condensed tracking-tight'>
 						Choose domain
@@ -181,7 +181,7 @@ export function CreateShortLinkForm() {
 					</p>
 				</div>
 
-				<div className='w-2/5'>
+				<div className='w-full @xl:w-2/5'>
 					<FormItem id='short-domain'>
 						<FormItem.Input
 							size='md'
@@ -199,7 +199,7 @@ export function CreateShortLinkForm() {
 			<Separator />
 
 			<div className='flex items-center p-surface gap-surface'>
-				<div className='ml-auto w-2/5 flex gap-2'>
+				<div className='ml-auto w-full @xl:w-2/5 flex gap-2'>
 					<Button
 						className='flex-1'
 						type='button'
