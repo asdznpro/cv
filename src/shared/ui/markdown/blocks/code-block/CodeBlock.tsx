@@ -77,7 +77,7 @@ export function CodeBlock({ children }: { children: React.ReactNode }) {
 
 				<div
 					ref={bodyRef}
-					className='overflow-x-auto scrollbar max-h-144 p-surface text-sm leading-6'
+					className='overflow-x-auto max-h-144 p-surface text-sm leading-6'
 				>
 					{!hasTitle && (
 						<Button

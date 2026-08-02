@@ -10,7 +10,7 @@ import { TOOLKIT_LOGOS } from 'shared/data'
 export function Hero() {
 	return (
 		<div className='w-full h-screen flex flex-col p-2 gap-2'>
-			<div className='relative z-0 w-full h-full rounded-xl border border-separator bg-blue-900 overflow-hidden'>
+			<div className='relative z-0 w-full h-full rounded-xl border border-separator bg-blue-950/40 overflow-hidden'>
 				<div className='absolute inset-0'>
 					<Lanyard
 						position={[0, 0, 14]}

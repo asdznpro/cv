@@ -12,6 +12,7 @@ import { useBoot } from 'widgets'
 
 import { Badge, Button, Kbd, Separator } from 'ui/blocks'
 import { Logo } from 'ui/brand'
+import { Backdrop } from 'ui/overlays'
 
 import {
 	Icon28AddOutline,
@@ -100,14 +101,11 @@ export function Header() {
 		<header className='fixed top-0 z-20 w-full max-h-screen p-app pointer-events-none'>
 			<AnimatePresence>
 				{isOpen && (
-					<motion.div
-						aria-hidden='true'
-						initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-						animate={{ opacity: 1, backdropFilter: 'blur(6px)' }}
-						exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-						transition={{ duration: 0.2 }}
+					<Backdrop
+						key='backdrop'
+						className='z-0'
+						aria-hidden
 						onClick={() => setIsOpen(false)}
-						className='fixed inset-0 z-0 pointer-events-auto bg-background/80'
 					/>
 				)}
 			</AnimatePresence>

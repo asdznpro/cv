@@ -5,17 +5,16 @@ import Image from 'next/image'
 
 import { getMarkdown, getMarkdownToc } from 'lib/server'
 import { getImagePalette } from 'lib/utils'
+
 import { ARTICLES_DATA } from 'shared/data'
 
 import { ArticleToc, BackToTop } from 'widgets'
-import { Badge, Button, PreviewCard, Separator } from 'ui/blocks'
+import { Badge, PreviewCard, Separator } from 'ui/blocks'
 import { MarkdownContent } from 'ui/markdown'
 import {
 	Icon20ArrowTurnRightOutline,
-	Icon28ArrowLeftOutline,
 	Icon28ChevronDownOutline,
 	Icon28ChevronLeftCircle,
-	Icon28CopyOutline,
 } from '@vkontakte/icons'
 
 export default async function Article({
@@ -150,42 +149,14 @@ export default async function Article({
 					</ViewTransition>
 				</section>
 
-				<section className='max-w-7xl w-full grid grid-cols-[1fr_auto_1fr] gap-10'>
-					<div className=''>
+				<section className='max-w-7xl w-full flex flex-col @3xl:grid grid-cols-[1fr_auto_1fr] gap-10'>
+					<div className='max-w-2xl'>
 						<ArticleToc items={toc} />
 					</div>
 
 					<section className='max-w-2xl w-full flex flex-col gap-10'>
 						<MarkdownContent>{content}</MarkdownContent>
-
-						{/* <div className='flex gap-1.5'>
-							{article.tags.map(tag => (
-								<Badge
-									key={tag}
-									to={`/articles?tag=${tag}`}
-									mode='outline'
-									appearance='neutral'
-								>
-									#{tag}
-								</Badge>
-							))}
-						</div> */}
 					</section>
-
-					{/* <div className=''>
-						<div className='flex flex-col 0gap-2 text-lg text-foreground-secondary font-condensed font-medium'>
-							<span className='w-fit flex'>30 Jun 2026</span>
-							<span className='w-fit flex'>4 min read</span>
-							<span className='w-fit flex items-center gap-1.5 hover:text-foreground transition-colors cursor-pointer'>
-								Copy{' '}
-								<Icon28ChevronLeftCircle
-									className='-rotate-90'
-									width={18}
-									height={18}
-								/>
-							</span>
-						</div>
-					</div> */}
 				</section>
 
 				<section className='max-w-2xl w-full flex flex-col gap-6'>
@@ -243,16 +214,6 @@ export default async function Article({
 				</section>
 
 				<section className='sticky bottom-4 w-full flex justify-center gap-2'>
-					{/* <Button
-						to='/articles'
-						size='lg'
-						appearance='neutral'
-						prefix={<Icon28ArrowLeftOutline width={20} height={20} />}
-						radius='rounded'
-					>
-						Back to All Articles
-					</Button> */}
-
 					<BackToTop />
 				</section>
 			</article>

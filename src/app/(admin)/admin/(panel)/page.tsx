@@ -1,10 +1,14 @@
 'use client'
 
-import { Icon28HelpOutline } from '@vkontakte/icons'
 import Link from 'next/link'
 
+import { PixelBlast } from 'widgets'
+
 import { Button, Separator } from 'ui/blocks'
+import { ContextCard, Tooltip } from 'ui/floating'
 import { FormItem } from 'ui/forms'
+
+import { Icon28HelpOutline } from '@vkontakte/icons'
 
 export default function Admin() {
 	return (
@@ -13,14 +17,13 @@ export default function Admin() {
 
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-12'>
 				<div className='flex flex-col gap-4'>
-					<h1 className='text-5xl font-medium font-condensed tracking-tight'>
+					<h1 className='text-5xl text-balance font-medium font-condensed tracking-tight'>
 						Overview
 					</h1>
 
-					<p className='text-foreground-secondary'>
+					<p className='text-foreground-secondary text-balance'>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
 						quos. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-						Quisquam,
 					</p>
 				</div>
 
@@ -40,7 +43,14 @@ export default function Admin() {
 
 						<FormItem id='coupon-code' required>
 							<FormItem.Label
-								suffix={<Icon28HelpOutline width={20} height={20} />}
+								suffix={
+									<Tooltip
+										align='end'
+										text='Why this exists — scope, limits, or constraints'
+									>
+										<Icon28HelpOutline width={20} height={20} />
+									</Tooltip>
+								}
 							>
 								Coupon Code
 							</FormItem.Label>
@@ -114,18 +124,20 @@ export default function Admin() {
 			</section>
 
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
-				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+				<div className='flex flex-wrap items-center gap-app not-first-of-type:pt-8 pb-3'>
 					<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 						Overview
 					</h2>
 
-					<Button
-						mode='ghost'
-						appearance='neutral'
-						prefix={<Icon28HelpOutline width={18} height={18} />}
-					>
-						Help Button
-					</Button>
+					<Tooltip text='Why this exists — scope, limits, or constraints'>
+						<Button
+							mode='ghost'
+							appearance='neutral'
+							prefix={<Icon28HelpOutline width={18} height={18} />}
+						>
+							Help Button
+						</Button>
+					</Tooltip>
 				</div>
 
 				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
@@ -158,7 +170,9 @@ export default function Admin() {
 							</p>
 						</div>
 
-						<Button>Gift Subscription</Button>
+						<ContextCard content={<p>$14.99 per month</p>}>
+							<Button>Gift Subscription</Button>
+						</ContextCard>
 					</div>
 				</div>
 
@@ -206,7 +220,7 @@ export default function Admin() {
 					</h2>
 				</div>
 
-				<div className='flex flex-col bg-surface border border-separator rounded-surface outline-2 outline-offset-2 outline-danger '>
+				<div className='flex flex-col bg-surface border border-separator rounded-surface outline-2 outline-offset-2 outline-danger'>
 					<div className='flex p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
@@ -218,7 +232,7 @@ export default function Admin() {
 								<Link
 									href='/'
 									target='_blank'
-									className='text-info hover:text-info-secondary underline transition-colors'
+									className='text-link hover:text-link-secondary underline transition-colors'
 								>
 									unintended side effects
 								</Link>
@@ -343,6 +357,24 @@ export default function Admin() {
 					</p>
 				</div>
 			</section>
+
+			<div className='-z-10 absolute inset-x-0 top-0 w-full h-1/4 flex flex-col'>
+				<div className='absolute inset-0 -z-8 bg-linear-to-b from-transparent 0from-20% to-background' />
+
+				<div className='absolute inset-0 -z-10 0bg-blue-900 0border-b border-separator'>
+					<PixelBlast
+						variant='square'
+						pixelSize={2}
+						color='#1212ce'
+						patternScale={1}
+						patternDensity={1}
+						enableRipples={false}
+						speed={0.9}
+						transparent
+						edgeFade={0}
+					/>
+				</div>
+			</div>
 
 			<span />
 		</>

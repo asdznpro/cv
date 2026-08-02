@@ -22,7 +22,7 @@ import {
 	Icon28ChainOutline,
 } from '@vkontakte/icons'
 
-const NAV_ITEMS = [
+export const NAV_ITEMS = [
 	{
 		id: 'main',
 		label: 'Main',
@@ -79,8 +79,8 @@ const NAV_ITEMS = [
 		label: 'System',
 		items: [
 			{
-				href: '/admin/links',
-				label: 'Short Links',
+				href: '/admin/shortener',
+				label: 'URL Shortener',
 				icon: <Icon28ChainOutline width={20} height={20} />,
 			},
 			{
@@ -98,7 +98,9 @@ export function Sidebar() {
 		useAdminShell()
 
 	const displayName =
-		[user?.firstName, user?.lastName].filter(Boolean).join(' ') || 'Admin'
+		[user?.firstName, user?.lastName?.slice(0, 1) + '.']
+			.filter(Boolean)
+			.join(' ') || 'Admin'
 
 	const activeHref = NAV_ITEMS.flatMap(section =>
 		section.items.map(item => item.href),
@@ -112,7 +114,7 @@ export function Sidebar() {
 		<>
 			<motion.aside
 				style={{ width: widthMv }}
-				className='relative sticky top-0 flex shrink-0 h-screen justify-end overflow-hidden'
+				className='0relative sticky top-0 flex shrink-0 h-screen justify-end overflow-hidden bg-background'
 			>
 				<span
 					aria-hidden
@@ -186,7 +188,7 @@ export function Sidebar() {
 
 					<div className='flex flex-col p-surface gap-surface'>
 						<div className='flex items-center gap-surface'>
-							<div className='w-9 h-9 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden outline-2 outline-offset-3 outline-accent'>
+							<div className='w-9 h-9 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden 0outline-2 outline-offset-3 outline-accent'>
 								{user?.avatar ? (
 									<Image
 										className='w-full h-full object-cover'
@@ -210,7 +212,6 @@ export function Sidebar() {
 								mode='ghost'
 								appearance='neutral'
 								prefix={<Icon28MoreHorizontal width={18} height={18} />}
-								radius='rounded'
 								iconOnly
 							/>
 						</div>
