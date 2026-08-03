@@ -38,7 +38,7 @@ export default function Admin() {
 							)}
 						/>
 
-						<Kbd keys={['Esc']} />
+						{/* <Kbd keys={['Esc']} /> */}
 					</div>
 				</div>
 
@@ -97,6 +97,27 @@ export default function Admin() {
 							))}
 						</div>
 					))}
+				</div>
+
+				<Separator />
+
+				<div className='flex p-surface gap-surface'>
+					<span className='flex items-center gap-2'>
+						<Kbd size='sm' keys={['↑', '↓']} />
+						<span className='text-xs text-foreground-secondary'>
+							to navigate
+						</span>
+					</span>
+
+					<span className='flex items-center gap-2'>
+						<Kbd size='sm' keys={['↵']} />
+						<span className='text-xs text-foreground-secondary'>to select</span>
+					</span>
+
+					<span className='flex items-center gap-2'>
+						<Kbd size='sm' keys={['Esc']} />
+						<span className='text-xs text-foreground-secondary'>to close</span>
+					</span>
 				</div>
 			</div>,
 		)

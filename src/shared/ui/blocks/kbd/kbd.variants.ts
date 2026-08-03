@@ -27,7 +27,7 @@ export const kbdVariants = cva(
 		},
 
 		compoundVariants: [
-			{ size: 'sm', radius: 'smooth', class: 'rounded-xs' },
+			{ size: 'sm', radius: 'smooth', class: 'rounded-[3px]' },
 			{ size: 'md', radius: 'smooth', class: 'rounded' },
 		],
 
@@ -48,10 +48,10 @@ export function kbdGroupRadiusClass(
 
 	if (length <= 1) return 'rounded-full'
 	if (index === 0) {
-		return isSm ? 'rounded-l-xl rounded-r-xs' : 'rounded-l-2xl rounded-r'
+		return isSm ? 'rounded-l-xl rounded-r-[3px]' : 'rounded-l-2xl rounded-r'
 	}
 	if (index === length - 1) {
-		return isSm ? 'rounded-r-xl rounded-l-xs' : 'rounded-r-2xl rounded-l'
+		return isSm ? 'rounded-r-xl rounded-l-[3px]' : 'rounded-r-2xl rounded-l'
 	}
-	return isSm ? 'rounded-xs' : 'rounded'
+	return isSm ? 'rounded-[3px]' : 'rounded'
 }

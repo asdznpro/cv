@@ -31,32 +31,42 @@ export default function Settings() {
 				</div>
 
 				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
-					<div className='flex p-surface gap-surface'>
+					<div className='flex flex-wrap p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
 								First name
 							</h3>
 						</div>
 
-						<div className='w-2/5'>
+						<div className='w-full @xl:w-2/5'>
 							<FormItem id='coupon-code'>
-								<FormItem.Input size='md' type='text' value='Andrew' />
+								<FormItem.Input
+									size='md'
+									mode='outline'
+									type='text'
+									value='Andrew'
+								/>
 							</FormItem>
 						</div>
 					</div>
 
 					<Separator />
 
-					<div className='flex p-surface gap-surface'>
+					<div className='flex flex-wrap p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
 								Last name
 							</h3>
 						</div>
 
-						<div className='w-2/5'>
+						<div className='w-full @xl:w-2/5'>
 							<FormItem id='coupon-code'>
-								<FormItem.Input size='md' type='text' value='S.' />
+								<FormItem.Input
+									size='md'
+									mode='outline'
+									type='text'
+									value='S.'
+								/>
 							</FormItem>
 						</div>
 					</div>
@@ -64,7 +74,7 @@ export default function Settings() {
 					<Separator />
 
 					<div className='flex items-center p-surface gap-surface'>
-						<div className='ml-auto w-2/5 flex gap-2'>
+						<div className='ml-auto w-full @xl:w-2/5 flex gap-2'>
 							<Button
 								className='flex-1'
 								type='button'
@@ -94,7 +104,7 @@ export default function Settings() {
 				</div>
 
 				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
-					<div className='flex p-surface gap-surface'>
+					<div className='flex flex-wrap p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
 								Sidebar behavior
@@ -106,9 +116,10 @@ export default function Settings() {
 							</p>
 						</div>
 
-						<div className='w-2/5'>
+						<div className='w-full @xl:w-2/5'>
 							<FormItem id='coupon-code'>
 								<FormItem.Input
+									mode='outline'
 									size='md'
 									type='text'
 									value='Expanded'
@@ -120,7 +131,7 @@ export default function Settings() {
 
 					<Separator />
 
-					<div className='flex p-surface gap-surface'>
+					<div className='flex flex-wrap p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
 								Gift a Lowtab.gg Subscription
@@ -133,9 +144,10 @@ export default function Settings() {
 							</p>
 						</div>
 
-						<div className='w-2/5'>
+						<div className='w-full @xl:w-2/5'>
 							<FormItem id='coupon-code'>
 								<FormItem.Input
+									mode='outline'
 									size='md'
 									type='text'
 									value='Expanded'

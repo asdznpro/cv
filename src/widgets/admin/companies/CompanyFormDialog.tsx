@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react'
 
 import { toast } from 'sonner'
+import { twMerge } from 'tailwind-merge'
 
 import {
 	type Company,
@@ -123,6 +124,29 @@ export function CompanyFormDialog({
 					<p className='text-xl font-medium font-condensed tracking-tight'>
 						{editingId ? 'Edit company' : 'Create company'}
 					</p>
+				</div>
+			</div>
+
+			<Separator />
+
+			<div className='flex flex-col p-surface gap-surface'>
+				<div
+					className={twMerge(
+						'group min-h-32 flex items-center p-surface gap-surface',
+						'rounded-md border border-dashed border-separator hover:bg-surface-secondary focus-visible:bg-surface-secondary active:scale-98',
+						'transition-all duration-100 ease-in',
+						'select-none cursor-pointer focus-ring-base focus-ring-visible',
+					)}
+				>
+					<div className='flex flex-1 flex-col gap-2 text-center'>
+						<p className='text-sm0 font-medium font-condensed tracking-tight'>
+							Click to upload or drag and drop
+						</p>
+
+						<p className='text-xs text-foreground-secondary'>
+							PNG, JPG or GIF up to 10MB
+						</p>
+					</div>
 				</div>
 
 				<div className='grid @md/overlay:grid-cols-2 gap-app'>
