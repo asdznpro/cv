@@ -78,7 +78,7 @@ export const Button = forwardRef<
 			onClick={isInteractive ? restProps.onClick : undefined}
 			data-interactive={isInteractive ? true : undefined}
 			className={twMerge(
-				'root',
+				'group root',
 				buttonVariants({
 					mode,
 					appearance,
