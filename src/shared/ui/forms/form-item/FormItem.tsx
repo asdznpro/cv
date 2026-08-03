@@ -1,6 +1,6 @@
 'use client'
 
-import { useId } from 'react'
+import { useCallback, useId, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { FormItemProvider } from './FormItem.context'
@@ -21,23 +21,41 @@ export function FormItem(props: FormItemProps) {
 	const reactId = useId()
 	const id = idProp ?? reactId
 	const captionId = `${id}-caption`
+	const [hasLabel, setHasLabelState] = useState(false)
+	const setHasLabel = useCallback((next: boolean) => {
+		setHasLabelState(next)
+	}, [])
+
+	const value = useMemo(
+		() => ({
+			id,
+			status,
+			required,
+			optional,
+			disabled,
+			captionId,
+			hasLabel,
+			setHasLabel,
+		}),
+		[
+			id,
+			status,
+			required,
+			optional,
+			disabled,
+			captionId,
+			hasLabel,
+			setHasLabel,
+		],
+	)
 
 	return (
-		<FormItemProvider
-			value={{
-				id,
-				status,
-				required,
-				optional,
-				disabled,
-				captionId,
-			}}
-		>
+		<FormItemProvider value={value}>
 			<div
 				{...restProps}
 				data-status={status}
 				data-disabled={disabled || undefined}
-				className={twMerge('root flex flex-col gap-3', className)}
+				className={twMerge('root flex flex-col gap-2', className)}
 			>
 				{children}
 			</div>

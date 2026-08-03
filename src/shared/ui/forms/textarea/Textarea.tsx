@@ -129,6 +129,12 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 						</span>
 					)}
 				</span>
+
+				{isRequired && !formItem?.hasLabel && (
+					<span className='absolute -top-3 -right-1.5 text-danger select-none'>
+						*
+					</span>
+				)}
 			</span>
 		)
 	},

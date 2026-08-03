@@ -11,6 +11,9 @@ export type FormItemContextValue = {
 	optional: boolean
 	disabled: boolean
 	captionId: string
+	/** True while a Label is mounted inside this FormItem. */
+	hasLabel: boolean
+	setHasLabel: (hasLabel: boolean) => void
 }
 
 const FormItemContext = createContext<FormItemContextValue | null>(null)

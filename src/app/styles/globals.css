@@ -27,7 +27,6 @@
 
 html {
 	scrollbar-gutter: stable;
-	scroll-behavior: smooth;
 }
 
 body {
@@ -45,6 +44,7 @@ body {
 
 	scrollbar-width: thin;
 	scrollbar-color: var(--foreground-tertiary) transparent;
+	scroll-behavior: smooth;
 
 	&::selection {
 		background: var(--accent);

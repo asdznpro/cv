@@ -91,9 +91,9 @@ export function Header() {
 		)?.label ?? 'Overview'
 
 	return (
-		<header className='sticky top-0 z-10'>
+		<header className='sticky top-0 z-10 pointer-events-none'>
 			<div className='mx-auto max-w-lg flex items-center p-app'>
-				<div className='w-full flex items-center p-2 gap-2 bg-background border border-separator rounded-full'>
+				<div className='w-full flex items-center p-2 gap-2 bg-background border border-separator rounded-full pointer-events-auto'>
 					<span className='w-full flex gap-app'>
 						<Button
 							aria-label={open ? 'Hide sidebar' : 'Show sidebar'}

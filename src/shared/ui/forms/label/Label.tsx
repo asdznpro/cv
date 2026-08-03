@@ -1,5 +1,6 @@
 'use client'
 
+import { useLayoutEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { useFormItem } from '../form-item/FormItem.context'
@@ -7,6 +8,7 @@ import type { LabelProps } from './Label.interface'
 
 export function Label(props: LabelProps) {
 	const formItem = useFormItem()
+	const setHasLabel = formItem?.setHasLabel
 
 	const {
 		children,
@@ -22,13 +24,20 @@ export function Label(props: LabelProps) {
 	const required = requiredProp ?? formItem?.required ?? false
 	const optional = optionalProp ?? formItem?.optional ?? false
 
+	useLayoutEffect(() => {
+		if (!setHasLabel) return
+
+		setHasLabel(true)
+		return () => setHasLabel(false)
+	}, [setHasLabel])
+
 	return (
 		<label
 			{...restProps}
 			htmlFor={htmlFor ?? formItem?.id}
 			className={twMerge(
 				'root flex items-center gap-1.5',
-				'text-sm 0font-condensed font-medium',
+				'text-sm font-condensed font-medium',
 				className,
 			)}
 		>
