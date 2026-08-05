@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { motion } from 'motion/react'
 
 import { useAdminShell, MIN } from '../shell'
+import { COMMAND_MENU_HOTKEY, useAdminCommandMenu } from '../command-menu'
 import { Button, Kbd, Separator } from 'ui/blocks'
 
 import {
@@ -96,6 +97,7 @@ export function Sidebar() {
 	const pathname = usePathname()
 	const { user, open, clipLayout, widthMv, dimOpacity, onResizeStart } =
 		useAdminShell()
+	const { openCommandMenu } = useAdminCommandMenu()
 
 	const displayName =
 		[user?.firstName, user?.lastName?.slice(0, 1) + '.']
@@ -114,7 +116,7 @@ export function Sidebar() {
 		<>
 			<motion.aside
 				style={{ width: widthMv }}
-				className='0relative sticky top-0 flex shrink-0 h-screen justify-end overflow-hidden bg-background'
+				className='sticky top-0 flex shrink-0 h-screen justify-end overflow-hidden bg-background'
 			>
 				<span
 					aria-hidden
@@ -147,11 +149,10 @@ export function Sidebar() {
 							appearance='neutral'
 							prefix={<Icon28SearchOutline width={20} height={20} />}
 							suffix={
-								<>
-									<Kbd keys={['Shift', 'F']} radius='smooth' />
-								</>
+								<Kbd keys={[...COMMAND_MENU_HOTKEY.label]} radius='smooth' />
 							}
 							align='between'
+							onClick={openCommandMenu}
 						>
 							Search
 						</Button>

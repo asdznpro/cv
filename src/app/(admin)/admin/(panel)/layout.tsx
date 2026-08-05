@@ -1,6 +1,11 @@
 import { getAdminSession } from 'lib/auth'
 
-import { AdminShellProvider, Header, Sidebar } from 'widgets/admin'
+import {
+	AdminCommandMenuHost,
+	AdminShellProvider,
+	Header,
+	Sidebar,
+} from 'widgets/admin'
 
 export default async function AdminLayout({
 	children,
@@ -11,6 +16,8 @@ export default async function AdminLayout({
 
 	return (
 		<AdminShellProvider user={user}>
+			<AdminCommandMenuHost />
+
 			<div className='w-full h-full flex flex-1'>
 				<Sidebar />
 

@@ -178,7 +178,7 @@ export default function Settings() {
 							</h3>
 						</div>
 
-						<Kbd keys={['Shift', 'F']} />
+						<Kbd keys={['Ctrl', 'K']} />
 
 						<h3 className='font-medium font-condensed tracking-tight'>
 							*Switch*

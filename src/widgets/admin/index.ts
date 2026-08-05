@@ -1,3 +1,4 @@
+export * from './command-menu'
 export * from './companies'
 export * from './header'
 export * from './shortener'
