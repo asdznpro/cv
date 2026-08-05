@@ -80,20 +80,25 @@ export function ShortLinkFormDialog({
 						Edit short link
 					</p>
 				</div>
+			</div>
 
-				<div className='flex flex-col gap-app'>
-					<FormItem required>
+			<Separator />
+
+			<div className='flex flex-col p-surface gap-surface'>
+				<div className='grid @md/overlay:grid-cols-2 gap-app'>
+					<FormItem className='col-span-full' required>
 						<FormItem.Label>Target URL</FormItem.Label>
 						<FormItem.Input
 							aria-label='Target URL'
-							mode='secondary'
+							size='md'
+							mode='outline'
 							value={form.target_url}
 							onChange={event =>
 								setField('target_url', (event.target as HTMLInputElement).value)
 							}
 							placeholder='https://cv.asdzn.pro/...'
 							disabled={pending}
-							prefix={<Icon28ChainOutline width={20} height={20} />}
+							prefix={<Icon28ChainOutline width={18} height={18} />}
 						/>
 					</FormItem>
 
@@ -101,7 +106,8 @@ export function ShortLinkFormDialog({
 						<FormItem.Label>Slug</FormItem.Label>
 						<FormItem.Input
 							aria-label='Slug'
-							mode='secondary'
+							size='md'
+							mode='outline'
 							value={form.slug}
 							onChange={event =>
 								setField(
@@ -111,7 +117,7 @@ export function ShortLinkFormDialog({
 							}
 							placeholder='hh'
 							disabled={pending}
-							prefix={<Icon28HashtagOutline width={20} height={20} />}
+							prefix={<Icon28HashtagOutline width={18} height={18} />}
 						/>
 					</FormItem>
 
@@ -119,25 +125,27 @@ export function ShortLinkFormDialog({
 						<FormItem.Label>Title</FormItem.Label>
 						<FormItem.Input
 							aria-label='Title'
-							mode='secondary'
+							size='md'
+							mode='outline'
 							value={form.title}
 							onChange={event =>
 								setField('title', (event.target as HTMLInputElement).value)
 							}
 							placeholder='LinkedIn CV'
 							disabled={pending}
-							prefix={<Icon28InfoCircleOutline width={20} height={20} />}
+							prefix={<Icon28InfoCircleOutline width={18} height={18} />}
 						/>
 					</FormItem>
 
-					<FormItem>
+					<FormItem className='col-span-full'>
 						<FormItem.Label>Domain</FormItem.Label>
 						<FormItem.Input
 							aria-label='Domain'
-							mode='secondary'
+							size='md'
+							mode='outline'
 							value={SHORT_LINK_HOST}
 							readOnly
-							prefix={<Icon28GlobeOutline width={20} height={20} />}
+							prefix={<Icon28GlobeOutline width={18} height={18} />}
 						/>
 					</FormItem>
 				</div>

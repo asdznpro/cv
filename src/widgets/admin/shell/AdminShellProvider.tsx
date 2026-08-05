@@ -18,7 +18,7 @@ import {
 	useTransform,
 	type MotionValue,
 } from 'motion/react'
-import { useLocalStorage } from '@siberiacancode/reactuse'
+import { useHotkeys, useLocalStorage } from '@siberiacancode/reactuse'
 
 import type { AdminSession } from 'lib/auth'
 
@@ -28,9 +28,12 @@ const DEFAULT = 280
 const DIM_MAX = 1.2
 const STORAGE_KEY = 'cv-admin-sidebar'
 
+/** Ctrl/⌘B — toggle sidebar (not shown in UI yet). */
+const SIDEBAR_TOGGLE_HOTKEY = 'mod+b, mod+и'
+
 const WIDTH_TRANSITION = {
-	duration: 0.28,
-	ease: [0.32, 0.72, 0, 1] as const,
+	duration: 0.2,
+	ease: 'easeOut' as const,
 }
 
 type SidebarStorage = {
@@ -140,15 +143,18 @@ export function AdminShellProvider({
 	const closeSidebar = useCallback(() => {
 		if (closingRef.current || !open) return
 		closingRef.current = true
-		setClipLayout(true)
 		stopWidthAnimation()
 
+		// clipLayout включается сам через widthMv < MIN —
+		// не форсим заранее, иначе контент мигает с width: MIN
+		// пока aside ещё на полной ширине.
 		animate(widthMv, 0, {
 			...WIDTH_TRANSITION,
 			onComplete: () => {
 				setOpen(false)
 				closingRef.current = false
 				widthMv.set(0)
+				setClipLayout(true)
 				persist({ open: false, width: widthRef.current || DEFAULT })
 			},
 		})
@@ -175,6 +181,10 @@ export function AdminShellProvider({
 		if (open) closeSidebar()
 		else openSidebar()
 	}, [open, closeSidebar, openSidebar])
+
+	useHotkeys(SIDEBAR_TOGGLE_HOTKEY, () => {
+		toggle()
+	})
 
 	const onResizeStart = useCallback(
 		(e: ReactPointerEvent) => {
