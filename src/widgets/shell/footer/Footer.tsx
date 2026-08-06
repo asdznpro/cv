@@ -1,6 +1,6 @@
 import { twMerge } from 'tailwind-merge'
 
-import { StickerPeel } from 'widgets'
+import { StickerPeel } from 'ui/effects'
 import { Badge } from 'ui/blocks'
 import { Icon28GlobeCrossOutline, Icon28LinkOutline } from '@vkontakte/icons'
 

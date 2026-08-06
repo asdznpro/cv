@@ -8,7 +8,9 @@ import { getImagePalette } from 'lib/utils'
 
 import { ARTICLES_DATA } from 'shared/data'
 
-import { ArticleToc, BackToTop } from 'widgets'
+import { ArticleToc } from 'widgets/content'
+import { BackToTop } from 'widgets/shell'
+
 import { Badge, PreviewCard, Separator } from 'ui/blocks'
 import { MarkdownContent } from 'ui/markdown'
 import {

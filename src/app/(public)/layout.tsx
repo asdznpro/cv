@@ -1,6 +1,6 @@
 import { ViewTransition } from 'react'
 
-import { Header, Footer } from 'widgets'
+import { Header, Footer } from 'widgets/shell'
 
 export default function PublicLayout({
 	children,

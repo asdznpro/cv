@@ -4,10 +4,10 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion } from 'motion/react'
 
-import { useAdminShell, MIN } from '../shell'
+import { useAdminShell, MIN } from '../AdminShellProvider'
 import { COMMAND_MENU_HOTKEY, useAdminCommandMenu } from '../command-menu'
-import { Button, Kbd, Separator } from 'ui/blocks'
 
+import { Button, Kbd, Separator } from 'ui/blocks'
 import {
 	Icon28PollSquareOutline,
 	Icon28ArticlesOutline,
