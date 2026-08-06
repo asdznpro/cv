@@ -128,19 +128,25 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 											<Badge
 												size='md'
 												mode='soft'
-												appearance='neutral'
+												appearance={link.clicks_24h > 0 ? 'success' : 'neutral'}
 												prefix={<Icon28ViewOutline width={14} height={14} />}
+												title='Clicks (last 24h in parentheses)'
 											>
 												{link.clicks}
+												{link.clicks_24h > 0 && ' +' + link.clicks_24h}
 											</Badge>
 
 											<Badge
 												size='md'
 												mode='soft'
-												appearance='neutral'
+												appearance={
+													link.uniques_24h > 0 ? 'success' : 'neutral'
+												}
 												prefix={<Icon28UsersOutline width={14} height={14} />}
+												title='Unique visitors (last 24h in parentheses)'
 											>
 												{link.unique_visitors ?? 0}
+												{link.uniques_24h > 0 && ' +' + link.uniques_24h}
 											</Badge>
 
 											<Badge
@@ -155,7 +161,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 											</Badge>
 
 											<Badge
-												className='max-w-64'
+												className='max-w-52'
 												size='md'
 												mode='soft'
 												appearance='neutral'
