@@ -26,5 +26,5 @@ export interface PreviewCardProps extends Omit<
 	quality?: number
 	priority?: boolean
 
-	radius?: 'none' | 'base' | 'full' | undefined
+	radius?: 'none' | 'sm' | 'md' | 'full' | undefined
 }

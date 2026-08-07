@@ -191,7 +191,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 													mode='ghost'
 													appearance='neutral'
 													prefix={
-														<Icon28MoreHorizontal width={20} height={20} />
+														<Icon28MoreHorizontal width={18} height={18} />
 													}
 													iconOnly
 												/>

@@ -20,7 +20,8 @@ export const buttonVariants = cva(
 					'bg-foreground-tertiary/20 interactive-hover:hover:bg-foreground-tertiary/40 backdrop-blur-3xl',
 				outline:
 					'border border-separator interactive-hover:hover:bg-foreground-tertiary/20',
-				ghost: 'interactive-hover:hover:bg-foreground-tertiary/20',
+				ghost:
+					'interactive-hover:hover:bg-foreground-tertiary/20 focus-visible:bg-foreground-tertiary/20',
 			},
 			appearance: {
 				accent: '',
@@ -64,7 +65,7 @@ export const buttonVariants = cva(
 				mode: 'primary',
 				appearance: 'accent',
 				class:
-					'text-white bg-accent interactive-hover:hover:bg-accent-secondary 0hover-accent-ring',
+					'text-white bg-accent interactive-hover:hover:bg-accent-secondary',
 			},
 			{
 				mode: 'primary',

@@ -375,6 +375,7 @@ function Item({
 	suffix,
 	appearance = 'neutral',
 	disabled,
+	to,
 	onClick,
 	closeOnSelect = true,
 }: DropdownMenuItemProps) {
@@ -389,7 +390,8 @@ function Item({
 	return (
 		<Button
 			ref={item.ref}
-			type='button'
+			to={to}
+			type={to ? 'link' : 'button'}
 			role='menuitem'
 			tabIndex={isActive ? 0 : -1}
 			className={twMerge('flex-1', className)}

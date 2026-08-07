@@ -39,6 +39,7 @@ export type DropdownMenuItemProps = Pick<
 	| 'appearance'
 	| 'disabled'
 	| 'onClick'
+	| 'to'
 > & {
 	/** Close the whole menu tree after click. Default `true`. */
 	closeOnSelect?: boolean

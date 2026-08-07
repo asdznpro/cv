@@ -72,7 +72,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 							key={company.id}
 							className='flex flex-col bg-surface border border-separator rounded-surface'
 						>
-							<div className='flex items-center p-surface gap-app'>
+							<div className='flex items-center p-surface gap-surface'>
 								<Icon24DotsVertical
 									className='cursor-grab text-foreground-tertiary'
 									width={18}
@@ -113,7 +113,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 											<Button
 												mode='ghost'
 												appearance='neutral'
-												prefix={<Icon28MoreHorizontal width={20} height={20} />}
+												prefix={<Icon28MoreHorizontal width={18} height={18} />}
 												iconOnly
 											/>
 										</DropdownMenu.Trigger>
