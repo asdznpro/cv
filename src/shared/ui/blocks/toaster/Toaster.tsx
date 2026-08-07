@@ -45,7 +45,7 @@ export function Toaster() {
 					error: 'text-danger',
 					warning: 'text-warning',
 					loading: '',
-					default: 'bg-surface-secondary',
+					default: 'bg-surface',
 					icon: 'relative w-7 h-7 m-0 flex items-center justify-center',
 				},
 			}}

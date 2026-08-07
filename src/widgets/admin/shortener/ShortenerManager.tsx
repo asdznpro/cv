@@ -7,16 +7,19 @@ import { toast } from 'sonner'
 import { SHORT_LINK_HOST, shortLinkHref, type ShortLink } from 'lib/short-links'
 
 import { Badge, Button, Separator } from 'ui/blocks'
+import { DropdownMenu } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
 
 import {
-	Icon24DeleteOutline,
-	Icon24PenOutline,
 	Icon28CalendarOutline,
 	Icon28ChainOutline,
 	Icon28CopyOutline,
 	Icon28UsersOutline,
 	Icon28ViewOutline,
+	Icon28MoreHorizontal,
+	Icon28EditOutline,
+	Icon28DeleteOutline,
+	Icon28StatisticsOutline,
 } from '@vkontakte/icons'
 
 import { CreateShortLinkForm } from './CreateShortLinkForm'
@@ -174,31 +177,60 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 									<div className='flex gap-2 shrink-0'>
 										<Button
+											onClick={() => copyHref(link.slug)}
 											aria-label='Copy'
 											mode='soft'
 											appearance='neutral'
 											prefix={<Icon28CopyOutline width={18} height={18} />}
-											onClick={() => copyHref(link.slug)}
 											iconOnly
 										/>
 
-										<Button
-											aria-label='Edit'
-											mode='soft'
-											appearance='neutral'
-											prefix={<Icon24PenOutline width={18} height={18} />}
-											onClick={() => openEdit(link)}
-											iconOnly
-										/>
+										<DropdownMenu>
+											<DropdownMenu.Trigger>
+												<Button
+													mode='ghost'
+													appearance='neutral'
+													prefix={
+														<Icon28MoreHorizontal width={20} height={20} />
+													}
+													iconOnly
+												/>
+											</DropdownMenu.Trigger>
 
-										<Button
-											aria-label='Delete'
-											mode='soft'
-											appearance='danger'
-											prefix={<Icon24DeleteOutline width={18} height={18} />}
-											onClick={() => openDelete(link)}
-											iconOnly
-										/>
+											<DropdownMenu.Content className='w-32'>
+												<DropdownMenu.Box>
+													<DropdownMenu.Item
+														aria-label='Stats of short link'
+														prefix={
+															<Icon28StatisticsOutline width={18} height={18} />
+														}
+													>
+														Stats
+													</DropdownMenu.Item>
+
+													<DropdownMenu.Item
+														onClick={() => openEdit(link)}
+														aria-label='Edit short link'
+														prefix={
+															<Icon28EditOutline width={18} height={18} />
+														}
+													>
+														Edit
+													</DropdownMenu.Item>
+
+													<DropdownMenu.Item
+														onClick={() => openDelete(link)}
+														aria-label='Delete short link'
+														appearance='danger'
+														prefix={
+															<Icon28DeleteOutline width={18} height={18} />
+														}
+													>
+														Delete
+													</DropdownMenu.Item>
+												</DropdownMenu.Box>
+											</DropdownMenu.Content>
+										</DropdownMenu>
 									</div>
 								</div>
 
