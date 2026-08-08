@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
+import { AnimatePresence, motion } from 'motion/react'
 import { twMerge } from 'tailwind-merge'
 
 import {
@@ -19,6 +20,8 @@ import { DropdownMenu } from 'ui/floating'
 
 import {
 	Icon28CalendarOutline,
+	Icon28CancelOutline,
+	Icon28ChevronDownOutline,
 	Icon28CopyOutline,
 	Icon28DeleteOutline,
 	Icon28EditOutline,
@@ -73,29 +76,105 @@ export default function Articles() {
 					</Tabs>
 
 					<div className='flex flex-col bg-background border border-separator rounded-surface overflow-hidden'>
-						<div className='h-12 flex items-center gap-surface bg-surface px-surface'>
-							<Checkbox
-								aria-label='Select all articles'
-								checked={allSelected}
-								indeterminate={someSelected}
-								onChange={toggleAll}
-							/>
+						<div className='flex flex-col bg-surface'>
+							<AnimatePresence initial={false}>
+								{selectedIds.length > 0 && (
+									<motion.div
+										key='articles-bulk-toolbar'
+										initial={{ height: 0, opacity: 0 }}
+										animate={{ height: 'auto', opacity: 1 }}
+										exit={{ height: 0, opacity: 0 }}
+										transition={{
+											height: {
+												type: 'tween',
+												duration: 0.16,
+												ease: 'easeInOut',
+											},
+											opacity: { duration: 0.16 },
+										}}
+										className='overflow-hidden'
+									>
+										<div className='flex flex-col p-2 pb-0 gap-2'>
+											<div className='group flex p-2 gap-2 rounded-md bg-surface-secondary'>
+												<Button
+													onClick={toggleAll}
+													type='button'
+													size='sm'
+													mode='ghost'
+													appearance='neutral'
+												>
+													Select all
+												</Button>
 
-							<span className='flex-1 text-foreground-secondary text-sm truncate'>
-								{selectedIds.length > 0
-									? `${selectedIds.length} selected`
-									: `${ARTICLES_DATA.length} articles`}
-							</span>
+												<Separator orientation='vertical' />
 
-							<Button
-								type='button'
-								size='sm'
-								mode='secondary'
-								appearance='neutral'
-								prefix={<Icon28SortOutline width={16} height={16} />}
-							>
-								Sort by
-							</Button>
+												<Button
+													type='button'
+													size='sm'
+													mode='ghost'
+													appearance='neutral'
+													prefix={<Icon28ViewOutline width={16} height={16} />}
+													suffix={
+														<Icon28ChevronDownOutline width={16} height={16} />
+													}
+												>
+													Visibility
+												</Button>
+
+												<Button
+													type='button'
+													size='sm'
+													mode='ghost'
+													appearance='danger'
+													prefix={
+														<Icon28DeleteOutline width={16} height={16} />
+													}
+												>
+													Delete
+												</Button>
+
+												<Button
+													onClick={() => setSelectedIds([])}
+													className='ml-auto'
+													type='button'
+													size='sm'
+													mode='ghost'
+													appearance='neutral'
+													prefix={
+														<Icon28CancelOutline width={16} height={16} />
+													}
+													iconOnly
+												/>
+											</div>
+										</div>
+									</motion.div>
+								)}
+							</AnimatePresence>
+
+							<div className='h-12 flex items-center px-surface gap-surface'>
+								<Checkbox
+									aria-label='Select all articles'
+									checked={allSelected}
+									indeterminate={someSelected}
+									onChange={toggleAll}
+								/>
+
+								<span className='flex-1 text-foreground-secondary text-sm truncate'>
+									{selectedIds.length > 0
+										? `${selectedIds.length} selected`
+										: `${ARTICLES_DATA.length} articles`}
+								</span>
+
+								<Button
+									type='button'
+									size='sm'
+									mode='secondary'
+									appearance='neutral'
+									prefix={<Icon28SortOutline width={16} height={16} />}
+								>
+									Sort by
+								</Button>
+							</div>
 						</div>
 
 						<Separator />
