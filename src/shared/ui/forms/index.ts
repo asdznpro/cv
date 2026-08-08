@@ -1,6 +1,7 @@
 'use client'
 
 export * from './caption'
+export * from './checkbox'
 export * from './field-surface'
 export * from './form-item'
 export * from './input'
