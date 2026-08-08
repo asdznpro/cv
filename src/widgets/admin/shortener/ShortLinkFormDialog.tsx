@@ -153,8 +153,8 @@ export function ShortLinkFormDialog({
 
 			<Separator />
 
-			<div className='flex items-center p-surface gap-surface'>
-				<div className='ml-auto w-full @md/overlay:w-2/5 flex gap-2'>
+			<div className='flex @md/overlay:grid grid-cols-2 items-center p-surface gap-surface'>
+				<div className='col-start-2 flex flex-1 gap-2'>
 					<Button
 						onClick={onCancel}
 						className='flex-1'

@@ -7,16 +7,19 @@ import { toast } from 'sonner'
 import { SHORT_LINK_HOST, shortLinkHref, type ShortLink } from 'lib/short-links'
 
 import { Badge, Button, Separator } from 'ui/blocks'
+import { DropdownMenu } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
 
 import {
-	Icon24DeleteOutline,
-	Icon24PenOutline,
 	Icon28CalendarOutline,
 	Icon28ChainOutline,
 	Icon28CopyOutline,
 	Icon28UsersOutline,
 	Icon28ViewOutline,
+	Icon28MoreHorizontal,
+	Icon28EditOutline,
+	Icon28DeleteOutline,
+	Icon28StatisticsOutline,
 } from '@vkontakte/icons'
 
 import { CreateShortLinkForm } from './CreateShortLinkForm'
@@ -128,19 +131,25 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 											<Badge
 												size='md'
 												mode='soft'
-												appearance='neutral'
+												appearance={link.clicks_24h > 0 ? 'success' : 'neutral'}
 												prefix={<Icon28ViewOutline width={14} height={14} />}
+												title='Clicks (last 24h in parentheses)'
 											>
 												{link.clicks}
+												{link.clicks_24h > 0 && ' +' + link.clicks_24h}
 											</Badge>
 
 											<Badge
 												size='md'
 												mode='soft'
-												appearance='neutral'
+												appearance={
+													link.uniques_24h > 0 ? 'success' : 'neutral'
+												}
 												prefix={<Icon28UsersOutline width={14} height={14} />}
+												title='Unique visitors (last 24h in parentheses)'
 											>
 												{link.unique_visitors ?? 0}
+												{link.uniques_24h > 0 && ' +' + link.uniques_24h}
 											</Badge>
 
 											<Badge
@@ -155,7 +164,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 											</Badge>
 
 											<Badge
-												className='max-w-64'
+												className='max-w-52'
 												size='md'
 												mode='soft'
 												appearance='neutral'
@@ -168,31 +177,60 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 									<div className='flex gap-2 shrink-0'>
 										<Button
+											onClick={() => copyHref(link.slug)}
 											aria-label='Copy'
 											mode='soft'
 											appearance='neutral'
 											prefix={<Icon28CopyOutline width={18} height={18} />}
-											onClick={() => copyHref(link.slug)}
 											iconOnly
 										/>
 
-										<Button
-											aria-label='Edit'
-											mode='soft'
-											appearance='neutral'
-											prefix={<Icon24PenOutline width={18} height={18} />}
-											onClick={() => openEdit(link)}
-											iconOnly
-										/>
+										<DropdownMenu>
+											<DropdownMenu.Trigger>
+												<Button
+													mode='ghost'
+													appearance='neutral'
+													prefix={
+														<Icon28MoreHorizontal width={18} height={18} />
+													}
+													iconOnly
+												/>
+											</DropdownMenu.Trigger>
 
-										<Button
-											aria-label='Delete'
-											mode='soft'
-											appearance='danger'
-											prefix={<Icon24DeleteOutline width={18} height={18} />}
-											onClick={() => openDelete(link)}
-											iconOnly
-										/>
+											<DropdownMenu.Content className='w-32'>
+												<DropdownMenu.Box>
+													<DropdownMenu.Item
+														aria-label='Stats of short link'
+														prefix={
+															<Icon28StatisticsOutline width={18} height={18} />
+														}
+													>
+														Stats
+													</DropdownMenu.Item>
+
+													<DropdownMenu.Item
+														onClick={() => openEdit(link)}
+														aria-label='Edit short link'
+														prefix={
+															<Icon28EditOutline width={18} height={18} />
+														}
+													>
+														Edit
+													</DropdownMenu.Item>
+
+													<DropdownMenu.Item
+														onClick={() => openDelete(link)}
+														aria-label='Delete short link'
+														appearance='danger'
+														prefix={
+															<Icon28DeleteOutline width={18} height={18} />
+														}
+													>
+														Delete
+													</DropdownMenu.Item>
+												</DropdownMenu.Box>
+											</DropdownMenu.Content>
+										</DropdownMenu>
 									</div>
 								</div>
 

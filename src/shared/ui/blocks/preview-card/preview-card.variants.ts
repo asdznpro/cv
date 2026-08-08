@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority'
 export const previewCardVariants = cva(
 	// base
 
-	['relative w-full inline-flex'],
+	['relative w-full inline-flex select-none'],
 
 	{
 		variants: {
@@ -30,14 +30,15 @@ export const previewCardVariants = cva(
 
 			radius: {
 				none: '[&>.in]:rounded-none rounded-none',
-				base: '[&>.in]:rounded-xl rounded-surface',
+				sm: '[&>.in]:rounded-md rounded-md',
+				md: '[&>.in]:rounded-surface rounded-surface',
 				full: '[&>.in]:rounded-full rounded-full',
 			},
 		},
 
 		defaultVariants: {
 			ratio: 'video',
-			radius: 'base',
+			radius: 'md',
 		},
 	},
 )

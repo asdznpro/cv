@@ -2,9 +2,8 @@
 
 import Link from 'next/link'
 
-import { PixelBlast } from 'widgets'
-
 import { Button, Separator } from 'ui/blocks'
+import { PixelBlast } from 'ui/effects'
 import { ContextCard, Tooltip } from 'ui/floating'
 import { FormItem } from 'ui/forms'
 

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'motion/react'
 
-import { useAdminShell } from '../shell'
+import { useAdminShell } from '../AdminShellProvider'
 import { NAV_ITEMS } from '../sidebar'
 
 import { Button } from 'ui/blocks'

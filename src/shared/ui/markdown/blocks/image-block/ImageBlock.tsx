@@ -78,7 +78,10 @@ export function ImageBlock({
 			>
 				<motion.div
 					layoutId={id}
-					className={active?.id === id ? 'opacity-0' : 'opacity-100'}
+					className={twMerge(
+						'flex',
+						active?.id === id ? 'opacity-0' : 'opacity-100',
+					)}
 					transition={{ type: 'spring', stiffness: 300, damping: 30 }}
 				>
 					{variant === 'framed' ? (

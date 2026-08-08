@@ -5,16 +5,17 @@ import { useRouter } from 'next/navigation'
 import { type Company } from 'lib/companies'
 
 import { Badge, Button } from 'ui/blocks'
+import { DropdownMenu } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
 
 import {
-	Icon24DeleteOutline,
 	Icon24DotsVertical,
-	Icon24PenOutline,
 	Icon28AddOutline,
 	Icon28GlobeOutline,
 	Icon28HashtagOutline,
 	Icon28MoreHorizontal,
+	Icon28EditOutline,
+	Icon28DeleteOutline,
 } from '@vkontakte/icons'
 
 import { CompanyFormDialog } from './CompanyFormDialog'
@@ -71,7 +72,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 							key={company.id}
 							className='flex flex-col bg-surface border border-separator rounded-surface'
 						>
-							<div className='flex items-center p-surface gap-app'>
+							<div className='flex items-center p-surface gap-surface'>
 								<Icon24DotsVertical
 									className='cursor-grab text-foreground-tertiary'
 									width={18}
@@ -107,30 +108,39 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 								</div>
 
 								<div className='flex gap-2'>
-									<Button
-										aria-label='Редактировать'
-										mode='soft'
-										appearance='neutral'
-										prefix={<Icon24PenOutline width={18} height={18} />}
-										onClick={() => openCompanyForm(company)}
-										iconOnly
-									/>
+									<DropdownMenu>
+										<DropdownMenu.Trigger>
+											<Button
+												mode='ghost'
+												appearance='neutral'
+												prefix={<Icon28MoreHorizontal width={18} height={18} />}
+												iconOnly
+											/>
+										</DropdownMenu.Trigger>
 
-									<Button
-										aria-label='Удалить'
-										mode='soft'
-										appearance='danger'
-										prefix={<Icon24DeleteOutline width={18} height={18} />}
-										onClick={() => openDeleteCompany(company)}
-										iconOnly
-									/>
+										<DropdownMenu.Content className='w-32'>
+											<DropdownMenu.Box>
+												<DropdownMenu.Item
+													onClick={() => openCompanyForm(company)}
+													aria-label='Edit company'
+													prefix={<Icon28EditOutline width={18} height={18} />}
+												>
+													Edit
+												</DropdownMenu.Item>
 
-									<Button
-										mode='ghost'
-										appearance='neutral'
-										prefix={<Icon28MoreHorizontal width={20} height={20} />}
-										iconOnly
-									/>
+												<DropdownMenu.Item
+													onClick={() => openDeleteCompany(company)}
+													aria-label='Delete company'
+													appearance='danger'
+													prefix={
+														<Icon28DeleteOutline width={18} height={18} />
+													}
+												>
+													Delete
+												</DropdownMenu.Item>
+											</DropdownMenu.Box>
+										</DropdownMenu.Content>
+									</DropdownMenu>
 								</div>
 							</div>
 						</li>

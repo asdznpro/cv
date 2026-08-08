@@ -1,4 +1,4 @@
-import { NotFoundScreen } from 'widgets'
+import { NotFoundScreen } from 'widgets/shell'
 
 export default function NotFound() {
 	return <NotFoundScreen />

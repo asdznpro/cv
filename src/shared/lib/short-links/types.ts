@@ -7,6 +7,9 @@ export type ShortLink = {
 	title: string | null
 	clicks: number
 	unique_visitors: number
+	/** Rolling last 24 hours (from short_link_events). */
+	clicks_24h: number
+	uniques_24h: number
 	created_at: string
 	updated_at: string
 }

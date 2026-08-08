@@ -8,14 +8,12 @@ import { getImagePalette } from 'lib/utils'
 
 import { ARTICLES_DATA } from 'shared/data'
 
-import { ArticleToc, BackToTop } from 'widgets'
+import { ArticleCopyMenu, ArticleToc } from 'widgets/content'
+import { BackToTop } from 'widgets/shell'
+
 import { Badge, PreviewCard, Separator } from 'ui/blocks'
 import { MarkdownContent } from 'ui/markdown'
-import {
-	Icon20ArrowTurnRightOutline,
-	Icon28ChevronDownOutline,
-	Icon28ChevronLeftCircle,
-} from '@vkontakte/icons'
+import { Icon20ArrowTurnRightOutline } from '@vkontakte/icons'
 
 export default async function Article({
 	params,
@@ -92,13 +90,7 @@ export default async function Article({
 								4 min read
 							</Badge>
 
-							<Badge
-								mode='outline'
-								appearance='neutral'
-								suffix={<Icon28ChevronDownOutline width={16} height={16} />}
-							>
-								Copy
-							</Badge>
+							<ArticleCopyMenu markdown={content} />
 						</div>
 					</header>
 				</section>

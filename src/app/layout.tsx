@@ -5,7 +5,7 @@ import 'styles/globals.css'
 
 import { Providers } from 'providers'
 
-import { BootLoader, BootProvider } from 'widgets'
+import { BootLoader, BootProvider } from 'widgets/shell'
 import { Toaster } from 'ui/blocks'
 
 export const metadata: Metadata = {

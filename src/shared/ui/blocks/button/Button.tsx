@@ -6,7 +6,7 @@ import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { buttonVariants } from './button.variants'
-import type ButtonProps from './Button.interface'
+import type { ButtonProps } from './Button.interface'
 
 export const Button = forwardRef<
 	HTMLButtonElement | HTMLAnchorElement,

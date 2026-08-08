@@ -1,6 +1,7 @@
-import { PixelBlast } from 'widgets'
-import { VkIdOneTap } from 'widgets/admin'
+import { VkIdOneTap } from 'widgets/auth'
+
 import { Button, Separator } from 'ui/blocks'
+import { PixelBlast } from 'ui/effects'
 import { Icon28ArrowLeftOutline } from '@vkontakte/icons'
 
 export default function Login() {

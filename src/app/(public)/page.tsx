@@ -1,13 +1,9 @@
 'use client'
 
-import { Hero, StickerPeel } from 'widgets'
-import {
-	Badge,
-	Button,
-	FlickerSpinner,
-	PreviewCard,
-	Separator,
-} from 'ui/blocks'
+import { Hero } from 'widgets/hero'
+
+import { Badge, Button, PreviewCard, Separator } from 'ui/blocks'
+import { StickerPeel } from 'ui/effects'
 
 import { EXPERIENCE_DATA } from 'shared/data'
 

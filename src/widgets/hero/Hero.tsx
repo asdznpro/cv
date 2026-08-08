@@ -2,8 +2,8 @@
 
 import Image from 'next/image'
 
-import { Lanyard, PixelBlast } from 'widgets'
 import { Carousel } from 'ui/blocks'
+import { Lanyard, PixelBlast } from 'ui/effects'
 
 import { TOOLKIT_LOGOS } from 'shared/data'
 

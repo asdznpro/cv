@@ -1,6 +1,6 @@
 import { LinkProps } from 'next/link'
 
-export default interface ButtonProps extends Omit<
+export interface ButtonProps extends Omit<
 	React.AllHTMLAttributes<HTMLElement>,
 	'prefix' | 'size'
 > {

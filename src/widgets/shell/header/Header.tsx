@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useLockScroll, useHotkeys } from '@siberiacancode/reactuse'
 import { twMerge } from 'tailwind-merge'
 
-import { useBoot } from 'widgets'
+import { useBoot } from 'widgets/shell'
 
 import { Badge, Button, Kbd, Separator } from 'ui/blocks'
 import { Logo } from 'ui/brand'

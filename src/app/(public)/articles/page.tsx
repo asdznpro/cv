@@ -3,7 +3,8 @@
 import Image from 'next/image'
 import { ViewTransition } from 'react'
 
-import { ArticleItem } from 'widgets'
+import { ArticleItem } from 'widgets/content'
+
 import { Badge, Button } from 'ui/blocks'
 import {
 	Icon24ExternalLinkOutline,
