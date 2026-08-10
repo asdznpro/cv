@@ -6,7 +6,7 @@ export type FieldOption = {
 
 export type OptionListProps = {
 	options: FieldOption[]
-	value?: string
+	value?: string | string[]
 	activeIndex: number | null
 	listRef: React.RefObject<Array<HTMLElement | null>>
 	getItemProps: (

@@ -44,7 +44,7 @@ export function Select(props: SelectProps) {
 		id,
 		name,
 		className,
-		mode = 'outline',
+		mode,
 		status: statusProp,
 		size: fieldSize = 'lg',
 		radius,

@@ -15,7 +15,7 @@ export function OptionList({
 	listRef,
 	getItemProps,
 	onSelect,
-	mode = 'outline',
+	mode,
 	radius,
 	emptyText = 'No results',
 	style,
@@ -37,12 +37,14 @@ export function OptionList({
 			)}
 		>
 			{options.length === 0 ? (
-				<span className='p-app text-sm text-foreground-secondary select-none'>
+				<span className='p-2 text-sm text-foreground-secondary text-center select-none'>
 					{emptyText}
 				</span>
 			) : (
 				options.map((option, index) => {
-					const isSelected = option.value === value
+					const isSelected = Array.isArray(value)
+						? value.includes(option.value)
+						: option.value === value
 					const isActive = index === activeIndex
 
 					return (

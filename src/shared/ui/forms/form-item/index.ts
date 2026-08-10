@@ -1,10 +1,11 @@
 'use client'
 
 import { Caption } from '../_components/caption'
+import { Label } from '../_components/label'
+import { Autocomplete } from '../autocomplete'
 import { Combobox } from '../combobox'
 import { DropZone } from '../drop-zone'
 import { Input } from '../input'
-import { Label } from '../_components/label'
 import { Select } from '../select'
 import { Textarea } from '../textarea'
 
@@ -16,6 +17,7 @@ type FormItemComponent = typeof FormItemRoot & {
 	Textarea: typeof Textarea
 	Select: typeof Select
 	Combobox: typeof Combobox
+	Autocomplete: typeof Autocomplete
 	DropZone: typeof DropZone
 	Caption: typeof Caption
 }
@@ -27,6 +29,7 @@ FormItem.Input = Input
 FormItem.Textarea = Textarea
 FormItem.Select = Select
 FormItem.Combobox = Combobox
+FormItem.Autocomplete = Autocomplete
 FormItem.DropZone = DropZone
 FormItem.Caption = Caption
 

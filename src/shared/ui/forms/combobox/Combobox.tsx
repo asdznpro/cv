@@ -45,7 +45,7 @@ export function Combobox(props: ComboboxProps) {
 		id,
 		name,
 		className,
-		mode = 'outline',
+		mode,
 		status: statusProp,
 		size: fieldSize = 'lg',
 		radius,

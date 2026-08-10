@@ -28,10 +28,27 @@ const COMPANY_OPTIONS = [
 	{ value: 'navi', label: 'Natus Vincere' },
 ]
 
+const TAG_OPTIONS = [
+	{ value: 'cs2', label: 'CS2' },
+	{ value: 'dota2', label: 'Dota 2' },
+	{ value: 'esports', label: 'Esports' },
+	{ value: 'design', label: 'Design' },
+	{ value: 'frontend', label: 'Frontend' },
+	{ value: 'backend', label: 'Backend' },
+	{ value: 'database', label: 'Database' },
+	{ value: 'devops', label: 'DevOps' },
+	{ value: 'security', label: 'Security' },
+	{ value: 'testing', label: 'Testing' },
+	{ value: 'performance', label: 'Performance' },
+	{ value: 'ux', label: 'UX' },
+	{ value: 'ui', label: 'UI' },
+]
+
 export default function Admin() {
 	const [status, setStatus] = useState('draft')
 	const [category, setCategory] = useState('')
 	const [company, setCompany] = useState('')
+	const [tags, setTags] = useState<string[]>(['cs2'])
 
 	return (
 		<>
@@ -122,18 +139,6 @@ export default function Admin() {
 							<FormItem.Caption>Selected: {status || 'none'}</FormItem.Caption>
 						</FormItem>
 
-						<FormItem id='select-category'>
-							<FormItem.Label>Category</FormItem.Label>
-
-							<FormItem.Select
-								options={CATEGORY_OPTIONS}
-								value={category}
-								onValueChange={setCategory}
-								placeholder='Select category'
-								mode='secondary'
-							/>
-						</FormItem>
-
 						<FormItem id='combobox-company'>
 							<FormItem.Label>Company</FormItem.Label>
 
@@ -144,8 +149,21 @@ export default function Admin() {
 								placeholder='Search company'
 							/>
 
+							<FormItem.Caption>Selected: {company || 'none'}</FormItem.Caption>
+						</FormItem>
+
+						<FormItem id='autocomplete-tags'>
+							<FormItem.Label>Tags</FormItem.Label>
+
+							<FormItem.Autocomplete
+								options={TAG_OPTIONS}
+								value={tags}
+								onValueChange={setTags}
+								placeholder='Add tags'
+							/>
+
 							<FormItem.Caption>
-								Selected: {company || 'none'}
+								Selected: {tags.length ? tags.join(', ') : 'none'}
 							</FormItem.Caption>
 						</FormItem>
 					</div>
@@ -373,6 +391,7 @@ export default function Admin() {
 							target='_blank'
 							href='https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
 							className='font-medium text-foreground hover:text-accent underline'
+							rel='noopener'
 						>
 							Templates
 						</a>{' '}
@@ -381,6 +400,7 @@ export default function Admin() {
 							target='_blank'
 							href='https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
 							className='font-medium text-foreground hover:text-accent underline'
+							rel='noopener'
 						>
 							Learning
 						</a>{' '}
@@ -393,6 +413,7 @@ export default function Admin() {
 							target='_blank'
 							href='/'
 							className='text-foreground-secondary hover:text-foreground underline'
+							rel='noopener'
 						>
 							Lowtab.gg
 						</a>
