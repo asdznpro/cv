@@ -35,6 +35,7 @@ export function OverlayProvider({ children }: { children: ReactNode }) {
 				id,
 				content,
 				dismissible: options?.dismissible ?? true,
+				className: options?.className,
 			},
 		])
 		return id

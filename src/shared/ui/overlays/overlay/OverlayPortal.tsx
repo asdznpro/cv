@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'motion/react'
+import { twMerge } from 'tailwind-merge'
 
 import { Backdrop } from '../backdrop'
 import type { OverlayEntry } from './overlay.types'
@@ -53,7 +54,10 @@ export function OverlayPortal({ stack, onDismiss }: OverlayPortalProps) {
 							animate={{ opacity: 1, scale: 1 }}
 							exit={{ opacity: 0, scale: 0.96 }}
 							transition={TRANSITION}
-							className='@container/overlay pointer-events-auto w-full max-w-lg'
+							className={twMerge(
+								'@container/overlay pointer-events-auto max-w-lg w-full',
+								top.className,
+							)}
 						>
 							{top.content}
 						</motion.div>

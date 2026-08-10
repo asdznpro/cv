@@ -361,7 +361,7 @@ function Content({ children, className, style, id }: DropdownMenuContentProps) {
 
 function Box({ children, className }: DropdownMenuBoxProps) {
 	return (
-		<div className={twMerge('flex flex-col p-1.5 gap-1.5', className)}>
+		<div className={twMerge('flex flex-col p-1.5 gap-0.5', className)}>
 			{children}
 		</div>
 	)

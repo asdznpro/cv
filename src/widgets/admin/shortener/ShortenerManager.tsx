@@ -65,6 +65,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 					router.refresh()
 				}}
 			/>,
+			{ className: 'max-w-sm' },
 		)
 	}
 

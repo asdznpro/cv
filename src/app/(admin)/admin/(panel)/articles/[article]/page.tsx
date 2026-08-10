@@ -1,25 +1,12 @@
 'use client'
 
-import { notFound } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 
-import { getMarkdown } from 'lib/server'
-
-import { ARTICLES_DATA } from 'shared/data'
-
-import {
-	Badge,
-	Button,
-	Kbd,
-	PreviewCard,
-	Separator,
-	Tabs,
-	useTabState,
-} from 'ui/blocks'
+import { Badge, Button, Kbd, Separator, Tabs, useTabState } from 'ui/blocks'
 import { FormItem } from 'ui/forms'
 import { Tooltip } from 'ui/floating'
-import { MarkdownContent } from 'ui/markdown'
+import { useOverlay } from 'ui/overlays'
 
 import {
 	Icon20ArrowTurnRightOutline,
@@ -29,22 +16,94 @@ import {
 	Icon28DocumentTextOutline,
 } from '@vkontakte/icons'
 
-export default async function Article({
-	params,
+function UploadCoverDialog({
+	onCancel,
+	onSave,
 }: {
-	params: Promise<{ article: string }>
+	onCancel: () => void
+	onSave: (file: File | null) => void
 }) {
-	// const { article: slug } = await params
+	const [file, setFile] = useState<File | null>(null)
 
+	return (
+		<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+			<div className='flex flex-col p-surface gap-surface'>
+				<div className='flex flex-1 flex-col gap-3'>
+					<p className='text-xl font-medium font-condensed tracking-tight'>
+						Upload cover
+					</p>
+				</div>
+
+				<FormItem id='article-cover-upload'>
+					<FormItem.DropZone
+						value={file}
+						onValueChange={setFile}
+						emptyTitle='Click to upload or drag and drop'
+						emptyHint='PNG, JPG or GIF up to 10MB'
+					/>
+				</FormItem>
+			</div>
+
+			<Separator />
+
+			<div className='flex @md/overlay:grid grid-cols-2 items-center p-surface gap-surface'>
+				<div className='col-start-2 flex flex-1 gap-2'>
+					<Button
+						onClick={onCancel}
+						className='flex-1'
+						type='button'
+						size='sm'
+						mode='secondary'
+						appearance='neutral'
+					>
+						Cancel
+					</Button>
+
+					<Button
+						onClick={() => onSave(file)}
+						className='flex-1'
+						type='button'
+						size='sm'
+						appearance='neutral'
+					>
+						Save
+					</Button>
+				</div>
+			</div>
+		</div>
+	)
+}
+
+export default function Article() {
 	const { tabState, handleTabSelect } = useTabState(0)
+	const { open, close } = useOverlay()
 
-	// const article = ARTICLES_DATA.find(item => item.slug === slug)
+	const [coverFile, setCoverFile] = useState<File | null>(null)
+	const [coverPreview, setCoverPreview] = useState<string | null>(null)
 
-	// const { content } = await getMarkdown('example')
+	useEffect(() => {
+		if (!coverFile) {
+			setCoverPreview(null)
+			return
+		}
 
-	// if (!article) {
-	// 	notFound()
-	// }
+		const url = URL.createObjectURL(coverFile)
+		setCoverPreview(url)
+		return () => URL.revokeObjectURL(url)
+	}, [coverFile])
+
+	const openUploadCoverDialog = () => {
+		open(
+			<UploadCoverDialog
+				onCancel={close}
+				onSave={file => {
+					setCoverFile(file)
+					close()
+				}}
+			/>,
+			{ className: 'max-w-sm' },
+		)
+	}
 
 	return (
 		<>
@@ -63,6 +122,32 @@ export default async function Article({
 					<div className='flex flex-wrap p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
+								Visibility
+							</h3>
+
+							<p className='text-sm text-foreground-secondary @xl:text-balance'>
+								Control the visibility of the article
+							</p>
+						</div>
+
+						<div className='w-full @xl:w-2/5 flex flex-col gap-2'>
+							<FormItem id='article-category'>
+								<FormItem.Input
+									mode='outline'
+									size='md'
+									type='text'
+									placeholder='Hidden'
+									suffix={<Icon28ChevronDownOutline width={18} height={18} />}
+								/>
+							</FormItem>
+						</div>
+					</div>
+
+					<Separator />
+
+					<div className='flex flex-wrap p-surface gap-surface'>
+						<div className='flex flex-1 flex-col gap-3'>
+							<h3 className='text-xl font-medium font-condensed tracking-tight'>
 								Cover
 							</h3>
 
@@ -74,11 +159,26 @@ export default async function Article({
 
 						<div className='w-full @xl:w-2/5'>
 							<div className='z-0 relative flex'>
-								<button className='aspect-4/1 w-full flex items-center justify-center text-foreground-secondary bg-background hover:bg-surface-secondary border border-dashed border-separator rounded-md overflow-hidden cursor-pointer transition-colors focus-ring-base focus-ring-visible'>
-									<Icon28AddOutline width={16} height={16} />
+								<button
+									type='button'
+									onClick={openUploadCoverDialog}
+									className='aspect-4/1 w-full flex items-center justify-center text-foreground-secondary bg-background hover:bg-surface-secondary border border-dashed border-separator rounded-md overflow-hidden cursor-pointer transition-colors focus-ring-base focus-ring-visible'
+								>
+									{coverPreview ? (
+										<img
+											src={coverPreview}
+											alt={coverFile?.name ?? 'Cover'}
+											className='size-full object-cover'
+										/>
+									) : (
+										<Icon28AddOutline width={16} height={16} />
+									)}
 								</button>
 
-								<button className='z-1 absolute -bottom-2 right-4 size-12 flex items-center justify-center text-foreground-secondary bg-background hover:bg-surface-secondary border border-dashed border-separator rounded-full overflow-hidden cursor-pointer transition-colors focus-ring-base focus-ring-visible'>
+								<button
+									type='button'
+									className='z-1 absolute -bottom-2 right-4 size-12 flex items-center justify-center text-foreground-secondary bg-background hover:bg-surface-secondary border border-dashed border-separator rounded-full overflow-hidden cursor-pointer transition-colors focus-ring-base focus-ring-visible'
+								>
 									<Icon28AddOutline width={16} height={16} />
 								</button>
 							</div>
@@ -95,7 +195,7 @@ export default async function Article({
 
 							<p className='text-sm text-foreground-secondary @xl:text-balance'>
 								Headline and short summary used in lists, cards, and the article
-								header.
+								header
 							</p>
 						</div>
 
@@ -145,6 +245,16 @@ export default async function Article({
 						</div>
 
 						<div className='w-full @xl:w-2/5 flex flex-col gap-2'>
+							<FormItem id='article-category'>
+								<FormItem.Input
+									mode='outline'
+									size='md'
+									type='text'
+									placeholder='Type'
+									suffix={<Icon28ChevronDownOutline width={18} height={18} />}
+								/>
+							</FormItem>
+
 							<FormItem id='article-category'>
 								<FormItem.Input
 									mode='outline'
@@ -226,9 +336,9 @@ export default async function Article({
 						<span className='flex-1' />
 
 						<span className='flex items-center gap-2'>
-							<Kbd size='sm' keys={['Esc']} />
+							<Kbd size='sm' keys={['Ctrl', 'Enter']} />
 							<span className='text-xs text-foreground-secondary'>
-								to close
+								switch mode
 							</span>
 						</span>
 					</div>

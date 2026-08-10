@@ -3,14 +3,15 @@ import type { ReactNode } from 'react'
 export type OverlayId = string
 
 export type OverlayOpenOptions = {
-	/** Backdrop click + Escape. Default `true`. */
 	dismissible?: boolean
+	className?: string
 }
 
 export type OverlayEntry = {
 	id: OverlayId
 	content: ReactNode
 	dismissible: boolean
+	className?: string
 }
 
 export type OverlayContextValue = {

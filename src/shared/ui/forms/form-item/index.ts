@@ -2,6 +2,7 @@
 
 import { Caption } from '../_components/caption'
 import { Combobox } from '../combobox'
+import { DropZone } from '../drop-zone'
 import { Input } from '../input'
 import { Label } from '../_components/label'
 import { Select } from '../select'
@@ -15,6 +16,7 @@ type FormItemComponent = typeof FormItemRoot & {
 	Textarea: typeof Textarea
 	Select: typeof Select
 	Combobox: typeof Combobox
+	DropZone: typeof DropZone
 	Caption: typeof Caption
 }
 
@@ -25,6 +27,7 @@ FormItem.Input = Input
 FormItem.Textarea = Textarea
 FormItem.Select = Select
 FormItem.Combobox = Combobox
+FormItem.DropZone = DropZone
 FormItem.Caption = Caption
 
 export { FormItemProvider, useFormItem } from './FormItem.context'

@@ -1,5 +1,6 @@
 export * from './checkbox'
 export * from './combobox'
+export * from './drop-zone'
 export * from './form-item'
 export * from './input'
 export * from './radio'

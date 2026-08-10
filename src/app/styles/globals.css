@@ -7,9 +7,6 @@
 @import './markdown.css';
 @import './view-transition.css';
 
-/* @theme inline {
-} */
-
 @custom-variant input-enabled (&:has(input:not(:disabled)));
 @custom-variant input-disabled (&:has(input:disabled));
 
@@ -83,7 +80,7 @@ a[target='_blank']:not(.root)::after {
 	mask:
 		url('/assets/icons/external-link.svg') center / 1em no-repeat,
 		linear-gradient(#fff, #fff);
-	mask-composite: exclude; /* не везде стабильно */
+	mask-composite: exclude;
 	-webkit-mask: url('/assets/icons/external-link.svg') center / 1em no-repeat;
 }
 
@@ -91,6 +88,10 @@ a[target='_blank']:not(.root)::after {
 
 .focus-ring-base {
 	@apply outline-2 outline-offset-2 outline-foreground-secondary/0;
+}
+
+.focus-ring-active {
+	@apply outline-foreground-secondary/40;
 }
 
 .focus-ring-visible {
@@ -103,52 +104,6 @@ a[target='_blank']:not(.root)::after {
 
 .group:focus-visible .focus-ring-group-visible {
 	@apply outline-foreground-secondary/40;
-}
-
-/* Hover Accent Ring */
-
-@property --ring-angle {
-	syntax: '<angle>';
-	initial-value: 260deg;
-	inherits: false;
-}
-
-.hover-accent-ring::before {
-	content: '';
-	position: absolute;
-	inset: calc(-1 * var(--ring-offset, 2px) - var(--ring-width, 2px));
-	border-radius: calc(var(--ring-radius) + 4px);
-	padding: var(--ring-width, 2px);
-
-	--ring-angle: 260deg;
-
-	background: conic-gradient(
-		from var(--ring-angle),
-		color-mix(in srgb, var(--color-accent), transparent 60%) 20%,
-		var(--color-accent) 50%,
-		var(--color-accent-secondary) 80%,
-		color-mix(in srgb, var(--color-accent), transparent 60%) 100%
-	);
-
-	mask:
-		linear-gradient(#fff 0 0) content-box,
-		linear-gradient(#fff 0 0);
-	mask-composite: exclude;
-
-	opacity: 0;
-	pointer-events: none;
-	transition: opacity 0ms ease-in-out;
-}
-
-.hover-accent-ring:hover:not(:disabled)::before {
-	opacity: 1;
-	animation: accent-ring-spin 1s cubic-bezier(0.42, 0.07, 0.19, 0.97) forwards;
-}
-
-@keyframes accent-ring-spin {
-	to {
-		--ring-angle: 480deg;
-	}
 }
 
 /* Carousel Fade */
