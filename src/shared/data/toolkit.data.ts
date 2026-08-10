@@ -140,8 +140,8 @@ export const TOOLKIT_LOGOS = [
 	{
 		image: '/assets/toolkit/tanstack.svg',
 		name: 'Tanstack',
-		label: true,
-		size: { width: 160, height: 160 },
+		label: false,
+		size: { width: 1028, height: 160 },
 	},
 	{
 		image: '/assets/toolkit/cf_horizontal.svg',
