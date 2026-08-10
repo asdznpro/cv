@@ -221,7 +221,7 @@ export default function Articles() {
 
 									<div className='min-w-0 min-h-full flex-1 flex flex-col justify-center gap-2'>
 										<Link
-											href={`/admin/articles/${article.id}`}
+											href={`/admin/articles/${article.slug}`}
 											className='max-w-full w-fit text-xl font-medium font-condensed tracking-tight truncate hover:underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded'
 										>
 											{article.title}
@@ -305,7 +305,7 @@ export default function Articles() {
 
 													<DropdownMenu.Item
 														aria-label='Edit company'
-														to={`/admin/articles/${article.id}`}
+														to={`/admin/articles/${article.slug}`}
 														prefix={
 															<Icon28EditOutline width={18} height={18} />
 														}

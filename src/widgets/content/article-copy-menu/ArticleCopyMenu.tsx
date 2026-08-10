@@ -1,13 +1,13 @@
 'use client'
 
+import { Badge } from 'ui/blocks'
+import { DropdownMenu } from 'ui/floating'
+
 import {
 	Icon28ChainOutline,
 	Icon28ChevronDownOutline,
 	Icon28DocumentTextOutline,
 } from '@vkontakte/icons'
-
-import { Badge } from 'ui/blocks'
-import { DropdownMenu } from 'ui/floating'
 
 import type { ArticleCopyMenuProps } from './ArticleCopyMenu.interface'
 

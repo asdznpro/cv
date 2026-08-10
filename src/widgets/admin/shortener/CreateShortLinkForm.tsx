@@ -78,7 +78,7 @@ export function CreateShortLinkForm() {
 						Target URL
 					</h3>
 
-					<p className='text-sm text-foreground-secondary'>
+					<p className='text-sm text-foreground-secondary @xl:text-balance'>
 						Full destination where visitors will be redirected after opening the
 						short link
 					</p>
@@ -110,7 +110,7 @@ export function CreateShortLinkForm() {
 						Slug <span className='text-foreground-secondary'>(optional)</span>
 					</h3>
 
-					<p className='text-sm text-foreground-secondary'>
+					<p className='text-sm text-foreground-secondary @xl:text-balance'>
 						Custom path segment for the short link. Leave empty to generate a
 						random slug automatically.
 					</p>
@@ -145,7 +145,7 @@ export function CreateShortLinkForm() {
 						Title <span className='text-foreground-secondary'>(optional)</span>
 					</h3>
 
-					<p className='text-sm text-foreground-secondary'>
+					<p className='text-sm text-foreground-secondary @xl:text-balance'>
 						Internal label to identify the link in your admin list
 					</p>
 				</div>
@@ -176,7 +176,7 @@ export function CreateShortLinkForm() {
 						Choose domain
 					</h3>
 
-					<p className='text-sm text-foreground-secondary'>
+					<p className='text-sm text-foreground-secondary @xl:text-balance'>
 						Host used for all short links — currently fixed to a single domain
 					</p>
 				</div>

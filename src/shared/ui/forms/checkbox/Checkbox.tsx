@@ -92,9 +92,13 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 					)}
 				/>
 
-				<span className='pointer-events-none flex items-center justify-center'>
-					{state === 'on' && <Icon28DoneOutline width={18} height={18} />}
-					{state === 'mixed' && <Icon28MinusOutline width={18} height={18} />}
+				<span className='pointer-events-none size-full'>
+					{state === 'on' && (
+						<Icon28DoneOutline style={{ width: '100%', height: '100%' }} />
+					)}
+					{state === 'mixed' && (
+						<Icon28MinusOutline style={{ width: '100%', height: '100%' }} />
+					)}
 				</span>
 			</span>
 		)
