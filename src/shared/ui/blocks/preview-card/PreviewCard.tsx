@@ -73,7 +73,7 @@ export function PreviewCard(props: PreviewCardProps) {
 		>
 			{children}
 
-			<div className='in relative w-full h-full flex items-center justify-center text-foreground-tertiary bg-surface-secondary border border-separator overflow-hidden transition-all duration-100 ease-in focus-ring-base focus-ring-group-visible'>
+			<div className='in relative w-full h-full flex items-center justify-center text-foreground-tertiary bg-surface border border-separator overflow-hidden transition-all duration-100 ease-in focus-ring-base focus-ring-group-visible'>
 				{showPlaceholder && (
 					<div
 						className={twMerge(
@@ -85,7 +85,7 @@ export function PreviewCard(props: PreviewCardProps) {
 						{showSpinner ? (
 							<FlickerSpinner size={28} />
 						) : (
-							<Icon28PictureOutline />
+							<Icon28PictureOutline className='max-h-[32%]' />
 						)}
 					</div>
 				)}

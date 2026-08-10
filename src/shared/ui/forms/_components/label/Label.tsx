@@ -3,7 +3,7 @@
 import { useLayoutEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-import { useFormItem } from '../form-item/FormItem.context'
+import { useFormItem } from '../../form-item/FormItem.context'
 import type { LabelProps } from './Label.interface'
 
 export function Label(props: LabelProps) {

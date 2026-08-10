@@ -2,7 +2,7 @@
 
 import { twMerge } from 'tailwind-merge'
 
-import { useFormItem } from '../form-item/FormItem.context'
+import { useFormItem } from '../../form-item/FormItem.context'
 import { captionVariants } from './caption.variants'
 import type { CaptionProps } from './Caption.interface'
 

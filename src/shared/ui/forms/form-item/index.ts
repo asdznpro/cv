@@ -1,8 +1,12 @@
 'use client'
 
-import { Caption } from '../caption'
+import { Caption } from '../_components/caption'
+import { Label } from '../_components/label'
+import { Autocomplete } from '../autocomplete'
+import { Combobox } from '../combobox'
+import { DropZone } from '../drop-zone'
 import { Input } from '../input'
-import { Label } from '../label'
+import { Select } from '../select'
 import { Textarea } from '../textarea'
 
 import { FormItem as FormItemRoot } from './FormItem'
@@ -11,6 +15,10 @@ type FormItemComponent = typeof FormItemRoot & {
 	Label: typeof Label
 	Input: typeof Input
 	Textarea: typeof Textarea
+	Select: typeof Select
+	Combobox: typeof Combobox
+	Autocomplete: typeof Autocomplete
+	DropZone: typeof DropZone
 	Caption: typeof Caption
 }
 
@@ -19,6 +27,10 @@ export const FormItem = FormItemRoot as FormItemComponent
 FormItem.Label = Label
 FormItem.Input = Input
 FormItem.Textarea = Textarea
+FormItem.Select = Select
+FormItem.Combobox = Combobox
+FormItem.Autocomplete = Autocomplete
+FormItem.DropZone = DropZone
 FormItem.Caption = Caption
 
 export { FormItemProvider, useFormItem } from './FormItem.context'

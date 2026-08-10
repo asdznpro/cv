@@ -9,7 +9,7 @@ import { useFormItem } from '../form-item/FormItem.context'
 import { textareaVariants } from './textarea.variants'
 import type TextareaProps from './Textarea.interface'
 
-import { FieldSurface } from '../field-surface'
+import { FieldSurface } from '../_components/field-surface'
 import { ExpandIndicator } from './ExpandIndicator'
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(

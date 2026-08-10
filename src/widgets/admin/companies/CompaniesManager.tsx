@@ -52,6 +52,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 					router.refresh()
 				}}
 			/>,
+			{ className: 'max-w-sm' },
 		)
 	}
 

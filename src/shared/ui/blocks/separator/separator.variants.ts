@@ -8,8 +8,8 @@ export const separatorVariants = cva(
 	{
 		variants: {
 			orientation: {
-				horizontal: 'h-px w-full',
-				vertical: 'h-full w-px',
+				horizontal: 'w-full h-px',
+				vertical: 'w-px self-stretch',
 			},
 		},
 

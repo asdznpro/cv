@@ -295,7 +295,7 @@ function isBoxElement(
 	return isValidElement(child) && child.type === Box
 }
 
-function Content({ children, className }: DropdownMenuContentProps) {
+function Content({ children, className, style, id }: DropdownMenuContentProps) {
 	const {
 		refs,
 		floatingStyles,
@@ -324,12 +324,13 @@ function Content({ children, className }: DropdownMenuContentProps) {
 			>
 				<div
 					ref={refs.setFloating}
+					id={id}
 					style={floatingStyles}
 					className='z-80 outline-none'
 					{...getFloatingProps()}
 				>
 					<div
-						style={transitionStyles}
+						style={{ ...transitionStyles, ...style }}
 						data-open={open || undefined}
 						className={twMerge(
 							'max-w-64 min-w-32 flex flex-col',
@@ -360,7 +361,7 @@ function Content({ children, className }: DropdownMenuContentProps) {
 
 function Box({ children, className }: DropdownMenuBoxProps) {
 	return (
-		<div className={twMerge('flex flex-col p-1.5 gap-1.5', className)}>
+		<div className={twMerge('flex flex-col p-1.5 gap-0.5', className)}>
 			{children}
 		</div>
 	)

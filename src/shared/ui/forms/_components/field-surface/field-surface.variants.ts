@@ -1,12 +1,8 @@
 import { cva } from 'class-variance-authority'
 
+/** Fill / border / radius — usable on inputs and floating panels. */
 export const fieldSurfaceVariants = cva(
-	[
-		'field-surface absolute inset-0 -z-10 pointer-events-none',
-		'transition-all duration-100 ease-in',
-		'outline-2 outline-offset-2 outline-foreground-secondary/0',
-		'group-focus-within:outline-foreground-secondary/40',
-	],
+	['transition-all duration-100 ease-in'],
 
 	{
 		variants: {
@@ -30,8 +26,6 @@ export const fieldSurfaceVariants = cva(
 		},
 
 		compoundVariants: [
-			// default
-
 			{
 				mode: 'outline',
 				status: 'default',
@@ -50,9 +44,6 @@ export const fieldSurfaceVariants = cva(
 					'group-focus-within:border-danger',
 				],
 			},
-
-			// error
-
 			{
 				mode: 'secondary',
 				status: 'error',
@@ -63,15 +54,11 @@ export const fieldSurfaceVariants = cva(
 				status: 'error',
 				class: 'border-2 border-danger',
 			},
-
-			// disabled
-
 			{
 				mode: 'secondary',
 				disabled: true,
 				class: 'bg-foreground-tertiary/10',
 			},
-
 			{
 				mode: 'outline',
 				disabled: true,
@@ -87,3 +74,10 @@ export const fieldSurfaceVariants = cva(
 		},
 	},
 )
+
+/** Positioned backdrop under form controls. */
+export const fieldSurfaceBackdropVariants = cva([
+	'field-surface absolute inset-0 -z-10 pointer-events-none',
+	'outline-2 outline-offset-2 outline-foreground-secondary/0',
+	'group-focus-within:outline-foreground-secondary/40',
+])

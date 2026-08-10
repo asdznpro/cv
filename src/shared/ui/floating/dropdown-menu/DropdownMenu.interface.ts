@@ -22,6 +22,8 @@ export interface DropdownMenuTriggerProps {
 export interface DropdownMenuContentProps {
 	children: ReactNode
 	className?: string
+	style?: React.CSSProperties
+	id?: string
 }
 
 export interface DropdownMenuBoxProps {
