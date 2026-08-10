@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 
 import { Button, Separator } from 'ui/blocks'
@@ -9,7 +10,27 @@ import { FormItem } from 'ui/forms'
 
 import { Icon28HelpOutline } from '@vkontakte/icons'
 
+const STATUS_OPTIONS = [
+	{ value: 'draft', label: 'Draft' },
+	{ value: 'published', label: 'Published' },
+	{ value: 'archived', label: 'Archived' },
+	{ value: 'draft', label: 'Draft' },
+	{ value: 'published', label: 'Published' },
+	{ value: 'archived', label: 'Archived' },
+	{ value: 'draft', label: 'Draft' },
+	{ value: 'published', label: 'Published' },
+	{ value: 'archived', label: 'Archived' },
+]
+
+const CATEGORY_OPTIONS = [
+	{ value: 'experience', label: 'Experience' },
+	{ value: 'other', label: 'Other' },
+]
+
 export default function Admin() {
+	const [status, setStatus] = useState('draft')
+	const [category, setCategory] = useState('')
+
 	return (
 		<>
 			<span />
@@ -84,6 +105,31 @@ export default function Admin() {
 								Quisquam, quos. Lorem ipsum dolor sit amet consectetur
 								adipisicing elit. Quisquam, quos.
 							</FormItem.Caption>
+						</FormItem>
+
+						<FormItem id='select-status' required>
+							<FormItem.Label>Status</FormItem.Label>
+
+							<FormItem.Select
+								options={STATUS_OPTIONS}
+								value={status}
+								onValueChange={setStatus}
+								placeholder='Select status'
+							/>
+
+							<FormItem.Caption>Selected: {status || 'none'}</FormItem.Caption>
+						</FormItem>
+
+						<FormItem id='select-category'>
+							<FormItem.Label>Category</FormItem.Label>
+
+							<FormItem.Select
+								options={CATEGORY_OPTIONS}
+								value={category}
+								onValueChange={setCategory}
+								placeholder='Select category'
+								mode='secondary'
+							/>
 						</FormItem>
 					</div>
 

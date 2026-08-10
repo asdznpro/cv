@@ -1,6 +1,9 @@
 import { twMerge } from 'tailwind-merge'
 
-import { fieldSurfaceVariants } from './field-surface.variants'
+import {
+	fieldSurfaceBackdropVariants,
+	fieldSurfaceVariants,
+} from './field-surface.variants'
 import type FieldSurfaceProps from './FieldSurface.interface'
 
 export function FieldSurface(props: FieldSurfaceProps) {
@@ -10,6 +13,7 @@ export function FieldSurface(props: FieldSurfaceProps) {
 		<span
 			aria-hidden
 			className={twMerge(
+				fieldSurfaceBackdropVariants(),
 				fieldSurfaceVariants({ mode, status, radius, disabled }),
 				className,
 			)}
