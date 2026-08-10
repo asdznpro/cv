@@ -1,4 +1,4 @@
-import { FieldStatus } from '../field-status.type'
+import { FieldStatus } from '../../field-status.type'
 
 export interface CaptionProps extends Omit<
 	React.AllHTMLAttributes<HTMLElement>,

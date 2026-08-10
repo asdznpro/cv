@@ -1,8 +1,9 @@
 'use client'
 
-import { Caption } from '../caption'
+import { Caption } from '../_components/caption'
+import { Combobox } from '../combobox'
 import { Input } from '../input'
-import { Label } from '../label'
+import { Label } from '../_components/label'
 import { Select } from '../select'
 import { Textarea } from '../textarea'
 
@@ -13,6 +14,7 @@ type FormItemComponent = typeof FormItemRoot & {
 	Input: typeof Input
 	Textarea: typeof Textarea
 	Select: typeof Select
+	Combobox: typeof Combobox
 	Caption: typeof Caption
 }
 
@@ -22,6 +24,7 @@ FormItem.Label = Label
 FormItem.Input = Input
 FormItem.Textarea = Textarea
 FormItem.Select = Select
+FormItem.Combobox = Combobox
 FormItem.Caption = Caption
 
 export { FormItemProvider, useFormItem } from './FormItem.context'

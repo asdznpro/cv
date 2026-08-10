@@ -1,12 +1,7 @@
 import type { FieldOption } from '../_components/option-list'
 import type { FieldStatus } from '../field-status.type'
 
-export type { FieldOption }
-
-/** @deprecated Prefer FieldOption — kept for Select API compatibility. */
-export type SelectOption = FieldOption
-
-export default interface SelectProps {
+export default interface ComboboxProps {
 	options: FieldOption[]
 	value?: string
 	defaultValue?: string
@@ -21,4 +16,5 @@ export default interface SelectProps {
 	status?: FieldStatus
 	size?: 'lg' | 'md'
 	radius?: 'smooth' | 'rounded' | 'none'
+	emptyText?: string
 }

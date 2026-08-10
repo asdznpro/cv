@@ -8,7 +8,7 @@ import { useFormItem } from '../form-item/FormItem.context'
 import { inputVariants } from './input.variants'
 import type InputProps from './Input.interface'
 
-import { FieldSurface } from '../field-surface'
+import { FieldSurface } from '../_components/field-surface'
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
 	function Input(props, ref) {

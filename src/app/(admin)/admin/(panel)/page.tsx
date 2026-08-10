@@ -14,12 +14,6 @@ const STATUS_OPTIONS = [
 	{ value: 'draft', label: 'Draft' },
 	{ value: 'published', label: 'Published' },
 	{ value: 'archived', label: 'Archived' },
-	{ value: 'draft', label: 'Draft' },
-	{ value: 'published', label: 'Published' },
-	{ value: 'archived', label: 'Archived' },
-	{ value: 'draft', label: 'Draft' },
-	{ value: 'published', label: 'Published' },
-	{ value: 'archived', label: 'Archived' },
 ]
 
 const CATEGORY_OPTIONS = [
@@ -27,9 +21,17 @@ const CATEGORY_OPTIONS = [
 	{ value: 'other', label: 'Other' },
 ]
 
+const COMPANY_OPTIONS = [
+	{ value: 'vp', label: 'Virtus.pro' },
+	{ value: 'nsa', label: 'No Sleep Agency' },
+	{ value: 'team-spirit', label: 'Team Spirit' },
+	{ value: 'navi', label: 'Natus Vincere' },
+]
+
 export default function Admin() {
 	const [status, setStatus] = useState('draft')
 	const [category, setCategory] = useState('')
+	const [company, setCompany] = useState('')
 
 	return (
 		<>
@@ -130,6 +132,21 @@ export default function Admin() {
 								placeholder='Select category'
 								mode='secondary'
 							/>
+						</FormItem>
+
+						<FormItem id='combobox-company'>
+							<FormItem.Label>Company</FormItem.Label>
+
+							<FormItem.Combobox
+								options={COMPANY_OPTIONS}
+								value={company}
+								onValueChange={setCompany}
+								placeholder='Search company'
+							/>
+
+							<FormItem.Caption>
+								Selected: {company || 'none'}
+							</FormItem.Caption>
 						</FormItem>
 					</div>
 

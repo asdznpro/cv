@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 
 import {
 	FloatingFocusManager,
@@ -10,7 +10,6 @@ import {
 	offset,
 	shift,
 	size,
-	useClick,
 	useDismiss,
 	useFloating,
 	useInteractions,
@@ -19,26 +18,28 @@ import {
 	useTransitionStyles,
 } from '@floating-ui/react'
 import { twMerge } from 'tailwind-merge'
-import { Icon28ChevronDownOutline } from '@vkontakte/icons'
+import { Icon28CancelOutline, Icon28ChevronDownOutline } from '@vkontakte/icons'
 
 import { FieldSurface } from '../_components/field-surface'
 import { useFormItem } from '../form-item/FormItem.context'
 import { inputVariants } from '../input/input.variants'
 import { OptionList } from '../_components/option-list'
-import type SelectProps from './Select.interface'
+import type ComboboxProps from './Combobox.interface'
 
-export function Select(props: SelectProps) {
+export function Combobox(props: ComboboxProps) {
 	const formItem = useFormItem()
 	const listRef = useRef<Array<HTMLElement | null>>([])
 	const [open, setOpen] = useState(false)
 	const [activeIndex, setActiveIndex] = useState<number | null>(null)
+	const [query, setQuery] = useState('')
+	const [isFiltering, setIsFiltering] = useState(false)
 
 	const {
 		options,
 		value: valueProp,
 		defaultValue,
 		onValueChange,
-		placeholder = 'Select…',
+		placeholder = 'Search…',
 		disabled,
 		required,
 		id,
@@ -48,6 +49,7 @@ export function Select(props: SelectProps) {
 		status: statusProp,
 		size: fieldSize = 'lg',
 		radius,
+		emptyText = 'No results',
 	} = props
 
 	const isControlled = valueProp !== undefined
@@ -62,12 +64,25 @@ export function Select(props: SelectProps) {
 		formItem && status === 'error' ? formItem.captionId : undefined
 
 	const selected = options.find(option => option.value === value)
-	const label = selected?.label
-	const selectedIndex = options.findIndex(option => option.value === value)
+
+	const filtered = useMemo(() => {
+		if (!isFiltering) return options
+		const needle = query.trim().toLowerCase()
+		if (!needle) return options
+		return options.filter(option => option.label.toLowerCase().includes(needle))
+	}, [options, query, isFiltering])
+
+	const selectedIndex = filtered.findIndex(option => option.value === value)
 
 	const { refs, floatingStyles, context } = useFloating({
 		open,
-		onOpenChange: setOpen,
+		onOpenChange: next => {
+			setOpen(next)
+			if (!next) {
+				setActiveIndex(null)
+				setIsFiltering(false)
+			}
+		},
 		placement: 'bottom-start',
 		strategy: 'fixed',
 		whileElementsMounted: autoUpdate,
@@ -86,10 +101,6 @@ export function Select(props: SelectProps) {
 		],
 	})
 
-	const click = useClick(context, {
-		event: 'mousedown',
-		enabled: !isDisabled,
-	})
 	const dismiss = useDismiss(context)
 	const role = useRole(context, { role: 'listbox' })
 	const listNavigation = useListNavigation(context, {
@@ -98,10 +109,12 @@ export function Select(props: SelectProps) {
 		selectedIndex: selectedIndex >= 0 ? selectedIndex : null,
 		onNavigate: setActiveIndex,
 		loop: true,
+		virtual: true,
+		enabled: open,
 	})
 
 	const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
-		[click, dismiss, role, listNavigation],
+		[dismiss, role, listNavigation],
 	)
 
 	const { isMounted, styles: transitionStyles } = useTransitionStyles(context, {
@@ -110,10 +123,26 @@ export function Select(props: SelectProps) {
 	})
 
 	function selectValue(next: string) {
+		const option = options.find(item => item.value === next)
 		if (!isControlled) setUncontrolledValue(next)
 		onValueChange?.(next)
+		setQuery(option?.label ?? '')
+		setIsFiltering(false)
 		setOpen(false)
+		setActiveIndex(null)
 	}
+
+	function clearValue() {
+		if (!isControlled) setUncontrolledValue('')
+		onValueChange?.('')
+		setQuery('')
+		setIsFiltering(false)
+		setOpen(false)
+		setActiveIndex(null)
+	}
+
+	const inputValue = open ? query : (selected?.label ?? '')
+	const hasValue = Boolean(value)
 
 	return (
 		<>
@@ -122,21 +151,14 @@ export function Select(props: SelectProps) {
 			) : null}
 
 			<span className={twMerge('relative inline-flex w-full', className)}>
-				<button
-					{...getReferenceProps()}
-					ref={refs.setReference}
-					type='button'
-					id={fieldId}
-					disabled={isDisabled}
-					data-state={open ? 'open' : 'closed'}
-					aria-invalid={status === 'error' || undefined}
-					aria-required={isRequired || undefined}
-					aria-describedby={describedBy}
+				<span
+					ref={refs.setPositionReference}
 					className={twMerge(
-						'root w-full text-left outline-none',
-						'disabled:cursor-not-allowed',
+						'group root w-full',
 						inputVariants({ mode, status, size: fieldSize, radius }),
+						'input-disabled:cursor-not-allowed',
 					)}
+					data-state={open ? 'open' : 'closed'}
 				>
 					<FieldSurface
 						mode={mode}
@@ -148,22 +170,75 @@ export function Select(props: SelectProps) {
 					<span className='in relative w-full h-full flex items-center justify-center py-1'>
 						<span className='spacing w-0 h-full' />
 
-						<span
-							className={twMerge(
-								'content min-w-0 flex-1 truncate px-0.5',
-								!label && 'text-foreground-secondary',
-								isDisabled && 'text-foreground-secondary',
-							)}
-						>
-							{label ?? placeholder}
-						</span>
+						<input
+							{...getReferenceProps({
+								onFocus(event: React.FocusEvent<HTMLInputElement>) {
+									if (isDisabled) return
+									const input = event.currentTarget
+									const index = options.findIndex(
+										option => option.value === value,
+									)
+									setQuery(selected?.label ?? '')
+									setIsFiltering(false)
+									setActiveIndex(index >= 0 ? index : null)
+									setOpen(true)
+									requestAnimationFrame(() => input.select())
+								},
+								onChange(event: React.ChangeEvent<HTMLInputElement>) {
+									setQuery(event.currentTarget.value)
+									setIsFiltering(true)
+									setOpen(true)
+									setActiveIndex(0)
+								},
+								onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+									if (
+										event.key === 'Enter' &&
+										activeIndex != null &&
+										filtered[activeIndex] &&
+										!filtered[activeIndex].disabled
+									) {
+										event.preventDefault()
+										selectValue(filtered[activeIndex].value)
+									}
+								},
+							})}
+							ref={refs.setReference}
+							id={fieldId}
+							type='text'
+							role='combobox'
+							aria-autocomplete='list'
+							aria-expanded={open}
+							aria-invalid={status === 'error' || undefined}
+							aria-required={isRequired || undefined}
+							aria-describedby={describedBy}
+							disabled={isDisabled}
+							required={isRequired}
+							autoComplete='off'
+							placeholder={placeholder}
+							value={inputValue}
+							className='content w-full h-full px-0.5 rounded-xs appearance-none outline-none placeholder:text-foreground-secondary disabled:placeholder:text-foreground-tertiary disabled:text-foreground-secondary disabled:cursor-not-allowed'
+						/>
 
 						<span className='suffix flex gap-0.5 text-foreground-secondary'>
-							<Icon28ChevronDownOutline
-								width={18}
-								height={18}
-								className='transition-transform duration-100 group-data-[state=open]:rotate-180'
-							/>
+							{hasValue ? (
+								<button
+									type='button'
+									tabIndex={-1}
+									aria-label='Clear'
+									disabled={isDisabled}
+									onMouseDown={event => event.preventDefault()}
+									onClick={clearValue}
+									className='appearance-none outline-none cursor-pointer disabled:pointer-events-none'
+								>
+									<Icon28CancelOutline width={18} height={18} />
+								</button>
+							) : (
+								<Icon28ChevronDownOutline
+									width={18}
+									height={18}
+									className='transition-transform duration-100 group-data-[state=open]:rotate-180'
+								/>
+							)}
 						</span>
 
 						<span className='spacing w-0 h-full' />
@@ -174,7 +249,7 @@ export function Select(props: SelectProps) {
 							*
 						</span>
 					)}
-				</button>
+				</span>
 
 				{isMounted && (
 					<FloatingPortal>
@@ -182,6 +257,7 @@ export function Select(props: SelectProps) {
 							context={context}
 							modal={false}
 							initialFocus={-1}
+							returnFocus={false}
 						>
 							<div
 								{...getFloatingProps()}
@@ -190,7 +266,7 @@ export function Select(props: SelectProps) {
 								className='z-80 outline-none'
 							>
 								<OptionList
-									options={options}
+									options={filtered}
 									value={value}
 									activeIndex={activeIndex}
 									listRef={listRef}
@@ -198,6 +274,7 @@ export function Select(props: SelectProps) {
 									onSelect={selectValue}
 									mode={mode}
 									radius={radius}
+									emptyText={emptyText}
 									style={transitionStyles}
 								/>
 							</div>
