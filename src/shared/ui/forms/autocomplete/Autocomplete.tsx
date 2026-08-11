@@ -193,7 +193,12 @@ export function Autocomplete(props: AutocompleteProps) {
 									appearance='neutral'
 									size={fieldSize === 'md' ? 'sm' : 'md'}
 									disabled={isDisabled}
-									suffix={<Icon28CancelOutline width={14} height={14} />}
+									suffix={
+										<Icon28CancelOutline
+											width={fieldSize === 'md' ? 12 : 14}
+											height={fieldSize === 'md' ? 12 : 14}
+										/>
+									}
 									onMouseDown={event => event.preventDefault()}
 									onClick={() => {
 										if (isDisabled) return

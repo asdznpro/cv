@@ -297,10 +297,10 @@ export function Header() {
 											&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV
 										</span>
 
-										<span className='ml-auto flex gap-3'>
+										{/* <span className='ml-auto flex gap-3'>
 											<Kbd keys={['Shift', 'F']} />
 											<Kbd keys={['Esc']} />
-										</span>
+										</span> */}
 									</div>
 								</div>
 							</motion.div>

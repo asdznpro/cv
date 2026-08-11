@@ -21,4 +21,5 @@ export default interface SelectProps {
 	status?: FieldStatus
 	size?: 'lg' | 'md'
 	radius?: 'smooth' | 'rounded' | 'none'
+	prefix?: React.ReactNode
 }

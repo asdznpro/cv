@@ -16,63 +16,8 @@ import {
 	Icon28DocumentTextOutline,
 } from '@vkontakte/icons'
 
-function UploadCoverDialog({
-	onCancel,
-	onSave,
-}: {
-	onCancel: () => void
-	onSave: (file: File | null) => void
-}) {
-	const [file, setFile] = useState<File | null>(null)
-
-	return (
-		<div className='flex flex-col bg-surface border border-separator rounded-surface'>
-			<div className='flex flex-col p-surface gap-surface'>
-				<div className='flex flex-1 flex-col gap-3'>
-					<p className='text-xl font-medium font-condensed tracking-tight'>
-						Upload cover
-					</p>
-				</div>
-
-				<FormItem id='article-cover-upload'>
-					<FormItem.DropZone
-						value={file}
-						onValueChange={setFile}
-						emptyTitle='Click to upload or drag and drop'
-						emptyHint='PNG, JPG or GIF up to 10MB'
-					/>
-				</FormItem>
-			</div>
-
-			<Separator />
-
-			<div className='flex @md/overlay:grid grid-cols-2 items-center p-surface gap-surface'>
-				<div className='col-start-2 flex flex-1 gap-2'>
-					<Button
-						onClick={onCancel}
-						className='flex-1'
-						type='button'
-						size='sm'
-						mode='secondary'
-						appearance='neutral'
-					>
-						Cancel
-					</Button>
-
-					<Button
-						onClick={() => onSave(file)}
-						className='flex-1'
-						type='button'
-						size='sm'
-						appearance='neutral'
-					>
-						Save
-					</Button>
-				</div>
-			</div>
-		</div>
-	)
-}
+import { ChooseEntityDialog } from './ChooseEntityDialog'
+import { UploadCoverDialog } from './UploadCoverDialog'
 
 export default function Article() {
 	const { tabState, handleTabSelect } = useTabState(0)
@@ -95,6 +40,19 @@ export default function Article() {
 	const openUploadCoverDialog = () => {
 		open(
 			<UploadCoverDialog
+				onCancel={close}
+				onSave={file => {
+					setCoverFile(file)
+					close()
+				}}
+			/>,
+			{ className: 'max-w-sm' },
+		)
+	}
+
+	const openChooseEntityDialog = () => {
+		open(
+			<ChooseEntityDialog
 				onCancel={close}
 				onSave={file => {
 					setCoverFile(file)
@@ -132,12 +90,14 @@ export default function Article() {
 
 						<div className='w-full @xl:w-2/5 flex flex-col gap-2'>
 							<FormItem id='article-category'>
-								<FormItem.Input
+								<FormItem.Select
 									mode='outline'
 									size='md'
-									type='text'
-									placeholder='Hidden'
-									suffix={<Icon28ChevronDownOutline width={18} height={18} />}
+									options={[
+										{ label: 'Hidden', value: 'hidden' },
+										{ label: 'Public', value: 'public' },
+									]}
+									placeholder='Select visibility'
 								/>
 							</FormItem>
 						</div>
@@ -176,6 +136,7 @@ export default function Article() {
 								</button>
 
 								<button
+									onClick={openChooseEntityDialog}
 									type='button'
 									className='z-1 absolute -bottom-2 right-4 size-12 flex items-center justify-center text-foreground-secondary bg-background hover:bg-surface-secondary border border-dashed border-separator rounded-full overflow-hidden cursor-pointer transition-colors focus-ring-base focus-ring-visible'
 								>
@@ -246,32 +207,45 @@ export default function Article() {
 
 						<div className='w-full @xl:w-2/5 flex flex-col gap-2'>
 							<FormItem id='article-category'>
-								<FormItem.Input
+								<FormItem.Select
 									mode='outline'
 									size='md'
-									type='text'
-									placeholder='Type'
-									suffix={<Icon28ChevronDownOutline width={18} height={18} />}
+									options={[
+										{ label: 'External link', value: 'external-link' },
+										{ label: 'Article', value: 'article' },
+									]}
+									placeholder='Select type'
 								/>
 							</FormItem>
 
 							<FormItem id='article-category'>
-								<FormItem.Input
+								<FormItem.Combobox
 									mode='outline'
 									size='md'
-									type='text'
-									placeholder='Category'
-									suffix={<Icon28ChevronDownOutline width={18} height={18} />}
+									options={[
+										{ label: 'Experience', value: 'experience' },
+										{ label: 'Education', value: 'education' },
+										{ label: 'Skill', value: 'skill' },
+										{ label: 'Tool', value: 'tool' },
+										{ label: 'Other', value: 'other' },
+									]}
+									placeholder='Select category'
 								/>
 							</FormItem>
 
 							<FormItem id='article-tags'>
-								<FormItem.Input
+								<FormItem.Autocomplete
 									mode='outline'
 									size='md'
-									type='text'
-									placeholder='Tags'
-									suffix={<Icon28ChevronDownOutline width={18} height={18} />}
+									options={[
+										{ label: 'Graphic Design', value: 'graphic-design' },
+										{ label: 'Web Development', value: 'web-development' },
+										{ label: 'SEO', value: 'seo' },
+										{ label: 'Marketing', value: 'marketing' },
+										{ label: 'SMM', value: 'smm' },
+										{ label: 'Esports', value: 'esports' },
+									]}
+									placeholder='Add tags'
 								/>
 							</FormItem>
 						</div>

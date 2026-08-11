@@ -17,4 +17,5 @@ export default interface ComboboxProps {
 	size?: 'lg' | 'md'
 	radius?: 'smooth' | 'rounded' | 'none'
 	emptyText?: string
+	prefix?: React.ReactNode
 }

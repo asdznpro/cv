@@ -287,6 +287,8 @@ export default function Articles() {
 												<DropdownMenu.Box>
 													<DropdownMenu.Item
 														aria-label='Preview article'
+														href={`/articles/${article.slug}`}
+														target='_blank'
 														prefix={
 															<Icon28ViewOutline width={18} height={18} />
 														}

@@ -48,6 +48,7 @@ export function Select(props: SelectProps) {
 		status: statusProp,
 		size: fieldSize = 'lg',
 		radius,
+		prefix,
 	} = props
 
 	const isControlled = valueProp !== undefined
@@ -147,6 +148,10 @@ export function Select(props: SelectProps) {
 
 					<span className='in relative w-full h-full flex items-center justify-center py-1'>
 						<span className='spacing w-0 h-full' />
+
+						<span className='prefix flex gap-0.5 text-foreground-secondary'>
+							{prefix}
+						</span>
 
 						<span
 							className={twMerge(
