@@ -43,6 +43,7 @@ import {
 	Icon28SendOutline,
 	Icon28SortOutline,
 	Icon28UnarchiveOutline,
+	Icon28UsersOutline,
 	Icon28ViewOutline,
 } from '@vkontakte/icons'
 
@@ -438,10 +439,28 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 											<Badge
 												size='md'
 												mode='soft'
-												appearance='neutral'
+												appearance={
+													article.views_24h > 0 ? 'success' : 'neutral'
+												}
 												prefix={<Icon28ViewOutline width={14} height={14} />}
+												title='Views (last 24h delta)'
 											>
 												{article.views}
+												{article.views_24h > 0 && ' +' + article.views_24h}
+											</Badge>
+
+											<Badge
+												size='md'
+												mode='soft'
+												appearance={
+													article.uniques_24h > 0 ? 'success' : 'neutral'
+												}
+												prefix={<Icon28UsersOutline width={14} height={14} />}
+												title='Unique visitors (last 24h delta)'
+											>
+												{article.unique_visitors}
+												{article.uniques_24h > 0 &&
+													' +' + article.uniques_24h}
 											</Badge>
 
 											<Badge

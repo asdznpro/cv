@@ -47,12 +47,55 @@ function toActionError(error: unknown): ActionResult {
 function mapArticle(row: Record<string, unknown>): Article {
 	const company = row.company
 	return {
-		...(row as Omit<Article, 'company'>),
+		...(row as Omit<
+			Article,
+			'company' | 'views_24h' | 'uniques_24h' | 'unique_visitors' | 'views'
+		>),
+		views: Number(row.views ?? 0),
+		unique_visitors: Number(row.unique_visitors ?? 0),
+		views_24h: Number(row.views_24h ?? 0),
+		uniques_24h: Number(row.uniques_24h ?? 0),
 		company:
 			company && typeof company === 'object'
 				? (company as Article['company'])
 				: null,
 	}
+}
+
+async function withArticleStats24h(articles: Article[]): Promise<Article[]> {
+	if (articles.length === 0) return articles
+
+	const supabase = await createClient()
+	const { data: statsRows, error } = await supabase.rpc('article_stats_24h')
+
+	if (error) {
+		return articles.map((article) => ({
+			...article,
+			views_24h: 0,
+			uniques_24h: 0,
+		}))
+	}
+
+	const statsById = new Map<
+		string,
+		{ views_24h: number; uniques_24h: number }
+	>()
+
+	for (const row of statsRows ?? []) {
+		statsById.set(row.article_id as string, {
+			views_24h: Number(row.views_24h ?? 0),
+			uniques_24h: Number(row.uniques_24h ?? 0),
+		})
+	}
+
+	return articles.map((article) => {
+		const stats = statsById.get(article.id)
+		return {
+			...article,
+			views_24h: stats?.views_24h ?? 0,
+			uniques_24h: stats?.uniques_24h ?? 0,
+		}
+	})
 }
 
 export async function listArticles(
@@ -95,7 +138,11 @@ export async function listAdminArticles(
 
 	const { data, error } = await query
 	if (error) throw new Error(error.message)
-	return (data ?? []).map((row) => mapArticle(row as Record<string, unknown>))
+
+	const articles = (data ?? []).map((row) =>
+		mapArticle(row as Record<string, unknown>),
+	)
+	return withArticleStats24h(articles)
 }
 
 export async function listAllArticleIds(): Promise<string[]> {

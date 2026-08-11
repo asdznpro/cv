@@ -44,6 +44,10 @@ export type Article = {
 	related_mode: ArticleRelatedMode
 	related_article_ids: string[]
 	views: number
+	unique_visitors: number
+	/** Rolling last 24 hours (from article_view_events). */
+	views_24h: number
+	uniques_24h: number
 	priority: number
 	created_at: string
 	updated_at: string

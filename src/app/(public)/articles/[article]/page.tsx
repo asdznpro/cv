@@ -2,12 +2,15 @@ import { ViewTransition } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
+import { after } from 'next/server'
 
 import {
 	getArticleBySlug,
 	listRelatedArticles,
 	type Article,
 } from 'lib/articles'
+import { recordArticleView } from 'lib/articles/record-view'
+import { getVisitorHash } from 'lib/articles/visitor-hash'
 import { getMarkdownToc } from 'lib/server'
 import { getImagePalette } from 'lib/utils'
 
@@ -46,6 +49,13 @@ export default async function ArticlePage({
 	const article = await getArticleBySlug(slug)
 
 	if (!article) notFound()
+
+	if (article.status === 'published') {
+		const visitorHash = await getVisitorHash()
+		after(() => {
+			void recordArticleView(article.id, visitorHash)
+		})
+	}
 
 	const content = article.content
 	const [toc, related, palette] = await Promise.all([
