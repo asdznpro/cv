@@ -377,6 +377,8 @@ function Item({
 	appearance = 'neutral',
 	disabled,
 	to,
+	href,
+	target,
 	onClick,
 	closeOnSelect = true,
 }: DropdownMenuItemProps) {
@@ -392,7 +394,9 @@ function Item({
 		<Button
 			ref={item.ref}
 			to={to}
-			type={to ? 'link' : 'button'}
+			href={href}
+			target={target}
+			type={to || href ? 'link' : 'button'}
 			role='menuitem'
 			tabIndex={isActive ? 0 : -1}
 			className={twMerge('flex-1', className)}

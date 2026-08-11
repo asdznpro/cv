@@ -204,7 +204,7 @@ export function DropZone(props: DropZoneProps) {
 									className='absolute inset-0 size-full object-cover blur-2xl opacity-20'
 								/>
 
-								<div className='relative z-1 w-fit h-full flex items-center justify-center overflow-hidden rounded'>
+								<div className='relative z-1 w-fit h-fit flex items-center justify-center overflow-hidden rounded'>
 									<img
 										src={preview}
 										alt={value?.name ?? 'Uploaded file'}

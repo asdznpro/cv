@@ -149,4 +149,10 @@ export const TOOLKIT_LOGOS = [
 		label: false,
 		size: { width: 1100, height: 160 },
 	},
+	{
+		image: '/assets/toolkit/supabase.svg',
+		name: 'Supabase',
+		label: false,
+		size: { width: 824, height: 160 },
+	},
 ]

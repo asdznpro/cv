@@ -2,15 +2,24 @@
 
 import Image from 'next/image'
 
-import { Carousel } from 'ui/blocks'
+import { Badge, Carousel } from 'ui/blocks'
 import { Lanyard, PixelBlast } from 'ui/effects'
 
 import { TOOLKIT_LOGOS } from 'shared/data'
+import { Icon28WrenchOutline } from '@vkontakte/icons'
 
 export function Hero() {
 	return (
 		<div className='w-full h-screen flex flex-col p-2 gap-2'>
 			<div className='relative z-0 w-full h-full rounded-xl border border-separator bg-blue-950/40 overflow-hidden'>
+				<Badge
+					className='absolute bottom-app right-1/2 translate-x-1/2'
+					appearance='danger'
+					prefix={<Icon28WrenchOutline width={18} height={18} />}
+				>
+					In the process of active development
+				</Badge>
+
 				<div className='absolute inset-0'>
 					<Lanyard
 						position={[0, 0, 14]}

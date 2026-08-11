@@ -31,6 +31,7 @@ export function PreviewCard(props: PreviewCardProps) {
 		quality,
 		priority,
 		radius,
+		inner,
 		...restProps
 	} = props
 
@@ -66,14 +67,14 @@ export function PreviewCard(props: PreviewCardProps) {
 		<div
 			{...restProps}
 			className={twMerge(
-				'root',
+				'relative root',
 				previewCardVariants({ ratio, radius }),
 				className,
 			)}
 		>
 			{children}
 
-			<div className='in relative w-full h-full flex items-center justify-center text-foreground-tertiary bg-surface border border-separator overflow-hidden transition-all duration-100 ease-in focus-ring-base focus-ring-group-visible'>
+			<div className='in z-0 relative w-full h-full flex items-center justify-center text-foreground-tertiary bg-surface border border-separator overflow-hidden transition-all duration-100 ease-in focus-ring-base focus-ring-group-visible'>
 				{showPlaceholder && (
 					<div
 						className={twMerge(
@@ -109,6 +110,8 @@ export function PreviewCard(props: PreviewCardProps) {
 						loading='eager'
 					/>
 				)}
+
+				{inner}
 			</div>
 		</div>
 	)

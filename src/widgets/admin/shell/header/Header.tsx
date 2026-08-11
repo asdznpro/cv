@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'motion/react'
+import { twMerge } from 'tailwind-merge'
 
 import { useAdminShell } from '../AdminShellProvider'
 import { NAV_ITEMS } from '../sidebar'
@@ -102,7 +103,10 @@ export function Header() {
 							appearance='neutral'
 							prefix={
 								<Icon28HorizontalRectangle2VerticalLeftOutline
-									className='rotate-180'
+									className={twMerge(
+										'transition-transform rotate-180',
+										!open && '-scale-x-100',
+									)}
 									width={18}
 									height={18}
 								/>

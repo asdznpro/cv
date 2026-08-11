@@ -1,8 +1,7 @@
 'use client'
 
-import { forwardRef, useCallback } from 'react'
+import { forwardRef, useCallback, useLayoutEffect, useRef } from 'react'
 
-import { useTextareaAutosize } from '@siberiacancode/reactuse'
 import { twMerge } from 'tailwind-merge'
 
 import { useFormItem } from '../form-item/FormItem.context'
@@ -11,6 +10,17 @@ import type TextareaProps from './Textarea.interface'
 
 import { FieldSurface } from '../_components/field-surface'
 import { ExpandIndicator } from './ExpandIndicator'
+
+function syncTextareaHeight(el: HTMLTextAreaElement) {
+	const minHeight = el.style.minHeight
+	const maxHeight = el.style.maxHeight
+	el.style.height = 'auto'
+	el.style.minHeight = 'auto'
+	el.style.maxHeight = 'none'
+	el.style.height = `${el.scrollHeight}px`
+	el.style.minHeight = minHeight
+	el.style.maxHeight = maxHeight
+}
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 	function Textarea(props, ref) {
@@ -26,6 +36,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 			id,
 			disabled,
 			required,
+			value,
+			defaultValue,
+			onChange,
 			...restProps
 		} = props
 
@@ -36,16 +49,23 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 		const describedBy =
 			formItem && status === 'error' ? formItem.captionId : undefined
 
-		const message = useTextareaAutosize()
+		const textareaRef = useRef<HTMLTextAreaElement | null>(null)
 
 		const setRefs = useCallback(
 			(node: HTMLTextAreaElement | null) => {
-				message.ref.current = node as HTMLTextAreaElement
+				textareaRef.current = node
 				if (typeof ref === 'function') ref(node)
 				else if (ref) ref.current = node
 			},
-			[message.ref, ref],
+			[ref],
 		)
+
+		useLayoutEffect(() => {
+			const el = textareaRef.current
+			if (!el) return
+			void value
+			syncTextareaHeight(el)
+		}, [value])
 
 		const isResizable = resize !== 'none'
 
@@ -60,7 +80,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 			axis: 'vertical' | 'horizontal' | 'both',
 		) => {
 			e.preventDefault()
-			const el = message.ref.current!
+			const el = textareaRef.current
+			if (!el) return
 
 			const startY = e.clientY
 			const startH = el.offsetHeight
@@ -101,22 +122,31 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 					disabled={isDisabled}
 				/>
 
-				<span className='in relative w-full h-full flex items-center justify-center'>
+				<span className="in relative w-full h-full flex items-center justify-center">
 					<textarea
 						{...restProps}
 						ref={setRefs}
 						id={fieldId}
 						disabled={isDisabled}
 						required={isRequired}
+						value={value}
+						defaultValue={defaultValue}
 						aria-invalid={status === 'error' || undefined}
 						aria-required={isRequired || undefined}
 						aria-describedby={describedBy}
-						className='textarea resize-none scrollbar-none w-full rounded-xs appearance-none outline-none placeholder:text-foreground-secondary disabled:placeholder:text-foreground-tertiary disabled:text-foreground-secondary disabled:cursor-not-allowed'
+						onChange={(event) => {
+							onChange?.(event)
+							requestAnimationFrame(() => {
+								const el = textareaRef.current
+								if (el) syncTextareaHeight(el)
+							})
+						}}
+						className="textarea resize-none scrollbar-none w-full rounded-xs appearance-none outline-none placeholder:text-foreground-secondary disabled:placeholder:text-foreground-tertiary disabled:text-foreground-secondary disabled:cursor-not-allowed select-text"
 					/>
 
 					{isResizable && !isDisabled && (
 						<span
-							onPointerDown={e => startResize(e, resize)}
+							onPointerDown={(e) => startResize(e, resize)}
 							className={twMerge(
 								'absolute bottom-1 right-1',
 								resizeCursor[resize],
@@ -124,14 +154,14 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 						>
 							<ExpandIndicator
 								size={12}
-								className='transition-all duration-100 text-foreground-tertiary hover:text-foreground'
+								className="transition-all duration-100 text-foreground-tertiary hover:text-foreground"
 							/>
 						</span>
 					)}
 				</span>
 
 				{isRequired && !formItem?.hasLabel && (
-					<span className='absolute -top-3 -right-1.5 text-danger select-none'>
+					<span className="absolute -top-3 -right-1.5 text-danger select-none">
 						*
 					</span>
 				)}

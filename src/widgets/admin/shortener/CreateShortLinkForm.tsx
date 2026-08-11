@@ -183,14 +183,13 @@ export function CreateShortLinkForm() {
 
 				<div className='w-full @xl:w-2/5'>
 					<FormItem id='short-domain'>
-						<FormItem.Input
+						<FormItem.Select
 							size='md'
 							mode='outline'
-							type='text'
-							value={SHORT_LINK_HOST}
 							prefix={<Icon28GlobeOutline width={18} height={18} />}
-							suffix={<Icon28ChevronDownOutline width={18} height={18} />}
-							readOnly
+							options={[{ label: SHORT_LINK_HOST, value: SHORT_LINK_HOST }]}
+							value={SHORT_LINK_HOST}
+							placeholder='Select domain'
 						/>
 					</FormItem>
 				</div>
