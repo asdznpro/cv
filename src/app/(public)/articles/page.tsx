@@ -14,21 +14,21 @@ export default async function Articles() {
 
 	return (
 		<>
-			<span className="h-24" />
+			<span className='h-24' />
 
-			<section className="mx-auto max-w-4xl w-full flex flex-col px-app gap-20">
-				<div className="flex gap-app">
-					<div className="flex flex-1 flex-col gap-3">
-						<h1 className="text-5xl font-semibold font-condensed tracking-tight uppercase">
+			<section className='mx-auto max-w-4xl w-full flex flex-col px-app gap-20'>
+				<div className='flex gap-app'>
+					<div className='flex flex-1 flex-col gap-3'>
+						<h1 className='text-5xl font-semibold font-condensed tracking-tight uppercase'>
 							Articles
 						</h1>
 					</div>
 
 					<Button
-						mode="soft"
-						appearance="neutral"
+						mode='soft'
+						appearance='neutral'
 						prefix={<Icon28CopyOutline width={18} height={18} />}
-						radius="rounded"
+						radius='rounded'
 						iconOnly
 					/>
 				</div>

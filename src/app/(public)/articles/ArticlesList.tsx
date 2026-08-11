@@ -7,6 +7,7 @@ import type { Article } from 'lib/articles'
 import { trackArticleEngagement } from 'lib/articles/track-view-action'
 
 import { ArticleItem } from 'widgets/content'
+import { EmptyStateScreen } from 'widgets/shell'
 
 import { Badge, Button } from 'ui/blocks'
 import { Icon24ExternalLinkOutline, Icon28Play } from '@vkontakte/icons'
@@ -40,16 +41,12 @@ export function ArticlesList({
 	showStatus = false,
 }: ArticlesListProps) {
 	if (articles.length === 0) {
-		return (
-			<p className="text-foreground-secondary text-sm">
-				Пока нет опубликованных статей.
-			</p>
-		)
+		return <EmptyStateScreen />
 	}
 
 	return (
-		<div className="flex flex-col gap-10">
-			{articles.map((item) => {
+		<div className='flex flex-col gap-10'>
+			{articles.map(item => {
 				const externalUrl = item.type === 'link' ? item.external_url : null
 				const hrefProps = externalUrl
 					? { href: externalUrl, target: '_blank' as const }
@@ -72,53 +69,53 @@ export function ArticlesList({
 					>
 						<ViewTransition
 							name={`article-preview-${item.id}`}
-							share="page-share"
-							default="auto"
+							share='page-share'
+							default='auto'
 						>
 							<ArticleItem.Preview
 								src={item.cover_url ?? undefined}
 								alt={item.title}
 							>
-								<span className="z-1 absolute top-0 left-0 w-full flex p-2 gap-1.5 uppercase">
-									{status ? (
-										<Badge size="md" mode="secondary" appearance="neutral">
+								<span className='z-1 absolute top-0 left-0 w-full flex p-2 gap-1.5 uppercase'>
+									{status && (
+										<Badge size='md' mode='secondary' appearance='neutral'>
 											{status}
 										</Badge>
-									) : null}
+									)}
 
-									{externalUrl ? (
+									{externalUrl && (
 										<Badge
-											className="ml-auto"
-											size="md"
-											mode="secondary"
-											appearance="neutral"
+											className='ml-auto'
+											size='md'
+											mode='secondary'
+											appearance='neutral'
 											prefix={
 												<Icon24ExternalLinkOutline width={14} height={14} />
 											}
 										/>
-									) : null}
+									)}
 								</span>
 
-								{externalUrl ? (
+								{externalUrl && (
 									<Button
-										as="span"
-										className="z-1 absolute inset-0"
-										appearance="neutral"
+										as='span'
+										className='z-1 absolute inset-0'
+										appearance='neutral'
 										prefix={<Icon28Play width={18} height={18} />}
-										radius="rounded"
+										radius='rounded'
 										iconOnly
 									/>
-								) : null}
+								)}
 
-								{item.company ? (
+								{item.company && (
 									<ViewTransition
 										name={`article-preview-company-${item.id}`}
-										share="page-share"
-										default="auto"
+										share='page-share'
+										default='auto'
 									>
-										<div className="z-1 absolute -bottom-6 right-6 w-24 h-24 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden">
+										<div className='z-1 absolute -bottom-6 right-6 w-24 h-24 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden'>
 											<Image
-												className="w-full h-full object-cover"
+												className='w-full h-full object-cover'
 												src={item.company.logo}
 												alt={item.company.name}
 												width={200}
@@ -126,7 +123,7 @@ export function ArticlesList({
 											/>
 										</div>
 									</ViewTransition>
-								) : null}
+								)}
 							</ArticleItem.Preview>
 						</ViewTransition>
 
