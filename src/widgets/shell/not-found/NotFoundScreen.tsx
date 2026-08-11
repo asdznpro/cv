@@ -11,11 +11,11 @@ export function NotFoundScreen() {
 				</h1>
 
 				<p className='text-xl font-semibold uppercase'>
-					Хо щит, страница не найдена
+					Ah shit, page not found
 				</p>
 
 				<Button to='/' size='lg' appearance='neutral' radius='rounded'>
-					Вернуться на главную
+					Go to home
 				</Button>
 
 				<span className='-z-1 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 container w-[120%] aspect-square animate-[fade-in_500ms_ease-out] bg-radial from-danger/20 to-60% to-background pointer-events-none' />

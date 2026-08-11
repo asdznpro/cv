@@ -6,8 +6,6 @@ export type Company = {
 	slug: string
 	logo: string
 	url: string | null
-	sticker_image: string | null
-	sticker_rotate: number | null
 	created_at: string
 	updated_at: string
 }
@@ -17,8 +15,6 @@ export type CompanyInput = {
 	slug: string
 	logo: string
 	url?: string | null
-	sticker_image?: string | null
-	sticker_rotate?: number | null
 }
 
 export function slugifyCompanyName(name: string) {
@@ -34,19 +30,12 @@ export function normalizeCompanyInput(input: CompanyInput): CompanyInput {
 	const slug = (input.slug.trim() || slugifyCompanyName(name)).toLowerCase()
 	const logo = input.logo.trim()
 	const url = input.url?.trim() || null
-	const sticker_image = input.sticker_image?.trim() || null
-	const sticker_rotate =
-		input.sticker_rotate === null || input.sticker_rotate === undefined
-			? null
-			: Number(input.sticker_rotate)
 
 	return {
 		name,
 		slug,
 		logo,
 		url,
-		sticker_image,
-		sticker_rotate: Number.isFinite(sticker_rotate) ? sticker_rotate : null,
 	}
 }
 

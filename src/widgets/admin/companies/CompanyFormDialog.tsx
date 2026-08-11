@@ -3,7 +3,6 @@
 import { useState, useTransition } from 'react'
 
 import { toast } from 'sonner'
-import { twMerge } from 'tailwind-merge'
 
 import {
 	type Company,
@@ -20,8 +19,6 @@ import {
 	Icon28GlobeOutline,
 	Icon28HashtagOutline,
 	Icon28PictureOutline,
-	Icon28StickerOutline,
-	Icon28RotateLeftOutline,
 } from '@vkontakte/icons'
 
 type FormState = {
@@ -29,8 +26,6 @@ type FormState = {
 	slug: string
 	logo: string
 	url: string
-	sticker_image: string
-	sticker_rotate: string
 }
 
 const EMPTY_FORM: FormState = {
@@ -38,8 +33,6 @@ const EMPTY_FORM: FormState = {
 	slug: '',
 	logo: '',
 	url: '',
-	sticker_image: '',
-	sticker_rotate: '',
 }
 
 function toFormState(company: Company): FormState {
@@ -48,9 +41,6 @@ function toFormState(company: Company): FormState {
 		slug: company.slug,
 		logo: company.logo,
 		url: company.url ?? '',
-		sticker_image: company.sticker_image ?? '',
-		sticker_rotate:
-			company.sticker_rotate === null ? '' : String(company.sticker_rotate),
 	}
 }
 
@@ -90,10 +80,6 @@ export function CompanyFormDialog({
 			slug: form.slug,
 			logo: form.logo,
 			url: form.url || null,
-			sticker_image: form.sticker_image || null,
-			sticker_rotate: form.sticker_rotate.trim()
-				? Number(form.sticker_rotate)
-				: null,
 		}
 
 		startTransition(async () => {
@@ -113,15 +99,15 @@ export function CompanyFormDialog({
 
 	return (
 		<form
-			className='flex flex-col bg-surface border border-separator rounded-surface'
+			className="flex flex-col bg-surface border border-separator rounded-surface"
 			onSubmit={event => {
 				event.preventDefault()
 				submit()
 			}}
 		>
-			<div className='flex flex-col p-surface gap-surface'>
-				<div className='flex flex-1 flex-col gap-3'>
-					<p className='text-xl font-medium font-condensed tracking-tight'>
+			<div className="flex flex-col p-surface gap-surface">
+				<div className="flex flex-1 flex-col gap-3">
+					<p className="text-xl font-medium font-condensed tracking-tight">
 						{editingId ? 'Edit company' : 'Create company'}
 					</p>
 				</div>
@@ -129,18 +115,18 @@ export function CompanyFormDialog({
 
 			<Separator />
 
-			<div className='flex flex-col p-surface gap-surface'>
-				<div className='grid @md/overlay:grid-cols-2 gap-app'>
+			<div className="flex flex-col p-surface gap-surface">
+				<div className="grid @md/overlay:grid-cols-2 gap-app">
 					<FormItem required>
 						<FormItem.Label>Название</FormItem.Label>
 						<FormItem.Input
-							aria-label='Название'
-							mode='secondary'
+							aria-label="Название"
+							mode="secondary"
 							value={form.name}
 							onChange={event =>
 								onNameChange((event.target as HTMLInputElement).value)
 							}
-							placeholder='Enter name'
+							placeholder="Enter name"
 							disabled={pending}
 							prefix={<Icon28InfoCircleOutline width={20} height={20} />}
 						/>
@@ -149,14 +135,14 @@ export function CompanyFormDialog({
 					<FormItem required>
 						<FormItem.Label>Slug</FormItem.Label>
 						<FormItem.Input
-							aria-label='Slug'
-							mode='secondary'
+							aria-label="Slug"
+							mode="secondary"
 							value={form.slug}
 							onChange={event => {
 								setSlugTouched(true)
 								setField('slug', (event.target as HTMLInputElement).value)
 							}}
-							placeholder='Enter slug'
+							placeholder="Enter slug"
 							disabled={pending}
 							prefix={<Icon28HashtagOutline width={20} height={20} />}
 						/>
@@ -165,13 +151,13 @@ export function CompanyFormDialog({
 					<FormItem required>
 						<FormItem.Label>Logo path</FormItem.Label>
 						<FormItem.Input
-							aria-label='Logo path'
-							mode='secondary'
+							aria-label="Logo path"
+							mode="secondary"
 							value={form.logo}
 							onChange={event =>
 								setField('logo', (event.target as HTMLInputElement).value)
 							}
-							placeholder='Enter logo path'
+							placeholder="Enter logo path"
 							disabled={pending}
 							prefix={<Icon28PictureOutline width={20} height={20} />}
 						/>
@@ -180,52 +166,15 @@ export function CompanyFormDialog({
 					<FormItem optional>
 						<FormItem.Label>Website</FormItem.Label>
 						<FormItem.Input
-							aria-label='Website'
-							mode='secondary'
+							aria-label="Website"
+							mode="secondary"
 							value={form.url}
 							onChange={event =>
 								setField('url', (event.target as HTMLInputElement).value)
 							}
-							placeholder='Enter website'
+							placeholder="Enter website"
 							disabled={pending}
 							prefix={<Icon28GlobeOutline width={20} height={20} />}
-						/>
-					</FormItem>
-
-					<FormItem>
-						<FormItem.Label>Sticker path</FormItem.Label>
-						<FormItem.Input
-							mode='secondary'
-							aria-label='Sticker path'
-							value={form.sticker_image}
-							onChange={event =>
-								setField(
-									'sticker_image',
-									(event.target as HTMLInputElement).value,
-								)
-							}
-							placeholder='Enter sticker path'
-							disabled={pending}
-							prefix={<Icon28StickerOutline width={20} height={20} />}
-						/>
-					</FormItem>
-
-					<FormItem>
-						<FormItem.Label>Sticker rotate</FormItem.Label>
-						<FormItem.Input
-							mode='secondary'
-							type='number'
-							aria-label='Sticker rotate'
-							value={form.sticker_rotate}
-							onChange={event =>
-								setField(
-									'sticker_rotate',
-									(event.target as HTMLInputElement).value,
-								)
-							}
-							placeholder='Enter sticker rotate'
-							disabled={pending}
-							prefix={<Icon28RotateLeftOutline width={20} height={20} />}
 						/>
 					</FormItem>
 				</div>
@@ -233,25 +182,25 @@ export function CompanyFormDialog({
 
 			<Separator />
 
-			<div className='flex @md/overlay:grid grid-cols-2 items-center p-surface gap-surface'>
-				<div className='col-start-2 flex flex-1 gap-2'>
+			<div className="flex @md/overlay:grid grid-cols-2 items-center p-surface gap-surface">
+				<div className="col-start-2 flex flex-1 gap-2">
 					<Button
 						onClick={onCancel}
-						className='flex-1'
-						type='button'
-						size='sm'
-						mode='secondary'
-						appearance='neutral'
+						className="flex-1"
+						type="button"
+						size="sm"
+						mode="secondary"
+						appearance="neutral"
 						disabled={pending}
 					>
 						Cancel
 					</Button>
 
 					<Button
-						className='flex-1'
-						type='submit'
-						size='sm'
-						appearance='neutral'
+						className="flex-1"
+						type="submit"
+						size="sm"
+						appearance="neutral"
 						disabled={pending}
 					>
 						{editingId ? 'Save' : 'Create'}
