@@ -133,7 +133,8 @@ export const buttonVariants = cva(
 			{
 				mode: 'secondary',
 				appearance: 'neutral',
-				class: 'text-foreground',
+				class:
+					'text-foreground [&_.prefix]:text-foreground-secondary [&_.suffix]:text-foreground-secondary',
 			},
 
 			// outline
@@ -156,7 +157,8 @@ export const buttonVariants = cva(
 			{
 				mode: 'outline',
 				appearance: 'neutral',
-				class: 'text-foreground',
+				class:
+					'text-foreground [&_.prefix]:text-foreground-secondary [&_.suffix]:text-foreground-secondary',
 			},
 
 			// ghost
@@ -179,7 +181,8 @@ export const buttonVariants = cva(
 			{
 				mode: 'ghost',
 				appearance: 'neutral',
-				class: 'text-foreground-secondary',
+				class:
+					'text-foreground [&_.prefix]:text-foreground-secondary [&_.suffix]:text-foreground-secondary',
 			},
 		],
 

@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 
 import { Badge, Button, Kbd, Separator, Tabs, useTabState } from 'ui/blocks'
 import { FormItem } from 'ui/forms'
@@ -9,10 +8,11 @@ import { Tooltip } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
 
 import {
-	Icon20ArrowTurnRightOutline,
 	Icon28AddOutline,
+	Icon28ArchiveOutline,
 	Icon28ArrowLeftOutline,
-	Icon28ChevronDownOutline,
+	Icon28CancelOutline,
+	Icon28DeleteOutline,
 	Icon28DocumentTextOutline,
 } from '@vkontakte/icons'
 
@@ -97,6 +97,7 @@ export default function Article() {
 										{ label: 'Hidden', value: 'hidden' },
 										{ label: 'Public', value: 'public' },
 									]}
+									value='public'
 									placeholder='Select visibility'
 								/>
 							</FormItem>
@@ -105,6 +106,32 @@ export default function Article() {
 
 					<Separator />
 
+					<div className='flex flex-wrap p-surface gap-surface'>
+						<div className='flex flex-1 flex-col gap-3'>
+							<h3 className='text-xl font-medium font-condensed tracking-tight'>
+								This article isn't archived
+							</h3>
+
+							<p className='text-sm text-foreground-secondary @xl:text-balance'>
+								Archive the article to keep it out of the main feed
+							</p>
+						</div>
+
+						<div className='w-full @xl:w-2/5 flex flex-col gap-2'>
+							<Button
+								className='w-full'
+								mode='secondary'
+								appearance='neutral'
+								prefix={<Icon28ArchiveOutline width={18} height={18} />}
+								align='spread'
+							>
+								Archive article
+							</Button>
+						</div>
+					</div>
+				</div>
+
+				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
 					<div className='flex flex-wrap p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
@@ -170,15 +197,6 @@ export default function Article() {
 								/>
 							</FormItem>
 
-							<FormItem id='article-title'>
-								<FormItem.Input
-									mode='outline'
-									size='md'
-									type='text'
-									placeholder='Slug'
-								/>
-							</FormItem>
-
 							<FormItem id='article-description'>
 								<FormItem.Textarea
 									mode='outline'
@@ -214,10 +232,47 @@ export default function Article() {
 										{ label: 'External link', value: 'external-link' },
 										{ label: 'Article', value: 'article' },
 									]}
+									value='article'
 									placeholder='Select type'
 								/>
 							</FormItem>
 
+							{true ? (
+								<FormItem id='article-title'>
+									<FormItem.Input
+										mode='outline'
+										size='md'
+										type='text'
+										placeholder='Slug'
+									/>
+								</FormItem>
+							) : (
+								<FormItem id='article-title'>
+									<FormItem.Input
+										mode='outline'
+										size='md'
+										type='text'
+										placeholder='Link'
+									/>
+								</FormItem>
+							)}
+						</div>
+					</div>
+
+					<Separator />
+
+					<div className='flex flex-wrap p-surface gap-surface'>
+						<div className='flex flex-1 flex-col gap-3'>
+							<h3 className='text-xl font-medium font-condensed tracking-tight'>
+								Taxonomies
+							</h3>
+
+							<p className='text-sm text-foreground-secondary @xl:text-balance'>
+								Add taxonomies to the article for better search and filtering
+							</p>
+						</div>
+
+						<div className='w-full @xl:w-2/5 flex flex-col gap-2'>
 							<FormItem id='article-category'>
 								<FormItem.Combobox
 									mode='outline'
@@ -326,40 +381,102 @@ export default function Article() {
 					</div>
 				</div>
 
-				<div className='flex flex-col border border-separator rounded-surface overflow-hidden'>
-					<div className='flex flex-col p-surface gap-surface bg-surface'>
-						<span className='text-foreground-secondary text-sm font-medium'>
-							Возможно, вам будет интересно
-						</span>
-					</div>
+				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+					<div className='flex flex-wrap p-surface gap-surface'>
+						<div className='flex flex-1 flex-col gap-3'>
+							<h3 className='text-xl font-medium font-condensed tracking-tight'>
+								Related articles
+							</h3>
 
-					<Separator />
+							<p className='text-sm text-foreground-secondary @xl:text-balance'>
+								Select related articles to display in the sidebar or let the
+								system generate them automatically
+							</p>
+						</div>
 
-					<div className='flex flex-col p-surface gap-surface'>
-						{[
-							'Что такое Apache Kafka: как устроен и работает брокер											сообщений',
-							'Apache Kafka: разбираемся в технологии в теории и на практике',
-							'Как работать с темами в Kafka',
-						].map(item => (
-							<Link
-								key={item}
-								href='/news/article-1'
-								className='group relative flex gap-2 transition-all hover:underline underline-offset-4 outline-none'
-							>
-								<Badge
-									mode='ghost'
-									appearance='neutral'
-									prefix={
-										<Icon20ArrowTurnRightOutline width={18} height={18} />
-									}
-									radius='smooth'
+						<div className='w-full @xl:w-2/5 flex flex-col gap-2'>
+							<FormItem id='article-category'>
+								<FormItem.Select
+									mode='outline'
+									size='md'
+									options={[
+										{ label: 'Manual', value: 'manual' },
+										{ label: 'Auto', value: 'auto' },
+									]}
+									value='manual'
+									placeholder='Select mode'
 								/>
+							</FormItem>
 
-								<span className='text-xl font-semibold font-condensed tracking-tight'>
-									{item}
-								</span>
-							</Link>
-						))}
+							<div className='flex items-center gap-2'>
+								<FormItem id='article-category' className='flex-1'>
+									<FormItem.Combobox
+										mode='outline'
+										size='md'
+										options={[
+											{ label: 'Experience', value: 'experience' },
+											{ label: 'Education', value: 'education' },
+											{ label: 'Skill', value: 'skill' },
+											{ label: 'Tool', value: 'tool' },
+											{ label: 'Other', value: 'other' },
+										]}
+										placeholder='Select article'
+									/>
+								</FormItem>
+
+								<Badge
+									size='sm'
+									mode='secondary'
+									appearance='neutral'
+									prefix={<Icon28CancelOutline width={12} height={12} />}
+								/>
+							</div>
+
+							<Button
+								className='w-full border-dashed'
+								mode='outline'
+								appearance='neutral'
+								prefix={<Icon28AddOutline width={18} height={18} />}
+								suffix={<span>1/3</span>}
+								align='spread'
+							>
+								Add more
+							</Button>
+						</div>
+					</div>
+				</div>
+
+				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+					<div className='flex flex-col gap-3'>
+						<h2 className='flex-1 text-danger text-3xl font-medium font-condensed tracking-tight'>
+							Danger zone
+						</h2>
+					</div>
+				</div>
+
+				<div className='flex flex-col bg-surface border border-separator rounded-surface outline-2 outline-offset-4 outline-danger'>
+					<div className='flex flex-wrap p-surface gap-surface'>
+						<div className='flex flex-1 flex-col gap-3'>
+							<h3 className='ext-xl font-medium font-condensed tracking-tight'>
+								Delete article
+							</h3>
+
+							<p className='text-sm text-foreground-secondary @xl:text-balance'>
+								Permanently delete the article and all associated data
+							</p>
+						</div>
+
+						<div className='w-full @xl:w-2/5 flex flex-col gap-2'>
+							<Button
+								className='w-full'
+								mode='secondary'
+								appearance='danger'
+								prefix={<Icon28DeleteOutline width={18} height={18} />}
+								align='spread'
+							>
+								Delete article
+							</Button>
+						</div>
 					</div>
 				</div>
 			</section>

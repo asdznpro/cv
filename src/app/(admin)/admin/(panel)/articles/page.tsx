@@ -19,6 +19,7 @@ import { Checkbox } from 'ui/forms'
 import { DropdownMenu } from 'ui/floating'
 
 import {
+	Icon28ArchiveOutline,
 	Icon28CalendarOutline,
 	Icon28CancelOutline,
 	Icon28ChevronDownOutline,
@@ -72,7 +73,7 @@ export default function Articles() {
 						<Tabs.Item>All</Tabs.Item>
 						<Tabs.Item>Posted</Tabs.Item>
 						<Tabs.Item>Drafts</Tabs.Item>
-						<Tabs.Item>Scheduled</Tabs.Item>
+						<Tabs.Item>Archived</Tabs.Item>
 					</Tabs>
 
 					<div className='flex flex-col bg-background border border-separator rounded-surface overflow-hidden'>
@@ -171,6 +172,7 @@ export default function Articles() {
 									mode='secondary'
 									appearance='neutral'
 									prefix={<Icon28SortOutline width={16} height={16} />}
+									suffix={<span>(не трогаем)</span>}
 								>
 									Sort by
 								</Button>
@@ -221,7 +223,7 @@ export default function Articles() {
 
 									<div className='min-w-0 min-h-full flex-1 flex flex-col justify-center gap-2'>
 										<Link
-											href={`/admin/articles/${article.slug}`}
+											href={`/admin/articles/${article.id}`}
 											className='max-w-full w-fit text-xl font-medium font-condensed tracking-tight truncate hover:underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded'
 										>
 											{article.title}
@@ -306,13 +308,24 @@ export default function Articles() {
 													</DropdownMenu.Item>
 
 													<DropdownMenu.Item
-														aria-label='Edit company'
-														to={`/admin/articles/${article.slug}`}
+														aria-label='Edit article'
+														to={`/admin/articles/${article.id}`}
 														prefix={
 															<Icon28EditOutline width={18} height={18} />
 														}
 													>
 														Edit
+													</DropdownMenu.Item>
+												</DropdownMenu.Box>
+
+												<DropdownMenu.Box>
+													<DropdownMenu.Item
+														aria-label='Archive article'
+														prefix={
+															<Icon28ArchiveOutline width={18} height={18} />
+														}
+													>
+														Archive
 													</DropdownMenu.Item>
 
 													<DropdownMenu.Item
