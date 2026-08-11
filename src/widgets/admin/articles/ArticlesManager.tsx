@@ -38,6 +38,7 @@ import {
 	Icon28DeleteOutline,
 	Icon28EditOutline,
 	Icon28GlobeOutline,
+	Icon28HandPointUpOutline,
 	Icon28HashtagOutline,
 	Icon28MoreHorizontal,
 	Icon28SendOutline,
@@ -442,7 +443,13 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 												appearance={
 													article.views_24h > 0 ? 'success' : 'neutral'
 												}
-												prefix={<Icon28ViewOutline width={14} height={14} />}
+												prefix={
+													article.type === 'article' ? (
+														<Icon28ViewOutline width={14} height={14} />
+													) : (
+														<Icon28HandPointUpOutline width={14} height={14} />
+													)
+												}
 												title='Views (last 24h delta)'
 											>
 												{article.views}
@@ -459,8 +466,7 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 												title='Unique visitors (last 24h delta)'
 											>
 												{article.unique_visitors}
-												{article.uniques_24h > 0 &&
-													' +' + article.uniques_24h}
+												{article.uniques_24h > 0 && ' +' + article.uniques_24h}
 											</Badge>
 
 											<Badge

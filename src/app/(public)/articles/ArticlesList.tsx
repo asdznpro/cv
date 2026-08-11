@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { ViewTransition } from 'react'
 
 import type { Article } from 'lib/articles'
+import { trackArticleEngagement } from 'lib/articles/track-view-action'
 
 import { ArticleItem } from 'widgets/content'
 
@@ -58,7 +59,17 @@ export function ArticlesList({
 				const status = showStatus ? statusLabel(item.status) : null
 
 				return (
-					<ArticleItem key={item.id} {...hrefProps}>
+					<ArticleItem
+						key={item.id}
+						{...hrefProps}
+						onClick={
+							externalUrl
+								? () => {
+										void trackArticleEngagement(item.id)
+									}
+								: undefined
+						}
+					>
 						<ViewTransition
 							name={`article-preview-${item.id}`}
 							share="page-share"

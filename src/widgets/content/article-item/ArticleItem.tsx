@@ -17,6 +17,7 @@ function ArticleItemRoot({
 	target,
 	className,
 	children,
+	...rest
 }: ArticleItemProps) {
 	const classNames = twMerge(
 		'relative group root flex flex-col gap-6 outline-none',
@@ -30,6 +31,7 @@ function ArticleItemRoot({
 				target={target}
 				rel={target === '_blank' ? 'noopener noreferrer' : undefined}
 				className={classNames}
+				{...rest}
 			>
 				{children}
 			</a>
@@ -38,13 +40,17 @@ function ArticleItemRoot({
 
 	if (to) {
 		return (
-			<Link href={to} target={target} className={classNames}>
+			<Link href={to} target={target} className={classNames} {...rest}>
 				{children}
 			</Link>
 		)
 	}
 
-	return <article className={classNames}>{children}</article>
+	return (
+		<article className={classNames} {...rest}>
+			{children}
+		</article>
+	)
 }
 
 function ArticleItemPreview({
