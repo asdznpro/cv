@@ -126,6 +126,75 @@ export async function getAdminArticle(id: string): Promise<Article | null> {
 	return mapArticle(data as Record<string, unknown>)
 }
 
+/** Public (published) or admin (any status) article by slug. */
+export async function getArticleBySlug(slug: string): Promise<Article | null> {
+	if (!slug) return null
+
+	const isAdmin = await assertAdmin()
+	const supabase = isAdmin ? createAdminClient() : await createClient()
+
+	let query = supabase
+		.from('articles')
+		.select(ARTICLE_SELECT)
+		.eq('slug', slug)
+		.eq('type', 'article')
+
+	if (!isAdmin) {
+		query = query.eq('status', 'published')
+	}
+
+	const { data, error } = await query.maybeSingle()
+	if (error) throw new Error(error.message)
+	if (!data) return null
+	return mapArticle(data as Record<string, unknown>)
+}
+
+export async function listRelatedArticles(
+	article: Article,
+	limit = 3,
+): Promise<Article[]> {
+	const isAdmin = await assertAdmin()
+	const supabase = isAdmin ? createAdminClient() : await createClient()
+
+	if (article.related_mode === 'manual' && article.related_article_ids.length) {
+		const ids = article.related_article_ids.slice(0, limit)
+		const { data, error } = await supabase
+			.from('articles')
+			.select(ARTICLE_SELECT)
+			.in('id', ids)
+
+		if (error) throw new Error(error.message)
+
+		const byId = new Map(
+			(data ?? []).map((row) => {
+				const mapped = mapArticle(row as Record<string, unknown>)
+				return [mapped.id, mapped] as const
+			}),
+		)
+
+		return ids
+			.map((id) => byId.get(id))
+			.filter((item): item is Article => Boolean(item))
+	}
+
+	let query = supabase
+		.from('articles')
+		.select(ARTICLE_SELECT)
+		.eq('type', 'article')
+		.neq('id', article.id)
+		.order('priority', { ascending: false })
+		.order('created_at', { ascending: false })
+		.limit(limit)
+
+	if (!isAdmin) {
+		query = query.eq('status', 'published')
+	}
+
+	const { data, error } = await query
+	if (error) throw new Error(error.message)
+	return (data ?? []).map((row) => mapArticle(row as Record<string, unknown>))
+}
+
 export async function createArticle(
 	input: ArticleInput,
 ): Promise<ActionResult> {
