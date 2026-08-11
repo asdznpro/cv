@@ -1,5 +1,6 @@
 export type { ActionResult } from './actions'
 export {
+	applyArticlePlacement,
 	createArticle,
 	deleteArticle,
 	deleteArticles,

@@ -412,6 +412,69 @@ export async function deleteArticle(id: string): Promise<ActionResult> {
 	return deleteArticles([id])
 }
 
+/**
+ * Place article at the top (placeAfterId = null) or right after another article.
+ * Reassigns dense priorities (n..1) for the full admin list order.
+ */
+export async function applyArticlePlacement(
+	articleId: string,
+	placeAfterId: string | null,
+): Promise<ActionResult> {
+	if (!(await assertAdmin())) {
+		return { ok: false, error: 'Unauthorized' }
+	}
+
+	if (!articleId) return { ok: false, error: 'Не указан id статьи' }
+
+	try {
+		const supabase = createAdminClient()
+		const { data, error } = await supabase
+			.from('articles')
+			.select('id')
+			.order('priority', { ascending: false })
+			.order('created_at', { ascending: false })
+
+		if (error) return { ok: false, error: error.message }
+
+		const others = (data ?? [])
+			.map((row) => row.id as string)
+			.filter((id) => id !== articleId)
+
+		let ordered: string[]
+		if (!placeAfterId) {
+			ordered = [articleId, ...others]
+		} else {
+			const index = others.indexOf(placeAfterId)
+			if (index === -1) {
+				ordered = [articleId, ...others]
+			} else {
+				ordered = [
+					...others.slice(0, index + 1),
+					articleId,
+					...others.slice(index + 1),
+				]
+			}
+		}
+
+		for (let index = 0; index < ordered.length; index += 1) {
+			const priority = ordered.length - index
+			const { error: updateError } = await supabase
+				.from('articles')
+				.update({ priority })
+				.eq('id', ordered[index])
+
+			if (updateError) return { ok: false, error: updateError.message }
+		}
+
+		revalidatePath('/admin/articles')
+		revalidatePath(`/admin/articles/${articleId}`)
+		revalidatePath('/articles')
+		return { ok: true }
+	} catch (error) {
+		return toActionError(error)
+	}
+}
+
 export async function uploadCoverAction(
 	formData: FormData,
 ): Promise<ActionResult> {

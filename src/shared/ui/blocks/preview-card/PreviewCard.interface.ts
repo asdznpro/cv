@@ -25,6 +25,7 @@ export interface PreviewCardProps extends Omit<
 
 	quality?: number
 	priority?: boolean
+	inner?: React.ReactNode
 
 	radius?: 'none' | 'sm' | 'md' | 'full' | undefined
 }

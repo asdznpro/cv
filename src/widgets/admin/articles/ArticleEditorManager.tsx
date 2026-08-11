@@ -11,6 +11,7 @@ import { twMerge } from 'tailwind-merge'
 import {
 	ARTICLE_CATEGORIES,
 	ARTICLE_TAGS,
+	applyArticlePlacement,
 	createArticle,
 	slugifyArticleTitle,
 	updateArticle,
@@ -87,6 +88,27 @@ const RELATED_MODE_OPTIONS = [
 	{ label: 'Manual', value: 'manual' },
 ]
 
+/** Sentinel: place article at the top of the list. */
+const ORDER_TOP = '__top__'
+
+type ArticleOption = {
+	id: string
+	title: string
+}
+
+function getInitialPlaceAfter(
+	article: Article | null,
+	orderedIds: string[],
+): string {
+	if (!article) {
+		return orderedIds.length > 0 ? orderedIds[orderedIds.length - 1] : ORDER_TOP
+	}
+
+	const index = orderedIds.indexOf(article.id)
+	if (index <= 0) return ORDER_TOP
+	return orderedIds[index - 1]
+}
+
 const EMPTY_FORM: FormState = {
 	title: '',
 	description: '',
@@ -145,7 +167,7 @@ function toInput(form: FormState): ArticleInput {
 type ArticleEditorManagerProps = {
 	article: Article | null
 	companies: Company[]
-	articleOptions: Array<{ id: string; title: string }>
+	articleOptions: ArticleOption[]
 }
 
 export function ArticleEditorManager({
@@ -161,31 +183,60 @@ export function ArticleEditorManager({
 		() => (article ? toFormState(article) : EMPTY_FORM),
 		[article],
 	)
+	const orderedIds = useMemo(
+		() => articleOptions.map((item) => item.id),
+		[articleOptions],
+	)
+	const initialPlaceAfter = useMemo(
+		() => getInitialPlaceAfter(article, orderedIds),
+		[article, orderedIds],
+	)
+
 	const [form, setForm] = useState<FormState>(initial)
 	const [slugTouched, setSlugTouched] = useState(Boolean(article?.slug))
 	const [articleId, setArticleId] = useState(article?.id ?? null)
+	const [placeAfterId, setPlaceAfterId] = useState(initialPlaceAfter)
 	const [relatedSlots, setRelatedSlots] = useState<
 		Array<{ key: string; articleId: string }>
 	>(() =>
-		(article?.related_article_ids ?? []).map(id => ({
+		(article?.related_article_ids ?? []).map((id) => ({
 			key: id,
 			articleId: id,
 		})),
 	)
 
-	const selectedCompany = companies.find(item => item.id === form.company_id)
+	const selectedCompany = companies.find((item) => item.id === form.company_id)
 	const relatedOptions = articleOptions
-		.filter(item => item.id !== articleId)
-		.map(item => ({ label: item.title, value: item.id }))
+		.filter((item) => item.id !== articleId)
+		.map((item) => ({ label: item.title, value: item.id }))
+
+	const orderingOptions = useMemo(() => {
+		const afterOptions = articleOptions
+			.filter((item) => item.id !== articleId)
+			.map((item) => ({
+				label: `After: ${item.title}`,
+				value: item.id,
+			}))
+
+		return [{ label: 'Top of list', value: ORDER_TOP }, ...afterOptions]
+	}, [articleId, articleOptions])
 
 	const isDirty = useMemo(() => {
+		if (placeAfterId !== initialPlaceAfter) return true
 		if (JSON.stringify(form) !== JSON.stringify(initial)) return true
 
 		const initialRelated = article?.related_article_ids ?? []
-		const currentRelated = relatedSlots.map(slot => slot.articleId)
+		const currentRelated = relatedSlots.map((slot) => slot.articleId)
 		if (currentRelated.length !== initialRelated.length) return true
 		return currentRelated.some((id, index) => id !== initialRelated[index])
-	}, [article?.related_article_ids, form, initial, relatedSlots])
+	}, [
+		article?.related_article_ids,
+		form,
+		initial,
+		initialPlaceAfter,
+		placeAfterId,
+		relatedSlots,
+	])
 
 	const statusOptions =
 		article?.status === 'published' || article?.status === 'archived'
@@ -193,11 +244,11 @@ export function ArticleEditorManager({
 			: STATUS_OPTIONS
 
 	function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
-		setForm(prev => ({ ...prev, [key]: value }))
+		setForm((prev) => ({ ...prev, [key]: value }))
 	}
 
 	function onTitleChange(value: string) {
-		setForm(prev => ({
+		setForm((prev) => ({
 			...prev,
 			title: value,
 			slug:
@@ -210,8 +261,9 @@ export function ArticleEditorManager({
 	function discard() {
 		setForm(initial)
 		setSlugTouched(Boolean(article?.slug))
+		setPlaceAfterId(initialPlaceAfter)
 		setRelatedSlots(
-			(article?.related_article_ids ?? []).map(id => ({
+			(article?.related_article_ids ?? []).map((id) => ({
 				key: id,
 				articleId: id,
 			})),
@@ -223,7 +275,7 @@ export function ArticleEditorManager({
 		const payload = toInput({
 			...form,
 			status: nextStatus ?? form.status,
-			related_article_ids: relatedSlots.map(slot => slot.articleId),
+			related_article_ids: relatedSlots.map((slot) => slot.articleId),
 		})
 
 		startTransition(async () => {
@@ -234,6 +286,18 @@ export function ArticleEditorManager({
 			if (!result.ok) {
 				toast.error(result.error)
 				return
+			}
+
+			const savedId = articleId ?? result.article?.id
+			if (savedId) {
+				const placement = await applyArticlePlacement(
+					savedId,
+					placeAfterId === ORDER_TOP ? null : placeAfterId,
+				)
+				if (!placement.ok) {
+					toast.error(placement.error)
+					return
+				}
 			}
 
 			toast.success(
@@ -570,6 +634,33 @@ export function ArticleEditorManager({
 										setField('tags', value as ArticleTag[])
 									}
 									placeholder='Add tags'
+								/>
+							</FormItem>
+						</div>
+					</div>
+
+					<Separator />
+
+					<div className='flex flex-wrap p-surface gap-surface'>
+						<div className='flex flex-1 flex-col gap-3'>
+							<h3 className='text-xl font-medium font-condensed tracking-tight'>
+								Ordering
+							</h3>
+							<p className='text-sm text-foreground-secondary @xl:text-balance'>
+								Place this article at the top or right after another one in the
+								list
+							</p>
+						</div>
+
+						<div className='w-full @xl:w-2/5 flex flex-col gap-2'>
+							<FormItem id='article-ordering'>
+								<FormItem.Combobox
+									mode='outline'
+									size='md'
+									options={orderingOptions}
+									value={placeAfterId}
+									onValueChange={setPlaceAfterId}
+									placeholder='Select position'
 								/>
 							</FormItem>
 						</div>

@@ -390,30 +390,33 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 										alt={article.title}
 										radius='sm'
 										sizes='(max-width: 1240px) 100vw, 1240px'
+										inner={
+											<span className='z-1 absolute inset-0 w-full h-full'>
+												{article.status === 'draft' && (
+													<span className='size-full flex items-center justify-center bg-surface/60'>
+														<Badge
+															appearance='neutral'
+															prefix={
+																<Icon28EditOutline width={16} height={16} />
+															}
+														/>
+													</span>
+												)}
+
+												{article.status === 'archived' && (
+													<span className='size-full flex items-center justify-center bg-surface/60'>
+														<Badge
+															appearance='neutral'
+															prefix={
+																<Icon28ArchiveOutline width={16} height={16} />
+															}
+														/>
+													</span>
+												)}
+											</span>
+										}
 									>
 										<span className='z-1 absolute inset-0 w-full h-full'>
-											{article.status === 'draft' && (
-												<span className='size-full flex items-center justify-center'>
-													<Badge
-														appearance='neutral'
-														prefix={
-															<Icon28EditOutline width={16} height={16} />
-														}
-													/>
-												</span>
-											)}
-
-											{article.status === 'archived' && (
-												<span className='size-full flex items-center justify-center'>
-													<Badge
-														appearance='neutral'
-														prefix={
-															<Icon28ArchiveOutline width={16} height={16} />
-														}
-													/>
-												</span>
-											)}
-
 											{article.company && (
 												<div className='z-1 absolute -bottom-2 right-2 size-9 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden'>
 													<Image
