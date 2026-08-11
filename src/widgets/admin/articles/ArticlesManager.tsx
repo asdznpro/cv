@@ -32,6 +32,7 @@ import { DropdownMenu } from 'ui/floating'
 import {
 	Icon28ArchiveOutline,
 	Icon28CalendarOutline,
+	Icon28Cancel,
 	Icon28ChevronDownOutline,
 	Icon28CopyOutline,
 	Icon28DeleteOutline,
@@ -39,6 +40,7 @@ import {
 	Icon28GlobeOutline,
 	Icon28HashtagOutline,
 	Icon28MoreHorizontal,
+	Icon28SendOutline,
 	Icon28SortOutline,
 	Icon28UnarchiveOutline,
 	Icon28ViewOutline,
@@ -238,23 +240,64 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 
 												<DropdownMenu.Content className='w-40'>
 													<DropdownMenu.Box>
-														<DropdownMenu.Item
-															onClick={() => onBulkStatus('published')}
-														>
-															Publish
-														</DropdownMenu.Item>
+														{statusFilter !== 'published' &&
+															statusFilter !== 'archived' && (
+																<DropdownMenu.Item
+																	aria-label='Publish articles'
+																	onClick={() => onBulkStatus('published')}
+																	prefix={
+																		<Icon28SendOutline width={18} height={18} />
+																	}
+																>
+																	Publish
+																</DropdownMenu.Item>
+															)}
 
-														<DropdownMenu.Item
-															onClick={() => onBulkStatus('draft')}
-														>
-															Move to draft
-														</DropdownMenu.Item>
-
-														<DropdownMenu.Item
-															onClick={() => onBulkStatus('archived')}
-														>
-															Archive
-														</DropdownMenu.Item>
+														{statusFilter !== 'archived' ? (
+															<DropdownMenu.Item
+																aria-label='Archive article'
+																prefix={
+																	<Icon28ArchiveOutline
+																		width={18}
+																		height={18}
+																	/>
+																}
+																onClick={() =>
+																	runBulk(
+																		() =>
+																			updateArticlesStatus(
+																				selectedIds,
+																				'archived',
+																			),
+																		`Articles archived: ${selectedIds.length}`,
+																	)
+																}
+															>
+																Archive
+															</DropdownMenu.Item>
+														) : (
+															<DropdownMenu.Item
+																aria-label='Unarchive article'
+																prefix={
+																	<Icon28UnarchiveOutline
+																		width={18}
+																		height={18}
+																	/>
+																}
+																onClick={() =>
+																	runBulk(
+																		() =>
+																			updateArticlesStatus(
+																				selectedIds,
+																				'published',
+																			),
+																		`Articles restored: ${selectedIds.length}`,
+																	)
+																}
+															>
+																Unarchive
+															</DropdownMenu.Item>
+														)}
 													</DropdownMenu.Box>
 												</DropdownMenu.Content>
 											</DropdownMenu>
@@ -273,10 +316,14 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 
 											<span className='flex-1' />
 
-											<span className='text-sm text-foreground-secondary px-2'>
-												{selectedIds.length} selected
-												{allExistingSelected ? ' (all)' : ''}
-											</span>
+											<Button
+												onClick={() => setSelectedIds([])}
+												type='button'
+												size='sm'
+												mode='ghost'
+												appearance='neutral'
+												prefix={<Icon28Cancel width={16} height={16} />}
+											/>
 										</div>
 									</div>
 								</motion.div>
@@ -303,7 +350,6 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 								mode='secondary'
 								appearance='neutral'
 								prefix={<Icon28SortOutline width={16} height={16} />}
-								suffix={<span>(не трогаем)</span>}
 							>
 								Sort by
 							</Button>
@@ -313,8 +359,10 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 					<Separator />
 
 					{pageArticles.length === 0 ? (
-						<div className='p-surface text-sm text-foreground-secondary'>
-							Пока нет статей в этом статусе.
+						<div className='min-h-40 flex items-center justify-center p-surface'>
+							<p className='text-center text-sm text-foreground-secondary'>
+								No articles in this status
+							</p>
 						</div>
 					) : (
 						pageArticles.map(article => (

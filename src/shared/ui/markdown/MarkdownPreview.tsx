@@ -13,8 +13,8 @@ const remarkPlugins = [remarkGfm]
 export function MarkdownPreview({ children }: { children: string }) {
 	if (!children.trim()) {
 		return (
-			<p className="text-foreground-secondary text-sm">
-				Nothing to preview yet.
+			<p className='text-foreground-secondary text-sm m-auto'>
+				Nothing to preview yet
 			</p>
 		)
 	}
@@ -27,7 +27,9 @@ export function MarkdownPreview({ children }: { children: string }) {
 					rehypePlugins={markdownRehypePlugins}
 					components={markdownComponents}
 					fallback={
-						<p className="text-foreground-secondary text-sm">Rendering…</p>
+						<p className='text-foreground-secondary text-sm m-auto'>
+							Rendering…
+						</p>
 					}
 				>
 					{children}

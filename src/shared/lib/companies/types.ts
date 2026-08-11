@@ -1,3 +1,5 @@
+import { slugify } from 'transliteration'
+
 export type Company = {
 	id: string
 	name: string
@@ -20,12 +22,11 @@ export type CompanyInput = {
 }
 
 export function slugifyCompanyName(name: string) {
-	return name
-		.trim()
-		.toLowerCase()
-		.replace(/[^a-z0-9]+/g, '-')
-		.replace(/-+/g, '-')
-		.replace(/^-|-$/g, '')
+	return slugify(name, {
+		lowercase: true,
+		separator: '-',
+		allowedChars: 'a-zA-Z0-9',
+	})
 }
 
 export function normalizeCompanyInput(input: CompanyInput): CompanyInput {

@@ -1,3 +1,5 @@
+import { slugify } from 'transliteration'
+
 export const ARTICLE_STATUSES = ['draft', 'published', 'archived'] as const
 export const ARTICLE_TYPES = ['article', 'link'] as const
 export const ARTICLE_CATEGORIES = ['experience', 'other'] as const
@@ -85,12 +87,11 @@ function isArticleTag(value: string): value is ArticleTag {
 }
 
 export function slugifyArticleTitle(title: string) {
-	return title
-		.trim()
-		.toLowerCase()
-		.replace(/[^a-z0-9]+/g, '-')
-		.replace(/-+/g, '-')
-		.replace(/^-|-$/g, '')
+	return slugify(title, {
+		lowercase: true,
+		separator: '-',
+		allowedChars: 'a-zA-Z0-9',
+	})
 }
 
 export function normalizeArticleInput(input: ArticleInput): ArticleInput {

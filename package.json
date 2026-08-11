@@ -49,6 +49,7 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.6.0",
     "three": "^0.185.1",
+    "transliteration": "^2.6.1",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0"
   },

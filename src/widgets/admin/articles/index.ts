@@ -1,4 +1,5 @@
 export { ArticleEditorManager } from './ArticleEditorManager'
+export { ArticleMarkdownEditor } from './ArticleMarkdownEditor'
 export { ArticlesManager } from './ArticlesManager'
 export { ChooseEntityDialog } from './ChooseEntityDialog'
 export { DeleteArticleDialog } from './DeleteArticleDialog'

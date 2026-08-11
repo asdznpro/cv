@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 
 import { AnimatePresence, motion } from 'motion/react'
 import { toast } from 'sonner'
-import { useClipboard } from '@siberiacancode/reactuse'
+import { twMerge } from 'tailwind-merge'
 
 import {
 	ARTICLE_CATEGORIES,
@@ -24,10 +24,9 @@ import {
 } from 'lib/articles'
 import type { Company } from 'lib/companies'
 
-import { Badge, Button, Kbd, Separator, Tabs, useTabState } from 'ui/blocks'
+import { Badge, Button, Separator } from 'ui/blocks'
 import { FormItem } from 'ui/forms'
 import { Tooltip } from 'ui/floating'
-import { MarkdownPreview } from 'ui/markdown'
 import { useOverlay } from 'ui/overlays'
 
 import {
@@ -35,9 +34,9 @@ import {
 	Icon28ArrowLeftOutline,
 	Icon28CancelOutline,
 	Icon28DeleteOutline,
-	Icon28DocumentTextOutline,
 } from '@vkontakte/icons'
 
+import { ArticleMarkdownEditor } from './ArticleMarkdownEditor'
 import { ChooseEntityDialog } from './ChooseEntityDialog'
 import { DeleteArticleDialog } from './DeleteArticleDialog'
 import { UploadCoverDialog } from './UploadCoverDialog'
@@ -143,15 +142,6 @@ function toInput(form: FormState): ArticleInput {
 	}
 }
 
-function getCursorPosition(value: string, selectionStart: number) {
-	const textBefore = value.slice(0, Math.max(0, selectionStart))
-	const lines = textBefore.split('\n')
-	return {
-		line: lines.length,
-		column: (lines.at(-1)?.length ?? 0) + 1,
-	}
-}
-
 type ArticleEditorManagerProps = {
 	article: Article | null
 	companies: Company[]
@@ -165,9 +155,7 @@ export function ArticleEditorManager({
 }: ArticleEditorManagerProps) {
 	const router = useRouter()
 	const { open, close } = useOverlay()
-	const { copy } = useClipboard()
 	const [pending, startTransition] = useTransition()
-	const { tabState, handleTabSelect } = useTabState(0)
 
 	const initial = useMemo(
 		() => (article ? toFormState(article) : EMPTY_FORM),
@@ -184,7 +172,6 @@ export function ArticleEditorManager({
 			articleId: id,
 		})),
 	)
-	const [cursor, setCursor] = useState({ line: 1, column: 1 })
 
 	const selectedCompany = companies.find(item => item.id === form.company_id)
 	const relatedOptions = articleOptions
@@ -267,10 +254,6 @@ export function ArticleEditorManager({
 		})
 	}
 
-	function syncCursor(textarea: HTMLTextAreaElement) {
-		setCursor(getCursorPosition(textarea.value, textarea.selectionStart))
-	}
-
 	function openUploadCover() {
 		open(
 			<UploadCoverDialog
@@ -335,11 +318,6 @@ export function ArticleEditorManager({
 		setRelatedSlots(prev => prev.filter(slot => slot.key !== key))
 	}
 
-	const contentStats = {
-		chars: form.content.length,
-		lines: form.content.split('\n').length,
-	}
-
 	return (
 		<>
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
@@ -398,7 +376,10 @@ export function ArticleEditorManager({
 								<button
 									type='button'
 									onClick={openUploadCover}
-									className='aspect-4/1 w-full flex items-center justify-center text-foreground-secondary bg-background hover:bg-surface-secondary border border-dashed border-separator rounded-md overflow-hidden cursor-pointer transition-colors focus-ring-base focus-ring-visible'
+									className={twMerge(
+										'aspect-4/1 w-full flex items-center justify-center text-foreground-secondary bg-background hover:bg-surface-secondary border border-separator rounded-md overflow-hidden cursor-pointer transition-colors focus-ring-base focus-ring-visible',
+										!form.cover_url && 'border-dashed',
+									)}
 								>
 									{form.cover_url ? (
 										<Image
@@ -417,7 +398,10 @@ export function ArticleEditorManager({
 								<button
 									onClick={openChooseEntity}
 									type='button'
-									className='z-1 absolute -bottom-2 right-4 size-12 flex items-center justify-center text-foreground-secondary bg-background hover:bg-surface-secondary border border-dashed border-separator rounded-full overflow-hidden cursor-pointer transition-colors focus-ring-base focus-ring-visible'
+									className={twMerge(
+										'z-1 absolute -bottom-2 right-4 size-12 flex items-center justify-center text-foreground-secondary bg-background hover:bg-surface-secondary border border-separator rounded-full overflow-hidden cursor-pointer transition-colors focus-ring-base focus-ring-visible',
+										!selectedCompany && 'border-dashed',
+									)}
 								>
 									{selectedCompany ? (
 										<Image
@@ -449,7 +433,7 @@ export function ArticleEditorManager({
 						</div>
 
 						<div className='w-full @xl:w-2/5 flex flex-col gap-2'>
-							<FormItem id='article-title'>
+							<FormItem id='article-title' required>
 								<FormItem.Input
 									mode='outline'
 									size='md'
@@ -517,7 +501,7 @@ export function ArticleEditorManager({
 							</FormItem>
 
 							{form.type === 'article' ? (
-								<FormItem id='article-slug'>
+								<FormItem id='article-slug' required>
 									<FormItem.Input
 										mode='outline'
 										size='md'
@@ -531,7 +515,7 @@ export function ArticleEditorManager({
 									/>
 								</FormItem>
 							) : (
-								<FormItem id='article-link'>
+								<FormItem id='article-link' required>
 									<FormItem.Input
 										mode='outline'
 										size='md'
@@ -576,7 +560,7 @@ export function ArticleEditorManager({
 								/>
 							</FormItem>
 
-							<FormItem id='article-tags'>
+							<FormItem id='article-tags' required>
 								<FormItem.Autocomplete
 									mode='outline'
 									size='md'
@@ -593,103 +577,10 @@ export function ArticleEditorManager({
 				</div>
 
 				{form.type === 'article' && (
-					<>
-						<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
-							<div className='flex flex-col gap-3'>
-								<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
-									Content
-								</h2>
-							</div>
-						</div>
-
-						<div className='flex flex-col border border-separator rounded-surface overflow-hidden'>
-							<div className='flex flex-col bg-surface'>
-								<div className='h-12 flex items-center px-surface gap-surface'>
-									<Tabs
-										className='border-none'
-										initialIndex={tabState}
-										onTabSelect={handleTabSelect}
-									>
-										<Tabs.Item>Edit</Tabs.Item>
-										<Tabs.Item>Preview</Tabs.Item>
-									</Tabs>
-
-									<Button
-										type='button'
-										size='sm'
-										mode='soft'
-										appearance='neutral'
-										prefix={
-											<Icon28DocumentTextOutline width={16} height={16} />
-										}
-										onClick={() => {
-											void copy(form.content)
-											toast.success('Markdown copied')
-										}}
-									>
-										Copy Markdown
-									</Button>
-								</div>
-							</div>
-
-							<Separator />
-
-							{tabState === 0 ? (
-								<div className='flex'>
-									<textarea
-										className='w-full p-surface resize-none appearance-none outline-none text-xs font-mono placeholder:text-foreground-secondary disabled:placeholder:text-foreground-tertiary'
-										placeholder='Write your article here...'
-										rows={20}
-										value={form.content}
-										onChange={event => {
-											setField('content', event.currentTarget.value)
-											syncCursor(event.currentTarget)
-										}}
-										onClick={event => syncCursor(event.currentTarget)}
-										onKeyUp={event => syncCursor(event.currentTarget)}
-										onSelect={event => syncCursor(event.currentTarget)}
-									/>
-								</div>
-							) : (
-								<div className='p-surface max-h-88 min-h-88 overflow-y-auto overflow-x-clip'>
-									<MarkdownPreview>{form.content}</MarkdownPreview>
-								</div>
-							)}
-
-							<Separator />
-
-							<div className='h-12 flex items-center p-surface gap-surface bg-surface'>
-								{tabState === 0 && (
-									<>
-										<span className='text-xs text-foreground-secondary'>
-											Line {cursor.line}, Column {cursor.column}
-										</span>
-
-										<Separator orientation='vertical' />
-									</>
-								)}
-
-								<span className='text-xs text-foreground-secondary'>
-									{contentStats.lines} lines
-								</span>
-
-								<Separator orientation='vertical' />
-
-								<span className='text-xs text-foreground-secondary'>
-									{contentStats.chars.toLocaleString('ru-RU')} characters
-								</span>
-
-								<span className='flex-1' />
-
-								<span className='flex items-center gap-2'>
-									<Kbd size='sm' keys={['Ctrl', 'Enter']} />
-									<span className='text-xs text-foreground-secondary'>
-										switch mode
-									</span>
-								</span>
-							</div>
-						</div>
-					</>
+					<ArticleMarkdownEditor
+						value={form.content}
+						onValueChange={value => setField('content', value)}
+					/>
 				)}
 
 				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
