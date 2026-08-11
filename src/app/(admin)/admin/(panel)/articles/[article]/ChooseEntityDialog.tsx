@@ -14,9 +14,22 @@ export function ChooseEntityDialog({ onCancel }: ChooseEntityDialogProps) {
 			<div className='flex flex-col p-surface gap-surface'>
 				<div className='flex flex-1 flex-col gap-3'>
 					<p className='text-xl font-medium font-condensed tracking-tight'>
-						Choose entity or create new
+						Choose entity{' '}
+						<span className='text-foreground-secondary'>
+							(or create new soon)
+						</span>
 					</p>
 				</div>
+
+				<FormItem id='article-cover-upload'>
+					<FormItem.Select
+						size='md'
+						mode='outline'
+						options={[{ label: 'Company', value: 'company' }]}
+						value='company'
+						placeholder='Select entity type'
+					/>
+				</FormItem>
 
 				<FormItem id='article-cover-upload'>
 					<FormItem.Combobox size='md' mode='outline' options={[]} />

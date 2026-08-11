@@ -80,11 +80,11 @@ export default function Article() {
 					<div className='flex flex-wrap p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
-								Visibility
+								Status
 							</h3>
 
 							<p className='text-sm text-foreground-secondary @xl:text-balance'>
-								Control the visibility of the article
+								Control the status of the article
 							</p>
 						</div>
 
@@ -94,39 +94,14 @@ export default function Article() {
 									mode='outline'
 									size='md'
 									options={[
-										{ label: 'Hidden', value: 'hidden' },
-										{ label: 'Public', value: 'public' },
+										{ label: 'Posted', value: 'posted' },
+										{ label: 'Draft', value: 'draft' },
+										{ label: 'Archived', value: 'archived' },
 									]}
-									value='public'
+									value='posted'
 									placeholder='Select visibility'
 								/>
 							</FormItem>
-						</div>
-					</div>
-
-					<Separator />
-
-					<div className='flex flex-wrap p-surface gap-surface'>
-						<div className='flex flex-1 flex-col gap-3'>
-							<h3 className='text-xl font-medium font-condensed tracking-tight'>
-								This article isn't archived
-							</h3>
-
-							<p className='text-sm text-foreground-secondary @xl:text-balance'>
-								Archive the article to keep it out of the main feed
-							</p>
-						</div>
-
-						<div className='w-full @xl:w-2/5 flex flex-col gap-2'>
-							<Button
-								className='w-full'
-								mode='secondary'
-								appearance='neutral'
-								prefix={<Icon28ArchiveOutline width={18} height={18} />}
-								align='spread'
-							>
-								Archive article
-							</Button>
 						</div>
 					</div>
 				</div>
