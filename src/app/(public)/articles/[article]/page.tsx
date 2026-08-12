@@ -1,17 +1,16 @@
 import { ViewTransition } from 'react'
-import { notFound } from 'next/navigation'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { after } from 'next/server'
+import { notFound } from 'next/navigation'
 
 import {
 	getArticleBySlug,
 	listRelatedArticles,
 	type Article,
 } from 'lib/articles'
-import { recordArticleView } from 'lib/articles/record-view'
-import { getVisitorHash } from 'lib/articles/visitor-hash'
-
+import { getVisitorHash, recordArticleView } from 'lib/articles/server'
 import { getImagePalette, getMarkdownToc } from 'lib/server'
 import { getFormattedDate } from 'lib/utils'
 
@@ -96,7 +95,7 @@ export default async function ArticlePage({
 							</h1>
 						</div>
 
-						<div className='flex gap-1.5'>
+						<div className='flex flex-wrap gap-1.5'>
 							{article.status !== 'published' && (
 								<Badge mode='outline' appearance='neutral'>
 									{article.status === 'draft' ? 'Draft' : 'Archived'}
@@ -104,7 +103,7 @@ export default async function ArticlePage({
 							)}
 
 							<Badge mode='outline' appearance='neutral'>
-								{getFormattedDate(article.created_at, false).relative}
+								{getFormattedDate(article.created_at, false).full}
 							</Badge>
 
 							<Badge mode='outline' appearance='neutral'>

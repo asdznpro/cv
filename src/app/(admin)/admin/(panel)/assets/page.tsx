@@ -1,4 +1,4 @@
-export default function Images() {
+export default function Assets() {
 	return (
 		<>
 			<span />
@@ -6,7 +6,7 @@ export default function Images() {
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-12'>
 				<div className='flex flex-col gap-4'>
 					<h1 className='text-5xl text-balance font-medium font-condensed tracking-tight'>
-						Images
+						Assets
 					</h1>
 
 					<p className='text-foreground-secondary text-balance'>
