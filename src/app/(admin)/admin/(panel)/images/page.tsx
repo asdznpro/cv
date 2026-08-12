@@ -1,22 +1,5 @@
-export default function Images() {
-	return (
-		<>
-			<span />
+import { redirect } from 'next/navigation'
 
-			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-12'>
-				<div className='flex flex-col gap-4'>
-					<h1 className='text-5xl text-balance font-medium font-condensed tracking-tight'>
-						Images
-					</h1>
-
-					<p className='text-foreground-secondary text-balance'>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-						quos. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					</p>
-				</div>
-			</section>
-
-			<span />
-		</>
-	)
+export default function ImagesRedirectPage() {
+	redirect('/admin/assets')
 }

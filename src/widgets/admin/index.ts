@@ -1,4 +1,5 @@
 export * from './articles'
+export * from './assets'
 export * from './companies'
 export * from './shortener'
 export * from './shell'

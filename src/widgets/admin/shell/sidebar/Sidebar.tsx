@@ -1,13 +1,16 @@
 'use client'
 
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { useTransition } from 'react'
 import { motion } from 'motion/react'
 
 import { useAdminShell, MIN } from '../AdminShellProvider'
 import { COMMAND_MENU_HOTKEY, useAdminCommandMenu } from '../command-menu'
 
 import { Button, Kbd, Separator } from 'ui/blocks'
+import { DropdownMenu } from 'ui/floating'
+
 import {
 	Icon28PollSquareOutline,
 	Icon28ArticlesOutline,
@@ -21,6 +24,7 @@ import {
 	Icon28SearchOutline,
 	Icon28ChevronRightOutline,
 	Icon28ChainOutline,
+	Icon28DoorArrowRightOutline,
 } from '@vkontakte/icons'
 
 export const NAV_ITEMS = [
@@ -46,8 +50,8 @@ export const NAV_ITEMS = [
 				icon: <Icon28ArticlesOutline width={20} height={20} />,
 			},
 			{
-				href: '/admin/images',
-				label: 'Images',
+				href: '/admin/assets',
+				label: 'Assets',
 				icon: <Icon28PictureStackOutline width={20} height={20} />,
 			},
 		],
@@ -95,6 +99,8 @@ export const NAV_ITEMS = [
 
 export function Sidebar() {
 	const pathname = usePathname()
+	const router = useRouter()
+	const [pending, startTransition] = useTransition()
 	const { user, open, clipLayout, widthMv, dimOpacity, onResizeStart } =
 		useAdminShell()
 	const { openCommandMenu } = useAdminCommandMenu()
@@ -111,6 +117,14 @@ export function Sidebar() {
 		.sort((a, b) => b.length - a.length)[0]
 
 	const isActiveRoute = (href: string) => href === activeHref
+
+	const handleLogout = () => {
+		startTransition(async () => {
+			await fetch('/api/auth/logout', { method: 'POST' })
+			router.replace('/admin/login')
+			router.refresh()
+		})
+	}
 
 	return (
 		<>
@@ -209,12 +223,32 @@ export function Sidebar() {
 								{displayName}
 							</p>
 
-							<Button
-								mode='ghost'
-								appearance='neutral'
-								prefix={<Icon28MoreHorizontal width={18} height={18} />}
-								iconOnly
-							/>
+							<DropdownMenu>
+								<DropdownMenu.Trigger>
+									<Button
+										mode='ghost'
+										appearance='neutral'
+										prefix={<Icon28MoreHorizontal width={18} height={18} />}
+										iconOnly
+									/>
+								</DropdownMenu.Trigger>
+
+								<DropdownMenu.Content className='w-32'>
+									<DropdownMenu.Box>
+										<DropdownMenu.Item
+											onClick={handleLogout}
+											aria-label='Logout'
+											appearance='danger'
+											prefix={
+												<Icon28DoorArrowRightOutline width={18} height={18} />
+											}
+											disabled={pending}
+										>
+											Logout
+										</DropdownMenu.Item>
+									</DropdownMenu.Box>
+								</DropdownMenu.Content>
+							</DropdownMenu>
 						</div>
 					</div>
 				</div>

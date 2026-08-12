@@ -21,7 +21,7 @@ export function ArticleCopyMenu({
 	className,
 }: ArticleCopyMenuProps) {
 	return (
-		<DropdownMenu align='start'>
+		<DropdownMenu align='center'>
 			<DropdownMenu.Trigger className={className}>
 				<Badge
 					mode='outline'

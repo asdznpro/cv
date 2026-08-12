@@ -1,18 +1,18 @@
 import { ViewTransition } from 'react'
-import { notFound } from 'next/navigation'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { after } from 'next/server'
+import { notFound } from 'next/navigation'
 
 import {
 	getArticleBySlug,
 	listRelatedArticles,
 	type Article,
 } from 'lib/articles'
-import { recordArticleView } from 'lib/articles/record-view'
-import { getVisitorHash } from 'lib/articles/visitor-hash'
-import { getMarkdownToc } from 'lib/server'
-import { getImagePalette } from 'lib/utils'
+import { getVisitorHash, recordArticleView } from 'lib/articles/server'
+import { getImagePalette, getMarkdownToc } from 'lib/server'
+import { getFormattedDate } from 'lib/utils'
 
 import { ArticleCopyMenu, ArticleToc } from 'widgets/content'
 import { BackToTop } from 'widgets/shell'
@@ -20,10 +20,6 @@ import { BackToTop } from 'widgets/shell'
 import { Badge, PreviewCard, Separator } from 'ui/blocks'
 import { MarkdownContent } from 'ui/markdown'
 import { Icon20ArrowTurnRightOutline } from '@vkontakte/icons'
-
-function formatDate(value: string) {
-	return value.slice(0, 10)
-}
 
 function formatCategory(value: string) {
 	return value.charAt(0).toUpperCase() + value.slice(1)
@@ -99,7 +95,7 @@ export default async function ArticlePage({
 							</h1>
 						</div>
 
-						<div className='flex gap-1.5'>
+						<div className='flex flex-wrap gap-1.5'>
 							{article.status !== 'published' && (
 								<Badge mode='outline' appearance='neutral'>
 									{article.status === 'draft' ? 'Draft' : 'Archived'}
@@ -107,7 +103,7 @@ export default async function ArticlePage({
 							)}
 
 							<Badge mode='outline' appearance='neutral'>
-								{formatDate(article.created_at)}
+								{getFormattedDate(article.created_at, false).full}
 							</Badge>
 
 							<Badge mode='outline' appearance='neutral'>

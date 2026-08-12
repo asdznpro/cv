@@ -5,16 +5,13 @@ import { ViewTransition } from 'react'
 
 import type { Article } from 'lib/articles'
 import { trackArticleEngagement } from 'lib/articles/track-view-action'
+import { getFormattedDate } from 'lib/utils'
 
 import { ArticleItem } from 'widgets/content'
 import { EmptyStateScreen } from 'widgets/shell'
 
 import { Badge, Button } from 'ui/blocks'
 import { Icon24ExternalLinkOutline, Icon28Play } from '@vkontakte/icons'
-
-function formatDate(value: string) {
-	return value.slice(0, 10)
-}
 
 function formatCategory(value: string) {
 	return value.charAt(0).toUpperCase() + value.slice(1)
@@ -129,7 +126,7 @@ export function ArticlesList({
 
 						<ArticleItem.Info
 							meta={[
-								formatDate(item.created_at),
+								getFormattedDate(item.created_at, false).relative,
 								formatCategory(item.category),
 							]}
 							title={item.title}

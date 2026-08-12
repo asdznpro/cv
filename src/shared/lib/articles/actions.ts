@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 
 import { requireAdminSession } from 'lib/auth'
-import { uploadArticleCover } from 'lib/r2'
+import { uploadArticleCover } from 'lib/r2/upload-article-cover'
 import { createAdminClient } from 'lib/supabase/admin'
 import { createClient } from 'lib/supabase/server'
 
