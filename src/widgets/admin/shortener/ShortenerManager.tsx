@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
 import { SHORT_LINK_HOST, shortLinkHref, type ShortLink } from 'lib/short-links'
+import { getFormattedDate } from 'lib/utils'
 
 import { Badge, Button, Separator } from 'ui/blocks'
 import { DropdownMenu } from 'ui/floating'
@@ -28,14 +29,6 @@ import { ShortLinkFormDialog } from './ShortLinkFormDialog'
 
 type ShortenerManagerProps = {
 	links: ShortLink[]
-}
-
-function formatDate(value: string) {
-	return new Intl.DateTimeFormat('en-CA', {
-		year: 'numeric',
-		month: '2-digit',
-		day: '2-digit',
-	}).format(new Date(value))
 }
 
 export function ShortenerManager({ links }: ShortenerManagerProps) {
@@ -161,7 +154,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 													<Icon28CalendarOutline width={14} height={14} />
 												}
 											>
-												{formatDate(link.created_at)}
+												{getFormattedDate(link.created_at, false).short}
 											</Badge>
 
 											<Badge

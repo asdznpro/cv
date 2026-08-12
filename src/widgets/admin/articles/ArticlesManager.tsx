@@ -17,6 +17,7 @@ import {
 	listAllArticleIds,
 	updateArticlesStatus,
 } from 'lib/articles'
+import { getFormattedDate } from 'lib/utils'
 
 import {
 	Badge,
@@ -52,10 +53,6 @@ const STATUS_TABS = ['all', 'published', 'draft', 'archived'] as const
 
 type ArticlesManagerProps = {
 	articles: Article[]
-}
-
-function formatDate(value: string) {
-	return value.slice(0, 10)
 }
 
 export function ArticlesManager({ articles }: ArticlesManagerProps) {
@@ -480,7 +477,7 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 													<Icon28CalendarOutline width={14} height={14} />
 												}
 											>
-												{formatDate(article.created_at)}
+												{getFormattedDate(article.created_at, false).short}
 											</Badge>
 
 											<Badge

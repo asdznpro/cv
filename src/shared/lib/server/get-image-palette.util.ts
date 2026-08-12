@@ -1,3 +1,5 @@
+import 'server-only'
+
 import { Vibrant } from 'node-vibrant/node'
 import type { Palette } from '@vibrant/color'
 

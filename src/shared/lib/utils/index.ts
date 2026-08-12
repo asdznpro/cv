@@ -1,1 +1,1 @@
-export * from './get-image-palette.util'
+export * from './get-formatted-date.util'
