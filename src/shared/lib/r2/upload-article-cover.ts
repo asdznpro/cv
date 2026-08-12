@@ -1,21 +1,7 @@
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import 'server-only'
 
-function requireEnv(name: string) {
-	const value = process.env[name]
-	if (!value) throw new Error(`${name} is not set`)
-	return value
-}
-
-function getR2Client() {
-	return new S3Client({
-		region: 'auto',
-		endpoint: requireEnv('R2_ENDPOINT'),
-		credentials: {
-			accessKeyId: requireEnv('R2_ACCESS_KEY_ID'),
-			secretAccessKey: requireEnv('R2_SECRET_ACCESS_KEY'),
-		},
-	})
-}
+import type { UploadAssetResult } from './upload-asset'
+import { uploadAsset } from './upload-asset'
 
 function extensionFromMime(mime: string) {
 	switch (mime) {
@@ -32,18 +18,11 @@ function extensionFromMime(mime: string) {
 	}
 }
 
-export type UploadCoverResult = {
-	key: string
-	url: string
-}
-
 /** Upload article cover to Cloudflare R2 and return public CDN URL. */
 export async function uploadArticleCover(
 	file: File,
 	articleId?: string,
-): Promise<UploadCoverResult> {
-	const bucket = requireEnv('R2_BUCKET')
-	const cdn = requireEnv('NEXT_PUBLIC_CDN_URL').replace(/\/$/, '')
+): Promise<UploadAssetResult> {
 	const mime = file.type || 'application/octet-stream'
 	const ext = extensionFromMime(mime)
 	const id = crypto.randomUUID()
@@ -51,20 +30,5 @@ export async function uploadArticleCover(
 		? `articles/${articleId}/cover-${id}.${ext}`
 		: `articles/covers/cover-${id}.${ext}`
 
-	const body = Buffer.from(await file.arrayBuffer())
-
-	await getR2Client().send(
-		new PutObjectCommand({
-			Bucket: bucket,
-			Key: key,
-			Body: body,
-			ContentType: mime,
-			CacheControl: 'public, max-age=31536000, immutable',
-		}),
-	)
-
-	return {
-		key,
-		url: `${cdn}/${key}`,
-	}
+	return uploadAsset({ file, key })
 }

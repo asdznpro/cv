@@ -50,8 +50,8 @@ export const NAV_ITEMS = [
 				icon: <Icon28ArticlesOutline width={20} height={20} />,
 			},
 			{
-				href: '/admin/images',
-				label: 'Images',
+				href: '/admin/assets',
+				label: 'Assets',
 				icon: <Icon28PictureStackOutline width={20} height={20} />,
 			},
 		],
