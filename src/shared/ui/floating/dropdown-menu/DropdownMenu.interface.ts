@@ -12,6 +12,8 @@ export default interface DropdownMenuProps {
 	onOpenChange?: (open: boolean) => void
 	placement?: Placement
 	align?: FloatingAlign
+	/** `click` — left click on trigger. `contextmenu` — right click at cursor. */
+	trigger?: 'click' | 'contextmenu'
 }
 
 export interface DropdownMenuTriggerProps {
@@ -44,6 +46,7 @@ export type DropdownMenuItemProps = Pick<
 	| 'className'
 	| 'prefix'
 	| 'suffix'
+	| 'mode'
 	| 'appearance'
 	| 'disabled'
 	| 'onClick'

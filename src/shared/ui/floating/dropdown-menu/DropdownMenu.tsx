@@ -31,6 +31,7 @@ import {
 	safePolygon,
 	shift,
 	useClick,
+	useClientPoint,
 	useDismiss,
 	useFloating,
 	useFloatingNodeId,
@@ -70,6 +71,8 @@ type ItemPropsUser = HTMLAttributes<HTMLElement> &
 type DropdownMenuContextValue = {
 	open: boolean
 	setOpen: (open: boolean) => void
+	trigger: 'click' | 'contextmenu'
+	setAnchor: (point: { x: number; y: number }) => void
 	refs: ReturnType<typeof useFloating>['refs']
 	floatingStyles: CSSProperties
 	getReferenceProps: (
@@ -110,14 +113,17 @@ function Menu({
 	onOpenChange,
 	placement = 'bottom',
 	align = 'end',
+	trigger = 'click',
 }: DropdownMenuProps) {
 	const parentId = useFloatingParentNodeId()
 	const isNested = parentId != null
 	const nodeId = useFloatingNodeId()
 	const tree = useFloatingTree()
+	const isContext = trigger === 'contextmenu' && !isNested
 
 	const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen)
 	const [activeIndex, setActiveIndex] = useState<number | null>(null)
+	const [anchor, setAnchor] = useState<{ x: number; y: number } | null>(null)
 
 	const listRef = useRef<Array<HTMLElement | null>>([])
 	const labelsRef = useRef<Array<string | null>>([])
@@ -146,7 +152,7 @@ function Menu({
 		whileElementsMounted: autoUpdate,
 		middleware: [
 			offset({
-				mainAxis: isNested ? 4 : 6,
+				mainAxis: isNested ? 4 : isContext ? 4 : 6,
 				alignmentAxis: isNested ? -6 : 0,
 			}),
 			flip({ padding: 8, fallbackAxisSideDirection: 'end' }),
@@ -160,9 +166,15 @@ function Menu({
 		handleClose: safePolygon({ buffer: 1 }),
 	})
 	const click = useClick(context, {
+		enabled: !isContext,
 		event: 'mousedown',
 		toggle: !isNested,
 		ignoreMouse: isNested,
+	})
+	const clientPoint = useClientPoint(context, {
+		enabled: isContext && open,
+		x: anchor?.x ?? null,
+		y: anchor?.y ?? null,
 	})
 	const dismiss = useDismiss(context, { bubbles: true })
 	const role = useRole(context, { role: 'menu' })
@@ -174,7 +186,7 @@ function Menu({
 	})
 
 	const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
-		[hover, click, dismiss, role, listNavigation],
+		[hover, click, clientPoint, dismiss, role, listNavigation],
 	)
 
 	const { isMounted, styles: transitionStyles } = useTransitionStyles(context, {
@@ -210,6 +222,8 @@ function Menu({
 		() => ({
 			open,
 			setOpen,
+			trigger,
+			setAnchor,
 			refs,
 			floatingStyles,
 			getReferenceProps,
@@ -226,6 +240,7 @@ function Menu({
 		[
 			open,
 			setOpen,
+			trigger,
 			refs,
 			floatingStyles,
 			getReferenceProps,
@@ -267,7 +282,8 @@ function DropdownMenuRoot(props: DropdownMenuProps) {
 /* ─── Trigger ─── */
 
 function Trigger({ children, className }: DropdownMenuTriggerProps) {
-	const { refs, getReferenceProps, open } = useDropdownMenu()
+	const { refs, getReferenceProps, open, trigger, setOpen, setAnchor } =
+		useDropdownMenu()
 
 	if (!isValidElement(children)) {
 		throw new Error('DropdownMenu.Trigger expects a single React element child')
@@ -276,12 +292,22 @@ function Trigger({ children, className }: DropdownMenuTriggerProps) {
 	const child = children as ReactElement<{
 		className?: string
 		ref?: Ref<HTMLElement>
+		onContextMenu?: (event: React.MouseEvent<HTMLElement>) => void
 	}>
 
 	const ref = useMergeRefs([refs.setReference, child.props.ref])
 
 	return cloneElement(child, {
-		...(getReferenceProps() as object),
+		...(getReferenceProps({
+			onContextMenu(event: React.MouseEvent<HTMLElement>) {
+				child.props.onContextMenu?.(event)
+				if (event.defaultPrevented || trigger !== 'contextmenu') return
+				event.preventDefault()
+				event.stopPropagation()
+				setAnchor({ x: event.clientX, y: event.clientY })
+				setOpen(true)
+			},
+		}) as object),
 		ref,
 		className: twMerge(child.props.className, className),
 		'data-state': open ? 'open' : 'closed',
@@ -403,6 +429,7 @@ function Item({
 	className,
 	prefix,
 	suffix,
+	mode = 'ghost',
 	appearance = 'neutral',
 	disabled,
 	to,
@@ -429,7 +456,7 @@ function Item({
 			role='menuitem'
 			tabIndex={isActive ? 0 : -1}
 			className={twMerge('flex-1', className)}
-			mode='ghost'
+			mode={mode}
 			appearance={appearance}
 			prefix={prefix}
 			suffix={suffix}

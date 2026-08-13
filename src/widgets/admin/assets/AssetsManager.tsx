@@ -28,7 +28,7 @@ import {
 	Separator,
 } from 'ui/blocks'
 import { Checkbox } from 'ui/forms'
-import { DropdownMenu } from 'ui/floating'
+import { ContextMenu, DropdownMenu } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
 
 import {
@@ -36,15 +36,14 @@ import {
 	Icon24Squareshape4GridOutline,
 	Icon28AddOutline,
 	Icon28ArrowUpOutline,
-	Icon28CalendarOutline,
 	Icon28Cancel,
 	Icon28ChevronDownOutline,
 	Icon28CopyOutline,
 	Icon28DeleteOutline,
+	Icon28DoneOutline,
 	Icon28FolderOutline,
 	Icon28MoreHorizontal,
 	Icon28PictureOutline,
-	Icon28SortOutline,
 	Icon28UploadOutline,
 	Icon28ViewOutline,
 } from '@vkontakte/icons'
@@ -62,6 +61,17 @@ function isImageName(name: string) {
 	return /\.(png|jpe?g|gif|webp|svg)$/i.test(name)
 }
 
+type AssetsView = 'list' | 'grid'
+
+const ASSETS_VIEW_KEY = 'cv.admin.assets.view'
+
+function readAssetsView(): AssetsView {
+	if (typeof window === 'undefined') return 'list'
+	return window.localStorage.getItem(ASSETS_VIEW_KEY) === 'grid'
+		? 'grid'
+		: 'list'
+}
+
 type AssetsManagerProps = {
 	initial: AssetListResult
 }
@@ -73,11 +83,21 @@ export function AssetsManager({ initial }: AssetsManagerProps) {
 	const [list, setList] = useState(initial)
 	const [pending, startTransition] = useTransition()
 	const [selectedIds, setSelectedIds] = useState<string[]>([])
+	const [view, setView] = useState<AssetsView>('list')
+
+	useEffect(() => {
+		setView(readAssetsView())
+	}, [])
 
 	useEffect(() => {
 		setList(initial)
 		setSelectedIds([])
 	}, [initial])
+
+	function setAssetsView(next: AssetsView) {
+		setView(next)
+		window.localStorage.setItem(ASSETS_VIEW_KEY, next)
+	}
 
 	const crumbs = breadcrumbSegments(list.prefix)
 	const parent = parentPrefix(list.prefix)
@@ -324,190 +344,6 @@ export function AssetsManager({ initial }: AssetsManagerProps) {
 				</div>
 			</section>
 
-			{false && (
-				<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
-					<nav className='flex flex-wrap items-center gap-1 text-sm text-foreground-secondary'>
-						<button
-							type='button'
-							className='hover:text-foreground transition-colors'
-							onClick={() => openFolder('')}
-							disabled={pending}
-						>
-							Root
-						</button>
-
-						{crumbs.map(crumb => (
-							<span key={crumb.prefix} className='flex items-center gap-1'>
-								<span className='select-none'>/</span>
-
-								<button
-									type='button'
-									className='hover:text-foreground transition-colors'
-									onClick={() => openFolder(crumb.prefix)}
-									disabled={pending}
-								>
-									{crumb.label}
-								</button>
-							</span>
-						))}
-					</nav>
-
-					{isEmpty ? (
-						<div className='flex flex-col items-center justify-center gap-3 py-16 text-center border border-dashed border-separator rounded-surface'>
-							<Icon28FolderOutline width={28} height={28} />
-
-							<p className='text-foreground-secondary'>This folder is empty</p>
-						</div>
-					) : (
-						<ul className='flex flex-col gap-2'>
-							{list.folders.map(folder => (
-								<li
-									key={folder.prefix}
-									className='flex items-center gap-3 p-3 border border-separator rounded-surface bg-surface'
-								>
-									<button
-										type='button'
-										className='flex flex-1 items-center gap-3 min-w-0 text-left'
-										onClick={() => openFolder(folder.prefix)}
-										disabled={pending}
-									>
-										<span className='flex size-10 items-center justify-center rounded-full bg-background border border-separator shrink-0'>
-											<Icon28FolderOutline width={18} height={18} />
-										</span>
-
-										<span className='flex flex-col min-w-0'>
-											<MiddleTruncate
-												className='font-medium'
-												value={folder.name}
-											/>
-
-											<span className='text-xs text-foreground-secondary'>
-												Folder
-											</span>
-										</span>
-									</button>
-
-									<DropdownMenu>
-										<DropdownMenu.Trigger>
-											<Button
-												mode='ghost'
-												appearance='neutral'
-												prefix={<Icon28MoreHorizontal width={18} height={18} />}
-												iconOnly
-												disabled={pending}
-											/>
-										</DropdownMenu.Trigger>
-
-										<DropdownMenu.Content className='w-36'>
-											<DropdownMenu.Box>
-												<DropdownMenu.Item
-													appearance='danger'
-													prefix={
-														<Icon28DeleteOutline width={18} height={18} />
-													}
-													onClick={() =>
-														confirmDeleteFolder(folder.prefix, folder.name)
-													}
-												>
-													Delete
-												</DropdownMenu.Item>
-											</DropdownMenu.Box>
-										</DropdownMenu.Content>
-									</DropdownMenu>
-								</li>
-							))}
-
-							{list.files.map(file => (
-								<li
-									key={file.key}
-									className='flex items-center gap-3 p-3 border border-separator rounded-surface bg-surface'
-								>
-									<a
-										href={file.url}
-										target='_blank'
-										rel='noreferrer'
-										className='root flex flex-1 items-center gap-3 min-w-0'
-									>
-										<span className='flex size-10 items-center justify-center rounded-full bg-background border border-separator shrink-0 overflow-hidden'>
-											{/\.(png|jpe?g|gif|webp|svg)$/i.test(file.name) ? (
-												<Image
-													src={file.url}
-													alt=''
-													width={40}
-													height={40}
-													className='size-full object-cover'
-												/>
-											) : (
-												<Icon28PictureOutline width={18} height={18} />
-											)}
-										</span>
-
-										<span className='flex flex-col min-w-0 gap-1'>
-											<MiddleTruncate
-												className='font-medium'
-												value={file.name}
-											/>
-
-											<span className='flex flex-wrap gap-1.5'>
-												<Badge size='md' mode='soft' appearance='neutral'>
-													{formatBytes(file.size)}
-												</Badge>
-
-												{file.lastModified && (
-													<Badge size='md' mode='soft' appearance='neutral'>
-														{getFormattedDate(file.lastModified, false).short}
-													</Badge>
-												)}
-											</span>
-										</span>
-									</a>
-
-									<DropdownMenu>
-										<DropdownMenu.Trigger>
-											<Button
-												mode='ghost'
-												appearance='neutral'
-												prefix={<Icon28MoreHorizontal width={18} height={18} />}
-												iconOnly
-												disabled={pending}
-											/>
-										</DropdownMenu.Trigger>
-
-										<DropdownMenu.Content className='w-40'>
-											<DropdownMenu.Box>
-												<DropdownMenu.Item
-													prefix={<Icon28CopyOutline width={18} height={18} />}
-													onClick={() => copyUrl(file.url)}
-												>
-													Copy URL
-												</DropdownMenu.Item>
-
-												<DropdownMenu.Item
-													appearance='danger'
-													prefix={
-														<Icon28DeleteOutline width={18} height={18} />
-													}
-													onClick={() => confirmDeleteFile(file.key, file.name)}
-												>
-													Delete
-												</DropdownMenu.Item>
-											</DropdownMenu.Box>
-										</DropdownMenu.Content>
-									</DropdownMenu>
-								</li>
-							))}
-						</ul>
-					)}
-
-					{list.isTruncated && (
-						<p className='text-sm text-foreground-secondary'>
-							Showing first page of results. Narrow into folders if the list is
-							truncated.
-						</p>
-					)}
-				</section>
-			)}
-
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
 				<div className='flex flex-col bg-background border border-separator rounded-surface overflow-hidden'>
 					<div className='flex flex-col bg-surface'>
@@ -630,26 +466,46 @@ export function AssetsManager({ initial }: AssetsManagerProps) {
 										size='sm'
 										mode='secondary'
 										appearance='neutral'
-										prefix={<Icon24List width={16} height={16} />}
+										prefix={
+											view === 'grid' ? (
+												<Icon24Squareshape4GridOutline width={16} height={16} />
+											) : (
+												<Icon24List width={16} height={16} />
+											)
+										}
 										suffix={<Icon28ChevronDownOutline width={16} height={16} />}
 									/>
 								</DropdownMenu.Trigger>
 
-								<DropdownMenu.Content className='w-32'>
+								<DropdownMenu.Content className='w-36'>
 									<DropdownMenu.Box>
 										<DropdownMenu.Heading>View</DropdownMenu.Heading>
 
 										<DropdownMenu.Item
 											aria-label='List view'
+											onClick={() => setAssetsView('list')}
+											mode={view === 'list' ? 'secondary' : 'ghost'}
 											prefix={<Icon24List width={18} height={18} />}
+											suffix={
+												view === 'list' && (
+													<Icon28DoneOutline width={18} height={18} />
+												)
+											}
 										>
 											List
 										</DropdownMenu.Item>
 
 										<DropdownMenu.Item
 											aria-label='Grid view'
+											onClick={() => setAssetsView('grid')}
+											mode={view === 'grid' ? 'secondary' : 'ghost'}
 											prefix={
 												<Icon24Squareshape4GridOutline width={18} height={18} />
+											}
+											suffix={
+												view === 'grid' && (
+													<Icon28DoneOutline width={18} height={18} />
+												)
 											}
 										>
 											Grid
@@ -668,7 +524,7 @@ export function AssetsManager({ initial }: AssetsManagerProps) {
 								This folder is empty
 							</p>
 						</div>
-					) : (
+					) : view === 'list' ? (
 						<>
 							{list.folders.map(folder => (
 								<div
@@ -855,8 +711,329 @@ export function AssetsManager({ initial }: AssetsManagerProps) {
 								</div>
 							))}
 						</>
+					) : (
+						<div className='grid grid-cols-5 p-2 gap-2'>
+							{list.folders.map(folder => (
+								<ContextMenu key={folder.prefix}>
+									<ContextMenu.Trigger>
+										<button
+											onClick={() => openFolder(folder.prefix)}
+											disabled={pending}
+											type='button'
+											className={twMerge(
+												'group flex flex-col rounded-md cursor-pointer',
+												'transition-colors hover:bg-surface focus-visible:bg-surface focus-ring-base focus-ring-visible',
+												selectedIds.includes(folder.prefix) && 'bg-surface',
+											)}
+										>
+											<div className='flex flex-col items-center p-2 gap-2'>
+												<PreviewCard
+													className='w-16'
+													placeholder={
+														<Icon28FolderOutline width={28} height={28} />
+													}
+													ratio='square'
+													radius='full'
+													sizes='(max-width: 1240px) 100vw, 1240px'
+													interactive={false}
+												/>
+
+												<div className='max-w-full text-center text-sm font-medium font-condensed tracking-tight'>
+													<MiddleTruncate value={folder.name} />
+												</div>
+											</div>
+										</button>
+									</ContextMenu.Trigger>
+
+									<ContextMenu.Content className='w-32'>
+										<ContextMenu.Box>
+											<ContextMenu.Item
+												aria-label='Open folder'
+												prefix={<Icon28FolderOutline width={18} height={18} />}
+												onClick={() => openFolder(folder.prefix)}
+											>
+												Open
+											</ContextMenu.Item>
+
+											<ContextMenu.Item
+												aria-label='Delete folder'
+												appearance='danger'
+												prefix={<Icon28DeleteOutline width={18} height={18} />}
+												onClick={() =>
+													confirmDeleteFolder(folder.prefix, folder.name)
+												}
+											>
+												Delete
+											</ContextMenu.Item>
+										</ContextMenu.Box>
+									</ContextMenu.Content>
+								</ContextMenu>
+							))}
+
+							{list.files.map(file => (
+								<ContextMenu key={file.key}>
+									<ContextMenu.Trigger>
+										<a
+											key={file.key}
+											href={file.url}
+											target='_blank'
+											rel='noreferrer'
+											className={twMerge(
+												'root group flex flex-col rounded-md cursor-pointer',
+												'transition-colors hover:bg-surface focus-visible:bg-surface focus-ring-base focus-ring-visible',
+												selectedIds.includes(file.key) && 'bg-surface',
+											)}
+										>
+											<div className='flex flex-col items-center p-2 gap-2'>
+												<PreviewCard
+													className='w-16'
+													ratio='square'
+													src={file.url}
+													alt={file.name}
+													radius='sm'
+													sizes='(max-width: 1240px) 100vw, 1240px'
+													interactive={false}
+												/>
+
+												<div className='max-w-full text-center text-sm font-medium font-condensed tracking-tight'>
+													<MiddleTruncate value={file.name} />
+												</div>
+											</div>
+										</a>
+									</ContextMenu.Trigger>
+
+									<ContextMenu.Content className='w-40'>
+										<ContextMenu.Box>
+											<ContextMenu.Item
+												aria-label='Open file'
+												href={file.url}
+												target='_blank'
+												prefix={<Icon28ViewOutline width={18} height={18} />}
+											>
+												Open
+											</ContextMenu.Item>
+
+											<ContextMenu.Item
+												aria-label='Copy CDN URL'
+												prefix={<Icon28CopyOutline width={18} height={18} />}
+												onClick={() => copyUrl(file.url)}
+											>
+												Copy URL
+											</ContextMenu.Item>
+
+											<ContextMenu.Item
+												aria-label='Delete file'
+												appearance='danger'
+												prefix={<Icon28DeleteOutline width={18} height={18} />}
+												onClick={() => confirmDeleteFile(file.key, file.name)}
+											>
+												Delete
+											</ContextMenu.Item>
+										</ContextMenu.Box>
+									</ContextMenu.Content>
+								</ContextMenu>
+							))}
+						</div>
 					)}
 				</div>
+
+				{/* не трогаем этот блок */}
+
+				{false && (
+					<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
+						<nav className='flex flex-wrap items-center gap-1 text-sm text-foreground-secondary'>
+							<button
+								type='button'
+								className='hover:text-foreground transition-colors'
+								onClick={() => openFolder('')}
+								disabled={pending}
+							>
+								Root
+							</button>
+
+							{crumbs.map(crumb => (
+								<span key={crumb.prefix} className='flex items-center gap-1'>
+									<span className='select-none'>/</span>
+
+									<button
+										type='button'
+										className='hover:text-foreground transition-colors'
+										onClick={() => openFolder(crumb.prefix)}
+										disabled={pending}
+									>
+										{crumb.label}
+									</button>
+								</span>
+							))}
+						</nav>
+
+						{isEmpty ? (
+							<div className='flex flex-col items-center justify-center gap-3 py-16 text-center border border-dashed border-separator rounded-surface'>
+								<Icon28FolderOutline width={28} height={28} />
+
+								<p className='text-foreground-secondary'>
+									This folder is empty
+								</p>
+							</div>
+						) : (
+							<ul className='flex flex-col gap-2'>
+								{list.folders.map(folder => (
+									<li
+										key={folder.prefix}
+										className='flex items-center gap-3 p-3 border border-separator rounded-surface bg-surface'
+									>
+										<button
+											type='button'
+											className='flex flex-1 items-center gap-3 min-w-0 text-left'
+											onClick={() => openFolder(folder.prefix)}
+											disabled={pending}
+										>
+											<span className='flex size-10 items-center justify-center rounded-full bg-background border border-separator shrink-0'>
+												<Icon28FolderOutline width={18} height={18} />
+											</span>
+
+											<span className='flex flex-col min-w-0'>
+												<MiddleTruncate
+													className='font-medium'
+													value={folder.name}
+												/>
+
+												<span className='text-xs text-foreground-secondary'>
+													Folder
+												</span>
+											</span>
+										</button>
+
+										<DropdownMenu>
+											<DropdownMenu.Trigger>
+												<Button
+													mode='ghost'
+													appearance='neutral'
+													prefix={
+														<Icon28MoreHorizontal width={18} height={18} />
+													}
+													iconOnly
+													disabled={pending}
+												/>
+											</DropdownMenu.Trigger>
+
+											<DropdownMenu.Content className='w-36'>
+												<DropdownMenu.Box>
+													<DropdownMenu.Item
+														appearance='danger'
+														prefix={
+															<Icon28DeleteOutline width={18} height={18} />
+														}
+														onClick={() =>
+															confirmDeleteFolder(folder.prefix, folder.name)
+														}
+													>
+														Delete
+													</DropdownMenu.Item>
+												</DropdownMenu.Box>
+											</DropdownMenu.Content>
+										</DropdownMenu>
+									</li>
+								))}
+
+								{list.files.map(file => (
+									<li
+										key={file.key}
+										className='flex items-center gap-3 p-3 border border-separator rounded-surface bg-surface'
+									>
+										<a
+											href={file.url}
+											target='_blank'
+											rel='noreferrer'
+											className='root flex flex-1 items-center gap-3 min-w-0'
+										>
+											<span className='flex size-10 items-center justify-center rounded-full bg-background border border-separator shrink-0 overflow-hidden'>
+												{/\.(png|jpe?g|gif|webp|svg)$/i.test(file.name) ? (
+													<Image
+														src={file.url}
+														alt=''
+														width={40}
+														height={40}
+														className='size-full object-cover'
+													/>
+												) : (
+													<Icon28PictureOutline width={18} height={18} />
+												)}
+											</span>
+
+											<span className='flex flex-col min-w-0 gap-1'>
+												<MiddleTruncate
+													className='font-medium'
+													value={file.name}
+												/>
+
+												<span className='flex flex-wrap gap-1.5'>
+													<Badge size='md' mode='soft' appearance='neutral'>
+														{formatBytes(file.size)}
+													</Badge>
+
+													{file.lastModified && (
+														<Badge size='md' mode='soft' appearance='neutral'>
+															{getFormattedDate(file.lastModified, false).short}
+														</Badge>
+													)}
+												</span>
+											</span>
+										</a>
+
+										<DropdownMenu>
+											<DropdownMenu.Trigger>
+												<Button
+													mode='ghost'
+													appearance='neutral'
+													prefix={
+														<Icon28MoreHorizontal width={18} height={18} />
+													}
+													iconOnly
+													disabled={pending}
+												/>
+											</DropdownMenu.Trigger>
+
+											<DropdownMenu.Content className='w-40'>
+												<DropdownMenu.Box>
+													<DropdownMenu.Item
+														prefix={
+															<Icon28CopyOutline width={18} height={18} />
+														}
+														onClick={() => copyUrl(file.url)}
+													>
+														Copy URL
+													</DropdownMenu.Item>
+
+													<DropdownMenu.Item
+														appearance='danger'
+														prefix={
+															<Icon28DeleteOutline width={18} height={18} />
+														}
+														onClick={() =>
+															confirmDeleteFile(file.key, file.name)
+														}
+													>
+														Delete
+													</DropdownMenu.Item>
+												</DropdownMenu.Box>
+											</DropdownMenu.Content>
+										</DropdownMenu>
+									</li>
+								))}
+							</ul>
+						)}
+
+						{list.isTruncated && (
+							<p className='text-sm text-foreground-secondary'>
+								Showing first page of results. Narrow into folders if the list
+								is truncated.
+							</p>
+						)}
+					</section>
+				)}
+
+				{/* не трогаем этот блок */}
 
 				{!false && (
 					<div className='flex flex-col bg-background border border-separator rounded-surface overflow-hidden'>
@@ -1067,81 +1244,6 @@ export function AssetsManager({ initial }: AssetsManagerProps) {
 											</div>
 										</div>
 									</div>
-								))}
-							</>
-						)}
-					</div>
-				)}
-
-				{!false && (
-					<div className='grid grid-cols-5 p-2 gap-2 bg-background border border-separator rounded-surface overflow-hidden'>
-						{isEmpty ? (
-							<div className='col-span-full min-h-40 flex items-center justify-center p-surface'>
-								<p className='text-center text-sm text-foreground-secondary'>
-									This folder is empty
-								</p>
-							</div>
-						) : (
-							<>
-								{list.folders.map(folder => (
-									<button
-										key={folder.prefix}
-										onClick={() => openFolder(folder.prefix)}
-										disabled={pending}
-										type='button'
-										className={twMerge(
-											'group flex flex-col rounded-md cursor-pointer',
-											'transition-colors hover:bg-surface focus-visible:bg-surface focus-ring-base focus-ring-visible',
-											selectedIds.includes(folder.prefix) && 'bg-surface',
-										)}
-									>
-										<div className='flex flex-col items-center p-2 gap-2'>
-											<PreviewCard
-												className='w-16'
-												placeholder={
-													<Icon28FolderOutline width={28} height={28} />
-												}
-												ratio='square'
-												radius='full'
-												sizes='(max-width: 1240px) 100vw, 1240px'
-												interactive={false}
-											/>
-
-											<div className='max-w-full text-center text-sm font-medium font-condensed tracking-tight'>
-												<MiddleTruncate value={folder.name} />
-											</div>
-										</div>
-									</button>
-								))}
-
-								{list.files.map(file => (
-									<a
-										key={file.key}
-										href={file.url}
-										target='_blank'
-										rel='noreferrer'
-										className={twMerge(
-											'root group flex flex-col rounded-md cursor-pointer',
-											'transition-colors hover:bg-surface focus-visible:bg-surface focus-ring-base focus-ring-visible',
-											selectedIds.includes(file.key) && 'bg-surface',
-										)}
-									>
-										<div className='flex flex-col items-center p-2 gap-2'>
-											<PreviewCard
-												className='w-16'
-												ratio='square'
-												src={file.url}
-												alt={file.name}
-												radius='sm'
-												sizes='(max-width: 1240px) 100vw, 1240px'
-												interactive={false}
-											/>
-
-											<div className='max-w-full text-center text-sm font-medium font-condensed tracking-tight'>
-												<MiddleTruncate value={file.name} />
-											</div>
-										</div>
-									</a>
 								))}
 							</>
 						)}
