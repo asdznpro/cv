@@ -55,6 +55,7 @@ import type DropdownMenuProps from './DropdownMenu.interface'
 import type {
 	DropdownMenuBoxProps,
 	DropdownMenuContentProps,
+	DropdownMenuHeadingProps,
 	DropdownMenuItemProps,
 	DropdownMenuSubProps,
 	DropdownMenuSubTriggerProps,
@@ -295,6 +296,12 @@ function isBoxElement(
 	return isValidElement(child) && child.type === Box
 }
 
+function isHeadingElement(
+	child: ReactNode,
+): child is ReactElement<DropdownMenuHeadingProps> {
+	return isValidElement(child) && child.type === Heading
+}
+
 function Content({ children, className, style, id }: DropdownMenuContentProps) {
 	const {
 		refs,
@@ -359,10 +366,32 @@ function Content({ children, className, style, id }: DropdownMenuContentProps) {
 
 /* ─── Box ─── */
 
-function Box({ children, className }: DropdownMenuBoxProps) {
+function Heading({ children, className }: DropdownMenuHeadingProps) {
 	return (
-		<div className={twMerge('flex flex-col p-1.5 gap-0.5', className)}>
+		<span
+			className={twMerge(
+				'px-2.5 py-1.5 text-xs text-foreground-secondary select-none pointer-events-none',
+				className,
+			)}
+		>
 			{children}
+		</span>
+	)
+}
+
+function Box({ children, className }: DropdownMenuBoxProps) {
+	const nodes = Children.toArray(children)
+	const headings = nodes.filter(isHeadingElement)
+	const items = nodes.filter(child => !isHeadingElement(child))
+
+	if (headings.length > 1) {
+		throw new Error('DropdownMenu.Box allows at most one DropdownMenu.Heading')
+	}
+
+	return (
+		<div className={twMerge('flex flex-col p-1.5 gap-1', className)}>
+			{headings[0]}
+			{items}
 		</div>
 	)
 }
@@ -480,6 +509,7 @@ type DropdownMenuComponent = typeof DropdownMenuRoot & {
 	Trigger: typeof Trigger
 	Content: typeof Content
 	Box: typeof Box
+	Heading: typeof Heading
 	Item: typeof Item
 	Sub: typeof Sub
 	SubTrigger: typeof SubTrigger
@@ -491,6 +521,7 @@ export const DropdownMenu = DropdownMenuRoot as DropdownMenuComponent
 DropdownMenu.Trigger = Trigger
 DropdownMenu.Content = Content
 DropdownMenu.Box = Box
+DropdownMenu.Heading = Heading
 DropdownMenu.Item = Item
 DropdownMenu.Sub = Sub
 DropdownMenu.SubTrigger = SubTrigger
@@ -499,6 +530,7 @@ DropdownMenu.SubContent = SubContent
 Trigger.displayName = 'DropdownMenu.Trigger'
 Content.displayName = 'DropdownMenu.Content'
 Box.displayName = 'DropdownMenu.Box'
+Heading.displayName = 'DropdownMenu.Heading'
 Item.displayName = 'DropdownMenu.Item'
 Sub.displayName = 'DropdownMenu.Sub'
 SubTrigger.displayName = 'DropdownMenu.SubTrigger'

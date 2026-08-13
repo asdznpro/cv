@@ -471,7 +471,13 @@ export function FlickerSpinner(props: SpinnerProps) {
 	const { size = 28, className, ...restProps } = props
 
 	return (
-		<div {...restProps} className={twMerge('w-fit', className)}>
+		<span
+			{...restProps}
+			className={twMerge(
+				'inline-flex max-h-full [&_svg]:h-auto [&_svg]:w-auto [&_svg]:max-h-full',
+				className,
+			)}
+		>
 			<FlickerDotSpinner
 				grids={grids}
 				size={size}
@@ -479,6 +485,6 @@ export function FlickerSpinner(props: SpinnerProps) {
 				offColor='var(--color-separator)'
 				variant='5x5'
 			/>
-		</div>
+		</span>
 	)
 }

@@ -32,6 +32,8 @@ export function PreviewCard(props: PreviewCardProps) {
 		priority,
 		radius,
 		inner,
+		placeholder,
+		interactive = true,
 		...restProps
 	} = props
 
@@ -74,19 +76,26 @@ export function PreviewCard(props: PreviewCardProps) {
 		>
 			{children}
 
-			<div className='in z-0 relative w-full h-full flex items-center justify-center text-foreground-tertiary bg-surface border border-separator overflow-hidden transition-all duration-100 ease-in focus-ring-base focus-ring-group-visible'>
+			<div
+				className={twMerge(
+					'in z-0 relative w-full h-full flex items-center justify-center text-foreground-tertiary bg-surface border border-separator overflow-hidden transition-all duration-100 ease-in',
+					interactive && 'focus-ring-base focus-ring-group-visible',
+				)}
+			>
 				{showPlaceholder && (
 					<div
+						aria-hidden={status === 'loaded'}
 						className={twMerge(
 							'absolute inset-0 flex items-center justify-center transition-opacity duration-300',
 							status === 'loaded' ? 'opacity-0' : 'opacity-100',
 						)}
-						aria-hidden={status === 'loaded'}
 					>
 						{showSpinner ? (
-							<FlickerSpinner size={28} />
+							<FlickerSpinner className='max-h-[40%]' />
 						) : (
-							<Icon28PictureOutline className='max-h-[32%]' />
+							<span className='contents *:max-h-[40%] [&_svg]:max-h-[40%]'>
+								{placeholder ?? <Icon28PictureOutline />}
+							</span>
 						)}
 					</div>
 				)}
@@ -102,8 +111,10 @@ export function PreviewCard(props: PreviewCardProps) {
 						priority={priority}
 						quality={quality}
 						className={twMerge(
-							'object-cover transition-all duration-500 ease-out group-hover:scale-110 group-focus-visible:scale-110 group-active:scale-105',
+							'object-cover',
 							status === 'loaded' ? 'opacity-100' : 'opacity-0',
+							interactive &&
+								'transition-all duration-500 ease-out group-hover:scale-110 group-focus-visible:scale-110 group-active:scale-105',
 						)}
 						onLoad={markLoaded}
 						onError={markError}

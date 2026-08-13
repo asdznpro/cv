@@ -31,6 +31,12 @@ export interface DropdownMenuBoxProps {
 	className?: string
 }
 
+/** Non-interactive group title. At most one per `DropdownMenu.Box`. */
+export interface DropdownMenuHeadingProps {
+	children: ReactNode
+	className?: string
+}
+
 /** Menu row — Button with fixed `mode="ghost"` / `align="between"`. */
 export type DropdownMenuItemProps = Pick<
 	ButtonProps,

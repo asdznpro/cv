@@ -3,6 +3,7 @@ export type {
 	default as DropdownMenuProps,
 	DropdownMenuBoxProps,
 	DropdownMenuContentProps,
+	DropdownMenuHeadingProps,
 	DropdownMenuItemProps,
 	DropdownMenuSubProps,
 	DropdownMenuSubTriggerProps,

@@ -1,6 +1,6 @@
 export interface PreviewCardProps extends Omit<
 	React.AllHTMLAttributes<HTMLElement>,
-	'size'
+	'size' | 'placeholder'
 > {
 	ratio?:
 		| '4:1'
@@ -25,7 +25,10 @@ export interface PreviewCardProps extends Omit<
 
 	quality?: number
 	priority?: boolean
+	interactive?: boolean
+
 	inner?: React.ReactNode
+	placeholder?: React.ReactNode
 
 	radius?: 'none' | 'sm' | 'md' | 'full' | undefined
 }
