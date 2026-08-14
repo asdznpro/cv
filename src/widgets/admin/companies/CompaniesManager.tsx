@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 
 import { type Company } from 'lib/companies'
 
-import { Badge, Button } from 'ui/blocks'
+import { Badge, Button, PreviewCard } from 'ui/blocks'
 import { DropdownMenu } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
 
@@ -73,11 +73,20 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 							key={company.id}
 							className='flex flex-col bg-surface border border-separator rounded-surface'
 						>
-							<div className='flex items-center p-surface gap-surface'>
+							<div className='flex 0items-center p-surface gap-surface'>
 								<Icon24DotsVertical
-									className='cursor-grab text-foreground-tertiary'
+									className='cursor-grab text-foreground-tertiary my-auto'
 									width={18}
 									height={18}
+								/>
+
+								<PreviewCard
+									className='w-14'
+									ratio='square'
+									src={company.logo}
+									alt={company.name}
+									radius='full'
+									sizes='(max-width: 1240px) 100vw, 1240px'
 								/>
 
 								<div className='min-w-0 flex-1 flex flex-col gap-2'>
@@ -85,22 +94,22 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 										{company.name}
 									</p>
 
-									<span className='flex gap-1'>
+									<span className='flex flex-wrap gap-1'>
 										<Badge
-											size='md'
+											size='sm'
 											mode='soft'
 											appearance='neutral'
-											prefix={<Icon28HashtagOutline width={14} height={14} />}
+											prefix={<Icon28HashtagOutline width={12} height={12} />}
 										>
 											{company.slug}
 										</Badge>
 
 										{company.url && (
 											<Badge
-												size='md'
+												size='sm'
 												mode='soft'
 												appearance='neutral'
-												prefix={<Icon28GlobeOutline width={14} height={14} />}
+												prefix={<Icon28GlobeOutline width={12} height={12} />}
 											>
 												{company.url.split('/')[2]}
 											</Badge>
@@ -150,7 +159,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 			)}
 
 			<Button
-				className='w-full'
+				className='mx-auto'
 				size='lg'
 				mode='ghost'
 				appearance='neutral'

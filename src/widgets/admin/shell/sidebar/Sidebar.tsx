@@ -62,14 +62,14 @@ export const NAV_ITEMS = [
 		label: 'Resume',
 		items: [
 			{
-				href: '/admin/experience',
-				label: 'Experience',
-				icon: <Icon28WorkOutline width={20} height={20} />,
-			},
-			{
 				href: '/admin/companies',
 				label: 'Companies',
 				icon: <Icon28DocumentTextOutline width={20} height={20} />,
+			},
+			{
+				href: '/admin/experience',
+				label: 'Experience',
+				icon: <Icon28WorkOutline width={20} height={20} />,
 			},
 			{
 				href: '/admin/skills',

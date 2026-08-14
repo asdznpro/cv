@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 import * as VKID from '@vkid/sdk'
 
+import { Badge } from 'ui/blocks'
+
 export function VkIdOneTap() {
 	const ref = useRef<HTMLDivElement>(null)
 	const [error, setError] = useState<string | null>(null)
@@ -77,13 +79,16 @@ export function VkIdOneTap() {
 	}, [])
 
 	return (
-		<div className='w-full flex flex-col gap-2'>
+		<div className='relative w-full flex flex-col gap-2'>
 			<div ref={ref} className='w-full' />
-			{error ? (
-				<p className='text-sm text-red-400' role='alert'>
-					{error}
-				</p>
-			) : null}
+
+			{error && (
+				<span className='absolute inset-0 flex items-center justify-center bg-background/80 pointer-events-none'>
+					<Badge role='alert' size='md' mode='soft' appearance='danger'>
+						{error}
+					</Badge>
+				</span>
+			)}
 		</div>
 	)
 }

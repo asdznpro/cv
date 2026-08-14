@@ -12,6 +12,8 @@ export default interface DropdownMenuProps {
 	onOpenChange?: (open: boolean) => void
 	placement?: Placement
 	align?: FloatingAlign
+	/** `click` — left click on trigger. `contextmenu` — right click at cursor. */
+	trigger?: 'click' | 'contextmenu'
 }
 
 export interface DropdownMenuTriggerProps {
@@ -31,6 +33,12 @@ export interface DropdownMenuBoxProps {
 	className?: string
 }
 
+/** Non-interactive group title. At most one per `DropdownMenu.Box`. */
+export interface DropdownMenuHeadingProps {
+	children: ReactNode
+	className?: string
+}
+
 /** Menu row — Button with fixed `mode="ghost"` / `align="between"`. */
 export type DropdownMenuItemProps = Pick<
 	ButtonProps,
@@ -38,6 +46,7 @@ export type DropdownMenuItemProps = Pick<
 	| 'className'
 	| 'prefix'
 	| 'suffix'
+	| 'mode'
 	| 'appearance'
 	| 'disabled'
 	| 'onClick'

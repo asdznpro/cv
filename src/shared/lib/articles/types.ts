@@ -149,7 +149,7 @@ export function validateArticleInput(input: ArticleInput) {
 	if (data.category && !isArticleCategory(data.category)) {
 		errors.category = 'Некорректная category'
 	}
-	if ((data.tags ?? []).some((tag) => !isArticleTag(tag))) {
+	if ((data.tags ?? []).some(tag => !isArticleTag(tag))) {
 		errors.tags = 'Некорректные tags'
 	}
 

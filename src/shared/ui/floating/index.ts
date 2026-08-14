@@ -1,4 +1,5 @@
 export * from './arrow'
 export * from './context-card'
+export * from './context-menu'
 export * from './dropdown-menu'
 export * from './tooltip'

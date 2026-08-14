@@ -48,7 +48,7 @@ export function validateCompanyInput(input: CompanyInput) {
 	else if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(data.slug)) {
 		errors.slug = 'Только a-z, 0-9 и дефисы'
 	}
-	if (!data.logo) errors.logo = 'Укажите путь к логотипу'
+	if (!data.logo) errors.logo = 'Загрузите логотип'
 
 	return { data, errors, ok: Object.keys(errors).length === 0 }
 }

@@ -31,7 +31,7 @@ export function OptionList({
 					radius,
 					disabled: false,
 				}),
-				'max-h-48 overflow-y-auto flex flex-col p-1.5 gap-0.5',
+				'max-h-48 overflow-y-auto flex flex-col p-1.5 gap-1',
 				'rounded-xl shadow-xl shadow-background/40',
 				className,
 			)}

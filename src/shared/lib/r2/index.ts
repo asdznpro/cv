@@ -16,5 +16,6 @@ export {
 	deleteAssetsAction,
 	deleteFolderAction,
 	listAssetsAction,
+	renameAssetAction,
 	uploadAssetAction,
 } from './actions'

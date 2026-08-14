@@ -3,13 +3,14 @@
 import { revalidatePath } from 'next/cache'
 
 import { requireAdminSession } from 'lib/auth'
+import { uploadCompanyLogo } from 'lib/r2/upload-company-logo'
 import { createAdminClient } from 'lib/supabase/admin'
 import { createClient } from 'lib/supabase/server'
 
 import { type Company, type CompanyInput, validateCompanyInput } from './types'
 
 export type ActionResult =
-	| { ok: true; company?: Company }
+	| { ok: true; company?: Company; url?: string }
 	| { ok: false; error: string; fieldErrors?: Record<string, string> }
 
 async function assertAdmin() {
@@ -133,6 +134,44 @@ export async function deleteCompany(id: string): Promise<ActionResult> {
 
 		revalidatePath('/admin/companies')
 		return { ok: true }
+	} catch (error) {
+		return toActionError(error)
+	}
+}
+
+export async function uploadCompanyLogoAction(
+	formData: FormData,
+): Promise<ActionResult> {
+	if (!(await assertAdmin())) {
+		return { ok: false, error: 'Unauthorized' }
+	}
+
+	const file = formData.get('file')
+	if (!(file instanceof File) || file.size === 0) {
+		return { ok: false, error: 'Файл не выбран' }
+	}
+
+	const companyId = String(formData.get('companyId') ?? '') || undefined
+	const maxSize = 10 * 1024 * 1024
+	if (file.size > maxSize) {
+		return { ok: false, error: 'Файл больше 10MB' }
+	}
+
+	const allowed = [
+		'image/png',
+		'image/jpeg',
+		'image/jpg',
+		'image/gif',
+		'image/webp',
+		'image/svg+xml',
+	]
+	if (!allowed.includes(file.type)) {
+		return { ok: false, error: 'Допустимы PNG, JPG, GIF, WebP, SVG' }
+	}
+
+	try {
+		const uploaded = await uploadCompanyLogo(file, companyId)
+		return { ok: true, url: uploaded.url }
 	} catch (error) {
 		return toActionError(error)
 	}

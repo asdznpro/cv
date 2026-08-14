@@ -32,7 +32,7 @@ export function Toaster() {
 				unstyled: true,
 				classNames: {
 					toast:
-						'w-80 flex p-4 gap-3 border border-separator rounded-[31px]',
+						'w-80 flex p-4 border border-separator rounded-[31px] has-[[data-icon]]:gap-3 not-has-[[data-icon]]:px-6',
 					content: 'flex flex-1 flex-col gap-2 select-none',
 					title: 'text-xl font-condensed font-medium',
 					description: 'text-sm !text-foreground-secondary',

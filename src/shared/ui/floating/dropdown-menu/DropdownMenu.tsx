@@ -31,6 +31,7 @@ import {
 	safePolygon,
 	shift,
 	useClick,
+	useClientPoint,
 	useDismiss,
 	useFloating,
 	useFloatingNodeId,
@@ -55,6 +56,7 @@ import type DropdownMenuProps from './DropdownMenu.interface'
 import type {
 	DropdownMenuBoxProps,
 	DropdownMenuContentProps,
+	DropdownMenuHeadingProps,
 	DropdownMenuItemProps,
 	DropdownMenuSubProps,
 	DropdownMenuSubTriggerProps,
@@ -69,6 +71,8 @@ type ItemPropsUser = HTMLAttributes<HTMLElement> &
 type DropdownMenuContextValue = {
 	open: boolean
 	setOpen: (open: boolean) => void
+	trigger: 'click' | 'contextmenu'
+	setAnchor: (point: { x: number; y: number }) => void
 	refs: ReturnType<typeof useFloating>['refs']
 	floatingStyles: CSSProperties
 	getReferenceProps: (
@@ -109,14 +113,17 @@ function Menu({
 	onOpenChange,
 	placement = 'bottom',
 	align = 'end',
+	trigger = 'click',
 }: DropdownMenuProps) {
 	const parentId = useFloatingParentNodeId()
 	const isNested = parentId != null
 	const nodeId = useFloatingNodeId()
 	const tree = useFloatingTree()
+	const isContext = trigger === 'contextmenu' && !isNested
 
 	const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen)
 	const [activeIndex, setActiveIndex] = useState<number | null>(null)
+	const [anchor, setAnchor] = useState<{ x: number; y: number } | null>(null)
 
 	const listRef = useRef<Array<HTMLElement | null>>([])
 	const labelsRef = useRef<Array<string | null>>([])
@@ -145,7 +152,7 @@ function Menu({
 		whileElementsMounted: autoUpdate,
 		middleware: [
 			offset({
-				mainAxis: isNested ? 4 : 6,
+				mainAxis: isNested ? 4 : isContext ? 4 : 6,
 				alignmentAxis: isNested ? -6 : 0,
 			}),
 			flip({ padding: 8, fallbackAxisSideDirection: 'end' }),
@@ -159,9 +166,15 @@ function Menu({
 		handleClose: safePolygon({ buffer: 1 }),
 	})
 	const click = useClick(context, {
+		enabled: !isContext,
 		event: 'mousedown',
 		toggle: !isNested,
 		ignoreMouse: isNested,
+	})
+	const clientPoint = useClientPoint(context, {
+		enabled: isContext && open,
+		x: anchor?.x ?? null,
+		y: anchor?.y ?? null,
 	})
 	const dismiss = useDismiss(context, { bubbles: true })
 	const role = useRole(context, { role: 'menu' })
@@ -173,7 +186,7 @@ function Menu({
 	})
 
 	const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
-		[hover, click, dismiss, role, listNavigation],
+		[hover, click, clientPoint, dismiss, role, listNavigation],
 	)
 
 	const { isMounted, styles: transitionStyles } = useTransitionStyles(context, {
@@ -209,6 +222,8 @@ function Menu({
 		() => ({
 			open,
 			setOpen,
+			trigger,
+			setAnchor,
 			refs,
 			floatingStyles,
 			getReferenceProps,
@@ -225,6 +240,7 @@ function Menu({
 		[
 			open,
 			setOpen,
+			trigger,
 			refs,
 			floatingStyles,
 			getReferenceProps,
@@ -266,7 +282,8 @@ function DropdownMenuRoot(props: DropdownMenuProps) {
 /* ─── Trigger ─── */
 
 function Trigger({ children, className }: DropdownMenuTriggerProps) {
-	const { refs, getReferenceProps, open } = useDropdownMenu()
+	const { refs, getReferenceProps, open, trigger, setOpen, setAnchor } =
+		useDropdownMenu()
 
 	if (!isValidElement(children)) {
 		throw new Error('DropdownMenu.Trigger expects a single React element child')
@@ -275,12 +292,23 @@ function Trigger({ children, className }: DropdownMenuTriggerProps) {
 	const child = children as ReactElement<{
 		className?: string
 		ref?: Ref<HTMLElement>
+		onContextMenu?: (event: React.MouseEvent<HTMLElement>) => void
 	}>
 
 	const ref = useMergeRefs([refs.setReference, child.props.ref])
 
 	return cloneElement(child, {
-		...(getReferenceProps() as object),
+		...getReferenceProps({
+			...child.props,
+			onContextMenu(event: React.MouseEvent<HTMLElement>) {
+				child.props.onContextMenu?.(event)
+				if (event.defaultPrevented || trigger !== 'contextmenu') return
+				event.preventDefault()
+				event.stopPropagation()
+				setAnchor({ x: event.clientX, y: event.clientY })
+				setOpen(true)
+			},
+		}),
 		ref,
 		className: twMerge(child.props.className, className),
 		'data-state': open ? 'open' : 'closed',
@@ -293,6 +321,12 @@ function isBoxElement(
 	child: ReactNode,
 ): child is ReactElement<{ children?: ReactNode }> {
 	return isValidElement(child) && child.type === Box
+}
+
+function isHeadingElement(
+	child: ReactNode,
+): child is ReactElement<DropdownMenuHeadingProps> {
+	return isValidElement(child) && child.type === Heading
 }
 
 function Content({ children, className, style, id }: DropdownMenuContentProps) {
@@ -359,10 +393,32 @@ function Content({ children, className, style, id }: DropdownMenuContentProps) {
 
 /* ─── Box ─── */
 
-function Box({ children, className }: DropdownMenuBoxProps) {
+function Heading({ children, className }: DropdownMenuHeadingProps) {
 	return (
-		<div className={twMerge('flex flex-col p-1.5 gap-0.5', className)}>
+		<span
+			className={twMerge(
+				'px-2.5 py-1.5 text-xs text-foreground-secondary select-none pointer-events-none',
+				className,
+			)}
+		>
 			{children}
+		</span>
+	)
+}
+
+function Box({ children, className }: DropdownMenuBoxProps) {
+	const nodes = Children.toArray(children)
+	const headings = nodes.filter(isHeadingElement)
+	const items = nodes.filter(child => !isHeadingElement(child))
+
+	if (headings.length > 1) {
+		throw new Error('DropdownMenu.Box allows at most one DropdownMenu.Heading')
+	}
+
+	return (
+		<div className={twMerge('flex flex-col p-1.5 gap-1', className)}>
+			{headings[0]}
+			{items}
 		</div>
 	)
 }
@@ -374,6 +430,7 @@ function Item({
 	className,
 	prefix,
 	suffix,
+	mode = 'ghost',
 	appearance = 'neutral',
 	disabled,
 	to,
@@ -400,7 +457,7 @@ function Item({
 			role='menuitem'
 			tabIndex={isActive ? 0 : -1}
 			className={twMerge('flex-1', className)}
-			mode='ghost'
+			mode={mode}
 			appearance={appearance}
 			prefix={prefix}
 			suffix={suffix}
@@ -480,6 +537,7 @@ type DropdownMenuComponent = typeof DropdownMenuRoot & {
 	Trigger: typeof Trigger
 	Content: typeof Content
 	Box: typeof Box
+	Heading: typeof Heading
 	Item: typeof Item
 	Sub: typeof Sub
 	SubTrigger: typeof SubTrigger
@@ -491,6 +549,7 @@ export const DropdownMenu = DropdownMenuRoot as DropdownMenuComponent
 DropdownMenu.Trigger = Trigger
 DropdownMenu.Content = Content
 DropdownMenu.Box = Box
+DropdownMenu.Heading = Heading
 DropdownMenu.Item = Item
 DropdownMenu.Sub = Sub
 DropdownMenu.SubTrigger = SubTrigger
@@ -499,6 +558,7 @@ DropdownMenu.SubContent = SubContent
 Trigger.displayName = 'DropdownMenu.Trigger'
 Content.displayName = 'DropdownMenu.Content'
 Box.displayName = 'DropdownMenu.Box'
+Heading.displayName = 'DropdownMenu.Heading'
 Item.displayName = 'DropdownMenu.Item'
 Sub.displayName = 'DropdownMenu.Sub'
 SubTrigger.displayName = 'DropdownMenu.SubTrigger'
