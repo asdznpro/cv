@@ -37,6 +37,7 @@ import {
 	Icon28ChevronDownOutline,
 	Icon28CopyOutline,
 	Icon28DeleteOutline,
+	Icon28DoneOutline,
 	Icon28EditOutline,
 	Icon28GlobeOutline,
 	Icon28HandPointUpOutline,
@@ -343,15 +344,53 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 									: `${pageArticles.length} articles`}
 							</span>
 
-							<Button
-								type='button'
-								size='sm'
-								mode='secondary'
-								appearance='neutral'
-								prefix={<Icon28SortOutline width={16} height={16} />}
-							>
-								Sort by
-							</Button>
+							<DropdownMenu>
+								<DropdownMenu.Trigger>
+									<Button
+										type='button'
+										size='sm'
+										mode='secondary'
+										appearance='neutral'
+										prefix={<Icon28SortOutline width={16} height={16} />}
+									>
+										Sort
+									</Button>
+								</DropdownMenu.Trigger>
+
+								<DropdownMenu.Content className='w-40'>
+									<DropdownMenu.Box>
+										<DropdownMenu.Item
+											aria-label='By title'
+											mode={!true ? 'ghost' : 'secondary'}
+											suffix={
+												true && <Icon28DoneOutline width={18} height={18} />
+											}
+										>
+											By title
+										</DropdownMenu.Item>
+
+										<DropdownMenu.Item
+											aria-label='By views'
+											mode={true ? 'ghost' : 'secondary'}
+											suffix={
+												!true && <Icon28DoneOutline width={18} height={18} />
+											}
+										>
+											By views
+										</DropdownMenu.Item>
+
+										<DropdownMenu.Item
+											aria-label='By date'
+											mode={true ? 'ghost' : 'secondary'}
+											suffix={
+												!true && <Icon28DoneOutline width={18} height={18} />
+											}
+										>
+											By date
+										</DropdownMenu.Item>
+									</DropdownMenu.Box>
+								</DropdownMenu.Content>
+							</DropdownMenu>
 						</div>
 					</div>
 
