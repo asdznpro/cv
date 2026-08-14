@@ -9,6 +9,7 @@ import {
 	createCompany,
 	slugifyCompanyName,
 	updateCompany,
+	uploadCompanyLogoAction,
 } from 'lib/companies'
 
 import { Button, Separator } from 'ui/blocks'
@@ -18,7 +19,6 @@ import {
 	Icon28InfoCircleOutline,
 	Icon28GlobeOutline,
 	Icon28HashtagOutline,
-	Icon28PictureOutline,
 } from '@vkontakte/icons'
 
 type FormState = {
@@ -61,6 +61,7 @@ export function CompanyFormDialog({
 		company ? toFormState(company) : EMPTY_FORM,
 	)
 	const [slugTouched, setSlugTouched] = useState(Boolean(company))
+	const [file, setFile] = useState<File | null>(null)
 
 	function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
 		setForm(prev => ({ ...prev, [key]: value }))
@@ -75,14 +76,39 @@ export function CompanyFormDialog({
 	}
 
 	function submit() {
-		const payload = {
-			name: form.name,
-			slug: form.slug,
-			logo: form.logo,
-			url: form.url || null,
-		}
-
 		startTransition(async () => {
+			let logo = form.logo
+
+			if (file) {
+				const formData = new FormData()
+				formData.set('file', file)
+				if (editingId) formData.set('companyId', editingId)
+
+				const uploaded = await uploadCompanyLogoAction(formData)
+				if (!uploaded.ok || !uploaded.url) {
+					toast.error(
+						uploaded.ok === false
+							? uploaded.error
+							: 'Не удалось загрузить логотип',
+					)
+					return
+				}
+
+				logo = uploaded.url
+			}
+
+			if (!logo) {
+				toast.error('Загрузите логотип')
+				return
+			}
+
+			const payload = {
+				name: form.name,
+				slug: form.slug,
+				logo,
+				url: form.url || null,
+			}
+
 			const result = editingId
 				? await updateCompany(editingId, payload)
 				: await createCompany(payload)
@@ -99,15 +125,15 @@ export function CompanyFormDialog({
 
 	return (
 		<form
-			className="flex flex-col bg-surface border border-separator rounded-surface"
+			className='flex flex-col bg-surface border border-separator rounded-surface'
 			onSubmit={event => {
 				event.preventDefault()
 				submit()
 			}}
 		>
-			<div className="flex flex-col p-surface gap-surface">
-				<div className="flex flex-1 flex-col gap-3">
-					<p className="text-xl font-medium font-condensed tracking-tight">
+			<div className='flex flex-col p-surface gap-surface'>
+				<div className='flex flex-1 flex-col gap-3'>
+					<p className='text-xl font-medium font-condensed tracking-tight'>
 						{editingId ? 'Edit company' : 'Create company'}
 					</p>
 				</div>
@@ -115,66 +141,77 @@ export function CompanyFormDialog({
 
 			<Separator />
 
-			<div className="flex flex-col p-surface gap-surface">
-				<div className="grid @md/overlay:grid-cols-2 gap-app">
-					<FormItem required>
+			<div className='flex flex-col p-surface gap-surface'>
+				<FormItem id='company-logo-upload' required>
+					<FormItem.Label>Avatar</FormItem.Label>
+					<FormItem.DropZone
+						value={file}
+						onValueChange={next => {
+							setFile(next)
+							if (!next) setField('logo', '')
+						}}
+						previewSrc={form.logo || null}
+						accept='image/png,image/jpeg,image/jpg,image/gif,image/webp,image/svg+xml'
+						emptyTitle='Click to upload or drag and drop'
+						emptyHint='PNG, JPG, GIF, WebP or SVG up to 10MB'
+						disabled={pending}
+						onReject={reason => {
+							toast.error(
+								reason === 'size'
+									? 'Файл больше 10MB'
+									: 'Допустимы PNG, JPG, GIF, WebP, SVG',
+							)
+						}}
+					/>
+				</FormItem>
+
+				<div className='grid @md/overlay:grid-cols-2 gap-app'>
+					<FormItem className='col-span-full' required>
 						<FormItem.Label>Название</FormItem.Label>
 						<FormItem.Input
-							aria-label="Название"
-							mode="secondary"
+							aria-label='Название'
+							size='md'
+							mode='outline'
 							value={form.name}
 							onChange={event =>
 								onNameChange((event.target as HTMLInputElement).value)
 							}
-							placeholder="Enter name"
+							placeholder='Enter name'
 							disabled={pending}
-							prefix={<Icon28InfoCircleOutline width={20} height={20} />}
+							prefix={<Icon28InfoCircleOutline width={18} height={18} />}
 						/>
 					</FormItem>
 
 					<FormItem required>
 						<FormItem.Label>Slug</FormItem.Label>
 						<FormItem.Input
-							aria-label="Slug"
-							mode="secondary"
+							aria-label='Slug'
+							size='md'
+							mode='outline'
 							value={form.slug}
 							onChange={event => {
 								setSlugTouched(true)
 								setField('slug', (event.target as HTMLInputElement).value)
 							}}
-							placeholder="Enter slug"
+							placeholder='Enter slug'
 							disabled={pending}
-							prefix={<Icon28HashtagOutline width={20} height={20} />}
-						/>
-					</FormItem>
-
-					<FormItem required>
-						<FormItem.Label>Logo path</FormItem.Label>
-						<FormItem.Input
-							aria-label="Logo path"
-							mode="secondary"
-							value={form.logo}
-							onChange={event =>
-								setField('logo', (event.target as HTMLInputElement).value)
-							}
-							placeholder="Enter logo path"
-							disabled={pending}
-							prefix={<Icon28PictureOutline width={20} height={20} />}
+							prefix={<Icon28HashtagOutline width={18} height={18} />}
 						/>
 					</FormItem>
 
 					<FormItem optional>
 						<FormItem.Label>Website</FormItem.Label>
 						<FormItem.Input
-							aria-label="Website"
-							mode="secondary"
+							aria-label='Website'
+							size='md'
+							mode='outline'
 							value={form.url}
 							onChange={event =>
 								setField('url', (event.target as HTMLInputElement).value)
 							}
-							placeholder="Enter website"
+							placeholder='Enter website'
 							disabled={pending}
-							prefix={<Icon28GlobeOutline width={20} height={20} />}
+							prefix={<Icon28GlobeOutline width={18} height={18} />}
 						/>
 					</FormItem>
 				</div>
@@ -182,26 +219,26 @@ export function CompanyFormDialog({
 
 			<Separator />
 
-			<div className="flex @md/overlay:grid grid-cols-2 items-center p-surface gap-surface">
-				<div className="col-start-2 flex flex-1 gap-2">
+			<div className='flex @md/overlay:grid grid-cols-2 items-center p-surface gap-surface'>
+				<div className='col-start-2 flex flex-1 gap-2'>
 					<Button
 						onClick={onCancel}
-						className="flex-1"
-						type="button"
-						size="sm"
-						mode="secondary"
-						appearance="neutral"
+						className='flex-1'
+						type='button'
+						size='sm'
+						mode='secondary'
+						appearance='neutral'
 						disabled={pending}
 					>
 						Cancel
 					</Button>
 
 					<Button
-						className="flex-1"
-						type="submit"
-						size="sm"
-						appearance="neutral"
-						disabled={pending}
+						className='flex-1'
+						type='submit'
+						size='sm'
+						appearance='neutral'
+						disabled={pending || (!file && !form.logo)}
 					>
 						{editingId ? 'Save' : 'Create'}
 					</Button>

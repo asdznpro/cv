@@ -171,7 +171,7 @@ export function DropZone(props: DropZoneProps) {
 				ref={dropZone.ref}
 				data-state={dropZone.overed ? 'over' : hasFile ? 'filled' : 'empty'}
 				data-disabled={isDisabled || undefined}
-				className={twMerge('group relative w-full 0h-48', className)}
+				className={twMerge('group relative w-full min-w-0', className)}
 			>
 				<button
 					type='button'
@@ -182,8 +182,8 @@ export function DropZone(props: DropZoneProps) {
 					aria-label={hasFile ? 'Replace file' : 'Upload file'}
 					onClick={openPicker}
 					className={twMerge(
-						'relative z-0 w-full h-full flex flex-col overflow-hidden',
-						'rounded-lg border border-dashed border-separator bg-background/80 backdrop-blur-sm',
+						'relative z-0 w-full min-w-0 h-48 flex flex-col overflow-hidden',
+						'rounded-md border border-dashed border-separator bg-background/80 backdrop-blur-sm',
 						'transition-all hover:bg-surface focus-visible:bg-surface',
 						'disabled:pointer-events-none disabled:cursor-not-allowed',
 						'appearance-none select-none cursor-pointer',
@@ -196,7 +196,7 @@ export function DropZone(props: DropZoneProps) {
 				>
 					{hasFile && preview ? (
 						<>
-							<div className='relative min-h-0 flex flex-1 items-center justify-center overflow-hidden p-surface'>
+							<div className='relative min-h-0 min-w-0 flex flex-1 items-center justify-center overflow-hidden p-surface'>
 								<img
 									src={preview}
 									alt=''
@@ -204,13 +204,11 @@ export function DropZone(props: DropZoneProps) {
 									className='absolute inset-0 size-full object-cover blur-2xl opacity-20'
 								/>
 
-								<div className='relative z-1 w-fit h-fit flex items-center justify-center overflow-hidden rounded'>
-									<img
-										src={preview}
-										alt={value?.name ?? 'Uploaded file'}
-										className='max-h-full max-w-full object-contain'
-									/>
-								</div>
+								<img
+									src={preview}
+									alt={value?.name ?? 'Uploaded file'}
+									className='relative z-1 max-h-full max-w-full object-contain rounded'
+								/>
 							</div>
 
 							<span className='relative z-1 w-full flex items-center p-2 gap-2 bg-surface border-t border-separator'>
@@ -235,13 +233,13 @@ export function DropZone(props: DropZoneProps) {
 							</span>
 						</>
 					) : (
-						<span className='flex flex-1 flex-col items-center justify-center p-surface gap-surface'>
+						<span className='flex flex-1 flex-col items-center justify-center p-surface gap-2'>
 							<span className='size-12 flex items-center justify-center rounded-full bg-surface-secondary text-foreground-secondary'>
 								<Icon28UploadOutline width={20} height={20} />
 							</span>
 
 							<div className='flex flex-col gap-1'>
-								<span className='text-lg font-medium font-condensed tracking-tight'>
+								<span className='font-medium font-condensed tracking-tight'>
 									{dropZone.overed ? 'Drop image here' : emptyTitle}
 								</span>
 

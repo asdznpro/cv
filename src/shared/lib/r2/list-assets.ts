@@ -24,22 +24,22 @@ export async function listAssets(
 	)
 
 	const folders: AssetFolder[] = (response.CommonPrefixes ?? [])
-		.map((item) => item.Prefix)
+		.map(item => item.Prefix)
 		.filter((value): value is string => Boolean(value))
-		.map((folderPrefix) => ({
+		.map(folderPrefix => ({
 			prefix: folderPrefix,
 			name: displayNameFromKey(folderPrefix, prefix),
 		}))
 		.sort((a, b) => a.name.localeCompare(b.name))
 
 	const files: AssetFile[] = (response.Contents ?? [])
-		.filter((item) => {
+		.filter(item => {
 			if (!item.Key) return false
 			if (item.Key === prefix) return false
 			if (item.Key.endsWith('/')) return false
 			return true
 		})
-		.map((item) => {
+		.map(item => {
 			const key = item.Key as string
 			return {
 				key,

@@ -71,7 +71,7 @@ export function RenameAssetDialog({
 						className='flex-1'
 						size='sm'
 						type='button'
-						appearance='accent'
+						appearance='neutral'
 						disabled={!name.trim() || name.trim() === initialName}
 						onClick={submit}
 					>

@@ -19,7 +19,7 @@ async function deleteKeys(keys: string[]) {
 			new DeleteObjectsCommand({
 				Bucket: bucket,
 				Delete: {
-					Objects: chunk.map((Key) => ({ Key })),
+					Objects: chunk.map(Key => ({ Key })),
 					Quiet: true,
 				},
 			}),
@@ -51,7 +51,7 @@ export async function deleteFolder(prefixInput: string) {
 		)
 
 		const keys = (page.Contents ?? [])
-			.map((item) => item.Key)
+			.map(item => item.Key)
 			.filter((key): key is string => Boolean(key))
 
 		if (keys.length) await deleteKeys(keys)

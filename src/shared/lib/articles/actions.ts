@@ -69,7 +69,7 @@ async function withArticleStats24h(articles: Article[]): Promise<Article[]> {
 	const { data: statsRows, error } = await supabase.rpc('article_stats_24h')
 
 	if (error) {
-		return articles.map((article) => ({
+		return articles.map(article => ({
 			...article,
 			views_24h: 0,
 			uniques_24h: 0,
@@ -88,7 +88,7 @@ async function withArticleStats24h(articles: Article[]): Promise<Article[]> {
 		})
 	}
 
-	return articles.map((article) => {
+	return articles.map(article => {
 		const stats = statsById.get(article.id)
 		return {
 			...article,
@@ -114,7 +114,7 @@ export async function listArticles(
 
 	const { data, error } = await query
 	if (error) throw new Error(error.message)
-	return (data ?? []).map((row) => mapArticle(row as Record<string, unknown>))
+	return (data ?? []).map(row => mapArticle(row as Record<string, unknown>))
 }
 
 /** Admin list — includes drafts/archived. */
@@ -139,7 +139,7 @@ export async function listAdminArticles(
 	const { data, error } = await query
 	if (error) throw new Error(error.message)
 
-	const articles = (data ?? []).map((row) =>
+	const articles = (data ?? []).map(row =>
 		mapArticle(row as Record<string, unknown>),
 	)
 	return withArticleStats24h(articles)
@@ -153,7 +153,7 @@ export async function listAllArticleIds(): Promise<string[]> {
 	const supabase = createAdminClient()
 	const { data, error } = await supabase.from('articles').select('id')
 	if (error) throw new Error(error.message)
-	return (data ?? []).map((row) => row.id as string)
+	return (data ?? []).map(row => row.id as string)
 }
 
 export async function getAdminArticle(id: string): Promise<Article | null> {
@@ -213,14 +213,14 @@ export async function listRelatedArticles(
 		if (error) throw new Error(error.message)
 
 		const byId = new Map(
-			(data ?? []).map((row) => {
+			(data ?? []).map(row => {
 				const mapped = mapArticle(row as Record<string, unknown>)
 				return [mapped.id, mapped] as const
 			}),
 		)
 
 		return ids
-			.map((id) => byId.get(id))
+			.map(id => byId.get(id))
 			.filter((item): item is Article => Boolean(item))
 	}
 
@@ -239,7 +239,7 @@ export async function listRelatedArticles(
 
 	const { data, error } = await query
 	if (error) throw new Error(error.message)
-	return (data ?? []).map((row) => mapArticle(row as Record<string, unknown>))
+	return (data ?? []).map(row => mapArticle(row as Record<string, unknown>))
 }
 
 export async function createArticle(
@@ -437,8 +437,8 @@ export async function applyArticlePlacement(
 		if (error) return { ok: false, error: error.message }
 
 		const others = (data ?? [])
-			.map((row) => row.id as string)
-			.filter((id) => id !== articleId)
+			.map(row => row.id as string)
+			.filter(id => id !== articleId)
 
 		let ordered: string[]
 		if (!placeAfterId) {

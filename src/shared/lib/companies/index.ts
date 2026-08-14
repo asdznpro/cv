@@ -4,6 +4,7 @@ export {
 	deleteCompany,
 	listCompanies,
 	updateCompany,
+	uploadCompanyLogoAction,
 } from './actions'
 export type { Company, CompanyInput } from './types'
 export {

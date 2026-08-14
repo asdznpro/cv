@@ -184,7 +184,7 @@ export function ArticleEditorManager({
 		[article],
 	)
 	const orderedIds = useMemo(
-		() => articleOptions.map((item) => item.id),
+		() => articleOptions.map(item => item.id),
 		[articleOptions],
 	)
 	const initialPlaceAfter = useMemo(
@@ -199,21 +199,21 @@ export function ArticleEditorManager({
 	const [relatedSlots, setRelatedSlots] = useState<
 		Array<{ key: string; articleId: string }>
 	>(() =>
-		(article?.related_article_ids ?? []).map((id) => ({
+		(article?.related_article_ids ?? []).map(id => ({
 			key: id,
 			articleId: id,
 		})),
 	)
 
-	const selectedCompany = companies.find((item) => item.id === form.company_id)
+	const selectedCompany = companies.find(item => item.id === form.company_id)
 	const relatedOptions = articleOptions
-		.filter((item) => item.id !== articleId)
-		.map((item) => ({ label: item.title, value: item.id }))
+		.filter(item => item.id !== articleId)
+		.map(item => ({ label: item.title, value: item.id }))
 
 	const orderingOptions = useMemo(() => {
 		const afterOptions = articleOptions
-			.filter((item) => item.id !== articleId)
-			.map((item) => ({
+			.filter(item => item.id !== articleId)
+			.map(item => ({
 				label: `After: ${item.title}`,
 				value: item.id,
 			}))
@@ -226,7 +226,7 @@ export function ArticleEditorManager({
 		if (JSON.stringify(form) !== JSON.stringify(initial)) return true
 
 		const initialRelated = article?.related_article_ids ?? []
-		const currentRelated = relatedSlots.map((slot) => slot.articleId)
+		const currentRelated = relatedSlots.map(slot => slot.articleId)
 		if (currentRelated.length !== initialRelated.length) return true
 		return currentRelated.some((id, index) => id !== initialRelated[index])
 	}, [
@@ -244,11 +244,11 @@ export function ArticleEditorManager({
 			: STATUS_OPTIONS
 
 	function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
-		setForm((prev) => ({ ...prev, [key]: value }))
+		setForm(prev => ({ ...prev, [key]: value }))
 	}
 
 	function onTitleChange(value: string) {
-		setForm((prev) => ({
+		setForm(prev => ({
 			...prev,
 			title: value,
 			slug:
@@ -263,7 +263,7 @@ export function ArticleEditorManager({
 		setSlugTouched(Boolean(article?.slug))
 		setPlaceAfterId(initialPlaceAfter)
 		setRelatedSlots(
-			(article?.related_article_ids ?? []).map((id) => ({
+			(article?.related_article_ids ?? []).map(id => ({
 				key: id,
 				articleId: id,
 			})),
@@ -275,7 +275,7 @@ export function ArticleEditorManager({
 		const payload = toInput({
 			...form,
 			status: nextStatus ?? form.status,
-			related_article_ids: relatedSlots.map((slot) => slot.articleId),
+			related_article_ids: relatedSlots.map(slot => slot.articleId),
 		})
 
 		startTransition(async () => {
@@ -758,13 +758,13 @@ export function ArticleEditorManager({
 					<>
 						<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
 							<div className='flex flex-col gap-3'>
-								<h2 className='flex-1 text-danger text-3xl font-medium font-condensed tracking-tight'>
+								<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 									Danger zone
 								</h2>
 							</div>
 						</div>
 
-						<div className='flex flex-col bg-surface border border-separator rounded-surface outline-2 outline-offset-4 outline-danger'>
+						<div className='flex flex-col bg-surface border border-separator rounded-surface outline-2 outline-offset-2 outline-danger'>
 							<div className='flex flex-wrap p-surface gap-surface'>
 								<div className='flex flex-1 flex-col gap-3'>
 									<h3 className='text-xl font-medium font-condensed tracking-tight'>
@@ -793,7 +793,7 @@ export function ArticleEditorManager({
 				)}
 			</section>
 
-			<section className='sticky bottom-app mx-auto max-w-md w-full flex flex-col px-app gap-app'>
+			<section className='sticky bottom-app mx-auto max-w-sm w-full flex flex-col px-app gap-app'>
 				<div className='flex flex-col bg-background border border-separator rounded-full overflow-hidden'>
 					<div className='flex items-center p-2 gap-2'>
 						<Tooltip text='Back to articles'>
@@ -807,36 +807,38 @@ export function ArticleEditorManager({
 							/>
 						</Tooltip>
 
-						<AnimatePresence initial={false}>
-							{isDirty && (
-								<motion.div
-									key='discard-changes'
-									initial={{ transform: 'translateX(-12px)', opacity: 0 }}
-									animate={{ transform: 'translateX(0)', opacity: 1 }}
-									exit={{ transform: 'translateX(-12px)', opacity: 0 }}
-									transition={{
-										transform: {
-											type: 'tween',
-											duration: 0.16,
-											ease: 'easeInOut',
-										},
-										opacity: { duration: 0.16 },
-									}}
-									className='overflow-hidden'
-								>
-									<Button
-										type='button'
-										mode='secondary'
-										appearance='neutral'
-										radius='rounded'
-										onClick={discard}
-										disabled={pending}
+						{article && (
+							<AnimatePresence initial={false}>
+								{isDirty && (
+									<motion.div
+										key='discard-changes'
+										initial={{ transform: 'translateX(-12px)', opacity: 0 }}
+										animate={{ transform: 'translateX(0)', opacity: 1 }}
+										exit={{ transform: 'translateX(-12px)', opacity: 0 }}
+										transition={{
+											transform: {
+												type: 'tween',
+												duration: 0.16,
+												ease: 'easeInOut',
+											},
+											opacity: { duration: 0.16 },
+										}}
+										className='overflow-hidden'
 									>
-										Discard changes
-									</Button>
-								</motion.div>
-							)}
-						</AnimatePresence>
+										<Button
+											type='button'
+											mode='secondary'
+											appearance='neutral'
+											radius='rounded'
+											onClick={discard}
+											disabled={pending}
+										>
+											Discard changes
+										</Button>
+									</motion.div>
+								)}
+							</AnimatePresence>
+						)}
 
 						<span className='flex-1' />
 

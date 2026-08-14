@@ -65,7 +65,7 @@ export function CreateFolderDialog({
 						className='flex-1'
 						size='sm'
 						type='button'
-						appearance='accent'
+						appearance='neutral'
 						disabled={!name.trim()}
 						onClick={() => onSubmit(name.trim())}
 					>

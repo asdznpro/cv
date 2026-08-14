@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
 		staleTimes: {
 			dynamic: 30,
 		},
+		serverActions: {
+			// DropZone / R2 uploads go up to 20MB; default action body is 1MB.
+			bodySizeLimit: '21mb',
+		},
 	},
 }
 
