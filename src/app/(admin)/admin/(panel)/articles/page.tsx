@@ -8,9 +8,7 @@ export default async function ArticlesPage() {
 		<>
 			<span />
 
-			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-12'>
-				<ArticlesManager articles={articles} />
-			</section>
+			<ArticlesManager articles={articles} />
 
 			<span />
 		</>

@@ -9,10 +9,10 @@ import { twMerge } from 'tailwind-merge'
 import { useAdminShell } from '../AdminShellProvider'
 import { NAV_ITEMS } from '../sidebar'
 
-import { Badge, Button, Counter } from 'ui/blocks'
+import { Button, Counter } from 'ui/blocks'
+
 import {
 	Icon28HorizontalRectangle2VerticalLeftOutline,
-	Icon28GlobeOutline,
 	Icon28Notifications,
 } from '@vkontakte/icons'
 
@@ -95,7 +95,7 @@ export function Header() {
 	return (
 		<header className='sticky top-0 z-10 w-full p-app pointer-events-none'>
 			<div className='mx-auto max-w-lg w-full flex'>
-				<div className=' w-full flex items-center p-2 gap-2 bg-background border border-separator rounded-full pointer-events-auto'>
+				<div className='w-full flex items-center p-2 gap-2 bg-background border border-separator rounded-full pointer-events-auto'>
 					<span className='w-full flex gap-app'>
 						<Button
 							aria-label={open ? 'Hide sidebar' : 'Show sidebar'}
@@ -139,17 +139,9 @@ export function Header() {
 							/>
 
 							<div className='absolute -top-1 -left-1 size-4 flex justify-end'>
-								<Counter variant='danger'>20</Counter>
+								<Counter variant='danger'>0</Counter>
 							</div>
 						</div>
-
-						<Button
-							to='/'
-							appearance='neutral'
-							prefix={<Icon28GlobeOutline width={18} height={18} />}
-							radius='rounded'
-							iconOnly
-						/>
 					</span>
 				</div>
 			</div>
