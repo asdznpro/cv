@@ -60,6 +60,7 @@ export function UploadCoverDialog({
 						onValueChange={setFile}
 						emptyTitle='Click to upload or drag and drop'
 						emptyHint='PNG, JPG or GIF up to 10MB'
+						className='h-auto!'
 					/>
 				</FormItem>
 			</div>

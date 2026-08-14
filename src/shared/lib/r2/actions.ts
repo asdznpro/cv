@@ -8,6 +8,7 @@ import { createFolder } from './create-folder'
 import { deleteAssets, deleteFolder } from './delete-assets'
 import { normalizePrefix } from './keys'
 import { listAssets } from './list-assets'
+import { renameAsset } from './rename-asset'
 import type { AssetListResult, R2ActionResult } from './types'
 import { uploadAsset } from './upload-asset'
 
@@ -67,6 +68,23 @@ export async function uploadAssetAction(
 		const uploaded = await uploadAsset({ file, prefix })
 		revalidateAssets()
 		return { ok: true, url: uploaded.url }
+	} catch (error) {
+		return toActionError(error)
+	}
+}
+
+export async function renameAssetAction(
+	key: string,
+	name: string,
+): Promise<R2ActionResult> {
+	if (!(await assertAdmin())) {
+		return { ok: false, error: 'Unauthorized' }
+	}
+
+	try {
+		const renamed = await renameAsset(key, name)
+		revalidateAssets()
+		return { ok: true, url: renamed.url }
 	} catch (error) {
 		return toActionError(error)
 	}

@@ -298,7 +298,8 @@ function Trigger({ children, className }: DropdownMenuTriggerProps) {
 	const ref = useMergeRefs([refs.setReference, child.props.ref])
 
 	return cloneElement(child, {
-		...(getReferenceProps({
+		...getReferenceProps({
+			...child.props,
 			onContextMenu(event: React.MouseEvent<HTMLElement>) {
 				child.props.onContextMenu?.(event)
 				if (event.defaultPrevented || trigger !== 'contextmenu') return
@@ -307,7 +308,7 @@ function Trigger({ children, className }: DropdownMenuTriggerProps) {
 				setAnchor({ x: event.clientX, y: event.clientY })
 				setOpen(true)
 			},
-		}) as object),
+		}),
 		ref,
 		className: twMerge(child.props.className, className),
 		'data-state': open ? 'open' : 'closed',

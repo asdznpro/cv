@@ -16,31 +16,31 @@ export function DeleteAssetDialog({
 	onConfirm,
 }: DeleteAssetDialogProps) {
 	return (
-		<div className="flex flex-col bg-surface border border-separator rounded-surface">
-			<div className="flex flex-col p-surface gap-surface">
-				<div className="flex flex-1 flex-col gap-3">
-					<h3 className="text-xl font-medium font-condensed tracking-tight">
+		<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+			<div className='flex flex-col p-surface gap-surface'>
+				<div className='flex flex-1 flex-col gap-3'>
+					<h3 className='text-xl font-medium font-condensed tracking-tight'>
 						{title}
 					</h3>
 
-					<p className="text-sm text-foreground-secondary">{description}</p>
+					<p className='text-sm text-foreground-secondary'>{description}</p>
 				</div>
 
-				<div className="flex justify-end gap-2">
+				<div className='flex justify-end gap-2'>
 					<Button
-						size="sm"
-						type="button"
-						mode="secondary"
-						appearance="neutral"
+						size='sm'
+						type='button'
+						mode='secondary'
+						appearance='neutral'
 						onClick={onCancel}
 					>
 						Cancel
 					</Button>
 
 					<Button
-						size="sm"
-						type="button"
-						appearance="danger"
+						size='sm'
+						type='button'
+						appearance='danger'
 						onClick={onConfirm}
 					>
 						Yes, delete

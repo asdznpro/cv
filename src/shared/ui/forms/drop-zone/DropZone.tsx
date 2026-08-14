@@ -171,7 +171,7 @@ export function DropZone(props: DropZoneProps) {
 				ref={dropZone.ref}
 				data-state={dropZone.overed ? 'over' : hasFile ? 'filled' : 'empty'}
 				data-disabled={isDisabled || undefined}
-				className={twMerge('group relative w-full', className)}
+				className={twMerge('group relative w-full 0h-48', className)}
 			>
 				<button
 					type='button'
@@ -182,8 +182,8 @@ export function DropZone(props: DropZoneProps) {
 					aria-label={hasFile ? 'Replace file' : 'Upload file'}
 					onClick={openPicker}
 					className={twMerge(
-						'relative z-0 w-full h-48 flex flex-col overflow-hidden',
-						'rounded-lg border border-dashed border-separator bg-background',
+						'relative z-0 w-full h-full flex flex-col overflow-hidden',
+						'rounded-lg border border-dashed border-separator bg-background/80 backdrop-blur-sm',
 						'transition-all hover:bg-surface focus-visible:bg-surface',
 						'disabled:pointer-events-none disabled:cursor-not-allowed',
 						'appearance-none select-none cursor-pointer',
@@ -236,7 +236,7 @@ export function DropZone(props: DropZoneProps) {
 						</>
 					) : (
 						<span className='flex flex-1 flex-col items-center justify-center p-surface gap-surface'>
-							<span className='size-12 flex items-center justify-center rounded-full bg-foreground-tertiary/20 text-foreground-secondary'>
+							<span className='size-12 flex items-center justify-center rounded-full bg-surface-secondary text-foreground-secondary'>
 								<Icon28UploadOutline width={20} height={20} />
 							</span>
 

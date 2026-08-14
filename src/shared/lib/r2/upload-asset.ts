@@ -3,6 +3,7 @@ import 'server-only'
 import { PutObjectCommand } from '@aws-sdk/client-s3'
 
 import { cdnUrlForKey, getR2Bucket, getR2Client } from './client'
+import { uniqueAssetFileName } from './file-name'
 import { assertSafeKey, joinKey, normalizePrefix } from './keys'
 
 export type UploadAssetInput = {
@@ -37,11 +38,6 @@ function extensionFromMime(mime: string) {
 	}
 }
 
-function extensionFromFileName(name: string) {
-	const match = name.match(/\.([a-z0-9]+)$/i)
-	return match?.[1]?.toLowerCase()
-}
-
 export async function uploadAsset({
 	file,
 	prefix = '',
@@ -49,11 +45,10 @@ export async function uploadAsset({
 	cacheControl = 'public, max-age=31536000, immutable',
 }: UploadAssetInput): Promise<UploadAssetResult> {
 	const mime = file.type || 'application/octet-stream'
-	const ext =
-		extensionFromFileName(file.name) || extensionFromMime(mime) || 'bin'
+	const ext = extensionFromMime(mime) || 'bin'
 	const key =
 		explicitKey ??
-		joinKey(normalizePrefix(prefix), `${crypto.randomUUID()}.${ext}`)
+		joinKey(normalizePrefix(prefix), uniqueAssetFileName(file.name, ext))
 
 	assertSafeKey(key)
 

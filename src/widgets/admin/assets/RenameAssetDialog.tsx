@@ -5,26 +5,33 @@ import { useState } from 'react'
 import { Button, Separator } from 'ui/blocks'
 import { FormItem } from 'ui/forms'
 
-type CreateFolderDialogProps = {
+type RenameAssetDialogProps = {
+	initialName: string
 	onCancel: () => void
 	onSubmit: (name: string) => void
 }
 
-export function CreateFolderDialog({
+export function RenameAssetDialog({
+	initialName,
 	onCancel,
 	onSubmit,
-}: CreateFolderDialogProps) {
-	const [name, setName] = useState('')
+}: RenameAssetDialogProps) {
+	const [name, setName] = useState(initialName)
+
+	function submit() {
+		const trimmed = name.trim()
+		if (trimmed) onSubmit(trimmed)
+	}
 
 	return (
 		<div className='flex flex-col bg-surface border border-separator rounded-surface'>
 			<div className='flex flex-col p-surface gap-surface'>
 				<div className='flex flex-1 flex-col gap-3'>
 					<h3 className='text-xl font-medium font-condensed tracking-tight'>
-						Create folder
+						Rename file
 					</h3>
 
-					<FormItem id='asset-folder-name' required>
+					<FormItem id='asset-file-name' required>
 						<FormItem.Input
 							mode='outline'
 							size='md'
@@ -32,13 +39,12 @@ export function CreateFolderDialog({
 							onChange={event =>
 								setName((event.target as HTMLInputElement).value)
 							}
-							placeholder='Folder name'
+							placeholder='File name'
 							autoFocus
 							onKeyDown={event => {
 								if (event.key === 'Enter') {
 									event.preventDefault()
-									const trimmed = name.trim()
-									if (trimmed) onSubmit(trimmed)
+									submit()
 								}
 							}}
 						/>
@@ -66,10 +72,10 @@ export function CreateFolderDialog({
 						size='sm'
 						type='button'
 						appearance='accent'
-						disabled={!name.trim()}
-						onClick={() => onSubmit(name.trim())}
+						disabled={!name.trim() || name.trim() === initialName}
+						onClick={submit}
 					>
-						Create
+						Rename
 					</Button>
 				</div>
 			</div>

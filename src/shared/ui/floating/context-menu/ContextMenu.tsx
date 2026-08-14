@@ -7,9 +7,9 @@ function ContextMenuRoot(props: DropdownMenuProps) {
 	return (
 		<DropdownMenu
 			{...props}
+			trigger='contextmenu'
 			placement='right-start'
 			align='start'
-			trigger='contextmenu'
 		/>
 	)
 }
