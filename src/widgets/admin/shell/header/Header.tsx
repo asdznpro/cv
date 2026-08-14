@@ -9,10 +9,11 @@ import { twMerge } from 'tailwind-merge'
 import { useAdminShell } from '../AdminShellProvider'
 import { NAV_ITEMS } from '../sidebar'
 
-import { Button } from 'ui/blocks'
+import { Badge, Button, Counter } from 'ui/blocks'
 import {
 	Icon28HorizontalRectangle2VerticalLeftOutline,
 	Icon28GlobeOutline,
+	Icon28Notifications,
 } from '@vkontakte/icons'
 
 function AnimatedLabel({ label }: { label: string }) {
@@ -128,6 +129,20 @@ export function Header() {
 					</span>
 
 					<span className='w-full flex justify-end gap-2'>
+						<div className='relative'>
+							<Button
+								mode='soft'
+								appearance='neutral'
+								prefix={<Icon28Notifications width={18} height={18} />}
+								radius='rounded'
+								iconOnly
+							/>
+
+							<div className='absolute -top-1 -left-1 size-4 flex justify-end'>
+								<Counter variant='danger'>20</Counter>
+							</div>
+						</div>
+
 						<Button
 							to='/'
 							appearance='neutral'
