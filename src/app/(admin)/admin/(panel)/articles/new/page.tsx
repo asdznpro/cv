@@ -1,5 +1,6 @@
 import { listAdminArticles } from 'lib/articles'
 import { listCompanies } from 'lib/companies'
+
 import { ArticleEditorManager } from 'widgets/admin'
 
 export default async function NewArticlePage() {

@@ -89,7 +89,7 @@ export const EXPERIENCE_DATA = [
 		order: 4,
 		role: 'Graphic Designer',
 		company: {
-			name: 'VK Esports (Warface)',
+			name: 'VK Esports — Warface',
 			logo: '/assets/experience/avatar/vk.png',
 			sticker: {
 				image: '/assets/sticker/warface.svg',

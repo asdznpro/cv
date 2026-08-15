@@ -1,4 +1,5 @@
 import { listCompanies } from 'lib/companies'
+
 import { CompaniesManager } from 'widgets/admin'
 
 export default async function CompaniesPage() {

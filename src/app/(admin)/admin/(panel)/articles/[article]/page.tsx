@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 
 import { getAdminArticle, listAdminArticles } from 'lib/articles'
 import { listCompanies } from 'lib/companies'
+
 import { ArticleEditorManager } from 'widgets/admin'
 
 export default async function EditArticlePage({

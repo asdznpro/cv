@@ -1,4 +1,5 @@
 import { listShortLinks } from 'lib/short-links'
+
 import { ShortenerManager } from 'widgets/admin'
 
 export default async function ShortenerPage() {

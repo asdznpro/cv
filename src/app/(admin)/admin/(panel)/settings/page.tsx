@@ -1,8 +1,9 @@
 'use client'
 
-import { Icon28ChevronDownOutline } from '@vkontakte/icons'
 import { Button, Separator, Kbd } from 'ui/blocks'
 import { FormItem } from 'ui/forms'
+
+import { Icon28ChevronDownOutline } from '@vkontakte/icons'
 
 export default function Settings() {
 	return (
