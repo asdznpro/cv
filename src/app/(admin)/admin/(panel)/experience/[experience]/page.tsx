@@ -1,22 +1,32 @@
+import { notFound } from 'next/navigation'
+
 import { listAdminArticles } from 'lib/articles'
 import { listCompanies } from 'lib/companies'
-import { listAdminExperiences } from 'lib/experience'
+import { getAdminExperience, listAdminExperiences } from 'lib/experience'
 
 import { ExperienceEditorManager } from 'widgets/admin'
 
-export default async function NewExperiencePage() {
-	const [companies, articles, experiences] = await Promise.all([
+export default async function EditExperiencePage({
+	params,
+}: {
+	params: Promise<{ experience: string }>
+}) {
+	const { experience: id } = await params
+	const [experience, companies, articles, experiences] = await Promise.all([
+		getAdminExperience(id),
 		listCompanies(),
 		listAdminArticles(),
 		listAdminExperiences(),
 	])
+
+	if (!experience) notFound()
 
 	return (
 		<>
 			<span />
 
 			<ExperienceEditorManager
-				experience={null}
+				experience={experience}
 				companies={companies}
 				articles={articles.map(item => ({
 					id: item.id,

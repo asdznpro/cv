@@ -1,11 +1,15 @@
+import { listAdminExperiences } from 'lib/experience'
+
 import { ExperienceManager } from 'widgets/admin'
 
-export default function Experience() {
+export default async function ExperiencePage() {
+	const experiences = await listAdminExperiences()
+
 	return (
 		<>
 			<span />
 
-			<ExperienceManager />
+			<ExperienceManager experiences={experiences} />
 
 			<span />
 		</>
