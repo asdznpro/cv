@@ -32,7 +32,6 @@ import { DropdownMenu, Tooltip } from 'ui/floating'
 
 import {
 	Icon28ArchiveOutline,
-	Icon28CalendarOutline,
 	Icon28Cancel,
 	Icon28ChevronDownOutline,
 	Icon28CopyOutline,
@@ -42,7 +41,6 @@ import {
 	Icon28DocumentPlusOutline,
 	Icon28GlobeOutline,
 	Icon28HandPointUpOutline,
-	Icon28HashtagOutline,
 	Icon28MoreHorizontal,
 	Icon28SendOutline,
 	Icon28SortOutline,

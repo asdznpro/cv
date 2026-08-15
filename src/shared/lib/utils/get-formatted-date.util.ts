@@ -2,6 +2,14 @@ import { Temporal } from 'temporal-polyfill'
 
 export type FormattedDateLanguage = 'ru' | 'en'
 
+export type GetFormattedDateOptions = {
+	includeTime?: boolean
+	includeDay?: boolean
+	language?: FormattedDateLanguage
+}
+
+type DatePrecision = 'year' | 'month' | 'day'
+
 type FormatDate = {
 	full: string
 	short: string
@@ -13,11 +21,17 @@ const EMPTY: Record<FormattedDateLanguage, string> = {
 	en: 'No data',
 }
 
-function parseInstant(timestamp: number | string): Temporal.Instant | null {
+function parseInstant(timestamp: number | string): {
+	instant: Temporal.Instant
+	precision: DatePrecision
+} | null {
 	try {
 		if (typeof timestamp === 'number') {
 			if (!timestamp || Number.isNaN(timestamp) || timestamp <= 0) return null
-			return Temporal.Instant.fromEpochMilliseconds(timestamp)
+			return {
+				instant: Temporal.Instant.fromEpochMilliseconds(timestamp),
+				precision: 'day',
+			}
 		}
 
 		const trimmed = timestamp.trim()
@@ -26,19 +40,52 @@ function parseInstant(timestamp: number | string): Temporal.Instant | null {
 		if (/^\d+$/.test(trimmed)) {
 			const n = Number(trimmed)
 			if (!n || n <= 0) return null
-			return Temporal.Instant.fromEpochMilliseconds(n)
+			return {
+				instant: Temporal.Instant.fromEpochMilliseconds(n),
+				precision: 'day',
+			}
 		}
 
-		const iso = trimmed.includes('T') ? trimmed : `${trimmed}T00:00:00Z`
-		return Temporal.Instant.from(iso)
+		let date = trimmed
+		let precision: DatePrecision = 'day'
+
+		if (/^\d{4}$/.test(date)) {
+			date = `${date}-01-01`
+			precision = 'year'
+		} else if (/^\d{4}-\d{2}$/.test(date)) {
+			date = `${date}-01`
+			precision = 'month'
+		}
+
+		const iso = date.includes('T') ? date : `${date}T00:00:00Z`
+		return { instant: Temporal.Instant.from(iso), precision }
 	} catch {
 		return null
 	}
 }
 
+function resolveOptions(
+	includeTimeOrOptions?: boolean | GetFormattedDateOptions,
+	language?: FormattedDateLanguage,
+): Required<GetFormattedDateOptions> {
+	if (typeof includeTimeOrOptions === 'object' && includeTimeOrOptions) {
+		return {
+			includeTime: includeTimeOrOptions.includeTime ?? true,
+			includeDay: includeTimeOrOptions.includeDay ?? true,
+			language: includeTimeOrOptions.language ?? 'en',
+		}
+	}
+
+	return {
+		includeTime: includeTimeOrOptions ?? true,
+		includeDay: true,
+		language: language ?? 'en',
+	}
+}
+
 function formatTime(
 	zoned: Temporal.ZonedDateTime,
-	language: FormattedDateLanguage
+	language: FormattedDateLanguage,
 ) {
 	if (language === 'ru') {
 		return `${String(zoned.hour).padStart(2, '0')}:${String(zoned.minute).padStart(2, '0')}`
@@ -55,18 +102,42 @@ function formatCalendarDate(
 	instant: Temporal.Instant,
 	language: FormattedDateLanguage,
 	includeTime: boolean,
-	variant: 'full' | 'short' | 'month-day'
+	variant: 'full' | 'short' | 'month-day',
+	precision: DatePrecision,
 ) {
-	const locale = language === 'ru' ? 'ru-RU' : 'en-US'
+	const locale = language === 'ru' ? 'ru-RU' : 'en-GB'
 	const hour12 = language !== 'ru'
+	const time =
+		includeTime && precision === 'day'
+			? ({ hour: 'numeric', minute: '2-digit', hour12 } as const)
+			: {}
+
+	if (precision === 'year') {
+		return new Intl.DateTimeFormat(locale, { year: 'numeric' }).format(
+			instant.epochMilliseconds,
+		)
+	}
+
+	if (precision === 'month') {
+		if (variant === 'short') {
+			const short = new Intl.DateTimeFormat(locale, {
+				month: '2-digit',
+				year: '2-digit',
+			}).format(instant.epochMilliseconds)
+			return language === 'en' ? short.replaceAll('/', '.') : short
+		}
+
+		return new Intl.DateTimeFormat(locale, {
+			month: 'long',
+			year: 'numeric',
+		}).format(instant.epochMilliseconds)
+	}
 
 	if (variant === 'month-day') {
 		return new Intl.DateTimeFormat(locale, {
 			day: 'numeric',
 			month: 'long',
-			...(includeTime
-				? { hour: 'numeric', minute: '2-digit', hour12 }
-				: {}),
+			...time,
 		}).format(instant.epochMilliseconds)
 	}
 
@@ -75,9 +146,7 @@ function formatCalendarDate(
 			day: 'numeric',
 			month: 'long',
 			year: 'numeric',
-			...(includeTime
-				? { hour: 'numeric', minute: '2-digit', hour12 }
-				: {}),
+			...time,
 		}).format(instant.epochMilliseconds)
 	}
 
@@ -85,9 +154,7 @@ function formatCalendarDate(
 		day: '2-digit',
 		month: '2-digit',
 		year: '2-digit',
-		...(includeTime
-			? { hour: 'numeric', minute: '2-digit', hour12 }
-			: {}),
+		...time,
 	}).format(instant.epochMilliseconds)
 
 	return language === 'en' ? short.replaceAll('/', '.') : short
@@ -96,11 +163,23 @@ function formatCalendarDate(
 function getRelativeDate(
 	zoned: Temporal.ZonedDateTime,
 	language: FormattedDateLanguage,
-	includeTime: boolean
+	includeTime: boolean,
+	precision: DatePrecision,
 ) {
+	if (precision !== 'day') {
+		return formatCalendarDate(
+			zoned.toInstant(),
+			language,
+			false,
+			precision === 'year' ? 'full' : 'month-day',
+			precision,
+		)
+	}
+
 	const timeZone = zoned.timeZoneId
-	const dayDiff = zoned.toPlainDate().until(Temporal.Now.plainDateISO(timeZone))
-		.days
+	const dayDiff = zoned
+		.toPlainDate()
+		.until(Temporal.Now.plainDateISO(timeZone)).days
 	const timeStr = includeTime ? formatTime(zoned, language) : ''
 	const withTime = (label: string, connector: 'в' | 'at') =>
 		includeTime ? `${label} ${connector} ${timeStr}` : label
@@ -111,7 +190,13 @@ function getRelativeDate(
 		if (dayDiff === 1) return withTime('Вчера', 'в')
 
 		if (dayDiff < -1) {
-			return formatCalendarDate(zoned.toInstant(), language, includeTime, 'month-day')
+			return formatCalendarDate(
+				zoned.toInstant(),
+				language,
+				includeTime,
+				'month-day',
+				'day',
+			)
 		}
 
 		if (dayDiff === 2) return withTime('Позавчера', 'в')
@@ -138,7 +223,13 @@ function getRelativeDate(
 	if (dayDiff === 1) return withTime('Yesterday', 'at')
 
 	if (dayDiff < -1) {
-		return formatCalendarDate(zoned.toInstant(), language, includeTime, 'month-day')
+		return formatCalendarDate(
+			zoned.toInstant(),
+			language,
+			includeTime,
+			'month-day',
+			'day',
+		)
 	}
 
 	if (dayDiff === 2) return withTime('2 days ago', 'at')
@@ -158,22 +249,40 @@ function getRelativeDate(
 
 function getFormattedDate(
 	timestamp: number | string,
-	includeTime: boolean = true,
-	language: FormattedDateLanguage = 'en'
+	includeTimeOrOptions?: boolean | GetFormattedDateOptions,
+	language?: FormattedDateLanguage,
 ): FormatDate {
-	const empty = EMPTY[language]
-	const instant = parseInstant(timestamp)
+	const options = resolveOptions(includeTimeOrOptions, language)
+	const empty = EMPTY[options.language]
+	const parsed = parseInstant(timestamp)
 
-	if (!instant) {
+	if (!parsed) {
 		return { full: empty, short: empty, relative: empty }
 	}
 
-	const zoned = instant.toZonedDateTimeISO(Temporal.Now.timeZoneId())
+	const precision =
+		options.includeDay === false && parsed.precision === 'day'
+			? 'month'
+			: parsed.precision
+	const includeTime = options.includeTime && precision === 'day'
+	const zoned = parsed.instant.toZonedDateTimeISO(Temporal.Now.timeZoneId())
 
 	return {
-		full: formatCalendarDate(instant, language, includeTime, 'full'),
-		short: formatCalendarDate(instant, language, includeTime, 'short'),
-		relative: getRelativeDate(zoned, language, includeTime),
+		full: formatCalendarDate(
+			parsed.instant,
+			options.language,
+			includeTime,
+			'full',
+			precision,
+		),
+		short: formatCalendarDate(
+			parsed.instant,
+			options.language,
+			includeTime,
+			'short',
+			precision,
+		),
+		relative: getRelativeDate(zoned, options.language, includeTime, precision),
 	}
 }
 

@@ -16,7 +16,7 @@ export const EXPERIENCE_DATA = [
 		employment: {
 			type: 'full-time',
 			start: '2024-06',
-			end: null,
+			end: '2026-04',
 			duration: '1 год и 11 месяцев',
 		},
 		summary:

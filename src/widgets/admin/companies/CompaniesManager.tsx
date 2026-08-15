@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { type Company } from 'lib/companies'
 
 import { Badge, Button, PreviewCard } from 'ui/blocks'
-import { DropdownMenu } from 'ui/floating'
+import { DropdownMenu, Tooltip } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
 
 import {
@@ -57,11 +57,31 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 	}
 
 	return (
-		<>
-			<div className='flex flex-col gap-4'>
-				<h1 className='text-5xl text-balance font-medium font-condensed tracking-tight'>
-					Companies
-				</h1>
+		<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
+			<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+				<div className='flex flex-1 flex-col gap-3'>
+					<h1 className='text-3xl font-medium font-condensed tracking-tight'>
+						Companies Manager
+					</h1>
+
+					<p className='text-sm text-foreground-secondary'>
+						If your hardware supports this feature we we automatically lay of
+						the processing to the hardware. Otherwise our built in software
+						algorithm is used.
+					</p>
+				</div>
+
+				<div className='flex self-start gap-2'>
+					<Tooltip text='Add company'>
+						<Button
+							onClick={() => openCompanyForm(null)}
+							mode='secondary'
+							appearance='neutral'
+							prefix={<Icon28AddOutline width={18} height={18} />}
+							iconOnly
+						/>
+					</Tooltip>
+				</div>
 			</div>
 
 			{companies.length === 0 ? (
@@ -157,17 +177,6 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 					))}
 				</ul>
 			)}
-
-			<Button
-				className='mx-auto'
-				size='lg'
-				mode='ghost'
-				appearance='neutral'
-				prefix={<Icon28AddOutline width={20} height={20} />}
-				onClick={() => openCompanyForm(null)}
-			>
-				Add company
-			</Button>
-		</>
+		</section>
 	)
 }

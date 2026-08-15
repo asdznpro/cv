@@ -2,6 +2,8 @@
 
 import { Hero } from 'widgets/hero'
 
+import { getFormattedDate } from 'lib/utils'
+
 import { Badge, Button, PreviewCard, Separator } from 'ui/blocks'
 import { StickerPeel } from 'ui/effects'
 
@@ -87,9 +89,13 @@ export default function Home() {
 										<p className='text-base @2xl:text-lg font-medium'>
 											{item.employment.type}
 											<br />
-											{item.employment.start} —{' '}
-											{item.employment.end ?? 'по н.в.'} (
-											{item.employment.duration})
+											{
+												getFormattedDate(item.employment.start, false).full
+											} —{' '}
+											{item.employment.end
+												? getFormattedDate(item.employment.end, false).full
+												: 'по н.в.'}{' '}
+											({item.employment.duration})
 										</p>
 
 										<p className='text-base @2xl:text-lg text-foreground-secondary'>
