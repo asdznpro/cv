@@ -81,7 +81,7 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 								key={item.id}
 								className='flex flex-col bg-surface border border-separator rounded-surface'
 							>
-								<div className='flex p-surface gap-surface'>
+								<div className='flex @md:grid grid-cols-4 p-surface gap-surface'>
 									<PreviewCard
 										className='size-14'
 										ratio='square'
@@ -100,7 +100,7 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 										/>
 									)}
 
-									<div className='min-w-0 flex-1 flex flex-col gap-2'>
+									<div className='col-span-2 min-w-0 flex-1 flex flex-col gap-2'>
 										<h2 className='text-xl text-balance font-semibold font-condensed tracking-tight'>
 											{item.company?.name ?? 'Company'} <br />{' '}
 											<span className='text-foreground-secondary'>
@@ -137,7 +137,7 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 										</span>
 									</div>
 
-									<div className='flex gap-2'>
+									<div className='flex justify-self-end gap-2'>
 										<DropdownMenu>
 											<DropdownMenu.Trigger>
 												<Button
@@ -181,7 +181,7 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 								<Separator />
 
 								<div className='flex flex-col p-surface gap-app text-sm'>
-									<div className='flex flex-col @md:grid grid-cols-4 gap-2'>
+									<div className='flex flex-col @md:grid grid-cols-4 gap-x-app gap-y-2'>
 										<p className='text-foreground-secondary'>
 											Employment type:
 										</p>
@@ -191,7 +191,7 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 										</p>
 									</div>
 
-									<div className='flex flex-col @md:grid grid-cols-4 gap-2'>
+									<div className='flex flex-col @md:grid grid-cols-4 gap-x-app gap-y-2'>
 										<p className='text-foreground-secondary'>Time period:</p>
 
 										<p className='col-span-3'>
@@ -212,13 +212,13 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 										</p>
 									</div>
 
-									<div className='flex flex-col @md:grid grid-cols-4 gap-2'>
+									<div className='flex flex-col @md:grid grid-cols-4 gap-x-app gap-y-2'>
 										<p className='text-foreground-secondary'>Summary:</p>
 
 										<p className='col-span-3 line-clamp-3'>{item.summary}</p>
 									</div>
 
-									<div className='flex flex-col @md:grid grid-cols-4 gap-2'>
+									<div className='flex flex-col @md:grid grid-cols-4 gap-x-app gap-y-2'>
 										<p className='text-foreground-secondary'>
 											Connected article:
 										</p>

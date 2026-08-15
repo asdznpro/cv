@@ -41,6 +41,7 @@ export function Tooltip(props: TooltipProps) {
 		appearance = 'neutral',
 		align = 'center',
 		className,
+		triggerClassName,
 		open: openProp,
 		defaultOpen = false,
 		onOpenChange,
@@ -118,7 +119,7 @@ export function Tooltip(props: TooltipProps) {
 		<>
 			<span
 				ref={refs.setReference}
-				className='max-w-full inline-flex align-middle'
+				className={twMerge('max-w-full inline-flex align-middle', triggerClassName)}
 				{...referenceProps}
 			>
 				{children as ReactNode}

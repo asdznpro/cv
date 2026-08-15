@@ -194,13 +194,14 @@ export function ExperienceEditorManager({
 		() => getInitialPlaceAfter(experience, orderedIds),
 		[experience, orderedIds],
 	)
-	const initialPositions: Array<ExperiencePosition | ''> =
-		experience?.positions?.length ? experience.positions : ['']
+	const initialPositions: Array<ExperiencePosition | ''> = experience?.positions
+		?.length
+		? experience.positions
+		: ['']
 
 	const [form, setForm] = useState<FormState>(initial)
-	const [positions, setPositions] = useState<Array<ExperiencePosition | ''>>(
-		initialPositions,
-	)
+	const [positions, setPositions] =
+		useState<Array<ExperiencePosition | ''>>(initialPositions)
 	const [experienceId, setExperienceId] = useState(experience?.id ?? null)
 	const [placeAfterId, setPlaceAfterId] = useState(initialPlaceAfter)
 
@@ -231,7 +232,14 @@ export function ExperienceEditorManager({
 			return true
 		}
 		return JSON.stringify(form) !== JSON.stringify(initial)
-	}, [form, initial, initialPlaceAfter, initialPositions, placeAfterId, positions])
+	}, [
+		form,
+		initial,
+		initialPlaceAfter,
+		initialPositions,
+		placeAfterId,
+		positions,
+	])
 
 	function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
 		setForm(prev => ({ ...prev, [key]: value }))
@@ -417,14 +425,10 @@ export function ExperienceEditorManager({
 												size='sm'
 												mode='secondary'
 												appearance='neutral'
-												prefix={
-													<Icon28CancelOutline width={12} height={12} />
-												}
+												prefix={<Icon28CancelOutline width={12} height={12} />}
 												onClick={() =>
 													setPositions(prev =>
-														prev.filter(
-															(_, itemIndex) => itemIndex !== index,
-														),
+														prev.filter((_, itemIndex) => itemIndex !== index),
 													)
 												}
 											/>
@@ -773,34 +777,36 @@ export function ExperienceEditorManager({
 							/>
 						</Tooltip>
 
-						{isDirty && (
+						{experienceId && (
 							<AnimatePresence initial={false}>
-								<motion.div
-									key='discard-changes'
-									initial={{ transform: 'translateX(-12px)', opacity: 0 }}
-									animate={{ transform: 'translateX(0)', opacity: 1 }}
-									exit={{ transform: 'translateX(-12px)', opacity: 0 }}
-									transition={{
-										transform: {
-											type: 'tween',
-											duration: 0.16,
-											ease: 'easeInOut',
-										},
-										opacity: { duration: 0.16 },
-									}}
-									className='overflow-hidden'
-								>
-									<Button
-										type='button'
-										mode='secondary'
-										appearance='neutral'
-										radius='rounded'
-										onClick={discard}
-										disabled={pending}
+								{isDirty && (
+									<motion.div
+										key='discard-changes'
+										initial={{ transform: 'translateX(-12px)', opacity: 0 }}
+										animate={{ transform: 'translateX(0)', opacity: 1 }}
+										exit={{ transform: 'translateX(-12px)', opacity: 0 }}
+										transition={{
+											transform: {
+												type: 'tween',
+												duration: 0.16,
+												ease: 'easeInOut',
+											},
+											opacity: { duration: 0.16 },
+										}}
+										className='overflow-hidden'
 									>
-										Discard changes
-									</Button>
-								</motion.div>
+										<Button
+											type='button'
+											mode='secondary'
+											appearance='neutral'
+											radius='rounded'
+											onClick={discard}
+											disabled={pending}
+										>
+											Discard changes
+										</Button>
+									</motion.div>
+								)}
 							</AnimatePresence>
 						)}
 
@@ -812,7 +818,7 @@ export function ExperienceEditorManager({
 							onClick={save}
 							disabled={pending || (Boolean(experienceId) && !isDirty)}
 						>
-							{experienceId ? 'Save changes' : 'Create'}
+							{experienceId ? 'Save changes' : 'Create experience'}
 						</Button>
 					</div>
 				</div>
