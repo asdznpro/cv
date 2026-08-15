@@ -1,6 +1,7 @@
 export * from './badge'
 export * from './button'
 export * from './carousel'
+export * from './counter'
 export * from './gauge'
 export * from './kbd'
 export * from './middle-truncate'

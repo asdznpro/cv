@@ -26,6 +26,8 @@ export default interface TooltipProps {
 	tip?: boolean
 	appearance?: TooltipAppearance
 	className?: string
+	/** Class names for the trigger wrapper (`inline-flex` span). */
+	triggerClassName?: string
 	open?: boolean
 	defaultOpen?: boolean
 	onOpenChange?: (open: boolean) => void

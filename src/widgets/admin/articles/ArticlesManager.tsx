@@ -28,26 +28,26 @@ import {
 	useTabState,
 } from 'ui/blocks'
 import { Checkbox } from 'ui/forms'
-import { DropdownMenu } from 'ui/floating'
+import { DropdownMenu, Tooltip } from 'ui/floating'
 
 import {
 	Icon28ArchiveOutline,
-	Icon28CalendarOutline,
 	Icon28Cancel,
 	Icon28ChevronDownOutline,
 	Icon28CopyOutline,
 	Icon28DeleteOutline,
 	Icon28DoneOutline,
 	Icon28EditOutline,
+	Icon28DocumentPlusOutline,
 	Icon28GlobeOutline,
 	Icon28HandPointUpOutline,
-	Icon28HashtagOutline,
 	Icon28MoreHorizontal,
 	Icon28SendOutline,
 	Icon28SortOutline,
 	Icon28UnarchiveOutline,
 	Icon28UsersOutline,
 	Icon28ViewOutline,
+	Icon28ChainOutline,
 } from '@vkontakte/icons'
 
 const STATUS_TABS = ['all', 'published', 'draft', 'archived'] as const
@@ -153,16 +153,30 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 	}
 
 	return (
-		<>
-			<div className='flex flex-col gap-4'>
-				<div className='flex items-center gap-3'>
-					<h1 className='flex-1 text-5xl text-balance font-medium font-condensed tracking-tight'>
-						Articles
+		<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
+			<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+				<div className='flex flex-1 flex-col gap-3'>
+					<h1 className='text-3xl font-medium font-condensed tracking-tight'>
+						Articles Manager
 					</h1>
 
-					<Button to='/admin/articles/new' size='sm'>
-						New article
-					</Button>
+					<p className='text-sm text-foreground-secondary'>
+						If your hardware supports this feature we we automatically lay of
+						the processing to the hardware. Otherwise our built in software
+						algorithm is used.
+					</p>
+				</div>
+
+				<div className='flex self-start gap-2'>
+					<Tooltip text='Create new article'>
+						<Button
+							to='/admin/articles/new'
+							mode='secondary'
+							appearance='neutral'
+							prefix={<Icon28DocumentPlusOutline width={18} height={18} />}
+							iconOnly
+						/>
+					</Tooltip>
 				</div>
 			</div>
 
@@ -508,22 +522,15 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 												{article.uniques_24h > 0 && ' +' + article.uniques_24h}
 											</Badge>
 
-											<Badge
-												size='md'
-												mode='soft'
-												appearance='neutral'
-												prefix={
-													<Icon28CalendarOutline width={14} height={14} />
-												}
-											>
-												{getFormattedDate(article.created_at, false).short}
+											<Badge size='md' mode='soft' appearance='neutral'>
+												{getFormattedDate(article.created_at).short}
 											</Badge>
 
 											<Badge
+												className='capitalize'
 												size='md'
 												mode='soft'
 												appearance='neutral'
-												prefix={<Icon28HashtagOutline width={14} height={14} />}
 											>
 												{article.category}
 											</Badge>
@@ -533,7 +540,7 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 													size='md'
 													mode='soft'
 													appearance='neutral'
-													prefix={<Icon28GlobeOutline width={14} height={14} />}
+													prefix={<Icon28ChainOutline width={14} height={14} />}
 												>
 													External
 												</Badge>
@@ -673,6 +680,6 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 					)}
 				</div>
 			</div>
-		</>
+		</section>
 	)
 }
