@@ -72,8 +72,8 @@ export const NAV_ITEMS = [
 				icon: <Icon28WorkOutline width={20} height={20} />,
 			},
 			{
-				href: '/admin/skills',
-				label: 'Skills',
+				href: '/admin/toolkit',
+				label: 'Toolkit',
 				icon: <Icon28WrenchOutline width={20} height={20} />,
 			},
 		],

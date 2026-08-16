@@ -87,7 +87,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 				<div className='relative flex'>
 					<CreateShortLinkForm />
 
-					<span className='-z-1 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 container w-[160%] aspect-square animate-[fade-in_500ms_ease-out] bg-radial from-accent/20 to-60% to-background pointer-events-none' />
+					<span className='-z-1 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 container w-[160%] aspect-square animate-[fade-in_1000ms_ease-out] bg-radial from-accent/20 to-60% to-background pointer-events-none' />
 				</div>
 			</section>
 
