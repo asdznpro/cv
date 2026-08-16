@@ -2,13 +2,18 @@
 
 import Image from 'next/image'
 
+import type { ToolkitItem } from 'lib/toolkit'
+
 import { Badge, Carousel } from 'ui/blocks'
 import { Lanyard, PixelBlast } from 'ui/effects'
 
-import { TOOLKIT_ITEMS } from 'shared/data'
 import { Icon28WrenchOutline } from '@vkontakte/icons'
 
-export function Hero() {
+type HeroProps = {
+	items: ToolkitItem[]
+}
+
+export function Hero({ items }: HeroProps) {
 	return (
 		<div className='w-full h-screen flex flex-col p-2 gap-2'>
 			<div className='relative z-0 w-full h-full rounded-xl border border-separator bg-blue-950/40 overflow-hidden'>
@@ -77,7 +82,7 @@ export function Hero() {
 				>
 					<Carousel.Viewport>
 						<Carousel.Content>
-							{TOOLKIT_ITEMS.map(item => (
+							{items.map(item => (
 								<Carousel.Item
 									key={item.id}
 									className='basis-auto mr-5 0bg-surface p-4 rounded-sm'

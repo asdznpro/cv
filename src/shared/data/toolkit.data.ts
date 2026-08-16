@@ -103,7 +103,7 @@ export const TOOLKIT_ITEMS = [
 		id: 'adobe-pr',
 		name: 'Premiere Pro',
 		area: 'Motion',
-		tags: [],
+		tags: ['Video'],
 		proficiency: 'Occasional',
 		color: '#9999ff',
 		summary:
@@ -363,7 +363,7 @@ export const TOOLKIT_ITEMS = [
 		id: 'redux-toolkit',
 		name: 'Redux Toolkit',
 		area: 'Frontend',
-		tags: [],
+		tags: ['State'],
 		proficiency: 'Occasional',
 		color: '#764ABC',
 		summary:
@@ -423,7 +423,7 @@ export const TOOLKIT_ITEMS = [
 		id: 'motion',
 		name: 'Motion',
 		area: 'Frontend',
-		tags: [],
+		tags: ['Animation'],
 		proficiency: 'Occasional',
 		color: '#fbd509',
 		summary:
@@ -443,7 +443,7 @@ export const TOOLKIT_ITEMS = [
 		id: 'prisma',
 		name: 'Prisma',
 		area: 'Backend',
-		tags: [],
+		tags: ['Database'],
 		proficiency: 'Occasional',
 		color: '#14b8a6',
 		summary:
@@ -503,7 +503,7 @@ export const TOOLKIT_ITEMS = [
 		id: 'supabase',
 		name: 'Supabase',
 		area: 'Backend',
-		tags: ['Fullstack'],
+		tags: ['Fullstack', 'Database'],
 		proficiency: 'Occasional',
 		color: '#3ECF8E',
 		summary:
