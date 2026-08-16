@@ -601,7 +601,7 @@ export function ExperienceEditorManager({
 						</div>
 
 						<div className='w-full @xl:w-2/5'>
-							<div className='flex gap-2'>
+							<div className='flex @xl:grid grid-cols-4 gap-2'>
 								{form.stickers.map((sticker, index) => (
 									<button
 										key={index}
@@ -609,7 +609,7 @@ export function ExperienceEditorManager({
 										onClick={() => openSticker(index)}
 										disabled={pending}
 										className={twMerge(
-											'relative size-14 flex items-center justify-center text-foreground-secondary bg-background hover:bg-surface-secondary border border-separator rounded-md overflow-hidden cursor-pointer transition-colors focus-ring-base focus-ring-visible',
+											'relative max-w-16 w-full aspect-square flex items-center justify-center text-foreground-secondary bg-background hover:bg-surface-secondary border border-separator rounded-md overflow-hidden cursor-pointer transition-colors focus-ring-base focus-ring-visible',
 											!sticker && 'border-dashed',
 										)}
 									>

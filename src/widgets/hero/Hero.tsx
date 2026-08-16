@@ -2,13 +2,18 @@
 
 import Image from 'next/image'
 
+import type { ToolkitItem } from 'lib/toolkit'
+
 import { Badge, Carousel } from 'ui/blocks'
 import { Lanyard, PixelBlast } from 'ui/effects'
 
-import { TOOLKIT_LOGOS } from 'shared/data'
 import { Icon28WrenchOutline } from '@vkontakte/icons'
 
-export function Hero() {
+type HeroProps = {
+	items: ToolkitItem[]
+}
+
+export function Hero({ items }: HeroProps) {
 	return (
 		<div className='w-full h-screen flex flex-col p-2 gap-2'>
 			<div className='relative z-0 w-full h-full rounded-xl border border-separator bg-blue-950/40 overflow-hidden'>
@@ -77,31 +82,31 @@ export function Hero() {
 				>
 					<Carousel.Viewport>
 						<Carousel.Content>
-							{TOOLKIT_LOGOS.map((logo, index) => (
+							{items.map(item => (
 								<Carousel.Item
-									key={index}
+									key={item.id}
 									className='basis-auto mr-5 0bg-surface p-4 rounded-sm'
 								>
 									<span className='h-full flex items-center gap-3'>
 										<span
 											className='inline-block max-w-52 h-10'
 											style={{
-												aspectRatio: `${logo.size.width} / ${logo.size.height}`,
+												aspectRatio: `${item.image.lockup.size.width} / ${item.image.lockup.size.height}`,
 											}}
 										>
 											<Image
 												className='size-full object-contain'
-												src={logo.image}
-												alt={logo.name}
-												width={logo.size.width}
-												height={logo.size.height}
+												src={item.image.lockup.url}
+												alt={item.name}
+												width={item.image.lockup.size.width}
+												height={item.image.lockup.size.height}
 												loading='eager'
 											/>
 										</span>
 
-										{logo.label && (
+										{item.image.lockup.label && (
 											<span className='text-3xl font-semibold font-condensed tracking-tight whitespace-nowrap'>
-												{logo.name}
+												{item.name}
 											</span>
 										)}
 									</span>

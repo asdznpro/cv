@@ -19,7 +19,7 @@ export type UploadAssetResult = {
 	url: string
 }
 
-function extensionFromMime(mime: string) {
+export function extensionFromMime(mime: string) {
 	switch (mime) {
 		case 'image/jpeg':
 			return 'jpg'

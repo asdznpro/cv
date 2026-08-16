@@ -3,9 +3,10 @@
 import { revalidatePath } from 'next/cache'
 
 import { requireAdminSession } from 'lib/auth'
-import { uploadExperienceSticker } from 'lib/r2/upload-experience-sticker'
 import { createAdminClient } from 'lib/supabase/admin'
 import { createClient } from 'lib/supabase/server'
+
+import { uploadExperienceSticker } from './upload'
 
 import {
 	type Experience,
@@ -53,7 +54,7 @@ function toActionError(error: unknown): ActionResult {
 function parseStickers(value: unknown): ExperienceSticker[] {
 	if (!Array.isArray(value)) return []
 	return value
-		.map(item => {
+		.map((item) => {
 			if (!item || typeof item !== 'object') return null
 			const row = item as { url?: unknown; rotate?: unknown }
 			const url = typeof row.url === 'string' ? row.url.trim() : ''
@@ -116,7 +117,9 @@ export async function listExperiences(): Promise<Experience[]> {
 		.order('start_on', { ascending: false })
 
 	if (error) throw new Error(error.message)
-	return (data ?? []).map(row => mapExperience(row as Record<string, unknown>))
+	return (data ?? []).map((row) =>
+		mapExperience(row as Record<string, unknown>),
+	)
 }
 
 export async function listAdminExperiences(): Promise<Experience[]> {
@@ -132,10 +135,14 @@ export async function listAdminExperiences(): Promise<Experience[]> {
 		.order('start_on', { ascending: false })
 
 	if (error) throw new Error(error.message)
-	return (data ?? []).map(row => mapExperience(row as Record<string, unknown>))
+	return (data ?? []).map((row) =>
+		mapExperience(row as Record<string, unknown>),
+	)
 }
 
-export async function getAdminExperience(id: string): Promise<Experience | null> {
+export async function getAdminExperience(
+	id: string,
+): Promise<Experience | null> {
 	if (!(await assertAdmin())) {
 		throw new Error('Unauthorized')
 	}
@@ -262,8 +269,8 @@ export async function applyExperiencePlacement(
 		if (error) return { ok: false, error: error.message }
 
 		const others = (data ?? [])
-			.map(row => row.id as string)
-			.filter(id => id !== experienceId)
+			.map((row) => row.id as string)
+			.filter((id) => id !== experienceId)
 
 		let ordered: string[]
 		if (!placeAfterId) {

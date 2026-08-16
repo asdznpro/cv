@@ -38,8 +38,8 @@ const NAV_ITEMS = [
 		href: '/articles?category=experience',
 	},
 	{
-		label: 'Skills',
-		href: '/skills',
+		label: 'Toolkit',
+		href: '/toolkit',
 	},
 ]
 
@@ -252,8 +252,8 @@ export function Header() {
 													className={twMerge(
 														'w-full h-14 flex items-center px-4 rounded-lg transition-colors focus-ring-base focus-ring-visible',
 														isActive
-															? 'bg-surface text-foreground'
-															: 'text-foreground-secondary hover:bg-surface focus-visible:bg-surface',
+															? 'bg-surface-secondary text-foreground'
+															: 'text-foreground-secondary hover:bg-surface-secondary focus-visible:bg-surface',
 													)}
 												>
 													<span className='text-2xl font-medium font-condensed tracking-tight truncate'>

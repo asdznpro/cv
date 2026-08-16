@@ -182,7 +182,7 @@ export function DropZone(props: DropZoneProps) {
 					aria-label={hasFile ? 'Replace file' : 'Upload file'}
 					onClick={openPicker}
 					className={twMerge(
-						'relative z-0 w-full min-w-0 h-48 flex flex-col overflow-hidden',
+						'relative z-0 w-full min-w-0 h-40 flex flex-col overflow-hidden',
 						'rounded-md border border-dashed border-separator bg-background/80 backdrop-blur-sm',
 						'transition-all hover:bg-surface focus-visible:bg-surface',
 						'disabled:pointer-events-none disabled:cursor-not-allowed',
@@ -196,7 +196,7 @@ export function DropZone(props: DropZoneProps) {
 				>
 					{hasFile && preview ? (
 						<>
-							<div className='relative min-h-0 min-w-0 flex flex-1 items-center justify-center overflow-hidden p-surface'>
+							<div className='relative min-w-0 min-h-0 flex flex-1 items-center justify-center overflow-hidden p-surface'>
 								<img
 									src={preview}
 									alt=''
