@@ -3,9 +3,10 @@
 import { revalidatePath } from 'next/cache'
 
 import { requireAdminSession } from 'lib/auth'
-import { uploadCompanyLogo } from 'lib/r2/upload-company-logo'
 import { createAdminClient } from 'lib/supabase/admin'
 import { createClient } from 'lib/supabase/server'
+
+import { uploadCompanyLogo } from './upload'
 
 import { type Company, type CompanyInput, validateCompanyInput } from './types'
 

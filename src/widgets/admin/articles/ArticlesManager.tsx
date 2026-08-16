@@ -159,12 +159,6 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 					<h1 className='text-3xl font-medium font-condensed tracking-tight'>
 						Articles Manager
 					</h1>
-
-					<p className='text-sm text-foreground-secondary'>
-						If your hardware supports this feature we we automatically lay of
-						the processing to the hardware. Otherwise our built in software
-						algorithm is used.
-					</p>
 				</div>
 
 				<div className='flex self-start gap-2'>

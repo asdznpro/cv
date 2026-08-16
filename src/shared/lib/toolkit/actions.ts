@@ -3,12 +3,10 @@
 import { revalidatePath } from 'next/cache'
 
 import { requireAdminSession } from 'lib/auth'
-import {
-	uploadToolkitImage,
-	type ToolkitImageKind,
-} from 'lib/r2/upload-toolkit-image'
 import { createAdminClient } from 'lib/supabase/admin'
 import { createClient } from 'lib/supabase/server'
+
+import { uploadToolkitImage, type ToolkitImageKind } from './upload'
 
 import {
 	type ToolkitItem,
@@ -76,6 +74,7 @@ function toRow(input: ReturnType<typeof validateToolkitInput>['data']) {
 
 function revalidateToolkit(id?: string) {
 	revalidatePath('/admin/toolkit')
+	revalidatePath('/skills')
 	revalidatePath('/')
 	if (id) revalidatePath(`/admin/toolkit/${id}`)
 }
@@ -90,7 +89,9 @@ async function queryToolkitItems(
 		.order('name', { ascending: true })
 
 	if (error) throw new Error(error.message)
-	return (data ?? []).map(row => mapToolkitItem(row as Record<string, unknown>))
+	return (data ?? []).map((row) =>
+		mapToolkitItem(row as Record<string, unknown>),
+	)
 }
 
 export async function listToolkit(): Promise<ToolkitItem[]> {
@@ -243,8 +244,8 @@ export async function applyToolkitPlacement(
 		if (error) return { ok: false, error: error.message }
 
 		const others = (data ?? [])
-			.map(row => row.id as string)
-			.filter(id => id !== itemId)
+			.map((row) => row.id as string)
+			.filter((id) => id !== itemId)
 
 		let ordered: string[]
 		if (!placeAfterId) {
