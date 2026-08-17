@@ -40,7 +40,7 @@ interface CSSVars extends CSSProperties {
 
 const StickerPeel: React.FC<StickerPeelProps> = ({
 	imageSrc,
-	rotate = 30,
+	rotate = 0,
 	peelBackHoverPct = 30,
 	peelBackActivePct = 40,
 	peelEasing = 'power3.out',
