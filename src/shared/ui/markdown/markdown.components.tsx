@@ -8,6 +8,7 @@ import {
 	renderImageFigure,
 	renderQuoteBlock,
 	renderMasonryBlock,
+	renderSpotifyBlock,
 } from './blocks'
 
 import { typographyComponents } from './config/typography.components'
@@ -17,7 +18,10 @@ export const markdownComponents: Components = {
 
 	blockquote: props => renderQuoteBlock(props),
 
-	div: props => renderMasonryBlock(props) ?? renderCodeDiv(props),
+	div: props =>
+		renderSpotifyBlock(props) ??
+		renderMasonryBlock(props) ??
+		renderCodeDiv(props),
 
 	figure: props => {
 		const codeFigure = renderCodeFigure(props)

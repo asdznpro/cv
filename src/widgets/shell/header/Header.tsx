@@ -119,7 +119,7 @@ export function Header() {
 				}}
 				initial={false}
 				animate={{
-					maxWidth: isOpen ? '48rem' : '42rem',
+					maxWidth: isOpen ? '48rem' : '32rem',
 				}}
 				transition={{
 					type: 'spring',
