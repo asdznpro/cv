@@ -88,25 +88,41 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 							className='flex flex-col bg-surface border border-separator rounded-surface'
 						>
 							<div className='flex 0items-center p-surface gap-surface'>
-								<Icon24DotsVertical
+								{/* <Icon24DotsVertical
 									className='cursor-grab text-foreground-tertiary my-auto'
 									width={18}
 									height={18}
-								/>
+								/> */}
 
 								<PreviewCard
-									className='w-14'
+									className='size-14'
 									ratio='square'
 									src={company.logo}
 									alt={company.name}
 									radius='full'
 									sizes='(max-width: 1240px) 100vw, 1240px'
+									// inner={
+									// 	<span className='z-1 absolute inset-0 w-full h-full'>
+									// 		<span className='size-full flex items-center justify-center bg-surface/60'>
+									// 			<Badge
+									// 				appearance='neutral'
+									// 				prefix={<Icon24DotsVertical width={16} height={16} />}
+									// 			/>
+									// 		</span>
+									// 	</span>
+									// }
 								/>
 
 								<div className='min-w-0 flex-1 flex flex-col gap-2'>
 									<p className='text-xl font-medium font-condensed tracking-tight truncate'>
 										{company.name}
 									</p>
+
+									{company.summary && (
+										<p className='text-sm text-foreground-secondary line-clamp-2'>
+											{company.summary}
+										</p>
+									)}
 
 									<span className='flex flex-wrap gap-1'>
 										<Badge

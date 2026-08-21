@@ -18,7 +18,7 @@ import {
 	type ToolkitTag,
 } from 'lib/toolkit'
 
-import { Button, Separator } from 'ui/blocks'
+import { Button, ScrollArea, Separator } from 'ui/blocks'
 import { Checkbox, FormItem } from 'ui/forms'
 
 import { Icon28HashtagOutline, Icon28InfoCircleOutline } from '@vkontakte/icons'
@@ -297,233 +297,240 @@ export function ToolkitFormDialog({
 
 			<Separator />
 
-			<div className='max-h-[min(60dvh,52rem)] overflow-y-auto flex flex-col p-surface gap-surface'>
-				<div className='grid @md/overlay:grid-cols-2 gap-app'>
-					<FormItem id='toolkit-icon-upload' required>
-						<FormItem.Label>Icon</FormItem.Label>
-						<FormItem.DropZone
-							value={iconFile}
-							onValueChange={next => {
-								setIconFile(next)
-								if (!next) setField('icon_url', '')
-							}}
-							previewSrc={form.icon_url || null}
-							accept={IMAGE_ACCEPT}
-							emptyTitle='Click to upload or drag and drop'
-							emptyHint='PNG, JPG, GIF, WebP or SVG up to 10MB'
-							disabled={pending}
-							onReject={reason => {
-								toast.error(
-									reason === 'size'
-										? 'Файл больше 10MB'
-										: 'Допустимы PNG, JPG, GIF, WebP, SVG',
-								)
-							}}
-						/>
-					</FormItem>
+			<ScrollArea className='max-h-[min(60dvh,52rem)]'>
+				<div className='flex flex-col p-surface gap-surface'>
+					<div className='grid @md/overlay:grid-cols-2 gap-app'>
+						<FormItem id='toolkit-icon-upload' required>
+							<FormItem.Label>Icon</FormItem.Label>
+							<FormItem.DropZone
+								value={iconFile}
+								onValueChange={next => {
+									setIconFile(next)
+									if (!next) setField('icon_url', '')
+								}}
+								previewSrc={form.icon_url || null}
+								accept={IMAGE_ACCEPT}
+								emptyTitle='Click to upload or drag and drop'
+								emptyHint='PNG, JPG, GIF, WebP or SVG up to 10MB'
+								disabled={pending}
+								onReject={reason => {
+									toast.error(
+										reason === 'size'
+											? 'Файл больше 10MB'
+											: 'Допустимы PNG, JPG, GIF, WebP, SVG',
+									)
+								}}
+							/>
+						</FormItem>
 
-					<FormItem id='toolkit-lockup-upload' required>
-						<FormItem.Label>Lockup</FormItem.Label>
-						<FormItem.DropZone
-							value={lockupFile}
-							onValueChange={next => {
-								void onLockupChange(next)
-							}}
-							previewSrc={form.lockup_url || null}
-							accept={IMAGE_ACCEPT}
-							emptyTitle='Click to upload or drag and drop'
-							emptyHint='PNG, JPG, GIF, WebP or SVG up to 10MB'
-							disabled={pending}
-							onReject={reason => {
-								toast.error(
-									reason === 'size'
-										? 'Файл больше 10MB'
-										: 'Допустимы PNG, JPG, GIF, WebP, SVG',
-								)
-							}}
-						/>
-					</FormItem>
-				</div>
+						<FormItem id='toolkit-lockup-upload' required>
+							<FormItem.Label>Lockup</FormItem.Label>
+							<FormItem.DropZone
+								value={lockupFile}
+								onValueChange={next => {
+									void onLockupChange(next)
+								}}
+								previewSrc={form.lockup_url || null}
+								accept={IMAGE_ACCEPT}
+								emptyTitle='Click to upload or drag and drop'
+								emptyHint='PNG, JPG, GIF, WebP or SVG up to 10MB'
+								disabled={pending}
+								onReject={reason => {
+									toast.error(
+										reason === 'size'
+											? 'Файл больше 10MB'
+											: 'Допустимы PNG, JPG, GIF, WebP, SVG',
+									)
+								}}
+							/>
+						</FormItem>
 
-				<div className='grid @md/overlay:grid-cols-2 gap-app'>
-					<FormItem className='col-span-full' required>
-						<FormItem.Label>Name</FormItem.Label>
-						<FormItem.Input
-							aria-label='Name'
-							size='md'
-							mode='outline'
-							value={form.name}
-							onChange={event =>
-								onNameChange((event.target as HTMLInputElement).value)
-							}
-							placeholder='Figma'
-							disabled={pending}
-							prefix={<Icon28InfoCircleOutline width={18} height={18} />}
-						/>
-					</FormItem>
+						<FormItem className='col-span-full' required>
+							<FormItem.Label>Name</FormItem.Label>
+							<FormItem.Input
+								aria-label='Name'
+								size='md'
+								mode='outline'
+								value={form.name}
+								onChange={event =>
+									onNameChange((event.target as HTMLInputElement).value)
+								}
+								placeholder='Figma'
+								disabled={pending}
+								prefix={<Icon28InfoCircleOutline width={18} height={18} />}
+							/>
+						</FormItem>
 
-					<FormItem required>
-						<FormItem.Label>Slug</FormItem.Label>
-						<FormItem.Input
-							aria-label='Slug'
-							size='md'
-							mode='outline'
-							value={form.slug}
-							onChange={event => {
-								setSlugTouched(true)
-								setField(
-									'slug',
-									(event.target as HTMLInputElement).value.toLowerCase(),
-								)
-							}}
-							placeholder='figma'
-							disabled={pending}
-							prefix={<Icon28HashtagOutline width={18} height={18} />}
-						/>
-					</FormItem>
+						<FormItem required>
+							<FormItem.Label>Slug</FormItem.Label>
+							<FormItem.Input
+								aria-label='Slug'
+								size='md'
+								mode='outline'
+								value={form.slug}
+								onChange={event => {
+									setSlugTouched(true)
+									setField(
+										'slug',
+										(event.target as HTMLInputElement).value.toLowerCase(),
+									)
+								}}
+								placeholder='figma'
+								disabled={pending}
+								prefix={<Icon28HashtagOutline width={18} height={18} />}
+							/>
+						</FormItem>
 
-					<FormItem required>
-						<FormItem.Label>Color</FormItem.Label>
-						<FormItem.Input
-							aria-label='Color'
-							size='md'
-							mode='outline'
-							value={form.color}
-							onChange={event =>
-								setField('color', (event.target as HTMLInputElement).value)
-							}
-							placeholder='#874fff'
-							disabled={pending}
-							prefix={
-								<span className='relative size-4 shrink-0 overflow-hidden rounded-xs'>
-									<input
-										type='color'
-										aria-label='Pick brand color'
-										className='absolute inset-0 size-full cursor-pointer appearance-none border-0 bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-none [&::-webkit-color-swatch]:border-0 [&::-moz-color-swatch]:rounded-none [&::-moz-color-swatch]:border-0'
-										value={colorValue}
-										onChange={event => setField('color', event.target.value)}
-										disabled={pending}
-									/>
-								</span>
-							}
-						/>
-					</FormItem>
+						<FormItem required>
+							<FormItem.Label>Color</FormItem.Label>
+							<FormItem.Input
+								aria-label='Color'
+								size='md'
+								mode='outline'
+								value={form.color}
+								onChange={event =>
+									setField('color', (event.target as HTMLInputElement).value)
+								}
+								placeholder='#874fff'
+								disabled={pending}
+								prefix={
+									<span className='relative size-4 shrink-0 overflow-hidden rounded-xs'>
+										<input
+											type='color'
+											aria-label='Pick brand color'
+											className='absolute inset-0 size-full cursor-pointer appearance-none border-0 bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-none [&::-webkit-color-swatch]:border-0 [&::-moz-color-swatch]:rounded-none [&::-moz-color-swatch]:border-0'
+											value={colorValue}
+											onChange={event => setField('color', event.target.value)}
+											disabled={pending}
+										/>
+									</span>
+								}
+							/>
+						</FormItem>
 
-					<FormItem required>
-						<FormItem.Label>Area</FormItem.Label>
-						<FormItem.Select
-							mode='outline'
-							size='md'
-							options={AREA_OPTIONS}
-							value={form.area}
-							onValueChange={value => setField('area', value as ToolkitArea)}
-							placeholder='Select area'
-							disabled={pending}
-						/>
-					</FormItem>
+						<FormItem required>
+							<FormItem.Label>Area</FormItem.Label>
+							<FormItem.Select
+								mode='outline'
+								size='md'
+								options={AREA_OPTIONS}
+								value={form.area}
+								onValueChange={value => setField('area', value as ToolkitArea)}
+								placeholder='Select area'
+								disabled={pending}
+							/>
+						</FormItem>
 
-					<FormItem required>
-						<FormItem.Label>Proficiency</FormItem.Label>
-						<FormItem.Select
-							mode='outline'
-							size='md'
-							options={PROFICIENCY_OPTIONS}
-							value={form.proficiency}
-							onValueChange={value =>
-								setField('proficiency', value as ToolkitProficiency)
-							}
-							placeholder='Select proficiency'
-							disabled={pending}
-						/>
-					</FormItem>
+						<FormItem required>
+							<FormItem.Label>Proficiency</FormItem.Label>
+							<FormItem.Select
+								mode='outline'
+								size='md'
+								options={PROFICIENCY_OPTIONS}
+								value={form.proficiency}
+								onValueChange={value =>
+									setField('proficiency', value as ToolkitProficiency)
+								}
+								placeholder='Select proficiency'
+								disabled={pending}
+							/>
+						</FormItem>
 
-					<FormItem className='col-span-full' optional>
-						<FormItem.Label>Tags</FormItem.Label>
-						<FormItem.Autocomplete
-							mode='outline'
-							size='md'
-							options={TAG_OPTIONS}
-							value={form.tags}
-							onValueChange={value => setField('tags', value as ToolkitTag[])}
-							placeholder='Add tags'
-							disabled={pending}
-						/>
-					</FormItem>
+						<FormItem className='col-span-full' optional>
+							<FormItem.Label>Tags</FormItem.Label>
+							<FormItem.Autocomplete
+								mode='outline'
+								size='md'
+								options={TAG_OPTIONS}
+								value={form.tags}
+								onValueChange={value => setField('tags', value as ToolkitTag[])}
+								placeholder='Add tags'
+								disabled={pending}
+							/>
+						</FormItem>
 
-					<FormItem className='col-span-full' optional>
-						<FormItem.Label>Summary</FormItem.Label>
-						<FormItem.Textarea
-							aria-label='Summary'
-							size='md'
-							mode='outline'
-							value={form.summary}
-							onChange={event =>
-								setField('summary', (event.target as HTMLTextAreaElement).value)
-							}
-							placeholder='Why I use it'
-							disabled={pending}
-							resize='none'
-						/>
-					</FormItem>
+						<FormItem className='col-span-full' optional>
+							<FormItem.Label>Summary</FormItem.Label>
+							<FormItem.Textarea
+								aria-label='Summary'
+								size='md'
+								mode='outline'
+								value={form.summary}
+								onChange={event =>
+									setField(
+										'summary',
+										(event.target as HTMLTextAreaElement).value,
+									)
+								}
+								placeholder='Why I use it'
+								disabled={pending}
+								resize='none'
+							/>
+						</FormItem>
 
-					<FormItem required>
-						<FormItem.Label>Lockup width</FormItem.Label>
-						<FormItem.Input
-							aria-label='Lockup width'
-							size='md'
-							mode='outline'
-							type='number'
-							min={1}
-							value={form.lockup_width}
-							onChange={event =>
-								setField(
-									'lockup_width',
-									(event.target as HTMLInputElement).value,
-								)
-							}
-							placeholder='160'
-							disabled={pending}
-						/>
-					</FormItem>
+						<FormItem required>
+							<FormItem.Label>Lockup width</FormItem.Label>
+							<FormItem.Input
+								aria-label='Lockup width'
+								size='md'
+								mode='outline'
+								type='number'
+								min={1}
+								value={form.lockup_width}
+								onChange={event =>
+									setField(
+										'lockup_width',
+										(event.target as HTMLInputElement).value,
+									)
+								}
+								placeholder='160'
+								disabled={pending}
+							/>
+						</FormItem>
 
-					<FormItem required>
-						<FormItem.Label>Lockup height</FormItem.Label>
-						<FormItem.Input
-							aria-label='Lockup height'
-							size='md'
-							mode='outline'
-							type='number'
-							min={1}
-							value={form.lockup_height}
-							onChange={event =>
-								setField(
-									'lockup_height',
-									(event.target as HTMLInputElement).value,
-								)
-							}
-							placeholder='160'
-							disabled={pending}
-						/>
-					</FormItem>
+						<FormItem required>
+							<FormItem.Label>Lockup height</FormItem.Label>
+							<FormItem.Input
+								aria-label='Lockup height'
+								size='md'
+								mode='outline'
+								type='number'
+								min={1}
+								value={form.lockup_height}
+								onChange={event =>
+									setField(
+										'lockup_height',
+										(event.target as HTMLInputElement).value,
+									)
+								}
+								placeholder='160'
+								disabled={pending}
+							/>
+						</FormItem>
 
-					<div className='col-span-full flex gap-2 select-none'>
-						<Checkbox
-							id='toolkit-show-label'
-							checked={form.show_label}
-							onChange={event =>
-								setField(
-									'show_label',
-									(event.target as HTMLInputElement).checked,
-								)
-							}
-							disabled={pending}
-						/>
-						<label htmlFor='toolkit-show-label' className='text-sm font-medium'>
-							Show name next to lockup
-						</label>
+						<div className='col-span-full flex gap-2 select-none'>
+							<Checkbox
+								id='toolkit-show-label'
+								checked={form.show_label}
+								onChange={event =>
+									setField(
+										'show_label',
+										(event.target as HTMLInputElement).checked,
+									)
+								}
+								disabled={pending}
+							/>
+
+							<label
+								htmlFor='toolkit-show-label'
+								className='text-sm font-medium'
+							>
+								Show name next to lockup
+							</label>
+						</div>
 					</div>
 				</div>
-			</div>
+			</ScrollArea>
 
 			<Separator />
 

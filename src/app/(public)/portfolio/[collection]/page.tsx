@@ -127,7 +127,7 @@ export default async function Portfolio() {
 							<div className='flex flex-col @lg:grid grid-cols-4 gap-x-app gap-y-2'>
 								<p className='text-foreground-secondary'>Summary:</p>
 
-								<p className='col-span-3 line-clamp-3'>{experience.summary}</p>
+								<p className='col-span-3 line-clamp-3'>{experience.company?.summary ?? ''}</p>
 							</div>
 
 							{experience.skills.length > 0 && (

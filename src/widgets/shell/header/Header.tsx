@@ -10,7 +10,7 @@ import { twMerge } from 'tailwind-merge'
 
 import { useBoot } from 'widgets/shell'
 
-import { Badge, Button, Kbd, Separator } from 'ui/blocks'
+import { Badge, Button, Separator } from 'ui/blocks'
 import { Logo } from 'ui/brand'
 import { Backdrop } from 'ui/overlays'
 
@@ -22,20 +22,20 @@ import {
 
 const NAV_ITEMS = [
 	{
-		label: 'Articles',
+		label: 'All Articles',
 		href: '/articles',
 	},
 	{
-		label: 'About',
+		label: 'Articles / About',
 		href: '/articles/about',
+	},
+	{
+		label: 'Articles / Experience',
+		href: '/articles?category=experience',
 	},
 	{
 		label: 'Portfolio',
 		href: '/portfolio',
-	},
-	{
-		label: 'Experience',
-		href: '/articles?category=experience',
 	},
 	{
 		label: 'Toolkit',
@@ -296,11 +296,6 @@ export function Header() {
 										<span>
 											&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV
 										</span>
-
-										{/* <span className='ml-auto flex gap-3'>
-											<Kbd keys={['Shift', 'F']} />
-											<Kbd keys={['Esc']} />
-										</span> */}
 									</div>
 								</div>
 							</motion.div>

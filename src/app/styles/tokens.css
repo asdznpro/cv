@@ -4,6 +4,10 @@
 	--layout-surface: 1rem;
 	--layout-surface-radius: 0.625rem;
 
+	@supports (corner-shape: squircle) {
+		--layout-surface-radius: 1rem;
+	}
+
 	--layout-app: 1rem;
 
 	@media (width >= 48rem) {

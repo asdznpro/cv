@@ -5,7 +5,14 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { useClipboard, useHotkeys } from '@siberiacancode/reactuse'
 
-import { Button, Kbd, Separator, Tabs, useTabState } from 'ui/blocks'
+import {
+	Button,
+	Kbd,
+	ScrollArea,
+	Separator,
+	Tabs,
+	useTabState,
+} from 'ui/blocks'
 import { MarkdownPreview } from 'ui/markdown'
 
 import { Icon28DocumentTextOutline } from '@vkontakte/icons'
@@ -107,9 +114,11 @@ export function ArticleMarkdownEditor({
 						/>
 					</div>
 				) : (
-					<div className='max-h-88 min-h-88 overflow-y-auto overflow-x-clip flex p-surface'>
-						<MarkdownPreview>{value}</MarkdownPreview>
-					</div>
+					<ScrollArea className='max-h-88'>
+						<div className='flex p-surface'>
+							<MarkdownPreview>{value}</MarkdownPreview>
+						</div>
+					</ScrollArea>
 				)}
 
 				<Separator />

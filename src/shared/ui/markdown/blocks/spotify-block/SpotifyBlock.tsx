@@ -20,7 +20,7 @@ export function SpotifyBlock({ type, id, compact, theme }: SpotifyBlockProps) {
 	const embed = { type, id, compact, theme }
 
 	return (
-		<div className='not-prose my-6! overflow-hidden rounded-2xl bg-background'>
+		<div className='not-prose my-6! overflow-hidden rounded-3xl bg-background'>
 			<iframe
 				src={spotifyEmbedSrc(embed)}
 				title={`Spotify ${TYPE_LABEL[type]}`}
