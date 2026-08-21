@@ -2,7 +2,7 @@ import type { Element as HastElement } from 'hast'
 import type { ExtraProps } from 'react-markdown'
 import type { ComponentPropsWithoutRef } from 'react'
 
-import { PreviewCardProps } from 'ui/blocks'
+import type { PreviewCardProps } from 'ui/blocks'
 
 import { getImageCaption, getNodeDataProperty } from '../../lib'
 import { ImageBlock } from './ImageBlock'

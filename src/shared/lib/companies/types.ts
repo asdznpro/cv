@@ -6,6 +6,7 @@ export type Company = {
 	slug: string
 	logo: string
 	url: string | null
+	summary: string
 	created_at: string
 	updated_at: string
 }
@@ -15,6 +16,7 @@ export type CompanyInput = {
 	slug: string
 	logo: string
 	url?: string | null
+	summary?: string
 }
 
 export function slugifyCompanyName(name: string) {
@@ -30,12 +32,14 @@ export function normalizeCompanyInput(input: CompanyInput): CompanyInput {
 	const slug = (input.slug.trim() || slugifyCompanyName(name)).toLowerCase()
 	const logo = input.logo.trim()
 	const url = input.url?.trim() || null
+	const summary = input.summary?.trim() ?? ''
 
 	return {
 		name,
 		slug,
 		logo,
 		url,
+		summary,
 	}
 }
 

@@ -26,6 +26,7 @@ type FormState = {
 	slug: string
 	logo: string
 	url: string
+	summary: string
 }
 
 const EMPTY_FORM: FormState = {
@@ -33,6 +34,7 @@ const EMPTY_FORM: FormState = {
 	slug: '',
 	logo: '',
 	url: '',
+	summary: '',
 }
 
 function toFormState(company: Company): FormState {
@@ -41,6 +43,7 @@ function toFormState(company: Company): FormState {
 		slug: company.slug,
 		logo: company.logo,
 		url: company.url ?? '',
+		summary: company.summary ?? '',
 	}
 }
 
@@ -107,6 +110,7 @@ export function CompanyFormDialog({
 				slug: form.slug,
 				logo,
 				url: form.url || null,
+				summary: form.summary,
 			}
 
 			const result = editingId
@@ -212,6 +216,25 @@ export function CompanyFormDialog({
 							placeholder='Enter website'
 							disabled={pending}
 							prefix={<Icon28GlobeOutline width={18} height={18} />}
+						/>
+					</FormItem>
+
+					<FormItem className='col-span-full' optional>
+						<FormItem.Label>Summary</FormItem.Label>
+						<FormItem.Textarea
+							aria-label='Summary'
+							size='md'
+							mode='outline'
+							value={form.summary}
+							onChange={event =>
+								setField(
+									'summary',
+									(event.target as HTMLTextAreaElement).value,
+								)
+							}
+							placeholder='What this company is'
+							disabled={pending}
+							resize='none'
 						/>
 					</FormItem>
 				</div>

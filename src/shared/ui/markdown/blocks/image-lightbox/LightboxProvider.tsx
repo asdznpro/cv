@@ -3,7 +3,7 @@
 import { createContext, use, useState } from 'react'
 import { useHotkeys, useLockScroll } from '@siberiacancode/reactuse'
 
-import { PreviewCardProps } from 'ui/blocks'
+import type { PreviewCardProps } from 'ui/blocks'
 import { ImageLightbox } from './ImageLightbox'
 
 type Item = {

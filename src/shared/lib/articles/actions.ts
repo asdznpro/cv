@@ -27,7 +27,8 @@ const ARTICLE_SELECT = `
     name,
     slug,
     logo,
-    url
+    url,
+    summary
   )
 `
 

@@ -28,7 +28,8 @@ const EXPERIENCE_SELECT = `
     name,
     slug,
     logo,
-    url
+    url,
+    summary
   ),
   article:articles (
     id,

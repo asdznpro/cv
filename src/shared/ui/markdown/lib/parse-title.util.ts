@@ -1,4 +1,4 @@
-import { PreviewCardProps } from 'ui/blocks'
+import type { PreviewCardProps } from 'ui/blocks'
 
 export type ImageVariant = 'framed' | 'plain'
 export type QuoteVariant = 'pull' | 'border'

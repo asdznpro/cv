@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { motion } from 'motion/react'
 
-import { Badge, PreviewCard, PreviewCardProps } from 'ui/blocks'
+import { Badge, PreviewCard, type PreviewCardProps } from 'ui/blocks'
 
 import { useLightbox } from '../image-lightbox'
 

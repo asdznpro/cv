@@ -1,79 +1,115 @@
-export default function Portfolio() {
+import React from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+
+import {
+	formatEmploymentType,
+	formatExperiencePosition,
+	listExperiences,
+} from 'lib/experience'
+import { getFormattedDate } from 'lib/utils'
+
+import { Badge, Button, PreviewCard } from 'ui/blocks'
+import { DropdownMenu, Tooltip } from 'ui/floating'
+
+import { Icon28MoreHorizontal } from '@vkontakte/icons'
+
+export default async function Portfolio() {
+	const experiences = await listExperiences()
+
 	return (
 		<>
 			<span className='h-24' />
 
-			<section
-				style={{ contentVisibility: 'auto', containIntrinsicSize: '640px' }}
-				className='mx-auto container w-full flex flex-col px-app gap-8'
-			>
-				<div className='flex flex-col gap-6'>
-					<h1 className='text-3xl font-semibold font-condensed tracking-tight'>
-						To get started, edit the page.tsx file.
-					</h1>
+			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-12'>
+				{experiences.map(item => (
+					<div key={item.id} className=' flex flex-col gap-app'>
+						<div className='flex px-surface gap-3'>
+							<PreviewCard
+								className='size-9'
+								ratio='square'
+								src={item.company?.logo}
+								alt={item.company?.name ?? ''}
+								sizes='90vw'
+								radius='full'
+							/>
 
-					<p className='text-lg text-foreground-secondary'>
-						Looking for a starting point or more instructions? Head over to{' '}
-						<a
-							target='_blank'
-							href='https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-							className='font-medium text-foreground hover:text-accent underline'
-						>
-							Templates
-						</a>{' '}
-						or the{' '}
-						<a
-							target='_blank'
-							href='https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-							className='font-medium text-foreground hover:text-accent underline'
-						>
-							Learning
-						</a>{' '}
-						center.
-					</p>
+							<p className='flex-1 text-balance text-3xl font-medium font-condensed tracking-tight'>
+								{item.company?.name ?? ''}
+								{/* &nbsp;&nbsp;
+								<span className='text-foreground-secondary'>
+									{getFormattedDate(item.start_on, {
+										includeTime: false,
+										includeDay: false,
+									}).short +
+										' — ' +
+										(item.end_on
+											? getFormattedDate(item.end_on, {
+													includeTime: false,
+													includeDay: false,
+												}).short
+											: 'по н.в.')}
+								</span> */}
+							</p>
 
-					<p className='text-sm text-foreground-tertiary font-condensed uppercase tracking-tight'>
-						Продолжая использовать{' '}
-						<a
-							target='_blank'
-							href='/'
-							className='text-foreground-secondary hover:text-foreground underline'
+							<Button
+								mode='ghost'
+								appearance='neutral'
+								prefix={<Icon28MoreHorizontal width={18} height={18} />}
+								iconOnly
+							/>
+						</div>
+
+						<Link
+							key={item.id}
+							href={`/portfolio/${item.company?.slug}`}
+							className='group flex outline-none'
 						>
-							Lowtab.gg
-						</a>
-						, вы принимаете условия нашей{' '}
-						<a
-							href='/'
-							className='text-foreground-secondary hover:text-foreground underline'
-						>
-							Политики конфиденциальности
-						</a>
-						{' и '}
-						<a
-							href='/'
-							className='text-foreground-secondary hover:text-foreground underline'
-						>
-							Правил сервиса
-						</a>
-						, а также соглашаетесь на{' '}
-						<a
-							href='/'
-							className='text-foreground-secondary hover:text-foreground underline'
-						>
-							обработку персональных данных
-						</a>
-						, применение{' '}
-						<a
-							href='/'
-							className='text-foreground-secondary hover:text-foreground underline'
-						>
-							файлов cookie
-						</a>
-						, средств аналитики и рекомендательных механизмов, необходимых для
-						корректной работы платформы, повышения удобства использования и
-						персонализации вашего пользовательского опыта.
-					</p>
-				</div>
+							<PreviewCard
+								ratio='video'
+								src=''
+								alt={item.company?.name ?? ''}
+								sizes='90vw'
+								className='w-full'
+							>
+								{/* <span className='z-1 absolute inset-0 w-full h-full'>
+									{item.company && (
+										<div className='z-1 absolute -bottom-2 right-2 size-9 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden'>
+											<Image
+												className='w-full h-full object-cover'
+												src={item.company.logo}
+												alt={item.company.name}
+												width={200}
+												height={200}
+											/>
+										</div>
+									)}
+								</span> */}
+							</PreviewCard>
+						</Link>
+
+						<div className='flex flex-col gap-2 px-surface'>
+							{/* <p className='font-medium'>
+								{'@' + item.company?.slug + ', '}
+								{getFormattedDate(item.start_on, {
+									includeTime: false,
+									includeDay: false,
+								}).full +
+									' — ' +
+									(item.end_on
+										? getFormattedDate(item.end_on, {
+												includeTime: false,
+												includeDay: false,
+											}).full
+										: 'по н.в.')}
+							</p> */}
+
+							<p className='text-foreground-secondary line-clamp-2'>
+								{item.company?.summary ?? ''}
+							</p>
+						</div>
+					</div>
+				))}
 			</section>
 
 			<span />

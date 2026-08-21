@@ -49,6 +49,12 @@ body {
 	}
 }
 
+@supports (corner-shape: squircle) {
+	* {
+		corner-shape: squircle;
+	}
+}
+
 /* Animation */
 
 @keyframes fade-in {

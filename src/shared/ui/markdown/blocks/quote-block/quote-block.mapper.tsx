@@ -9,7 +9,11 @@ type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'> &
 		node?: HastElement
 	}
 
-export function renderQuoteBlock({ node, children, ...props }: BlockquoteProps) {
+export function renderQuoteBlock({
+	node,
+	children,
+	...props
+}: BlockquoteProps) {
 	if (!node?.properties?.dataQuoteBlock) {
 		return (
 			<blockquote {...props} className='border-l-2 border-accent pl-4'>

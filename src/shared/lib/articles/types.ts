@@ -25,6 +25,7 @@ export type ArticleCompany = {
 	slug: string
 	logo: string
 	url: string | null
+	summary: string
 }
 
 export type Article = {

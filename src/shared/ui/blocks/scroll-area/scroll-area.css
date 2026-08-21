@@ -1,0 +1,20 @@
+.os-theme-cv {
+	box-sizing: border-box;
+
+	--os-size: 12px;
+	--os-padding-perpendicular: 4px;
+	--os-padding-axis: 8px;
+
+	--os-track-bg: transparent;
+	--os-track-bg-hover: transparent;
+	--os-track-bg-active: transparent;
+	--os-track-border: none;
+
+	--os-handle-bg: var(--foreground-tertiary);
+	--os-handle-bg-hover: var(--foreground-secondary);
+	--os-handle-bg-active: var(--foreground-secondary);
+	--os-handle-border: none;
+	--os-handle-border-radius: 999px;
+	--os-handle-min-size: 24px;
+	--os-handle-interactive-area-offset: 4px;
+}

@@ -38,6 +38,7 @@ export type ExperienceCompany = {
 	slug: string
 	logo: string
 	url: string | null
+	summary: string
 }
 
 export type ExperienceArticle = {

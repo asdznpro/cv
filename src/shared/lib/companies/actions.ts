@@ -70,6 +70,7 @@ export async function createCompany(
 		}
 
 		revalidatePath('/admin/companies')
+		revalidatePath('/portfolio')
 		return { ok: true, company: company as Company }
 	} catch (error) {
 		return toActionError(error)
@@ -110,6 +111,7 @@ export async function updateCompany(
 		}
 
 		revalidatePath('/admin/companies')
+		revalidatePath('/portfolio')
 		return { ok: true, company: company as Company }
 	} catch (error) {
 		return toActionError(error)
@@ -134,6 +136,7 @@ export async function deleteCompany(id: string): Promise<ActionResult> {
 		}
 
 		revalidatePath('/admin/companies')
+		revalidatePath('/portfolio')
 		return { ok: true }
 	} catch (error) {
 		return toActionError(error)
