@@ -15,7 +15,7 @@ import { getFormattedDate } from 'lib/utils'
 
 import { Badge, Button, ScrollArea, Separator } from 'ui/blocks'
 import { Checkbox } from 'ui/forms'
-import { DropdownMenu } from 'ui/floating'
+import { DropdownMenu, Tooltip } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
 
 import {
@@ -210,33 +210,40 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 											</p>
 
 											<span className='flex flex-wrap gap-1'>
-												<Badge
-													size='md'
-													mode='soft'
-													appearance={
-														link.clicks_24h > 0 ? 'success' : 'neutral'
-													}
-													prefix={
-														<Icon28HandPointUpOutline width={14} height={14} />
-													}
-													title='Clicks (last 24h in parentheses)'
-												>
-													{link.clicks}
-													{link.clicks_24h > 0 && ' +' + link.clicks_24h}
-												</Badge>
+												<Tooltip text='Clicks (last 24h in parentheses)'>
+													<Badge
+														size='md'
+														mode='soft'
+														appearance={
+															link.clicks_24h > 0 ? 'success' : 'neutral'
+														}
+														prefix={
+															<Icon28HandPointUpOutline
+																width={14}
+																height={14}
+															/>
+														}
+													>
+														{link.clicks}
+														{link.clicks_24h > 0 && ' +' + link.clicks_24h}
+													</Badge>
+												</Tooltip>
 
-												<Badge
-													size='md'
-													mode='soft'
-													appearance={
-														link.uniques_24h > 0 ? 'success' : 'neutral'
-													}
-													prefix={<Icon28UsersOutline width={14} height={14} />}
-													title='Unique visitors (last 24h in parentheses)'
-												>
-													{link.unique_visitors ?? 0}
-													{link.uniques_24h > 0 && ' +' + link.uniques_24h}
-												</Badge>
+												<Tooltip text='Unique visitors (last 24h in parentheses)'>
+													<Badge
+														size='md'
+														mode='soft'
+														appearance={
+															link.uniques_24h > 0 ? 'success' : 'neutral'
+														}
+														prefix={
+															<Icon28UsersOutline width={14} height={14} />
+														}
+													>
+														{link.unique_visitors ?? 0}
+														{link.uniques_24h > 0 && ' +' + link.uniques_24h}
+													</Badge>
+												</Tooltip>
 
 												<Badge size='md' mode='soft' appearance='neutral'>
 													{getFormattedDate(link.created_at, false).short}
