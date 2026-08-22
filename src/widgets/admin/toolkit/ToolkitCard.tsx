@@ -23,23 +23,23 @@ export function ToolkitCard({ item, onEdit, onDelete }: ToolkitCardProps) {
 		<ToolkitCardView
 			item={item}
 			action={
-				<div className="relative z-1 flex gap-2">
+				<div className='relative z-1 flex gap-2'>
 					<DropdownMenu>
 						<DropdownMenu.Trigger>
 							<Button
-								size="sm"
-								mode="ghost"
-								appearance="neutral"
+								size='sm'
+								mode='ghost'
+								appearance='neutral'
 								prefix={<Icon28MoreHorizontal width={16} height={16} />}
 								iconOnly
 							/>
 						</DropdownMenu.Trigger>
 
-						<DropdownMenu.Content className="w-32">
+						<DropdownMenu.Content className='w-32'>
 							<DropdownMenu.Box>
 								<DropdownMenu.Item
 									onClick={onEdit}
-									aria-label="Edit toolkit item"
+									aria-label='Edit toolkit item'
 									prefix={<Icon28EditOutline width={18} height={18} />}
 								>
 									Edit
@@ -47,8 +47,8 @@ export function ToolkitCard({ item, onEdit, onDelete }: ToolkitCardProps) {
 
 								<DropdownMenu.Item
 									onClick={onDelete}
-									aria-label="Delete toolkit item"
-									appearance="danger"
+									aria-label='Delete toolkit item'
+									appearance='danger'
 									prefix={<Icon28DeleteOutline width={18} height={18} />}
 								>
 									Delete

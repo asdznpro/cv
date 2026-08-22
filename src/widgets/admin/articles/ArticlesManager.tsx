@@ -23,6 +23,7 @@ import {
 	Badge,
 	Button,
 	PreviewCard,
+	ScrollArea,
 	Separator,
 	Tabs,
 	useTabState,
@@ -411,266 +412,284 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 							</p>
 						</div>
 					) : (
-						pageArticles.map(article => (
-							<div
-								key={article.id}
-								className={twMerge(
-									'group flex flex-col not-last:border-b border-separator hover:bg-surface transition-colors',
-									selectedIds.includes(article.id) && 'bg-surface',
-								)}
-							>
-								<div className='flex p-surface gap-surface'>
-									<Checkbox
-										className='my-auto'
-										aria-label={`Select ${article.title}`}
-										checked={selectedIds.includes(article.id)}
-										onChange={() => toggleOne(article.id)}
-									/>
+						<ScrollArea className='max-h-[80vh]'>
+							{pageArticles.map(article => (
+								<div
+									key={article.id}
+									className={twMerge(
+										'group flex flex-col not-last:border-b border-separator hover:bg-surface transition-colors',
+										selectedIds.includes(article.id) && 'bg-surface',
+									)}
+								>
+									<div className='flex p-surface gap-surface'>
+										<Checkbox
+											className='my-auto'
+											aria-label={`Select ${article.title}`}
+											checked={selectedIds.includes(article.id)}
+											onChange={() => toggleOne(article.id)}
+										/>
 
-									<PreviewCard
-										className='w-28 h-fit'
-										ratio='3:2'
-										src={article.cover_url ?? undefined}
-										alt={article.title}
-										radius='sm'
-										sizes='(max-width: 1240px) 100vw, 1240px'
-										inner={
+										<PreviewCard
+											className='w-28 h-fit'
+											ratio='3:2'
+											src={article.cover_url ?? undefined}
+											alt={article.title}
+											radius='sm'
+											sizes='(max-width: 1240px) 100vw, 1240px'
+											inner={
+												<span className='z-1 absolute inset-0 w-full h-full'>
+													{article.status === 'draft' && (
+														<span className='size-full flex items-center justify-center bg-surface/60'>
+															<Badge
+																appearance='neutral'
+																prefix={
+																	<Icon28EditOutline width={16} height={16} />
+																}
+															/>
+														</span>
+													)}
+
+													{article.status === 'archived' && (
+														<span className='size-full flex items-center justify-center bg-surface/60'>
+															<Badge
+																appearance='neutral'
+																prefix={
+																	<Icon28ArchiveOutline
+																		width={16}
+																		height={16}
+																	/>
+																}
+															/>
+														</span>
+													)}
+												</span>
+											}
+										>
 											<span className='z-1 absolute inset-0 w-full h-full'>
-												{article.status === 'draft' && (
-													<span className='size-full flex items-center justify-center bg-surface/60'>
-														<Badge
-															appearance='neutral'
-															prefix={
-																<Icon28EditOutline width={16} height={16} />
-															}
+												{article.company && (
+													<div className='z-1 absolute -bottom-2 right-2 size-9 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden'>
+														<Image
+															className='w-full h-full object-cover'
+															src={article.company.logo}
+															alt={article.company.name}
+															width={200}
+															height={200}
 														/>
-													</span>
-												)}
-
-												{article.status === 'archived' && (
-													<span className='size-full flex items-center justify-center bg-surface/60'>
-														<Badge
-															appearance='neutral'
-															prefix={
-																<Icon28ArchiveOutline width={16} height={16} />
-															}
-														/>
-													</span>
+													</div>
 												)}
 											</span>
-										}
-									>
-										<span className='z-1 absolute inset-0 w-full h-full'>
-											{article.company && (
-												<div className='z-1 absolute -bottom-2 right-2 size-9 flex items-center justify-center bg-surface border border-separator rounded-full overflow-hidden'>
-													<Image
-														className='w-full h-full object-cover'
-														src={article.company.logo}
-														alt={article.company.name}
-														width={200}
-														height={200}
-													/>
-												</div>
-											)}
-										</span>
-									</PreviewCard>
+										</PreviewCard>
 
-									<div className='min-w-0 min-h-full flex-1 flex flex-col justify-center gap-2'>
-										<Link
-											href={`/admin/articles/${article.id}`}
-											className='max-w-full w-fit text-xl font-medium font-condensed tracking-tight truncate hover:underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded'
-										>
-											{article.title}
-										</Link>
-
-										<span className='flex flex-wrap gap-1'>
-											<Badge
-												size='md'
-												mode='soft'
-												appearance={
-													article.views_24h > 0 ? 'success' : 'neutral'
-												}
-												prefix={
-													article.type === 'article' ? (
-														<Icon28ViewOutline width={14} height={14} />
-													) : (
-														<Icon28HandPointUpOutline width={14} height={14} />
-													)
-												}
-												title='Views (last 24h delta)'
+										<div className='min-w-0 min-h-full flex-1 flex flex-col justify-center gap-2'>
+											<Link
+												href={`/admin/articles/${article.id}`}
+												className='max-w-full w-fit text-xl font-medium font-condensed tracking-tight truncate hover:underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded'
 											>
-												{article.views}
-												{article.views_24h > 0 && ' +' + article.views_24h}
-											</Badge>
+												{article.title}
+											</Link>
 
-											<Badge
-												size='md'
-												mode='soft'
-												appearance={
-													article.uniques_24h > 0 ? 'success' : 'neutral'
-												}
-												prefix={<Icon28UsersOutline width={14} height={14} />}
-												title='Unique visitors (last 24h delta)'
-											>
-												{article.unique_visitors}
-												{article.uniques_24h > 0 && ' +' + article.uniques_24h}
-											</Badge>
-
-											<Badge size='md' mode='soft' appearance='neutral'>
-												{getFormattedDate(article.created_at).short}
-											</Badge>
-
-											<Badge
-												className='capitalize'
-												size='md'
-												mode='soft'
-												appearance='neutral'
-											>
-												{article.category}
-											</Badge>
-
-											{article.type === 'link' && (
+											<span className='flex flex-wrap gap-1'>
 												<Badge
 													size='md'
 													mode='soft'
-													appearance='neutral'
-													prefix={<Icon28ChainOutline width={14} height={14} />}
-												>
-													External
-												</Badge>
-											)}
-										</span>
-									</div>
-
-									<div className='flex gap-2'>
-										<DropdownMenu>
-											<DropdownMenu.Trigger>
-												<Button
-													mode='ghost'
-													appearance='neutral'
-													prefix={
-														<Icon28MoreHorizontal width={18} height={18} />
+													appearance={
+														article.views_24h > 0 ? 'success' : 'neutral'
 													}
-													iconOnly
-												/>
-											</DropdownMenu.Trigger>
+													prefix={
+														article.type === 'article' ? (
+															<Icon28ViewOutline width={14} height={14} />
+														) : (
+															<Icon28HandPointUpOutline
+																width={14}
+																height={14}
+															/>
+														)
+													}
+													title='Views (last 24h delta)'
+												>
+													{article.views}
+													{article.views_24h > 0 && ' +' + article.views_24h}
+												</Badge>
 
-											<DropdownMenu.Content className='w-32'>
-												<DropdownMenu.Box>
-													{article.type === 'article' && article.slug && (
+												<Badge
+													size='md'
+													mode='soft'
+													appearance={
+														article.uniques_24h > 0 ? 'success' : 'neutral'
+													}
+													prefix={<Icon28UsersOutline width={14} height={14} />}
+													title='Unique visitors (last 24h delta)'
+												>
+													{article.unique_visitors}
+													{article.uniques_24h > 0 &&
+														' +' + article.uniques_24h}
+												</Badge>
+
+												<Badge size='md' mode='soft' appearance='neutral'>
+													{getFormattedDate(article.created_at).short}
+												</Badge>
+
+												<Badge
+													className='capitalize'
+													size='md'
+													mode='soft'
+													appearance='neutral'
+												>
+													{article.category}
+												</Badge>
+
+												{article.type === 'link' && (
+													<Badge
+														size='md'
+														mode='soft'
+														appearance='neutral'
+														prefix={
+															<Icon28ChainOutline width={14} height={14} />
+														}
+													>
+														External
+													</Badge>
+												)}
+											</span>
+										</div>
+
+										<div className='flex gap-2'>
+											<DropdownMenu>
+												<DropdownMenu.Trigger>
+													<Button
+														mode='ghost'
+														appearance='neutral'
+														prefix={
+															<Icon28MoreHorizontal width={18} height={18} />
+														}
+														iconOnly
+													/>
+												</DropdownMenu.Trigger>
+
+												<DropdownMenu.Content className='w-32'>
+													<DropdownMenu.Box>
+														{article.type === 'article' && article.slug && (
+															<DropdownMenu.Item
+																aria-label='Preview article'
+																href={`/articles/${article.slug}`}
+																target='_blank'
+																prefix={
+																	<Icon28ViewOutline width={18} height={18} />
+																}
+															>
+																Preview
+															</DropdownMenu.Item>
+														)}
+
+														{article.type === 'link' &&
+															article.external_url && (
+																<DropdownMenu.Item
+																	aria-label='Open link'
+																	href={article.external_url}
+																	target='_blank'
+																	prefix={
+																		<Icon28GlobeOutline
+																			width={18}
+																			height={18}
+																		/>
+																	}
+																>
+																	Open
+																</DropdownMenu.Item>
+															)}
+
 														<DropdownMenu.Item
-															aria-label='Preview article'
-															href={`/articles/${article.slug}`}
-															target='_blank'
+															aria-label='Duplicate article'
 															prefix={
-																<Icon28ViewOutline width={18} height={18} />
+																<Icon28CopyOutline width={18} height={18} />
+															}
+															disabled={pending}
+															onClick={() => onDuplicate(article.id)}
+														>
+															Duplicate
+														</DropdownMenu.Item>
+
+														<DropdownMenu.Item
+															aria-label='Edit article'
+															to={`/admin/articles/${article.id}`}
+															prefix={
+																<Icon28EditOutline width={18} height={18} />
 															}
 														>
-															Preview
+															Edit
 														</DropdownMenu.Item>
-													)}
+													</DropdownMenu.Box>
 
-													{article.type === 'link' && article.external_url && (
+													<DropdownMenu.Box>
+														{article.status !== 'archived' ? (
+															<DropdownMenu.Item
+																aria-label='Archive article'
+																prefix={
+																	<Icon28ArchiveOutline
+																		width={18}
+																		height={18}
+																	/>
+																}
+																onClick={() =>
+																	runBulk(
+																		() =>
+																			updateArticlesStatus(
+																				[article.id],
+																				'archived',
+																			),
+																		'Статья в архиве',
+																	)
+																}
+															>
+																Archive
+															</DropdownMenu.Item>
+														) : (
+															<DropdownMenu.Item
+																aria-label='Unarchive article'
+																prefix={
+																	<Icon28UnarchiveOutline
+																		width={18}
+																		height={18}
+																	/>
+																}
+																onClick={() =>
+																	runBulk(
+																		() =>
+																			updateArticlesStatus(
+																				[article.id],
+																				'published',
+																			),
+																		'Статья восстановлена',
+																	)
+																}
+															>
+																Unarchive
+															</DropdownMenu.Item>
+														)}
+
 														<DropdownMenu.Item
-															aria-label='Open link'
-															href={article.external_url}
-															target='_blank'
+															aria-label='Delete article'
+															appearance='danger'
 															prefix={
-																<Icon28GlobeOutline width={18} height={18} />
-															}
-														>
-															Open
-														</DropdownMenu.Item>
-													)}
-
-													<DropdownMenu.Item
-														aria-label='Duplicate article'
-														prefix={
-															<Icon28CopyOutline width={18} height={18} />
-														}
-														disabled={pending}
-														onClick={() => onDuplicate(article.id)}
-													>
-														Duplicate
-													</DropdownMenu.Item>
-
-													<DropdownMenu.Item
-														aria-label='Edit article'
-														to={`/admin/articles/${article.id}`}
-														prefix={
-															<Icon28EditOutline width={18} height={18} />
-														}
-													>
-														Edit
-													</DropdownMenu.Item>
-												</DropdownMenu.Box>
-
-												<DropdownMenu.Box>
-													{article.status !== 'archived' ? (
-														<DropdownMenu.Item
-															aria-label='Archive article'
-															prefix={
-																<Icon28ArchiveOutline width={18} height={18} />
+																<Icon28DeleteOutline width={18} height={18} />
 															}
 															onClick={() =>
 																runBulk(
-																	() =>
-																		updateArticlesStatus(
-																			[article.id],
-																			'archived',
-																		),
-																	'Статья в архиве',
+																	() => deleteArticles([article.id]),
+																	'Статья удалена',
 																)
 															}
 														>
-															Archive
+															Delete
 														</DropdownMenu.Item>
-													) : (
-														<DropdownMenu.Item
-															aria-label='Unarchive article'
-															prefix={
-																<Icon28UnarchiveOutline
-																	width={18}
-																	height={18}
-																/>
-															}
-															onClick={() =>
-																runBulk(
-																	() =>
-																		updateArticlesStatus(
-																			[article.id],
-																			'published',
-																		),
-																	'Статья восстановлена',
-																)
-															}
-														>
-															Unarchive
-														</DropdownMenu.Item>
-													)}
-
-													<DropdownMenu.Item
-														aria-label='Delete article'
-														appearance='danger'
-														prefix={
-															<Icon28DeleteOutline width={18} height={18} />
-														}
-														onClick={() =>
-															runBulk(
-																() => deleteArticles([article.id]),
-																'Статья удалена',
-															)
-														}
-													>
-														Delete
-													</DropdownMenu.Item>
-												</DropdownMenu.Box>
-											</DropdownMenu.Content>
-										</DropdownMenu>
+													</DropdownMenu.Box>
+												</DropdownMenu.Content>
+											</DropdownMenu>
+										</div>
 									</div>
 								</div>
-							</div>
-						))
+							))}
+						</ScrollArea>
 					)}
 				</div>
 			</div>

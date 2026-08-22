@@ -26,6 +26,7 @@ import {
 	Button,
 	MiddleTruncate,
 	PreviewCard,
+	ScrollArea,
 	Separator,
 } from 'ui/blocks'
 import { Checkbox, FormItem } from 'ui/forms'
@@ -567,551 +568,565 @@ export function AssetsManager({ initial }: AssetsManagerProps) {
 				<Separator />
 
 				<div className='relative flex flex-col'>
-					{isEmpty ? (
-						<div className='min-h-40 flex items-center justify-center p-surface'>
-							<p className='text-center text-sm text-foreground-secondary'>
-								This folder is empty
-							</p>
-						</div>
-					) : view === 'compact-list' ? (
-						<div className='flex flex-col'>
-							{list.folders.map(folder => (
-								<div
-									key={folder.prefix}
-									className={twMerge(
-										'group flex flex-col not-last:border-b border-separator hover:bg-surface transition-colors',
-										selectedIds.includes(folder.prefix) && 'bg-surface',
-									)}
-								>
-									<div className='flex p-surface gap-surface'>
-										<Checkbox
-											className='my-auto'
-											aria-label={`Select ${folder.name}`}
-											checked={selectedIds.includes(folder.prefix)}
-											onChange={() => toggleOne(folder.prefix)}
-										/>
+					<ScrollArea className='max-h-[80vh]'>
+						{isEmpty ? (
+							<div className='min-h-40 flex items-center justify-center p-surface'>
+								<p className='text-center text-sm text-foreground-secondary'>
+									This folder is empty
+								</p>
+							</div>
+						) : view === 'compact-list' ? (
+							<div className='flex flex-col'>
+								{list.folders.map(folder => (
+									<div
+										key={folder.prefix}
+										className={twMerge(
+											'group flex flex-col not-last:border-b border-separator hover:bg-surface transition-colors',
+											selectedIds.includes(folder.prefix) && 'bg-surface',
+										)}
+									>
+										<div className='flex p-surface gap-surface'>
+											<Checkbox
+												className='my-auto'
+												aria-label={`Select ${folder.name}`}
+												checked={selectedIds.includes(folder.prefix)}
+												onChange={() => toggleOne(folder.prefix)}
+											/>
 
-										<div className='min-w-0 min-h-full flex-1 flex flex-col justify-center gap-2'>
-											<div className='text-sm grid grid-cols-4 gap-app'>
-												<div className='col-span-2 flex gap-2'>
-													<Icon28FolderOutline
-														className='text-foreground-secondary'
-														width={20}
-														height={20}
-													/>
+											<div className='min-w-0 min-h-full flex-1 flex flex-col justify-center gap-2'>
+												<div className='text-sm grid grid-cols-4 gap-app'>
+													<div className='col-span-2 flex gap-2'>
+														<Icon28FolderOutline
+															className='text-foreground-secondary'
+															width={20}
+															height={20}
+														/>
 
-													<button
-														type='button'
-														className='max-w-full w-fit text-left font-medium font-condensed tracking-tight hover:underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded cursor-pointer'
-														onClick={() => openFolder(folder.prefix)}
-														disabled={pending}
-													>
-														<MiddleTruncate value={folder.name} />
-													</button>
-												</div>
+														<button
+															type='button'
+															className='max-w-full w-fit text-left font-medium font-condensed tracking-tight hover:underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded cursor-pointer'
+															onClick={() => openFolder(folder.prefix)}
+															disabled={pending}
+														>
+															<MiddleTruncate value={folder.name} />
+														</button>
+													</div>
 
-												<div className='text-foreground-secondary font-condensed tracking-tight'>
-													Folder
+													<div className='text-foreground-secondary font-condensed tracking-tight'>
+														Folder
+													</div>
 												</div>
 											</div>
-										</div>
 
-										<div className='flex gap-2'>
-											<DropdownMenu>
-												<DropdownMenu.Trigger>
-													<Button
-														size='sm'
-														mode='ghost'
-														appearance='neutral'
-														prefix={
-															<Icon28MoreHorizontal width={16} height={16} />
-														}
-														iconOnly
-														disabled={pending}
-													/>
-												</DropdownMenu.Trigger>
-
-												<DropdownMenu.Content className='w-36'>
-													<DropdownMenu.Box>
-														<DropdownMenu.Item
-															aria-label='Open folder'
+											<div className='flex gap-2'>
+												<DropdownMenu>
+													<DropdownMenu.Trigger>
+														<Button
+															size='sm'
+															mode='ghost'
+															appearance='neutral'
 															prefix={
-																<Icon28FolderOutline width={18} height={18} />
+																<Icon28MoreHorizontal width={16} height={16} />
 															}
-															onClick={() => openFolder(folder.prefix)}
-														>
-															Open
-														</DropdownMenu.Item>
+															iconOnly
+															disabled={pending}
+														/>
+													</DropdownMenu.Trigger>
 
-														<DropdownMenu.Item
-															aria-label='Delete folder'
-															appearance='danger'
-															prefix={
-																<Icon28DeleteOutline width={18} height={18} />
-															}
-															onClick={() =>
-																confirmDeleteFolder(folder.prefix, folder.name)
-															}
-														>
-															Delete
-														</DropdownMenu.Item>
-													</DropdownMenu.Box>
-												</DropdownMenu.Content>
-											</DropdownMenu>
+													<DropdownMenu.Content className='w-36'>
+														<DropdownMenu.Box>
+															<DropdownMenu.Item
+																aria-label='Open folder'
+																prefix={
+																	<Icon28FolderOutline width={18} height={18} />
+																}
+																onClick={() => openFolder(folder.prefix)}
+															>
+																Open
+															</DropdownMenu.Item>
+
+															<DropdownMenu.Item
+																aria-label='Delete folder'
+																appearance='danger'
+																prefix={
+																	<Icon28DeleteOutline width={18} height={18} />
+																}
+																onClick={() =>
+																	confirmDeleteFolder(
+																		folder.prefix,
+																		folder.name,
+																	)
+																}
+															>
+																Delete
+															</DropdownMenu.Item>
+														</DropdownMenu.Box>
+													</DropdownMenu.Content>
+												</DropdownMenu>
+											</div>
 										</div>
 									</div>
-								</div>
-							))}
+								))}
 
-							{list.files.map(file => (
-								<div
-									key={file.key}
-									className={twMerge(
-										'group flex flex-col not-last:border-b border-separator hover:bg-surface transition-colors',
-										selectedIds.includes(file.key) && 'bg-surface',
-									)}
-								>
-									<div className='flex p-surface gap-surface'>
-										<Checkbox
-											className='my-auto'
-											aria-label={`Select ${file.name}`}
-											checked={selectedIds.includes(file.key)}
-											onChange={() => toggleOne(file.key)}
-										/>
+								{list.files.map(file => (
+									<div
+										key={file.key}
+										className={twMerge(
+											'group flex flex-col not-last:border-b border-separator hover:bg-surface transition-colors',
+											selectedIds.includes(file.key) && 'bg-surface',
+										)}
+									>
+										<div className='flex p-surface gap-surface'>
+											<Checkbox
+												className='my-auto'
+												aria-label={`Select ${file.name}`}
+												checked={selectedIds.includes(file.key)}
+												onChange={() => toggleOne(file.key)}
+											/>
 
-										<div className='min-w-0 min-h-full flex-1 flex flex-col justify-center gap-2'>
-											<div className='text-sm grid grid-cols-4 gap-app'>
+											<div className='min-w-0 min-h-full flex-1 flex flex-col justify-center gap-2'>
+												<div className='text-sm grid grid-cols-4 gap-app'>
+													<a
+														href={file.url}
+														target='_blank'
+														rel='noreferrer'
+														className='root max-w-full w-fit font-medium font-condensed tracking-tight hover:underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded col-span-2'
+													>
+														<MiddleTruncate value={file.name} />
+													</a>
+
+													<div className='text-foreground-secondary font-condensed tracking-tight'>
+														{formatBytes(file.size)}
+													</div>
+
+													{file.lastModified && (
+														<div className='text-foreground-secondary font-condensed tracking-tight'>
+															{getFormattedDate(file.lastModified).short}
+														</div>
+													)}
+												</div>
+											</div>
+
+											<div className='flex gap-2'>
+												<DropdownMenu>
+													<DropdownMenu.Trigger>
+														<Button
+															size='sm'
+															mode='ghost'
+															appearance='neutral'
+															prefix={
+																<Icon28MoreHorizontal width={16} height={16} />
+															}
+															iconOnly
+															disabled={pending}
+														/>
+													</DropdownMenu.Trigger>
+
+													<DropdownMenu.Content className='w-40'>
+														<DropdownMenu.Box>
+															<DropdownMenu.Item
+																aria-label='Open file'
+																href={file.url}
+																target='_blank'
+																prefix={
+																	<Icon28ViewOutline width={18} height={18} />
+																}
+															>
+																Open
+															</DropdownMenu.Item>
+
+															<DropdownMenu.Item
+																aria-label='Copy CDN URL'
+																prefix={
+																	<Icon28CopyOutline width={18} height={18} />
+																}
+																onClick={() => copyUrl(file.url)}
+															>
+																Copy URL
+															</DropdownMenu.Item>
+
+															<DropdownMenu.Item
+																aria-label='Rename file'
+																prefix={
+																	<Icon28EditOutline width={18} height={18} />
+																}
+																onClick={() =>
+																	openRenameFile(file.key, file.name)
+																}
+															>
+																Rename
+															</DropdownMenu.Item>
+
+															<DropdownMenu.Item
+																aria-label='Delete file'
+																appearance='danger'
+																prefix={
+																	<Icon28DeleteOutline width={18} height={18} />
+																}
+																onClick={() =>
+																	confirmDeleteFile(file.key, file.name)
+																}
+															>
+																Delete
+															</DropdownMenu.Item>
+														</DropdownMenu.Box>
+													</DropdownMenu.Content>
+												</DropdownMenu>
+											</div>
+										</div>
+									</div>
+								))}
+							</div>
+						) : view === 'list' ? (
+							<div className='flex flex-col'>
+								{list.folders.map(folder => (
+									<div
+										key={folder.prefix}
+										className={twMerge(
+											'group flex flex-col not-last:border-b border-separator hover:bg-surface transition-colors',
+											selectedIds.includes(folder.prefix) && 'bg-surface',
+										)}
+									>
+										<div className='flex p-surface gap-surface'>
+											<Checkbox
+												className='my-auto'
+												aria-label={`Select ${folder.name}`}
+												checked={selectedIds.includes(folder.prefix)}
+												onChange={() => toggleOne(folder.prefix)}
+											/>
+
+											<PreviewCard
+												className='w-14'
+												placeholder={
+													<Icon28FolderOutline width={28} height={28} />
+												}
+												ratio='square'
+												radius='full'
+												sizes='(max-width: 1240px) 100vw, 1240px'
+											/>
+
+											<div className='min-w-0 min-h-full flex-1 flex flex-col justify-center gap-2'>
+												<button
+													type='button'
+													className='max-w-full w-fit text-left text-xl font-medium font-condensed tracking-tight hover:underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded cursor-pointer'
+													onClick={() => openFolder(folder.prefix)}
+													disabled={pending}
+												>
+													<MiddleTruncate value={folder.name} />
+												</button>
+
+												<span className='flex flex-wrap gap-1'>
+													<Badge size='sm' mode='soft' appearance='neutral'>
+														Folder
+													</Badge>
+												</span>
+											</div>
+
+											<div className='flex gap-2'>
+												<DropdownMenu>
+													<DropdownMenu.Trigger>
+														<Button
+															mode='ghost'
+															appearance='neutral'
+															prefix={
+																<Icon28MoreHorizontal width={18} height={18} />
+															}
+															iconOnly
+															disabled={pending}
+														/>
+													</DropdownMenu.Trigger>
+
+													<DropdownMenu.Content className='w-32'>
+														<DropdownMenu.Box>
+															<DropdownMenu.Item
+																aria-label='Open folder'
+																prefix={
+																	<Icon28FolderOutline width={18} height={18} />
+																}
+																onClick={() => openFolder(folder.prefix)}
+															>
+																Open
+															</DropdownMenu.Item>
+
+															<DropdownMenu.Item
+																aria-label='Delete folder'
+																appearance='danger'
+																prefix={
+																	<Icon28DeleteOutline width={18} height={18} />
+																}
+																onClick={() =>
+																	confirmDeleteFolder(
+																		folder.prefix,
+																		folder.name,
+																	)
+																}
+															>
+																Delete
+															</DropdownMenu.Item>
+														</DropdownMenu.Box>
+													</DropdownMenu.Content>
+												</DropdownMenu>
+											</div>
+										</div>
+									</div>
+								))}
+
+								{list.files.map(file => (
+									<div
+										key={file.key}
+										className={twMerge(
+											'group flex flex-col not-last:border-b border-separator hover:bg-surface transition-colors',
+											selectedIds.includes(file.key) && 'bg-surface',
+										)}
+									>
+										<div className='flex p-surface gap-surface'>
+											<Checkbox
+												className='my-auto'
+												aria-label={`Select ${file.name}`}
+												checked={selectedIds.includes(file.key)}
+												onChange={() => toggleOne(file.key)}
+											/>
+
+											<PreviewCard
+												className='w-14'
+												ratio='square'
+												src={file.url}
+												alt={file.name}
+												radius='sm'
+												sizes='(max-width: 1240px) 100vw, 1240px'
+											/>
+
+											<div className='min-w-0 min-h-full flex-1 flex flex-col justify-center gap-2'>
 												<a
 													href={file.url}
 													target='_blank'
 													rel='noreferrer'
-													className='root max-w-full w-fit font-medium font-condensed tracking-tight hover:underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded col-span-2'
+													className='root max-w-full w-fit text-xl font-medium font-condensed tracking-tight hover:underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded'
 												>
 													<MiddleTruncate value={file.name} />
 												</a>
 
-												<div className='text-foreground-secondary font-condensed tracking-tight'>
-													{formatBytes(file.size)}
-												</div>
+												<span className='flex flex-wrap gap-1'>
+													<Badge size='sm' mode='soft' appearance='neutral'>
+														{formatBytes(file.size)}
+													</Badge>
 
-												{file.lastModified && (
-													<div className='text-foreground-secondary font-condensed tracking-tight'>
-														{getFormattedDate(file.lastModified).short}
-													</div>
-												)}
+													{file.lastModified && (
+														<Badge size='sm' mode='soft' appearance='neutral'>
+															{getFormattedDate(file.lastModified).short}
+														</Badge>
+													)}
+												</span>
+											</div>
+
+											<div className='flex gap-2'>
+												<DropdownMenu>
+													<DropdownMenu.Trigger>
+														<Button
+															mode='ghost'
+															appearance='neutral'
+															prefix={
+																<Icon28MoreHorizontal width={18} height={18} />
+															}
+															iconOnly
+															disabled={pending}
+														/>
+													</DropdownMenu.Trigger>
+
+													<DropdownMenu.Content className='w-32'>
+														<DropdownMenu.Box>
+															<DropdownMenu.Item
+																aria-label='Open file'
+																href={file.url}
+																target='_blank'
+																prefix={
+																	<Icon28ViewOutline width={18} height={18} />
+																}
+															>
+																Open
+															</DropdownMenu.Item>
+
+															<DropdownMenu.Item
+																aria-label='Copy CDN URL'
+																prefix={
+																	<Icon28CopyOutline width={18} height={18} />
+																}
+																onClick={() => copyUrl(file.url)}
+															>
+																Copy URL
+															</DropdownMenu.Item>
+
+															<DropdownMenu.Item
+																aria-label='Rename file'
+																prefix={
+																	<Icon28EditOutline width={18} height={18} />
+																}
+																onClick={() =>
+																	openRenameFile(file.key, file.name)
+																}
+															>
+																Rename
+															</DropdownMenu.Item>
+
+															<DropdownMenu.Item
+																aria-label='Delete file'
+																appearance='danger'
+																prefix={
+																	<Icon28DeleteOutline width={18} height={18} />
+																}
+																onClick={() =>
+																	confirmDeleteFile(file.key, file.name)
+																}
+															>
+																Delete
+															</DropdownMenu.Item>
+														</DropdownMenu.Box>
+													</DropdownMenu.Content>
+												</DropdownMenu>
 											</div>
 										</div>
-
-										<div className='flex gap-2'>
-											<DropdownMenu>
-												<DropdownMenu.Trigger>
-													<Button
-														size='sm'
-														mode='ghost'
-														appearance='neutral'
-														prefix={
-															<Icon28MoreHorizontal width={16} height={16} />
-														}
-														iconOnly
-														disabled={pending}
-													/>
-												</DropdownMenu.Trigger>
-
-												<DropdownMenu.Content className='w-40'>
-													<DropdownMenu.Box>
-														<DropdownMenu.Item
-															aria-label='Open file'
-															href={file.url}
-															target='_blank'
-															prefix={
-																<Icon28ViewOutline width={18} height={18} />
-															}
-														>
-															Open
-														</DropdownMenu.Item>
-
-														<DropdownMenu.Item
-															aria-label='Copy CDN URL'
-															prefix={
-																<Icon28CopyOutline width={18} height={18} />
-															}
-															onClick={() => copyUrl(file.url)}
-														>
-															Copy URL
-														</DropdownMenu.Item>
-
-														<DropdownMenu.Item
-															aria-label='Rename file'
-															prefix={
-																<Icon28EditOutline width={18} height={18} />
-															}
-															onClick={() =>
-																openRenameFile(file.key, file.name)
-															}
-														>
-															Rename
-														</DropdownMenu.Item>
-
-														<DropdownMenu.Item
-															aria-label='Delete file'
-															appearance='danger'
-															prefix={
-																<Icon28DeleteOutline width={18} height={18} />
-															}
-															onClick={() =>
-																confirmDeleteFile(file.key, file.name)
-															}
-														>
-															Delete
-														</DropdownMenu.Item>
-													</DropdownMenu.Box>
-												</DropdownMenu.Content>
-											</DropdownMenu>
-										</div>
 									</div>
-								</div>
-							))}
-						</div>
-					) : view === 'list' ? (
-						<div className='flex flex-col'>
-							{list.folders.map(folder => (
-								<div
-									key={folder.prefix}
-									className={twMerge(
-										'group flex flex-col not-last:border-b border-separator hover:bg-surface transition-colors',
-										selectedIds.includes(folder.prefix) && 'bg-surface',
-									)}
-								>
-									<div className='flex p-surface gap-surface'>
-										<Checkbox
-											className='my-auto'
-											aria-label={`Select ${folder.name}`}
-											checked={selectedIds.includes(folder.prefix)}
-											onChange={() => toggleOne(folder.prefix)}
-										/>
-
-										<PreviewCard
-											className='w-14'
-											placeholder={
-												<Icon28FolderOutline width={28} height={28} />
-											}
-											ratio='square'
-											radius='full'
-											sizes='(max-width: 1240px) 100vw, 1240px'
-										/>
-
-										<div className='min-w-0 min-h-full flex-1 flex flex-col justify-center gap-2'>
+								))}
+							</div>
+						) : (
+							<div className='grid grid-cols-5 p-2 gap-2'>
+								{list.folders.map(folder => (
+									<ContextMenu key={folder.prefix}>
+										<ContextMenu.Trigger>
 											<button
-												type='button'
-												className='max-w-full w-fit text-left text-xl font-medium font-condensed tracking-tight hover:underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded cursor-pointer'
 												onClick={() => openFolder(folder.prefix)}
 												disabled={pending}
+												type='button'
+												className={twMerge(
+													'group flex flex-col rounded-md cursor-pointer',
+													'transition-colors hover:bg-surface focus-visible:bg-surface focus-ring-base focus-ring-visible',
+													selectedIds.includes(folder.prefix) && 'bg-surface',
+												)}
 											>
-												<MiddleTruncate value={folder.name} />
-											</button>
-
-											<span className='flex flex-wrap gap-1'>
-												<Badge size='sm' mode='soft' appearance='neutral'>
-													Folder
-												</Badge>
-											</span>
-										</div>
-
-										<div className='flex gap-2'>
-											<DropdownMenu>
-												<DropdownMenu.Trigger>
-													<Button
-														mode='ghost'
-														appearance='neutral'
-														prefix={
-															<Icon28MoreHorizontal width={18} height={18} />
+												<div className='flex flex-col items-center p-2 gap-2'>
+													<PreviewCard
+														className='w-16'
+														placeholder={
+															<Icon28FolderOutline width={28} height={28} />
 														}
-														iconOnly
-														disabled={pending}
+														ratio='square'
+														radius='full'
+														sizes='(max-width: 1240px) 100vw, 1240px'
+														interactive={false}
 													/>
-												</DropdownMenu.Trigger>
 
-												<DropdownMenu.Content className='w-32'>
-													<DropdownMenu.Box>
-														<DropdownMenu.Item
-															aria-label='Open folder'
-															prefix={
-																<Icon28FolderOutline width={18} height={18} />
-															}
-															onClick={() => openFolder(folder.prefix)}
-														>
-															Open
-														</DropdownMenu.Item>
+													<div className='max-w-full text-center text-sm font-medium font-condensed tracking-tight'>
+														<MiddleTruncate value={folder.name} />
+													</div>
+												</div>
+											</button>
+										</ContextMenu.Trigger>
 
-														<DropdownMenu.Item
-															aria-label='Delete folder'
-															appearance='danger'
-															prefix={
-																<Icon28DeleteOutline width={18} height={18} />
-															}
-															onClick={() =>
-																confirmDeleteFolder(folder.prefix, folder.name)
-															}
-														>
-															Delete
-														</DropdownMenu.Item>
-													</DropdownMenu.Box>
-												</DropdownMenu.Content>
-											</DropdownMenu>
-										</div>
-									</div>
-								</div>
-							))}
+										<ContextMenu.Content className='w-32'>
+											<ContextMenu.Box>
+												<ContextMenu.Item
+													aria-label='Open folder'
+													prefix={
+														<Icon28FolderOutline width={18} height={18} />
+													}
+													onClick={() => openFolder(folder.prefix)}
+												>
+													Open
+												</ContextMenu.Item>
 
-							{list.files.map(file => (
-								<div
-									key={file.key}
-									className={twMerge(
-										'group flex flex-col not-last:border-b border-separator hover:bg-surface transition-colors',
-										selectedIds.includes(file.key) && 'bg-surface',
-									)}
-								>
-									<div className='flex p-surface gap-surface'>
-										<Checkbox
-											className='my-auto'
-											aria-label={`Select ${file.name}`}
-											checked={selectedIds.includes(file.key)}
-											onChange={() => toggleOne(file.key)}
-										/>
+												<ContextMenu.Item
+													aria-label='Delete folder'
+													appearance='danger'
+													prefix={
+														<Icon28DeleteOutline width={18} height={18} />
+													}
+													onClick={() =>
+														confirmDeleteFolder(folder.prefix, folder.name)
+													}
+												>
+													Delete
+												</ContextMenu.Item>
+											</ContextMenu.Box>
+										</ContextMenu.Content>
+									</ContextMenu>
+								))}
 
-										<PreviewCard
-											className='w-14'
-											ratio='square'
-											src={file.url}
-											alt={file.name}
-											radius='sm'
-											sizes='(max-width: 1240px) 100vw, 1240px'
-										/>
-
-										<div className='min-w-0 min-h-full flex-1 flex flex-col justify-center gap-2'>
+								{list.files.map(file => (
+									<ContextMenu key={file.key}>
+										<ContextMenu.Trigger>
 											<a
+												key={file.key}
 												href={file.url}
 												target='_blank'
 												rel='noreferrer'
-												className='root max-w-full w-fit text-xl font-medium font-condensed tracking-tight hover:underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded'
-											>
-												<MiddleTruncate value={file.name} />
-											</a>
-
-											<span className='flex flex-wrap gap-1'>
-												<Badge size='sm' mode='soft' appearance='neutral'>
-													{formatBytes(file.size)}
-												</Badge>
-
-												{file.lastModified && (
-													<Badge size='sm' mode='soft' appearance='neutral'>
-														{getFormattedDate(file.lastModified).short}
-													</Badge>
+												className={twMerge(
+													'root group flex flex-col rounded-md cursor-pointer',
+													'transition-colors hover:bg-surface focus-visible:bg-surface focus-ring-base focus-ring-visible',
+													selectedIds.includes(file.key) && 'bg-surface',
 												)}
-											</span>
-										</div>
-
-										<div className='flex gap-2'>
-											<DropdownMenu>
-												<DropdownMenu.Trigger>
-													<Button
-														mode='ghost'
-														appearance='neutral'
-														prefix={
-															<Icon28MoreHorizontal width={18} height={18} />
-														}
-														iconOnly
-														disabled={pending}
+											>
+												<div className='flex flex-col items-center p-2 gap-2'>
+													<PreviewCard
+														className='w-16'
+														ratio='square'
+														src={file.url}
+														alt={file.name}
+														radius='sm'
+														sizes='(max-width: 1240px) 100vw, 1240px'
+														interactive={false}
 													/>
-												</DropdownMenu.Trigger>
 
-												<DropdownMenu.Content className='w-32'>
-													<DropdownMenu.Box>
-														<DropdownMenu.Item
-															aria-label='Open file'
-															href={file.url}
-															target='_blank'
-															prefix={
-																<Icon28ViewOutline width={18} height={18} />
-															}
-														>
-															Open
-														</DropdownMenu.Item>
+													<div className='max-w-full text-center text-sm font-medium font-condensed tracking-tight'>
+														<MiddleTruncate value={file.name} />
+													</div>
+												</div>
+											</a>
+										</ContextMenu.Trigger>
 
-														<DropdownMenu.Item
-															aria-label='Copy CDN URL'
-															prefix={
-																<Icon28CopyOutline width={18} height={18} />
-															}
-															onClick={() => copyUrl(file.url)}
-														>
-															Copy URL
-														</DropdownMenu.Item>
+										<ContextMenu.Content className='w-32'>
+											<ContextMenu.Box>
+												<ContextMenu.Item
+													aria-label='Open file'
+													href={file.url}
+													target='_blank'
+													prefix={<Icon28ViewOutline width={18} height={18} />}
+												>
+													Open
+												</ContextMenu.Item>
 
-														<DropdownMenu.Item
-															aria-label='Rename file'
-															prefix={
-																<Icon28EditOutline width={18} height={18} />
-															}
-															onClick={() =>
-																openRenameFile(file.key, file.name)
-															}
-														>
-															Rename
-														</DropdownMenu.Item>
+												<ContextMenu.Item
+													aria-label='Copy CDN URL'
+													prefix={<Icon28CopyOutline width={18} height={18} />}
+													onClick={() => copyUrl(file.url)}
+												>
+													Copy URL
+												</ContextMenu.Item>
 
-														<DropdownMenu.Item
-															aria-label='Delete file'
-															appearance='danger'
-															prefix={
-																<Icon28DeleteOutline width={18} height={18} />
-															}
-															onClick={() =>
-																confirmDeleteFile(file.key, file.name)
-															}
-														>
-															Delete
-														</DropdownMenu.Item>
-													</DropdownMenu.Box>
-												</DropdownMenu.Content>
-											</DropdownMenu>
-										</div>
-									</div>
-								</div>
-							))}
-						</div>
-					) : (
-						<div className='grid grid-cols-5 p-2 gap-2'>
-							{list.folders.map(folder => (
-								<ContextMenu key={folder.prefix}>
-									<ContextMenu.Trigger>
-										<button
-											onClick={() => openFolder(folder.prefix)}
-											disabled={pending}
-											type='button'
-											className={twMerge(
-												'group flex flex-col rounded-md cursor-pointer',
-												'transition-colors hover:bg-surface focus-visible:bg-surface focus-ring-base focus-ring-visible',
-												selectedIds.includes(folder.prefix) && 'bg-surface',
-											)}
-										>
-											<div className='flex flex-col items-center p-2 gap-2'>
-												<PreviewCard
-													className='w-16'
-													placeholder={
-														<Icon28FolderOutline width={28} height={28} />
+												<ContextMenu.Item
+													aria-label='Rename file'
+													prefix={<Icon28EditOutline width={18} height={18} />}
+													onClick={() => openRenameFile(file.key, file.name)}
+												>
+													Rename
+												</ContextMenu.Item>
+
+												<ContextMenu.Item
+													aria-label='Delete file'
+													appearance='danger'
+													prefix={
+														<Icon28DeleteOutline width={18} height={18} />
 													}
-													ratio='square'
-													radius='full'
-													sizes='(max-width: 1240px) 100vw, 1240px'
-													interactive={false}
-												/>
-
-												<div className='max-w-full text-center text-sm font-medium font-condensed tracking-tight'>
-													<MiddleTruncate value={folder.name} />
-												</div>
-											</div>
-										</button>
-									</ContextMenu.Trigger>
-
-									<ContextMenu.Content className='w-32'>
-										<ContextMenu.Box>
-											<ContextMenu.Item
-												aria-label='Open folder'
-												prefix={<Icon28FolderOutline width={18} height={18} />}
-												onClick={() => openFolder(folder.prefix)}
-											>
-												Open
-											</ContextMenu.Item>
-
-											<ContextMenu.Item
-												aria-label='Delete folder'
-												appearance='danger'
-												prefix={<Icon28DeleteOutline width={18} height={18} />}
-												onClick={() =>
-													confirmDeleteFolder(folder.prefix, folder.name)
-												}
-											>
-												Delete
-											</ContextMenu.Item>
-										</ContextMenu.Box>
-									</ContextMenu.Content>
-								</ContextMenu>
-							))}
-
-							{list.files.map(file => (
-								<ContextMenu key={file.key}>
-									<ContextMenu.Trigger>
-										<a
-											key={file.key}
-											href={file.url}
-											target='_blank'
-											rel='noreferrer'
-											className={twMerge(
-												'root group flex flex-col rounded-md cursor-pointer',
-												'transition-colors hover:bg-surface focus-visible:bg-surface focus-ring-base focus-ring-visible',
-												selectedIds.includes(file.key) && 'bg-surface',
-											)}
-										>
-											<div className='flex flex-col items-center p-2 gap-2'>
-												<PreviewCard
-													className='w-16'
-													ratio='square'
-													src={file.url}
-													alt={file.name}
-													radius='sm'
-													sizes='(max-width: 1240px) 100vw, 1240px'
-													interactive={false}
-												/>
-
-												<div className='max-w-full text-center text-sm font-medium font-condensed tracking-tight'>
-													<MiddleTruncate value={file.name} />
-												</div>
-											</div>
-										</a>
-									</ContextMenu.Trigger>
-
-									<ContextMenu.Content className='w-32'>
-										<ContextMenu.Box>
-											<ContextMenu.Item
-												aria-label='Open file'
-												href={file.url}
-												target='_blank'
-												prefix={<Icon28ViewOutline width={18} height={18} />}
-											>
-												Open
-											</ContextMenu.Item>
-
-											<ContextMenu.Item
-												aria-label='Copy CDN URL'
-												prefix={<Icon28CopyOutline width={18} height={18} />}
-												onClick={() => copyUrl(file.url)}
-											>
-												Copy URL
-											</ContextMenu.Item>
-
-											<ContextMenu.Item
-												aria-label='Rename file'
-												prefix={<Icon28EditOutline width={18} height={18} />}
-												onClick={() => openRenameFile(file.key, file.name)}
-											>
-												Rename
-											</ContextMenu.Item>
-
-											<ContextMenu.Item
-												aria-label='Delete file'
-												appearance='danger'
-												prefix={<Icon28DeleteOutline width={18} height={18} />}
-												onClick={() => confirmDeleteFile(file.key, file.name)}
-											>
-												Delete
-											</ContextMenu.Item>
-										</ContextMenu.Box>
-									</ContextMenu.Content>
-								</ContextMenu>
-							))}
-						</div>
-					)}
+													onClick={() => confirmDeleteFile(file.key, file.name)}
+												>
+													Delete
+												</ContextMenu.Item>
+											</ContextMenu.Box>
+										</ContextMenu.Content>
+									</ContextMenu>
+								))}
+							</div>
+						)}
+					</ScrollArea>
 
 					{/* <FormItem id='article-cover-upload' className='absolute inset-2'>
 							<FormItem.DropZone
