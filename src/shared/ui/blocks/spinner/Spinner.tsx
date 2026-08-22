@@ -5,11 +5,11 @@ import type SpinnerProps from './Spinner.interface'
 import { Icon24Spinner } from '@vkontakte/icons'
 
 const Spinner: React.FC<SpinnerProps> = props => {
-	const { size = 28, width = 28, height = 28, className, ...restProps } = props
+	const { size = 28, className, ...restProps } = props
 
 	const computedStyle = {
-		width,
-		height,
+		width: size,
+		height: size,
 	}
 
 	return (

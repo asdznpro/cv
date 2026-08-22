@@ -9,7 +9,9 @@ import { createClient } from 'lib/supabase/server'
 import {
 	generateShortSlug,
 	type ShortLink,
+	type ShortLinkClick,
 	type ShortLinkInput,
+	type ShortLinkVisit,
 	validateShortLinkInput,
 } from './types'
 
@@ -79,6 +81,91 @@ export async function listShortLinks(): Promise<ShortLink[]> {
 			uniques_24h: stats?.uniques_24h ?? 0,
 		}
 	})
+}
+
+function mapVisit(
+	row: Record<string, unknown>,
+	clicks: ShortLinkClick[],
+): ShortLinkVisit {
+	return {
+		id: String(row.id),
+		hits: Number(row.hits ?? 1),
+		first_seen_at: String(row.first_seen_at),
+		last_seen_at: String(row.last_seen_at),
+		country: typeof row.country === 'string' ? row.country : null,
+		city: typeof row.city === 'string' ? row.city : null,
+		as_org: typeof row.as_org === 'string' ? row.as_org : null,
+		browser: typeof row.browser === 'string' ? row.browser : null,
+		os: typeof row.os === 'string' ? row.os : null,
+		device: typeof row.device === 'string' ? row.device : null,
+		referer:
+			typeof row.referer === 'string' && row.referer ? row.referer : null,
+		clicks,
+	}
+}
+
+export async function listShortLinkVisits(
+	linkId: string,
+): Promise<
+	{ ok: true; visits: ShortLinkVisit[] } | { ok: false; error: string }
+> {
+	if (!(await assertAdmin())) {
+		return { ok: false, error: 'Unauthorized' }
+	}
+
+	if (!linkId) {
+		return { ok: false, error: 'Не указан id ссылки' }
+	}
+
+	try {
+		const supabase = createAdminClient()
+		const { data, error } = await supabase
+			.from('short_link_visits')
+			.select(
+				'id, visitor_hash, hits, first_seen_at, last_seen_at, country, city, as_org, browser, os, device, referer',
+			)
+			.eq('link_id', linkId)
+			.order('last_seen_at', { ascending: false })
+			.limit(200)
+
+		if (error) {
+			return { ok: false, error: error.message }
+		}
+
+		const { data: eventRows } = await supabase
+			.from('short_link_events')
+			.select('id, created_at, visitor_hash')
+			.eq('link_id', linkId)
+			.order('created_at', { ascending: false })
+			.limit(2000)
+
+		const clicksByHash = new Map<string, ShortLinkClick[]>()
+
+		for (const event of eventRows ?? []) {
+			const hash = String(event.visitor_hash ?? '')
+			if (!hash) continue
+
+			const clicks = clicksByHash.get(hash) ?? []
+			clicks.push({
+				id: String(event.id),
+				created_at: String(event.created_at),
+			})
+			clicksByHash.set(hash, clicks)
+		}
+
+		return {
+			ok: true,
+			visits: (data ?? []).map(row =>
+				mapVisit(
+					row as Record<string, unknown>,
+					clicksByHash.get(String(row.visitor_hash ?? '')) ?? [],
+				),
+			),
+		}
+	} catch (error) {
+		const message = error instanceof Error ? error.message : 'Unknown error'
+		return { ok: false, error: message }
+	}
 }
 
 export async function createShortLink(

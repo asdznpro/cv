@@ -5,7 +5,12 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
 
-import { SHORT_LINK_HOST, shortLinkHref, type ShortLink } from 'lib/short-links'
+import {
+	SHORT_LINK_HOST,
+	shortLinkHref,
+	stripUrlProtocol,
+	type ShortLink,
+} from 'lib/short-links'
 import { getFormattedDate } from 'lib/utils'
 
 import { Badge, Button, ScrollArea, Separator } from 'ui/blocks'
@@ -29,6 +34,7 @@ import {
 import { CreateShortLinkForm } from './CreateShortLinkForm'
 import { DeleteShortLinkDialog } from './DeleteShortLinkDialog'
 import { ShortLinkFormDialog } from './ShortLinkFormDialog'
+import { ShortLinkVisitsDialog } from './ShortLinkVisitsDialog'
 
 type ShortenerManagerProps = {
 	links: ShortLink[]
@@ -65,6 +71,12 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 		)
 	}
 
+	const openVisits = (link: ShortLink) => {
+		open(<ShortLinkVisitsDialog link={link} onClose={() => close()} />, {
+			className: 'max-w-xl',
+		})
+	}
+
 	async function copyHref(slug: string) {
 		try {
 			await navigator.clipboard.writeText(shortLinkHref(slug))
@@ -82,9 +94,9 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 						URL Shortener
 					</h1>
 
-					<p className='text-foreground-secondary text-balance'>
+					{/* <p className='text-foreground-secondary text-balance'>
 						Create short links to your website or social media profiles
-					</p>
+					</p> */}
 				</div>
 
 				<div className='relative flex'>
@@ -100,10 +112,6 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 							Shortened Links
 						</h2>
-
-						<p className='text-foreground-secondary text-balance'>
-							Manage redirects for {SHORT_LINK_HOST}
-						</p>
 					</div>
 				</div>
 
@@ -241,7 +249,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 													appearance='neutral'
 													prefix={<Icon28ChainOutline width={14} height={14} />}
 												>
-													{link.target_url}
+													{stripUrlProtocol(link.target_url)}
 												</Badge>
 											</span>
 										</div>
@@ -280,6 +288,16 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 															}
 														>
 															Stats
+														</DropdownMenu.Item>
+
+														<DropdownMenu.Item
+															onClick={() => openVisits(link)}
+															aria-label='Visits of short link'
+															prefix={
+																<Icon28UsersOutline width={18} height={18} />
+															}
+														>
+															Visits
 														</DropdownMenu.Item>
 
 														<DropdownMenu.Item

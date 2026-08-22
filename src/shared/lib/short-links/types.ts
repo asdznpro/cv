@@ -14,6 +14,26 @@ export type ShortLink = {
 	updated_at: string
 }
 
+export type ShortLinkClick = {
+	id: string
+	created_at: string
+}
+
+export type ShortLinkVisit = {
+	id: string
+	hits: number
+	first_seen_at: string
+	last_seen_at: string
+	country: string | null
+	city: string | null
+	as_org: string | null
+	browser: string | null
+	os: string | null
+	device: string | null
+	referer: string | null
+	clicks: ShortLinkClick[]
+}
+
 export type ShortLinkInput = {
 	slug?: string | null
 	target_url: string
@@ -21,13 +41,17 @@ export type ShortLinkInput = {
 }
 
 export function shortLinkHref(slug: string) {
-	return `https://${SHORT_LINK_HOST}/${slug}`
+	return `${SHORT_LINK_HOST}/${slug}`
+}
+
+export function stripUrlProtocol(url: string) {
+	return url.replace(/^https?:\/\//i, '')
 }
 
 export function generateShortSlug(length = 7) {
 	const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789'
 	const bytes = crypto.getRandomValues(new Uint8Array(length))
-	return Array.from(bytes, b => alphabet[b % alphabet.length]).join('')
+	return Array.from(bytes, (b) => alphabet[b % alphabet.length]).join('')
 }
 
 export function normalizeShortLinkInput(input: ShortLinkInput): ShortLinkInput {

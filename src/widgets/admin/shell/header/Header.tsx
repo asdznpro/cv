@@ -9,7 +9,7 @@ import { twMerge } from 'tailwind-merge'
 import { useAdminShell } from '../AdminShellProvider'
 import { NAV_ITEMS } from '../sidebar'
 
-import { Button, Counter } from 'ui/blocks'
+import { Button, Counter, Separator } from 'ui/blocks'
 
 import {
 	Icon28HorizontalRectangle2VerticalLeftOutline,
@@ -93,56 +93,68 @@ export function Header() {
 		)?.label ?? 'Overview'
 
 	return (
-		<header className='sticky top-0 z-10 w-full p-app pointer-events-none'>
-			<div className='mx-auto max-w-lg w-full flex'>
-				<div className='w-full flex items-center p-2 gap-2 bg-background border border-separator rounded-full pointer-events-auto'>
-					<span className='w-full flex gap-app'>
-						<Button
-							aria-label={open ? 'Hide sidebar' : 'Show sidebar'}
-							onClick={toggle}
-							mode='soft'
-							appearance='neutral'
-							prefix={
-								<Icon28HorizontalRectangle2VerticalLeftOutline
-									className={twMerge(
-										'transition-transform rotate-180',
-										!open && '-scale-x-100',
-									)}
-									width={18}
-									height={18}
-								/>
-							}
-							radius='rounded'
-							iconOnly
-						/>
-					</span>
-
-					<span className='text-xl font-medium font-condensed tracking-tight whitespace-nowrap'>
-						<Link
-							href='/admin'
-							className='text-foreground-tertiary hover:text-foreground transition-all'
-						>
-							Admin
-						</Link>{' '}
-						<span className='text-foreground-tertiary select-none'>/</span>{' '}
-						<AnimatedLabel label={activeLabel} />
-					</span>
-
-					<span className='w-full flex justify-end gap-2'>
-						<div className='relative'>
+		<header className='sticky top-0 z-10 w-full pointer-events-none'>
+			<div className='mx-auto max-w-md w-full flex p-app'>
+				<div className='w-full flex flex-col bg-background border border-separator rounded-[27px] pointer-events-auto'>
+					<div className='w-full flex items-center p-2 gap-2'>
+						<span className='w-full flex gap-app'>
 							<Button
+								aria-label={open ? 'Hide sidebar' : 'Show sidebar'}
+								onClick={toggle}
 								mode='soft'
 								appearance='neutral'
-								prefix={<Icon28Notifications width={18} height={18} />}
+								prefix={
+									<Icon28HorizontalRectangle2VerticalLeftOutline
+										className={twMerge(
+											'transition-transform rotate-180',
+											!open && '-scale-x-100',
+										)}
+										width={18}
+										height={18}
+									/>
+								}
 								radius='rounded'
 								iconOnly
 							/>
+						</span>
 
-							<div className='absolute -top-1 -left-1 size-4 flex justify-end'>
-								<Counter variant='danger'>0</Counter>
+						<span className='text-xl font-medium font-condensed tracking-tight whitespace-nowrap'>
+							<Link
+								href='/admin'
+								className='text-foreground-tertiary hover:text-foreground transition-all'
+							>
+								Admin
+							</Link>{' '}
+							<span className='text-foreground-tertiary select-none'>/</span>{' '}
+							<AnimatedLabel label={activeLabel} />
+						</span>
+
+						<span className='w-full flex justify-end gap-2'>
+							<div className='relative'>
+								<Button
+									mode='soft'
+									appearance='neutral'
+									prefix={<Icon28Notifications width={18} height={18} />}
+									radius='rounded'
+									iconOnly
+								/>
+
+								<div className='absolute -top-1 -left-1 size-4 flex justify-end'>
+									<Counter variant='danger'>0</Counter>
+								</div>
 							</div>
+						</span>
+					</div>
+
+					{/* <Separator />
+
+					<div className='w-full flex items-center p-2 gap-2'>
+						<div className='w-full h-14 flex items-center px-4 gap-4 text-foreground-tertiary'>
+							<span>
+								&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV
+							</span>
 						</div>
-					</span>
+					</div> */}
 				</div>
 			</div>
 		</header>
