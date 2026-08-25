@@ -15,9 +15,9 @@ export const badgeVariants = cva(
 		variants: {
 			mode: {
 				primary: '',
-				soft: 'backdrop-blur-3xl',
+				soft: '',
 				secondary:
-					'bg-foreground-tertiary/20 data-interactive:interactive-hover:hover:bg-foreground-tertiary/40 backdrop-blur-3xl',
+					'bg-foreground-tertiary/20 data-interactive:interactive-hover:hover:bg-foreground-tertiary/40',
 				outline:
 					'border border-separator data-interactive:interactive-hover:hover:bg-foreground-tertiary/20',
 				ghost:

@@ -8,7 +8,7 @@ import { motion } from 'motion/react'
 import { useAdminShell, MIN } from '../AdminShellProvider'
 import { COMMAND_MENU_HOTKEY, useAdminCommandMenu } from '../command-menu'
 
-import { Button, Kbd, Separator } from 'ui/blocks'
+import { Button, Kbd, ScrollArea, Separator } from 'ui/blocks'
 import { DropdownMenu } from 'ui/floating'
 
 import {
@@ -156,48 +156,52 @@ export function Sidebar() {
 
 					<Separator />
 
-					<div className='scrollbar overflow-y-auto h-full flex flex-col p-2 gap-2'>
-						<Button
-							size='lg'
-							mode='soft'
-							appearance='neutral'
-							prefix={<Icon28SearchOutline width={20} height={20} />}
-							suffix={
-								<Kbd keys={[...COMMAND_MENU_HOTKEY.label]} radius='smooth' />
-							}
-							align='between'
-							onClick={openCommandMenu}
-						>
-							Search
-						</Button>
+					<ScrollArea className='h-full'>
+						<div className='flex flex-col p-2 gap-2'>
+							<Button
+								size='lg'
+								mode='soft'
+								appearance='neutral'
+								prefix={<Icon28SearchOutline width={20} height={20} />}
+								suffix={
+									<Kbd keys={[...COMMAND_MENU_HOTKEY.label]} radius='smooth' />
+								}
+								align='between'
+								onClick={openCommandMenu}
+							>
+								Search
+							</Button>
 
-						{NAV_ITEMS.map(section => (
-							<div key={section.id} className='flex flex-col gap-2'>
-								<span className='px-4 pt-4 pb-2 text-xs text-foreground-secondary select-none'>
-									{section.label}
-								</span>
+							{NAV_ITEMS.map(section => (
+								<div key={section.id} className='flex flex-col gap-2'>
+									<span className='px-4 pt-4 pb-2 text-xs text-foreground-secondary select-none'>
+										{section.label}
+									</span>
 
-								{section.items.map(item => (
-									<Button
-										key={item.href}
-										to={item.href}
-										size='lg'
-										mode={isActiveRoute(item.href) ? 'soft' : 'ghost'}
-										appearance={isActiveRoute(item.href) ? 'accent' : 'neutral'}
-										prefix={item.icon}
-										suffix={
-											isActiveRoute(item.href) && (
-												<Icon28ChevronRightOutline width={20} height={20} />
-											)
-										}
-										align='between'
-									>
-										{item.label}
-									</Button>
-								))}
-							</div>
-						))}
-					</div>
+									{section.items.map(item => (
+										<Button
+											key={item.href}
+											to={item.href}
+											size='lg'
+											mode={isActiveRoute(item.href) ? 'soft' : 'ghost'}
+											appearance={
+												isActiveRoute(item.href) ? 'accent' : 'neutral'
+											}
+											prefix={item.icon}
+											suffix={
+												isActiveRoute(item.href) && (
+													<Icon28ChevronRightOutline width={20} height={20} />
+												)
+											}
+											align='between'
+										>
+											{item.label}
+										</Button>
+									))}
+								</div>
+							))}
+						</div>
+					</ScrollArea>
 
 					<Separator />
 

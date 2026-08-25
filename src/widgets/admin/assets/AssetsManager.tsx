@@ -989,7 +989,7 @@ export function AssetsManager({ initial }: AssetsManagerProps) {
 								))}
 							</div>
 						) : (
-							<div className='grid grid-cols-5 p-2 gap-2'>
+							<div className='grid grid-cols-3 @md:grid-cols-4 @lg:grid-cols-5 p-2 gap-2'>
 								{list.folders.map(folder => (
 									<ContextMenu key={folder.prefix}>
 										<ContextMenu.Trigger>
