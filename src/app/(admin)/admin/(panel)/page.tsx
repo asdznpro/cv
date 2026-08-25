@@ -452,17 +452,16 @@ export default function Admin() {
 				</div>
 			</section>
 
-			<div className='-z-10 absolute inset-x-0 top-0 w-full h-1/4 flex flex-col'>
-				<div className='absolute inset-0 -z-8 bg-linear-to-b from-transparent 0from-20% to-background' />
-
-				<div className='absolute inset-0 -z-10 0bg-blue-900 0border-b border-separator'>
+			<div className='-z-10 absolute inset-x-0 top-0 w-full h-1/5 flex flex-col overflow-hidden'>
+				<div className='absolute inset-0 -z-10'>
 					<PixelBlast
 						variant='square'
 						pixelSize={2}
 						color='#1212ce'
 						patternScale={1}
-						patternDensity={0.6}
-						speed={0.9}
+						patternDensity={0.8}
+						speed={1}
+						bottomInset={640}
 					/>
 				</div>
 			</div>

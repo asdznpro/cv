@@ -53,6 +53,8 @@ type PixelBlastProps = {
 	transparent?: boolean
 	edgeFade?: number
 	noiseAmount?: number
+	/** CSS px. Field stays dense and darkens toward the bottom, then dithers out. */
+	bottomInset?: number
 }
 
 const createTouchTexture = (): TouchTexture => {
@@ -202,6 +204,7 @@ uniform float uRippleSpeed;
 uniform float uRippleThickness;
 uniform float uRippleIntensity;
 uniform float uEdgeFade;
+uniform float uBottomInset;
 
 uniform int   uShapeType;
 const int SHAPE_SQUARE   = 0;
@@ -301,6 +304,7 @@ void main(){
   base = base * 0.5 - 0.65;
 
   float feed = base + (uDensity - 0.5) * 0.3;
+  float bottomDim = 1.0;
 
   float speed     = uRippleSpeed;
   float thickness = uRippleThickness;
@@ -322,6 +326,14 @@ void main(){
     }
   }
 
+  if (uBottomInset > 0.0) {
+    float cellY = floor(gl_FragCoord.y / uPixelSize) * uPixelSize;
+    float n = fract(sin(dot(floor(gl_FragCoord.xy / uPixelSize), vec2(127.1, 311.7))) * 43758.5453);
+    float t = cellY / uBottomInset + (n - 0.5) * 0.18;
+    feed *= smoothstep(0.0, 0.1, t);
+    bottomDim = smoothstep(0.06, 1.0, t);
+  }
+
   float bayer = Bayer8(fragCoord / uPixelSize) - 0.5;
   float bw = step(0.5, feed + bayer);
 
@@ -341,7 +353,7 @@ void main(){
     M *= fade;
   }
 
-  vec3 color = uColor;
+  vec3 color = uColor * bottomDim;
 
   // sRGB gamma correction - convert linear to sRGB for accurate color output
   vec3 srgbColor = mix(
@@ -379,6 +391,7 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
 	transparent = true,
 	edgeFade = 0,
 	noiseAmount = 0,
+	bottomInset = 0,
 }) => {
 	const containerRef = useRef<HTMLDivElement | null>(null)
 	const visibilityRef = useRef({ visible: true })
@@ -407,6 +420,7 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
 			uRippleThickness: { value: number }
 			uRippleIntensity: { value: number }
 			uEdgeFade: { value: number }
+			uBottomInset: { value: number }
 		}
 		resizeObserver?: ResizeObserver
 		raf?: number
@@ -484,6 +498,7 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
 				uRippleThickness: { value: rippleThickness },
 				uRippleIntensity: { value: rippleIntensityScale },
 				uEdgeFade: { value: edgeFade },
+				uBottomInset: { value: bottomInset * renderer.getPixelRatio() },
 			}
 			const scene = new THREE.Scene()
 			const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
@@ -514,6 +529,8 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
 						renderer.domElement.height,
 					)
 				uniforms.uPixelSize.value = pixelSize * renderer.getPixelRatio()
+				uniforms.uBottomInset.value =
+					bottomInset * renderer.getPixelRatio()
 			}
 			setSize()
 			const ro = new ResizeObserver(setSize)
@@ -664,6 +681,8 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
 			t.uniforms.uRippleThickness.value = rippleThickness
 			t.uniforms.uRippleSpeed.value = rippleSpeed
 			t.uniforms.uEdgeFade.value = edgeFade
+			t.uniforms.uBottomInset.value =
+				bottomInset * t.renderer.getPixelRatio()
 			if (transparent) t.renderer.setClearAlpha(0)
 			else t.renderer.setClearColor(0x000000, 1)
 			if (t.liquidEffect) {
@@ -706,6 +725,7 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
 		rippleSpeed,
 		pixelSizeJitter,
 		edgeFade,
+		bottomInset,
 		transparent,
 		liquidStrength,
 		liquidRadius,

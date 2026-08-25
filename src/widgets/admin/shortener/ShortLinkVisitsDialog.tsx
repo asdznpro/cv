@@ -105,16 +105,16 @@ export function ShortLinkVisitsDialog({
 				<div className='flex flex-1 flex-col gap-3'>
 					<p className='text-xl font-medium font-condensed tracking-tight'>
 						Visits
-						{link.title ? (
+						{link.title && (
 							<>
 								{' '}
 								of{' '}
 								<span className='text-foreground-secondary'>{link.title}</span>
 							</>
-						) : null}
+						)}
 					</p>
 
-					<p className='flex items-center gap-1 text-sm text-foreground-secondary'>
+					<div className='flex items-center gap-1 text-sm text-foreground-secondary'>
 						{shortLinkHref(link.slug)} ·{' '}
 						{visits === null && (
 							<Spinner size={20} className='text-foreground-secondary' />
@@ -124,7 +124,7 @@ export function ShortLinkVisitsDialog({
 							: visits.length === 1
 								? '1 unique visitor'
 								: `${visits.length} unique visitors`}
-					</p>
+					</div>
 				</div>
 			</div>
 
