@@ -5,14 +5,19 @@ import { useState, useTransition } from 'react'
 
 import { toast } from 'sonner'
 
-import { SHORT_LINK_HOST, createShortLink } from 'lib/short-links'
+import {
+	SHORT_LINK_HOST,
+	createShortLink,
+	shortenerListHref,
+	type ShortLinkSortField,
+	type ShortLinkSortOrder,
+} from 'lib/short-links'
 
 import { Button, Separator } from 'ui/blocks'
 import { FormItem } from 'ui/forms'
 
 import {
 	Icon28ChainOutline,
-	Icon28ChevronDownOutline,
 	Icon28GlobeOutline,
 	Icon28HashtagOutline,
 	Icon28InfoCircleOutline,
@@ -30,7 +35,12 @@ const EMPTY_CREATE_FORM: CreateFormState = {
 	title: '',
 }
 
-export function CreateShortLinkForm() {
+type CreateShortLinkFormProps = {
+	sort: ShortLinkSortField
+	order: ShortLinkSortOrder
+}
+
+export function CreateShortLinkForm({ sort, order }: CreateShortLinkFormProps) {
 	const router = useRouter()
 	const pathname = usePathname()
 	const [pending, startTransition] = useTransition()
@@ -64,7 +74,7 @@ export function CreateShortLinkForm() {
 
 			toast.success('Ссылка создана')
 			resetForm()
-			router.push(pathname)
+			router.push(shortenerListHref(pathname, { page: 1, sort, order }))
 			router.refresh()
 		})
 	}

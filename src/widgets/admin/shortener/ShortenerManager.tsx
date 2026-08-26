@@ -1,6 +1,5 @@
 'use client'
 
-import { useMemo, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 
 import { toast } from 'sonner'
@@ -8,9 +7,12 @@ import { twMerge } from 'tailwind-merge'
 
 import {
 	SHORT_LINK_HOST,
+	shortenerListHref,
 	shortLinkHref,
 	stripUrlProtocol,
 	type ShortLink,
+	type ShortLinkSortField,
+	type ShortLinkSortOrder,
 } from 'lib/short-links'
 import { getFormattedDate } from 'lib/utils'
 
@@ -37,56 +39,6 @@ import { DeleteShortLinkDialog } from './DeleteShortLinkDialog'
 import { ShortLinkFormDialog } from './ShortLinkFormDialog'
 import { ShortLinkVisitsDialog } from './ShortLinkVisitsDialog'
 
-type SortField =
-	| 'title'
-	| 'date'
-	| 'views'
-	| 'views_24h'
-	| 'visitors'
-	| 'visitors_24h'
-
-type SortOrder = 'asc' | 'desc'
-
-const DEFAULT_SORT: SortField = 'views_24h'
-const DEFAULT_ORDER: SortOrder = 'desc'
-
-function sortValue(link: ShortLink, field: SortField) {
-	switch (field) {
-		case 'title':
-			return (link.title || link.slug).toLocaleLowerCase()
-		case 'date':
-			return Date.parse(link.created_at)
-		case 'views':
-			return link.clicks
-		case 'views_24h':
-			return link.clicks_24h
-		case 'visitors':
-			return link.unique_visitors ?? 0
-		case 'visitors_24h':
-			return link.uniques_24h
-	}
-}
-
-function compareLinks(
-	a: ShortLink,
-	b: ShortLink,
-	field: SortField,
-	order: SortOrder,
-) {
-	const direction = order === 'asc' ? 1 : -1
-	const left = sortValue(a, field)
-	const right = sortValue(b, field)
-
-	if (typeof left === 'string' && typeof right === 'string') {
-		const byTitle = left.localeCompare(right, undefined, { numeric: true })
-		if (byTitle !== 0) return byTitle * direction
-	} else if (left !== right) {
-		return ((left as number) - (right as number)) * direction
-	}
-
-	return Date.parse(b.created_at) - Date.parse(a.created_at)
-}
-
 function sortItemProps(active: boolean) {
 	return {
 		mode: (active ? 'secondary' : 'ghost') as 'secondary' | 'ghost',
@@ -105,6 +57,8 @@ type ShortenerManagerProps = {
 	count: number
 	page: number
 	pageSize: number
+	sort: ShortLinkSortField
+	order: ShortLinkSortOrder
 }
 
 export function ShortenerManager({
@@ -112,29 +66,26 @@ export function ShortenerManager({
 	count,
 	page,
 	pageSize,
+	sort,
+	order,
 }: ShortenerManagerProps) {
 	const { open, close } = useOverlay()
 	const router = useRouter()
 	const pathname = usePathname()
-	const [sortField, setSortField] = useState<SortField>(DEFAULT_SORT)
-	const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_ORDER)
 
-	const sortedLinks = useMemo(
-		() => [...links].sort((a, b) => compareLinks(a, b, sortField, sortOrder)),
-		[links, sortField, sortOrder],
-	)
-
-	const viewsSelected = sortField === 'views' || sortField === 'views_24h'
-	const visitorsSelected =
-		sortField === 'visitors' || sortField === 'visitors_24h'
+	const viewsSelected = sort === 'views' || sort === 'views_24h'
+	const visitorsSelected = sort === 'visitors' || sort === 'visitors_24h'
 
 	function goToPage(next: number) {
-		if (next <= 1) {
-			router.push(pathname)
-			return
-		}
+		router.push(shortenerListHref(pathname, { page: next, sort, order }))
+	}
 
-		router.push(`${pathname}?page=${next}`)
+	function changeSort(field: ShortLinkSortField) {
+		router.push(shortenerListHref(pathname, { page: 1, sort: field, order }))
+	}
+
+	function changeOrder(next: ShortLinkSortOrder) {
+		router.push(shortenerListHref(pathname, { page: 1, sort, order: next }))
 	}
 
 	const openVisits = (link: ShortLink) => {
@@ -186,14 +137,10 @@ export function ShortenerManager({
 					<h1 className='text-5xl text-balance font-medium font-condensed tracking-tight'>
 						URL Shortener
 					</h1>
-
-					{/* <p className='text-foreground-secondary text-balance'>
-						Create short links to your website or social media profiles
-					</p> */}
 				</div>
 
 				<div className='relative flex'>
-					<CreateShortLinkForm />
+					<CreateShortLinkForm sort={sort} order={order} />
 
 					<span className='-z-1 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 container w-[160%] aspect-square animate-[fade-in_1000ms_ease-out] bg-radial from-accent/20 to-60% to-background pointer-events-none' />
 				</div>
@@ -241,16 +188,16 @@ export function ShortenerManager({
 
 										<DropdownMenu.Item
 											aria-label='By title'
-											onClick={() => setSortField('title')}
-											{...sortItemProps(sortField === 'title')}
+											onClick={() => changeSort('title')}
+											{...sortItemProps(sort === 'title')}
 										>
 											Title (slug)
 										</DropdownMenu.Item>
 
 										<DropdownMenu.Item
 											aria-label='By date'
-											onClick={() => setSortField('date')}
-											{...sortItemProps(sortField === 'date')}
+											onClick={() => changeSort('date')}
+											{...sortItemProps(sort === 'date')}
 										>
 											Date
 										</DropdownMenu.Item>
@@ -267,16 +214,16 @@ export function ShortenerManager({
 												<DropdownMenu.Box>
 													<DropdownMenu.Item
 														aria-label='By total views'
-														onClick={() => setSortField('views')}
-														{...sortItemProps(sortField === 'views')}
+														onClick={() => changeSort('views')}
+														{...sortItemProps(sort === 'views')}
 													>
 														Default
 													</DropdownMenu.Item>
 
 													<DropdownMenu.Item
 														aria-label='By views in last 24h'
-														onClick={() => setSortField('views_24h')}
-														{...sortItemProps(sortField === 'views_24h')}
+														onClick={() => changeSort('views_24h')}
+														{...sortItemProps(sort === 'views_24h')}
 													>
 														Last 24h first
 													</DropdownMenu.Item>
@@ -296,16 +243,16 @@ export function ShortenerManager({
 												<DropdownMenu.Box>
 													<DropdownMenu.Item
 														aria-label='By total visitors'
-														onClick={() => setSortField('visitors')}
-														{...sortItemProps(sortField === 'visitors')}
+														onClick={() => changeSort('visitors')}
+														{...sortItemProps(sort === 'visitors')}
 													>
 														Default
 													</DropdownMenu.Item>
 
 													<DropdownMenu.Item
 														aria-label='By visitors in last 24h'
-														onClick={() => setSortField('visitors_24h')}
-														{...sortItemProps(sortField === 'visitors_24h')}
+														onClick={() => changeSort('visitors_24h')}
+														{...sortItemProps(sort === 'visitors_24h')}
 													>
 														Last 24h first
 													</DropdownMenu.Item>
@@ -319,16 +266,16 @@ export function ShortenerManager({
 
 										<DropdownMenu.Item
 											aria-label='Increasing'
-											onClick={() => setSortOrder('asc')}
-											{...sortItemProps(sortOrder === 'asc')}
+											onClick={() => changeOrder('asc')}
+											{...sortItemProps(order === 'asc')}
 										>
 											Ascending
 										</DropdownMenu.Item>
 
 										<DropdownMenu.Item
 											aria-label='Decreasing'
-											onClick={() => setSortOrder('desc')}
-											{...sortItemProps(sortOrder === 'desc')}
+											onClick={() => changeOrder('desc')}
+											{...sortItemProps(order === 'desc')}
 										>
 											Descending
 										</DropdownMenu.Item>
@@ -348,9 +295,9 @@ export function ShortenerManager({
 						</div>
 					) : (
 						<ScrollArea className='h-[72vh]'>
-							{sortedLinks.map((link, index) => (
+							{links.map((link, index) => (
 								<div key={link.id}>
-									<div className='flex items-center p-surface gap-surface'>
+									<div className='flex p-surface gap-surface'>
 										<div className='flex flex-1 flex-col gap-3 min-w-0'>
 											<p className='text-balance text-xl font-medium font-condensed tracking-tight'>
 												{link.title && link.title + ': '}
@@ -420,7 +367,7 @@ export function ShortenerManager({
 											</span>
 										</div>
 
-										<div className='flex gap-2 shrink-0'>
+										<div className='flex gap-2'>
 											<Button
 												onClick={() => copyHref(link.slug)}
 												aria-label='Copy'
@@ -492,7 +439,7 @@ export function ShortenerManager({
 										</div>
 									</div>
 
-									{index !== sortedLinks.length - 1 && <Separator />}
+									{index !== links.length - 1 && <Separator />}
 								</div>
 							))}
 						</ScrollArea>

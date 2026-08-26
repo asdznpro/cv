@@ -1,5 +1,21 @@
 export const SHORT_LINK_HOST = 'go.asdzn.pro'
+export const SHORTENER_PATH = '/admin/shortener'
 export const SHORT_LINKS_PAGE_SIZE = 10
+
+export const SHORT_LINK_SORT_FIELDS = [
+	'title',
+	'date',
+	'views',
+	'views_24h',
+	'visitors',
+	'visitors_24h',
+] as const
+
+export type ShortLinkSortField = (typeof SHORT_LINK_SORT_FIELDS)[number]
+export type ShortLinkSortOrder = 'asc' | 'desc'
+
+export const DEFAULT_SHORT_LINK_SORT: ShortLinkSortField = 'views_24h'
+export const DEFAULT_SHORT_LINK_ORDER: ShortLinkSortOrder = 'desc'
 
 export type ShortLink = {
 	id: string
@@ -40,6 +56,64 @@ export type ShortLinkListResult = {
 	count: number
 	page: number
 	pageSize: number
+	sort: ShortLinkSortField
+	order: ShortLinkSortOrder
+}
+
+export type ShortenerListQuery = {
+	page?: number
+	sort?: ShortLinkSortField
+	order?: ShortLinkSortOrder
+}
+
+function firstSearchParam(value: string | string[] | null | undefined) {
+	if (Array.isArray(value)) return value[0]
+	return value ?? undefined
+}
+
+export function parseShortLinkPage(
+	value: string | string[] | number | null | undefined,
+) {
+	if (typeof value === 'number') {
+		if (!Number.isInteger(value) || value < 1) return 1
+		return value
+	}
+
+	const page = Number(firstSearchParam(value))
+	if (!Number.isInteger(page) || page < 1) return 1
+	return page
+}
+
+export function parseShortLinkSort(
+	value: string | string[] | null | undefined,
+): ShortLinkSortField {
+	const raw = firstSearchParam(value)
+	return SHORT_LINK_SORT_FIELDS.includes(raw as ShortLinkSortField)
+		? (raw as ShortLinkSortField)
+		: DEFAULT_SHORT_LINK_SORT
+}
+
+export function parseShortLinkOrder(
+	value: string | string[] | null | undefined,
+): ShortLinkSortOrder {
+	return firstSearchParam(value) === 'asc' ? 'asc' : DEFAULT_SHORT_LINK_ORDER
+}
+
+export function shortenerListHref(
+	pathname = SHORTENER_PATH,
+	query: ShortenerListQuery = {},
+) {
+	const page = query.page ?? 1
+	const sort = query.sort ?? DEFAULT_SHORT_LINK_SORT
+	const order = query.order ?? DEFAULT_SHORT_LINK_ORDER
+	const params = new URLSearchParams()
+
+	if (page > 1) params.set('page', String(page))
+	if (sort !== DEFAULT_SHORT_LINK_SORT) params.set('sort', sort)
+	if (order !== DEFAULT_SHORT_LINK_ORDER) params.set('order', order)
+
+	const search = params.toString()
+	return search ? `${pathname}?${search}` : pathname
 }
 
 export type ShortLinkInput = {

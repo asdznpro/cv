@@ -1,31 +1,58 @@
 import { redirect } from 'next/navigation'
 
-import { listShortLinks } from 'lib/short-links'
+import {
+	listShortLinks,
+	parseShortLinkOrder,
+	parseShortLinkPage,
+	parseShortLinkSort,
+	SHORTENER_PATH,
+	shortenerListHref,
+} from 'lib/short-links'
 
 import { ShortenerManager } from 'widgets/admin'
 
-type ShortenerPageProps = {
-	searchParams: Promise<{ page?: string | string[] }>
+type ShortenerSearchParams = {
+	page?: string | string[]
+	sort?: string | string[]
+	order?: string | string[]
 }
 
-function parsePage(value: string | string[] | undefined) {
-	const raw = Array.isArray(value) ? value[0] : value
-	const page = Number(raw)
-	if (!Number.isInteger(page) || page < 1) return 1
-	return page
+type ShortenerPageProps = {
+	searchParams: Promise<ShortenerSearchParams>
+}
+
+function firstParam(value: string | string[] | undefined) {
+	return Array.isArray(value) ? value[0] : value
+}
+
+function requestedHref(params: ShortenerSearchParams) {
+	const search = new URLSearchParams()
+	const page = firstParam(params.page)
+	const sort = firstParam(params.sort)
+	const order = firstParam(params.order)
+
+	if (page) search.set('page', page)
+	if (sort) search.set('sort', sort)
+	if (order) search.set('order', order)
+
+	const query = search.toString()
+	return query ? `${SHORTENER_PATH}?${query}` : SHORTENER_PATH
 }
 
 export default async function ShortenerPage({
 	searchParams,
 }: ShortenerPageProps) {
 	const params = await searchParams
-	const requestedPage = parsePage(params.page)
-	const { links, count, page, pageSize } = await listShortLinks({
-		page: requestedPage,
+	const { links, count, page, pageSize, sort, order } = await listShortLinks({
+		page: parseShortLinkPage(params.page),
+		sort: parseShortLinkSort(params.sort),
+		order: parseShortLinkOrder(params.order),
 	})
 
-	if (requestedPage !== page) {
-		redirect(page <= 1 ? '/admin/shortener' : `/admin/shortener?page=${page}`)
+	const canonical = shortenerListHref(SHORTENER_PATH, { page, sort, order })
+
+	if (requestedHref(params) !== canonical) {
+		redirect(canonical)
 	}
 
 	return (
@@ -37,6 +64,8 @@ export default async function ShortenerPage({
 				count={count}
 				page={page}
 				pageSize={pageSize}
+				sort={sort}
+				order={order}
 			/>
 
 			<span />
