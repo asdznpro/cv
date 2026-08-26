@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { toast } from 'sonner'
@@ -36,6 +37,69 @@ import { DeleteShortLinkDialog } from './DeleteShortLinkDialog'
 import { ShortLinkFormDialog } from './ShortLinkFormDialog'
 import { ShortLinkVisitsDialog } from './ShortLinkVisitsDialog'
 
+type SortField =
+	| 'title'
+	| 'date'
+	| 'views'
+	| 'views_24h'
+	| 'visitors'
+	| 'visitors_24h'
+
+type SortOrder = 'asc' | 'desc'
+
+const DEFAULT_SORT: SortField = 'views_24h'
+const DEFAULT_ORDER: SortOrder = 'desc'
+
+function sortValue(link: ShortLink, field: SortField) {
+	switch (field) {
+		case 'title':
+			return (link.title || link.slug).toLocaleLowerCase()
+		case 'date':
+			return Date.parse(link.created_at)
+		case 'views':
+			return link.clicks
+		case 'views_24h':
+			return link.clicks_24h
+		case 'visitors':
+			return link.unique_visitors ?? 0
+		case 'visitors_24h':
+			return link.uniques_24h
+	}
+}
+
+function compareLinks(
+	a: ShortLink,
+	b: ShortLink,
+	field: SortField,
+	order: SortOrder,
+) {
+	const direction = order === 'asc' ? 1 : -1
+	const left = sortValue(a, field)
+	const right = sortValue(b, field)
+
+	if (typeof left === 'string' && typeof right === 'string') {
+		const byTitle = left.localeCompare(right, undefined, { numeric: true })
+		if (byTitle !== 0) return byTitle * direction
+	} else if (left !== right) {
+		return ((left as number) - (right as number)) * direction
+	}
+
+	return Date.parse(b.created_at) - Date.parse(a.created_at)
+}
+
+function sortItemProps(active: boolean) {
+	return {
+		mode: (active ? 'secondary' : 'ghost') as 'secondary' | 'ghost',
+		suffix: (
+			<Icon28DoneOutline
+				className={twMerge(!active && 'opacity-0 group-hover:opacity-40')}
+				width={18}
+				height={18}
+			/>
+		),
+	}
+}
+
 type ShortenerManagerProps = {
 	links: ShortLink[]
 }
@@ -43,6 +107,17 @@ type ShortenerManagerProps = {
 export function ShortenerManager({ links }: ShortenerManagerProps) {
 	const { open, close } = useOverlay()
 	const router = useRouter()
+	const [sortField, setSortField] = useState<SortField>(DEFAULT_SORT)
+	const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_ORDER)
+
+	const sortedLinks = useMemo(
+		() => [...links].sort((a, b) => compareLinks(a, b, sortField, sortOrder)),
+		[links, sortField, sortOrder],
+	)
+
+	const viewsSelected = sortField === 'views' || sortField === 'views_24h'
+	const visitorsSelected =
+		sortField === 'visitors' || sortField === 'visitors_24h'
 
 	const openEdit = (link: ShortLink) => {
 		open(
@@ -118,12 +193,12 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 				<div className='flex flex-col bg-background border border-separator rounded-surface overflow-hidden'>
 					<div className='flex flex-col bg-surface'>
 						<div className='h-12 flex items-center px-surface gap-surface'>
-							<Checkbox
+							{/* <Checkbox
 								aria-label='Select page articles'
 								// checked={pageSelected}
 								// indeterminate={somePageSelected}
 								// onChange={togglePage}
-							/>
+							/> */}
 
 							<span className='flex-1 text-foreground-secondary text-sm truncate'>
 								{links.length > 0 ? `${links.length} links` : 'No links'}
@@ -144,34 +219,100 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 								<DropdownMenu.Content className='w-40'>
 									<DropdownMenu.Box>
-										<DropdownMenu.Item
-											aria-label='By title'
-											mode={!true ? 'ghost' : 'secondary'}
-											suffix={
-												true && <Icon28DoneOutline width={18} height={18} />
-											}
-										>
-											By title
-										</DropdownMenu.Item>
+										<DropdownMenu.Heading>Sort by</DropdownMenu.Heading>
 
 										<DropdownMenu.Item
-											aria-label='By views'
-											mode={true ? 'ghost' : 'secondary'}
-											suffix={
-												!true && <Icon28DoneOutline width={18} height={18} />
-											}
+											aria-label='By title'
+											onClick={() => setSortField('title')}
+											{...sortItemProps(sortField === 'title')}
 										>
-											By views
+											Title
 										</DropdownMenu.Item>
 
 										<DropdownMenu.Item
 											aria-label='By date'
-											mode={true ? 'ghost' : 'secondary'}
-											suffix={
-												!true && <Icon28DoneOutline width={18} height={18} />
-											}
+											onClick={() => setSortField('date')}
+											{...sortItemProps(sortField === 'date')}
 										>
-											By date
+											Date
+										</DropdownMenu.Item>
+
+										<DropdownMenu.Sub>
+											<DropdownMenu.SubTrigger
+												aria-label='By views'
+												mode={viewsSelected ? 'secondary' : 'ghost'}
+											>
+												Views
+											</DropdownMenu.SubTrigger>
+
+											<DropdownMenu.SubContent className='w-40'>
+												<DropdownMenu.Box>
+													<DropdownMenu.Item
+														aria-label='By total views'
+														onClick={() => setSortField('views')}
+														{...sortItemProps(sortField === 'views')}
+													>
+														Default
+													</DropdownMenu.Item>
+
+													<DropdownMenu.Item
+														aria-label='By views in last 24h'
+														onClick={() => setSortField('views_24h')}
+														{...sortItemProps(sortField === 'views_24h')}
+													>
+														Last 24h first
+													</DropdownMenu.Item>
+												</DropdownMenu.Box>
+											</DropdownMenu.SubContent>
+										</DropdownMenu.Sub>
+
+										<DropdownMenu.Sub>
+											<DropdownMenu.SubTrigger
+												aria-label='By visitors'
+												mode={visitorsSelected ? 'secondary' : 'ghost'}
+											>
+												Visitors
+											</DropdownMenu.SubTrigger>
+
+											<DropdownMenu.SubContent className='w-40'>
+												<DropdownMenu.Box>
+													<DropdownMenu.Item
+														aria-label='By total visitors'
+														onClick={() => setSortField('visitors')}
+														{...sortItemProps(sortField === 'visitors')}
+													>
+														Default
+													</DropdownMenu.Item>
+
+													<DropdownMenu.Item
+														aria-label='By visitors in last 24h'
+														onClick={() => setSortField('visitors_24h')}
+														{...sortItemProps(sortField === 'visitors_24h')}
+													>
+														Last 24h first
+													</DropdownMenu.Item>
+												</DropdownMenu.Box>
+											</DropdownMenu.SubContent>
+										</DropdownMenu.Sub>
+									</DropdownMenu.Box>
+
+									<DropdownMenu.Box>
+										<DropdownMenu.Heading>Order by</DropdownMenu.Heading>
+
+										<DropdownMenu.Item
+											aria-label='Increasing'
+											onClick={() => setSortOrder('asc')}
+											{...sortItemProps(sortOrder === 'asc')}
+										>
+											Ascending
+										</DropdownMenu.Item>
+
+										<DropdownMenu.Item
+											aria-label='Decreasing'
+											onClick={() => setSortOrder('desc')}
+											{...sortItemProps(sortOrder === 'desc')}
+										>
+											Descending
 										</DropdownMenu.Item>
 									</DropdownMenu.Box>
 								</DropdownMenu.Content>
@@ -189,7 +330,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 						</div>
 					) : (
 						<ScrollArea className='max-h-[80vh]'>
-							{links.map((link, index) => (
+							{sortedLinks.map((link, index) => (
 								<div key={link.id}>
 									<div className='flex items-center p-surface gap-surface'>
 										<div className='flex flex-1 flex-col gap-3 min-w-0'>
@@ -333,7 +474,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 										</div>
 									</div>
 
-									{index !== links.length - 1 && <Separator />}
+									{index !== sortedLinks.length - 1 && <Separator />}
 								</div>
 							))}
 						</ScrollArea>

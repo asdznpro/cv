@@ -41,7 +41,7 @@ export type ShortLinkInput = {
 }
 
 export function shortLinkHref(slug: string) {
-	return `${SHORT_LINK_HOST}/${slug}`
+	return `https://${SHORT_LINK_HOST}/${slug}`
 }
 
 export function stripUrlProtocol(url: string) {

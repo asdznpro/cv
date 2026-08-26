@@ -104,11 +104,9 @@ export function ShortLinkVisitsDialog({
 			<div className='flex flex-col p-surface gap-surface'>
 				<div className='flex flex-1 flex-col gap-3'>
 					<p className='text-xl font-medium font-condensed tracking-tight'>
-						Visits
+						Visits{': '}
 						{link.title && (
 							<>
-								{' '}
-								of{' '}
 								<span className='text-foreground-secondary'>{link.title}</span>
 							</>
 						)}
