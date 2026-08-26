@@ -489,6 +489,7 @@ function SubTrigger({
 	children,
 	className,
 	prefix,
+	mode = 'ghost',
 	appearance = 'neutral',
 	disabled,
 }: DropdownMenuSubTriggerProps) {
@@ -507,7 +508,7 @@ function SubTrigger({
 			role='menuitem'
 			tabIndex={isActive ? 0 : -1}
 			className={twMerge('flex-1', className)}
-			mode='ghost'
+			mode={mode}
 			appearance={appearance}
 			prefix={prefix}
 			suffix={<Icon28ChevronRightOutline width={18} height={18} />}

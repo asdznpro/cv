@@ -1,19 +1,22 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
 
 import {
 	SHORT_LINK_HOST,
+	shortenerListHref,
 	shortLinkHref,
 	stripUrlProtocol,
 	type ShortLink,
+	type ShortLinkSortField,
+	type ShortLinkSortOrder,
 } from 'lib/short-links'
 import { getFormattedDate } from 'lib/utils'
 
-import { Badge, Button, ScrollArea, Separator } from 'ui/blocks'
+import { Badge, Button, Pagination, ScrollArea, Separator } from 'ui/blocks'
 import { Checkbox } from 'ui/forms'
 import { DropdownMenu, Tooltip } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
@@ -36,13 +39,60 @@ import { DeleteShortLinkDialog } from './DeleteShortLinkDialog'
 import { ShortLinkFormDialog } from './ShortLinkFormDialog'
 import { ShortLinkVisitsDialog } from './ShortLinkVisitsDialog'
 
-type ShortenerManagerProps = {
-	links: ShortLink[]
+function sortItemProps(active: boolean) {
+	return {
+		mode: (active ? 'secondary' : 'ghost') as 'secondary' | 'ghost',
+		suffix: (
+			<Icon28DoneOutline
+				className={twMerge(!active && 'opacity-0 group-hover:opacity-40')}
+				width={18}
+				height={18}
+			/>
+		),
+	}
 }
 
-export function ShortenerManager({ links }: ShortenerManagerProps) {
+type ShortenerManagerProps = {
+	links: ShortLink[]
+	count: number
+	page: number
+	pageSize: number
+	sort: ShortLinkSortField
+	order: ShortLinkSortOrder
+}
+
+export function ShortenerManager({
+	links,
+	count,
+	page,
+	pageSize,
+	sort,
+	order,
+}: ShortenerManagerProps) {
 	const { open, close } = useOverlay()
 	const router = useRouter()
+	const pathname = usePathname()
+
+	const viewsSelected = sort === 'views' || sort === 'views_24h'
+	const visitorsSelected = sort === 'visitors' || sort === 'visitors_24h'
+
+	function goToPage(next: number) {
+		router.push(shortenerListHref(pathname, { page: next, sort, order }))
+	}
+
+	function changeSort(field: ShortLinkSortField) {
+		router.push(shortenerListHref(pathname, { page: 1, sort: field, order }))
+	}
+
+	function changeOrder(next: ShortLinkSortOrder) {
+		router.push(shortenerListHref(pathname, { page: 1, sort, order: next }))
+	}
+
+	const openVisits = (link: ShortLink) => {
+		open(<ShortLinkVisitsDialog link={link} onClose={() => close()} />, {
+			className: 'max-w-xl',
+		})
+	}
 
 	const openEdit = (link: ShortLink) => {
 		open(
@@ -71,12 +121,6 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 		)
 	}
 
-	const openVisits = (link: ShortLink) => {
-		open(<ShortLinkVisitsDialog link={link} onClose={() => close()} />, {
-			className: 'max-w-xl',
-		})
-	}
-
 	async function copyHref(slug: string) {
 		try {
 			await navigator.clipboard.writeText(shortLinkHref(slug))
@@ -93,14 +137,10 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 					<h1 className='text-5xl text-balance font-medium font-condensed tracking-tight'>
 						URL Shortener
 					</h1>
-
-					{/* <p className='text-foreground-secondary text-balance'>
-						Create short links to your website or social media profiles
-					</p> */}
 				</div>
 
 				<div className='relative flex'>
-					<CreateShortLinkForm />
+					<CreateShortLinkForm sort={sort} order={order} />
 
 					<span className='-z-1 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 container w-[160%] aspect-square animate-[fade-in_1000ms_ease-out] bg-radial from-accent/20 to-60% to-background pointer-events-none' />
 				</div>
@@ -118,15 +158,15 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 				<div className='flex flex-col bg-background border border-separator rounded-surface overflow-hidden'>
 					<div className='flex flex-col bg-surface'>
 						<div className='h-12 flex items-center px-surface gap-surface'>
-							<Checkbox
+							{/* <Checkbox
 								aria-label='Select page articles'
 								// checked={pageSelected}
 								// indeterminate={somePageSelected}
 								// onChange={togglePage}
-							/>
+							/> */}
 
 							<span className='flex-1 text-foreground-secondary text-sm truncate'>
-								{links.length > 0 ? `${links.length} links` : 'No links'}
+								{count > 0 ? `${count} links` : 'No links'}
 							</span>
 
 							<DropdownMenu>
@@ -144,34 +184,100 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 								<DropdownMenu.Content className='w-40'>
 									<DropdownMenu.Box>
-										<DropdownMenu.Item
-											aria-label='By title'
-											mode={!true ? 'ghost' : 'secondary'}
-											suffix={
-												true && <Icon28DoneOutline width={18} height={18} />
-											}
-										>
-											By title
-										</DropdownMenu.Item>
+										<DropdownMenu.Heading>Sort by</DropdownMenu.Heading>
 
 										<DropdownMenu.Item
-											aria-label='By views'
-											mode={true ? 'ghost' : 'secondary'}
-											suffix={
-												!true && <Icon28DoneOutline width={18} height={18} />
-											}
+											aria-label='By title'
+											onClick={() => changeSort('title')}
+											{...sortItemProps(sort === 'title')}
 										>
-											By views
+											Title (slug)
 										</DropdownMenu.Item>
 
 										<DropdownMenu.Item
 											aria-label='By date'
-											mode={true ? 'ghost' : 'secondary'}
-											suffix={
-												!true && <Icon28DoneOutline width={18} height={18} />
-											}
+											onClick={() => changeSort('date')}
+											{...sortItemProps(sort === 'date')}
 										>
-											By date
+											Date
+										</DropdownMenu.Item>
+
+										<DropdownMenu.Sub>
+											<DropdownMenu.SubTrigger
+												aria-label='By views'
+												mode={viewsSelected ? 'secondary' : 'ghost'}
+											>
+												Views
+											</DropdownMenu.SubTrigger>
+
+											<DropdownMenu.SubContent className='w-40'>
+												<DropdownMenu.Box>
+													<DropdownMenu.Item
+														aria-label='By total views'
+														onClick={() => changeSort('views')}
+														{...sortItemProps(sort === 'views')}
+													>
+														Default
+													</DropdownMenu.Item>
+
+													<DropdownMenu.Item
+														aria-label='By views in last 24h'
+														onClick={() => changeSort('views_24h')}
+														{...sortItemProps(sort === 'views_24h')}
+													>
+														Last 24h first
+													</DropdownMenu.Item>
+												</DropdownMenu.Box>
+											</DropdownMenu.SubContent>
+										</DropdownMenu.Sub>
+
+										<DropdownMenu.Sub>
+											<DropdownMenu.SubTrigger
+												aria-label='By visitors'
+												mode={visitorsSelected ? 'secondary' : 'ghost'}
+											>
+												Visitors
+											</DropdownMenu.SubTrigger>
+
+											<DropdownMenu.SubContent className='w-40'>
+												<DropdownMenu.Box>
+													<DropdownMenu.Item
+														aria-label='By total visitors'
+														onClick={() => changeSort('visitors')}
+														{...sortItemProps(sort === 'visitors')}
+													>
+														Default
+													</DropdownMenu.Item>
+
+													<DropdownMenu.Item
+														aria-label='By visitors in last 24h'
+														onClick={() => changeSort('visitors_24h')}
+														{...sortItemProps(sort === 'visitors_24h')}
+													>
+														Last 24h first
+													</DropdownMenu.Item>
+												</DropdownMenu.Box>
+											</DropdownMenu.SubContent>
+										</DropdownMenu.Sub>
+									</DropdownMenu.Box>
+
+									<DropdownMenu.Box>
+										<DropdownMenu.Heading>Order by</DropdownMenu.Heading>
+
+										<DropdownMenu.Item
+											aria-label='Increasing'
+											onClick={() => changeOrder('asc')}
+											{...sortItemProps(order === 'asc')}
+										>
+											Ascending
+										</DropdownMenu.Item>
+
+										<DropdownMenu.Item
+											aria-label='Decreasing'
+											onClick={() => changeOrder('desc')}
+											{...sortItemProps(order === 'desc')}
+										>
+											Descending
 										</DropdownMenu.Item>
 									</DropdownMenu.Box>
 								</DropdownMenu.Content>
@@ -181,17 +287,17 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 					<Separator />
 
-					{links.length === 0 ? (
+					{count === 0 ? (
 						<div className='min-h-40 flex items-center justify-center p-surface'>
 							<p className='text-center text-sm text-foreground-secondary'>
 								No short links
 							</p>
 						</div>
 					) : (
-						<ScrollArea className='max-h-[80vh]'>
+						<ScrollArea className='h-[72vh]'>
 							{links.map((link, index) => (
 								<div key={link.id}>
-									<div className='flex items-center p-surface gap-surface'>
+									<div className='flex p-surface gap-surface'>
 										<div className='flex flex-1 flex-col gap-3 min-w-0'>
 											<p className='text-balance text-xl font-medium font-condensed tracking-tight'>
 												{link.title && link.title + ': '}
@@ -261,7 +367,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 											</span>
 										</div>
 
-										<div className='flex gap-2 shrink-0'>
+										<div className='flex gap-2'>
 											<Button
 												onClick={() => copyHref(link.slug)}
 												aria-label='Copy'
@@ -338,6 +444,26 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 							))}
 						</ScrollArea>
 					)}
+
+					<Separator />
+
+					<div className='flex flex-col bg-surface'>
+						<div className='h-12 flex items-center px-surface gap-surface'>
+							<Pagination
+								page={page}
+								pageSize={pageSize}
+								count={count}
+								onPageChange={goToPage}
+							>
+								<Pagination.Label />
+
+								<div className='flex gap-2'>
+									<Pagination.Prev />
+									<Pagination.Next />
+								</div>
+							</Pagination>
+						</div>
+					</div>
 				</div>
 			</section>
 		</>

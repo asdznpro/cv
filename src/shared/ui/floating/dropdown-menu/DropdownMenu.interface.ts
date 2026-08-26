@@ -65,5 +65,15 @@ export interface DropdownMenuSubProps {
 /** Nested trigger — Button-like; chevron suffix is built-in. */
 export type DropdownMenuSubTriggerProps = Pick<
 	ButtonProps,
-	'children' | 'className' | 'prefix' | 'appearance' | 'disabled'
+	| 'children'
+	| 'className'
+	| 'prefix'
+	| 'suffix'
+	| 'mode'
+	| 'appearance'
+	| 'disabled'
+	| 'onClick'
+	| 'to'
+	| 'href'
+	| 'target'
 >

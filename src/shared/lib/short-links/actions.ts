@@ -8,10 +8,17 @@ import { createClient } from 'lib/supabase/server'
 
 import {
 	generateShortSlug,
+	parseShortLinkOrder,
+	parseShortLinkPage,
+	parseShortLinkSort,
 	type ShortLink,
 	type ShortLinkClick,
 	type ShortLinkInput,
+	type ShortLinkListResult,
+	type ShortLinkSortField,
+	type ShortLinkSortOrder,
 	type ShortLinkVisit,
+	SHORT_LINKS_PAGE_SIZE,
 	validateShortLinkInput,
 } from './types'
 
@@ -33,54 +40,73 @@ function toActionError(error: unknown): ActionResult {
 	return { ok: false, error: message }
 }
 
-export async function listShortLinks(): Promise<ShortLink[]> {
+type ListShortLinksRow = {
+	id: string
+	slug: string
+	target_url: string
+	title: string | null
+	clicks: number
+	unique_visitors: number
+	created_at: string
+	updated_at: string
+	clicks_24h: number
+	uniques_24h: number
+	total_count: number
+	page: number
+	page_size: number
+	sort: ShortLinkSortField
+	sort_order: ShortLinkSortOrder
+}
+
+function mapListedLink(row: ListShortLinksRow): ShortLink {
+	return {
+		id: row.id,
+		slug: row.slug,
+		target_url: row.target_url,
+		title: row.title,
+		clicks: Number(row.clicks ?? 0),
+		unique_visitors: Number(row.unique_visitors ?? 0),
+		created_at: row.created_at,
+		updated_at: row.updated_at,
+		clicks_24h: Number(row.clicks_24h ?? 0),
+		uniques_24h: Number(row.uniques_24h ?? 0),
+	}
+}
+
+export async function listShortLinks(input?: {
+	page?: number
+	pageSize?: number
+	sort?: string | string[] | null
+	order?: string | string[] | null
+}): Promise<ShortLinkListResult> {
+	const pageSize = Math.max(1, input?.pageSize ?? SHORT_LINKS_PAGE_SIZE)
+	const sort = parseShortLinkSort(input?.sort)
+	const order = parseShortLinkOrder(input?.order)
+	const requestedPage = parseShortLinkPage(input?.page)
+
 	const supabase = await createClient()
-	const { data, error } = await supabase
-		.from('short_links')
-		.select('*')
-		.order('created_at', { ascending: false })
+	const { data, error } = await supabase.rpc('list_short_links', {
+		p_sort: sort,
+		p_order: order,
+		p_page: requestedPage,
+		p_page_size: pageSize,
+	})
 
 	if (error) {
 		throw new Error(error.message)
 	}
 
-	const links = (data ?? []) as Omit<ShortLink, 'clicks_24h' | 'uniques_24h'>[]
+	const rows = (data ?? []) as ListShortLinksRow[]
+	const meta = rows[0]
 
-	const { data: statsRows, error: statsError } = await supabase.rpc(
-		'short_link_stats_24h',
-	)
-
-	if (statsError) {
-		// Migration not applied yet — show lifetime only
-		return links.map(link => ({
-			...link,
-			unique_visitors: link.unique_visitors ?? 0,
-			clicks_24h: 0,
-			uniques_24h: 0,
-		}))
+	return {
+		links: rows.map(mapListedLink),
+		count: Number(meta?.total_count ?? 0),
+		page: Number(meta?.page ?? 1),
+		pageSize: Number(meta?.page_size ?? pageSize),
+		sort: parseShortLinkSort(meta?.sort ?? sort),
+		order: parseShortLinkOrder(meta?.sort_order ?? order),
 	}
-
-	const statsById = new Map<
-		string,
-		{ clicks_24h: number; uniques_24h: number }
-	>()
-
-	for (const row of statsRows ?? []) {
-		statsById.set(row.link_id as string, {
-			clicks_24h: Number(row.clicks_24h ?? 0),
-			uniques_24h: Number(row.uniques_24h ?? 0),
-		})
-	}
-
-	return links.map(link => {
-		const stats = statsById.get(link.id)
-		return {
-			...link,
-			unique_visitors: link.unique_visitors ?? 0,
-			clicks_24h: stats?.clicks_24h ?? 0,
-			uniques_24h: stats?.uniques_24h ?? 0,
-		}
-	})
 }
 
 function mapVisit(
