@@ -11,7 +11,9 @@ import {
 	type ShortLink,
 	type ShortLinkClick,
 	type ShortLinkInput,
+	type ShortLinkListResult,
 	type ShortLinkVisit,
+	SHORT_LINKS_PAGE_SIZE,
 	validateShortLinkInput,
 } from './types'
 
@@ -33,25 +35,57 @@ function toActionError(error: unknown): ActionResult {
 	return { ok: false, error: message }
 }
 
-export async function listShortLinks(): Promise<ShortLink[]> {
+export async function listShortLinks(input?: {
+	page?: number
+	pageSize?: number
+}): Promise<ShortLinkListResult> {
+	const pageSize = Math.max(1, input?.pageSize ?? SHORT_LINKS_PAGE_SIZE)
+	let page = Math.max(1, Math.trunc(input?.page ?? 1) || 1)
+
 	const supabase = await createClient()
-	const { data, error } = await supabase
-		.from('short_links')
-		.select('*')
-		.order('created_at', { ascending: false })
+
+	const fetchPage = (from: number, to: number) =>
+		supabase
+			.from('short_links')
+			.select('*', { count: 'exact' })
+			.order('created_at', { ascending: false })
+			.range(from, to)
+
+	let from = (page - 1) * pageSize
+	let { data, error, count } = await fetchPage(from, from + pageSize - 1)
 
 	if (error) {
 		throw new Error(error.message)
 	}
 
-	const links = (data ?? []) as Omit<ShortLink, 'clicks_24h' | 'uniques_24h'>[]
+	const total = count ?? 0
+	const pageCount = Math.max(1, Math.ceil(total / pageSize) || 1)
 
+	if (total > 0 && page > pageCount) {
+		page = pageCount
+		from = (page - 1) * pageSize
+		const retry = await fetchPage(from, from + pageSize - 1)
+		if (retry.error) {
+			throw new Error(retry.error.message)
+		}
+		data = retry.data
+	}
+
+	const rows = (data ?? []) as Omit<ShortLink, 'clicks_24h' | 'uniques_24h'>[]
+	const links = await attachShortLinkStats(rows)
+
+	return { links, count: total, page, pageSize }
+}
+
+async function attachShortLinkStats(
+	links: Omit<ShortLink, 'clicks_24h' | 'uniques_24h'>[],
+): Promise<ShortLink[]> {
+	const supabase = await createClient()
 	const { data: statsRows, error: statsError } = await supabase.rpc(
 		'short_link_stats_24h',
 	)
 
 	if (statsError) {
-		// Migration not applied yet — show lifetime only
 		return links.map(link => ({
 			...link,
 			unique_visitors: link.unique_visitors ?? 0,

@@ -1,4 +1,5 @@
 export const SHORT_LINK_HOST = 'go.asdzn.pro'
+export const SHORT_LINKS_PAGE_SIZE = 10
 
 export type ShortLink = {
 	id: string
@@ -34,6 +35,13 @@ export type ShortLinkVisit = {
 	clicks: ShortLinkClick[]
 }
 
+export type ShortLinkListResult = {
+	links: ShortLink[]
+	count: number
+	page: number
+	pageSize: number
+}
+
 export type ShortLinkInput = {
 	slug?: string | null
 	target_url: string
@@ -51,7 +59,7 @@ export function stripUrlProtocol(url: string) {
 export function generateShortSlug(length = 7) {
 	const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789'
 	const bytes = crypto.getRandomValues(new Uint8Array(length))
-	return Array.from(bytes, (b) => alphabet[b % alphabet.length]).join('')
+	return Array.from(bytes, b => alphabet[b % alphabet.length]).join('')
 }
 
 export function normalizeShortLinkInput(input: ShortLinkInput): ShortLinkInput {

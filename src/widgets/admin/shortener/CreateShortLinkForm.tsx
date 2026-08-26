@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 
 import { toast } from 'sonner'
@@ -32,6 +32,7 @@ const EMPTY_CREATE_FORM: CreateFormState = {
 
 export function CreateShortLinkForm() {
 	const router = useRouter()
+	const pathname = usePathname()
 	const [pending, startTransition] = useTransition()
 	const [form, setForm] = useState<CreateFormState>(EMPTY_CREATE_FORM)
 
@@ -63,6 +64,7 @@ export function CreateShortLinkForm() {
 
 			toast.success('Ссылка создана')
 			resetForm()
+			router.push(pathname)
 			router.refresh()
 		})
 	}

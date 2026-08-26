@@ -10,10 +10,12 @@ export type {
 	ShortLink,
 	ShortLinkClick,
 	ShortLinkInput,
+	ShortLinkListResult,
 	ShortLinkVisit,
 } from './types'
 export {
 	SHORT_LINK_HOST,
+	SHORT_LINKS_PAGE_SIZE,
 	generateShortSlug,
 	normalizeShortLinkInput,
 	shortLinkHref,

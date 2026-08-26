@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
@@ -49,7 +49,6 @@ type SortOrder = 'asc' | 'desc'
 
 const DEFAULT_SORT: SortField = 'views_24h'
 const DEFAULT_ORDER: SortOrder = 'desc'
-const PAGE_SIZE = 10
 
 function sortValue(link: ShortLink, field: SortField) {
 	switch (field) {
@@ -103,30 +102,46 @@ function sortItemProps(active: boolean) {
 
 type ShortenerManagerProps = {
 	links: ShortLink[]
+	count: number
+	page: number
+	pageSize: number
 }
 
-export function ShortenerManager({ links }: ShortenerManagerProps) {
+export function ShortenerManager({
+	links,
+	count,
+	page,
+	pageSize,
+}: ShortenerManagerProps) {
 	const { open, close } = useOverlay()
 	const router = useRouter()
+	const pathname = usePathname()
 	const [sortField, setSortField] = useState<SortField>(DEFAULT_SORT)
 	const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_ORDER)
-	const [page, setPage] = useState(1)
 
 	const sortedLinks = useMemo(
 		() => [...links].sort((a, b) => compareLinks(a, b, sortField, sortOrder)),
 		[links, sortField, sortOrder],
 	)
 
-	const pageCount = Math.max(1, Math.ceil(sortedLinks.length / PAGE_SIZE) || 1)
-	const currentPage = Math.min(page, pageCount)
-	const pageLinks = sortedLinks.slice(
-		(currentPage - 1) * PAGE_SIZE,
-		currentPage * PAGE_SIZE,
-	)
-
 	const viewsSelected = sortField === 'views' || sortField === 'views_24h'
 	const visitorsSelected =
 		sortField === 'visitors' || sortField === 'visitors_24h'
+
+	function goToPage(next: number) {
+		if (next <= 1) {
+			router.push(pathname)
+			return
+		}
+
+		router.push(`${pathname}?page=${next}`)
+	}
+
+	const openVisits = (link: ShortLink) => {
+		open(<ShortLinkVisitsDialog link={link} onClose={() => close()} />, {
+			className: 'max-w-xl',
+		})
+	}
 
 	const openEdit = (link: ShortLink) => {
 		open(
@@ -153,12 +168,6 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 			/>,
 			{ className: 'max-w-sm' },
 		)
-	}
-
-	const openVisits = (link: ShortLink) => {
-		open(<ShortLinkVisitsDialog link={link} onClose={() => close()} />, {
-			className: 'max-w-xl',
-		})
 	}
 
 	async function copyHref(slug: string) {
@@ -210,7 +219,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 							/> */}
 
 							<span className='flex-1 text-foreground-secondary text-sm truncate'>
-								{links.length > 0 ? `${links.length} links` : 'No links'}
+								{count > 0 ? `${count} links` : 'No links'}
 							</span>
 
 							<DropdownMenu>
@@ -232,10 +241,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 										<DropdownMenu.Item
 											aria-label='By title'
-											onClick={() => {
-												setSortField('title')
-												setPage(1)
-											}}
+											onClick={() => setSortField('title')}
 											{...sortItemProps(sortField === 'title')}
 										>
 											Title (slug)
@@ -243,10 +249,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 										<DropdownMenu.Item
 											aria-label='By date'
-											onClick={() => {
-												setSortField('date')
-												setPage(1)
-											}}
+											onClick={() => setSortField('date')}
 											{...sortItemProps(sortField === 'date')}
 										>
 											Date
@@ -264,10 +267,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 												<DropdownMenu.Box>
 													<DropdownMenu.Item
 														aria-label='By total views'
-														onClick={() => {
-															setSortField('views')
-															setPage(1)
-														}}
+														onClick={() => setSortField('views')}
 														{...sortItemProps(sortField === 'views')}
 													>
 														Default
@@ -275,10 +275,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 													<DropdownMenu.Item
 														aria-label='By views in last 24h'
-														onClick={() => {
-															setSortField('views_24h')
-															setPage(1)
-														}}
+														onClick={() => setSortField('views_24h')}
 														{...sortItemProps(sortField === 'views_24h')}
 													>
 														Last 24h first
@@ -299,10 +296,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 												<DropdownMenu.Box>
 													<DropdownMenu.Item
 														aria-label='By total visitors'
-														onClick={() => {
-															setSortField('visitors')
-															setPage(1)
-														}}
+														onClick={() => setSortField('visitors')}
 														{...sortItemProps(sortField === 'visitors')}
 													>
 														Default
@@ -310,10 +304,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 													<DropdownMenu.Item
 														aria-label='By visitors in last 24h'
-														onClick={() => {
-															setSortField('visitors_24h')
-															setPage(1)
-														}}
+														onClick={() => setSortField('visitors_24h')}
 														{...sortItemProps(sortField === 'visitors_24h')}
 													>
 														Last 24h first
@@ -328,10 +319,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 										<DropdownMenu.Item
 											aria-label='Increasing'
-											onClick={() => {
-												setSortOrder('asc')
-												setPage(1)
-											}}
+											onClick={() => setSortOrder('asc')}
 											{...sortItemProps(sortOrder === 'asc')}
 										>
 											Ascending
@@ -339,10 +327,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 										<DropdownMenu.Item
 											aria-label='Decreasing'
-											onClick={() => {
-												setSortOrder('desc')
-												setPage(1)
-											}}
+											onClick={() => setSortOrder('desc')}
 											{...sortItemProps(sortOrder === 'desc')}
 										>
 											Descending
@@ -355,15 +340,15 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 					<Separator />
 
-					{links.length === 0 ? (
+					{count === 0 ? (
 						<div className='min-h-40 flex items-center justify-center p-surface'>
 							<p className='text-center text-sm text-foreground-secondary'>
 								No short links
 							</p>
 						</div>
 					) : (
-						<ScrollArea className='max-h-[72vh]'>
-							{pageLinks.map((link, index) => (
+						<ScrollArea className='h-[72vh]'>
+							{sortedLinks.map((link, index) => (
 								<div key={link.id}>
 									<div className='flex items-center p-surface gap-surface'>
 										<div className='flex flex-1 flex-col gap-3 min-w-0'>
@@ -507,7 +492,7 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 										</div>
 									</div>
 
-									{index !== pageLinks.length - 1 && <Separator />}
+									{index !== sortedLinks.length - 1 && <Separator />}
 								</div>
 							))}
 						</ScrollArea>
@@ -518,10 +503,10 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 					<div className='flex flex-col bg-surface'>
 						<div className='h-12 flex items-center px-surface gap-surface'>
 							<Pagination
-								page={currentPage}
-								pageSize={PAGE_SIZE}
-								count={sortedLinks.length}
-								onPageChange={setPage}
+								page={page}
+								pageSize={pageSize}
+								count={count}
+								onPageChange={goToPage}
 							>
 								<Pagination.Label />
 
@@ -532,65 +517,6 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 							</Pagination>
 						</div>
 					</div>
-
-					{/* <Separator />
-
-					<div className='flex flex-col bg-surface'>
-						<div className='h-12 flex items-center px-surface gap-surface'>
-							<Button
-								type='button'
-								size='sm'
-								mode='ghost'
-								appearance='neutral'
-								prefix={<Icon28ChevronLeftOutline width={16} height={16} />}
-								disabled
-							>
-								Prev
-							</Button>
-
-							<div className='flex flex-1 justify-center gap-1.5'>
-								{[...Array(6)].map((_, index) => (
-									<Button
-										key={index}
-										type='button'
-										size='sm'
-										mode={index === 2 ? 'soft' : 'ghost'}
-										appearance={index === 2 ? 'accent' : 'neutral'}
-										prefix={index + 1}
-										iconOnly
-									/>
-								))}
-
-								<Button
-									type='button'
-									size='sm'
-									mode='ghost'
-									appearance='neutral'
-									prefix='...'
-									iconOnly
-								/>
-
-								<Button
-									type='button'
-									size='sm'
-									mode='ghost'
-									appearance='neutral'
-									prefix={24}
-									iconOnly
-								/>
-							</div>
-
-							<Button
-								type='button'
-								size='sm'
-								mode='ghost'
-								appearance='neutral'
-								suffix={<Icon28ChevronRightOutline width={16} height={16} />}
-							>
-								Next
-							</Button>
-						</div>
-					</div> */}
 				</div>
 			</section>
 		</>
