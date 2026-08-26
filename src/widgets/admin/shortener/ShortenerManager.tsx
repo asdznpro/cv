@@ -14,7 +14,7 @@ import {
 } from 'lib/short-links'
 import { getFormattedDate } from 'lib/utils'
 
-import { Badge, Button, ScrollArea, Separator } from 'ui/blocks'
+import { Badge, Button, Pagination, ScrollArea, Separator } from 'ui/blocks'
 import { Checkbox } from 'ui/forms'
 import { DropdownMenu, Tooltip } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
@@ -49,6 +49,7 @@ type SortOrder = 'asc' | 'desc'
 
 const DEFAULT_SORT: SortField = 'views_24h'
 const DEFAULT_ORDER: SortOrder = 'desc'
+const PAGE_SIZE = 10
 
 function sortValue(link: ShortLink, field: SortField) {
 	switch (field) {
@@ -109,10 +110,18 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 	const router = useRouter()
 	const [sortField, setSortField] = useState<SortField>(DEFAULT_SORT)
 	const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_ORDER)
+	const [page, setPage] = useState(1)
 
 	const sortedLinks = useMemo(
 		() => [...links].sort((a, b) => compareLinks(a, b, sortField, sortOrder)),
 		[links, sortField, sortOrder],
+	)
+
+	const pageCount = Math.max(1, Math.ceil(sortedLinks.length / PAGE_SIZE) || 1)
+	const currentPage = Math.min(page, pageCount)
+	const pageLinks = sortedLinks.slice(
+		(currentPage - 1) * PAGE_SIZE,
+		currentPage * PAGE_SIZE,
 	)
 
 	const viewsSelected = sortField === 'views' || sortField === 'views_24h'
@@ -223,15 +232,21 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 										<DropdownMenu.Item
 											aria-label='By title'
-											onClick={() => setSortField('title')}
+											onClick={() => {
+												setSortField('title')
+												setPage(1)
+											}}
 											{...sortItemProps(sortField === 'title')}
 										>
-											Title
+											Title (slug)
 										</DropdownMenu.Item>
 
 										<DropdownMenu.Item
 											aria-label='By date'
-											onClick={() => setSortField('date')}
+											onClick={() => {
+												setSortField('date')
+												setPage(1)
+											}}
 											{...sortItemProps(sortField === 'date')}
 										>
 											Date
@@ -249,7 +264,10 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 												<DropdownMenu.Box>
 													<DropdownMenu.Item
 														aria-label='By total views'
-														onClick={() => setSortField('views')}
+														onClick={() => {
+															setSortField('views')
+															setPage(1)
+														}}
 														{...sortItemProps(sortField === 'views')}
 													>
 														Default
@@ -257,7 +275,10 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 													<DropdownMenu.Item
 														aria-label='By views in last 24h'
-														onClick={() => setSortField('views_24h')}
+														onClick={() => {
+															setSortField('views_24h')
+															setPage(1)
+														}}
 														{...sortItemProps(sortField === 'views_24h')}
 													>
 														Last 24h first
@@ -278,7 +299,10 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 												<DropdownMenu.Box>
 													<DropdownMenu.Item
 														aria-label='By total visitors'
-														onClick={() => setSortField('visitors')}
+														onClick={() => {
+															setSortField('visitors')
+															setPage(1)
+														}}
 														{...sortItemProps(sortField === 'visitors')}
 													>
 														Default
@@ -286,7 +310,10 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 													<DropdownMenu.Item
 														aria-label='By visitors in last 24h'
-														onClick={() => setSortField('visitors_24h')}
+														onClick={() => {
+															setSortField('visitors_24h')
+															setPage(1)
+														}}
 														{...sortItemProps(sortField === 'visitors_24h')}
 													>
 														Last 24h first
@@ -301,7 +328,10 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 										<DropdownMenu.Item
 											aria-label='Increasing'
-											onClick={() => setSortOrder('asc')}
+											onClick={() => {
+												setSortOrder('asc')
+												setPage(1)
+											}}
 											{...sortItemProps(sortOrder === 'asc')}
 										>
 											Ascending
@@ -309,7 +339,10 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 
 										<DropdownMenu.Item
 											aria-label='Decreasing'
-											onClick={() => setSortOrder('desc')}
+											onClick={() => {
+												setSortOrder('desc')
+												setPage(1)
+											}}
 											{...sortItemProps(sortOrder === 'desc')}
 										>
 											Descending
@@ -329,8 +362,8 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 							</p>
 						</div>
 					) : (
-						<ScrollArea className='max-h-[80vh]'>
-							{sortedLinks.map((link, index) => (
+						<ScrollArea className='max-h-[72vh]'>
+							{pageLinks.map((link, index) => (
 								<div key={link.id}>
 									<div className='flex items-center p-surface gap-surface'>
 										<div className='flex flex-1 flex-col gap-3 min-w-0'>
@@ -474,11 +507,90 @@ export function ShortenerManager({ links }: ShortenerManagerProps) {
 										</div>
 									</div>
 
-									{index !== sortedLinks.length - 1 && <Separator />}
+									{index !== pageLinks.length - 1 && <Separator />}
 								</div>
 							))}
 						</ScrollArea>
 					)}
+
+					<Separator />
+
+					<div className='flex flex-col bg-surface'>
+						<div className='h-12 flex items-center px-surface gap-surface'>
+							<Pagination
+								page={currentPage}
+								pageSize={PAGE_SIZE}
+								count={sortedLinks.length}
+								onPageChange={setPage}
+							>
+								<Pagination.Label />
+
+								<div className='flex gap-2'>
+									<Pagination.Prev />
+									<Pagination.Next />
+								</div>
+							</Pagination>
+						</div>
+					</div>
+
+					{/* <Separator />
+
+					<div className='flex flex-col bg-surface'>
+						<div className='h-12 flex items-center px-surface gap-surface'>
+							<Button
+								type='button'
+								size='sm'
+								mode='ghost'
+								appearance='neutral'
+								prefix={<Icon28ChevronLeftOutline width={16} height={16} />}
+								disabled
+							>
+								Prev
+							</Button>
+
+							<div className='flex flex-1 justify-center gap-1.5'>
+								{[...Array(6)].map((_, index) => (
+									<Button
+										key={index}
+										type='button'
+										size='sm'
+										mode={index === 2 ? 'soft' : 'ghost'}
+										appearance={index === 2 ? 'accent' : 'neutral'}
+										prefix={index + 1}
+										iconOnly
+									/>
+								))}
+
+								<Button
+									type='button'
+									size='sm'
+									mode='ghost'
+									appearance='neutral'
+									prefix='...'
+									iconOnly
+								/>
+
+								<Button
+									type='button'
+									size='sm'
+									mode='ghost'
+									appearance='neutral'
+									prefix={24}
+									iconOnly
+								/>
+							</div>
+
+							<Button
+								type='button'
+								size='sm'
+								mode='ghost'
+								appearance='neutral'
+								suffix={<Icon28ChevronRightOutline width={16} height={16} />}
+							>
+								Next
+							</Button>
+						</div>
+					</div> */}
 				</div>
 			</section>
 		</>
