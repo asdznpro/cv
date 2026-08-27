@@ -1,6 +1,6 @@
 export const SHORT_LINK_HOST = 'go.asdzn.pro'
 export const SHORTENER_PATH = '/admin/shortener'
-export const SHORT_LINKS_PAGE_SIZE = 10
+export const SHORT_LINKS_PAGE_SIZE = 16
 
 export const SHORT_LINK_SORT_FIELDS = [
 	'title',

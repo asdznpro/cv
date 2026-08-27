@@ -22,6 +22,7 @@ import { getFormattedDate } from 'lib/utils'
 import {
 	Badge,
 	Button,
+	Pagination,
 	PreviewCard,
 	ScrollArea,
 	Separator,
@@ -233,9 +234,9 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 														mode='ghost'
 														appearance='neutral'
 														disabled={pending}
-														prefix={
-															<Icon28ViewOutline width={16} height={16} />
-														}
+														// prefix={
+														// 	<Icon28ViewOutline width={16} height={16} />
+														// }
 														suffix={
 															<Icon28ChevronDownOutline
 																width={16}
@@ -243,7 +244,7 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 															/>
 														}
 													>
-														Visibility
+														Status
 													</Button>
 												</DropdownMenu.Trigger>
 
@@ -261,6 +262,18 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 																	Publish
 																</DropdownMenu.Item>
 															)}
+
+														{statusFilter !== 'draft' && (
+															<DropdownMenu.Item
+																aria-label='Draft articles'
+																onClick={() => onBulkStatus('draft')}
+																prefix={
+																	<Icon28EditOutline width={18} height={18} />
+																}
+															>
+																Draft
+															</DropdownMenu.Item>
+														)}
 
 														{statusFilter !== 'archived' ? (
 															<DropdownMenu.Item
@@ -405,15 +418,15 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 
 					<Separator />
 
-					{pageArticles.length === 0 ? (
-						<div className='min-h-40 flex items-center justify-center p-surface'>
-							<p className='text-center text-sm text-foreground-secondary'>
-								No articles in this status
-							</p>
-						</div>
-					) : (
-						<ScrollArea className='max-h-[80vh]'>
-							{pageArticles.map(article => (
+					<ScrollArea className='h-[72vh]'>
+						{pageArticles.length === 0 ? (
+							<div className='h-full min-h-40 flex items-center justify-center p-surface'>
+								<p className='text-center text-sm text-foreground-secondary'>
+									No articles in this status
+								</p>
+							</div>
+						) : (
+							pageArticles.map(article => (
 								<div
 									key={article.id}
 									className={twMerge(
@@ -688,9 +701,29 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 										</div>
 									</div>
 								</div>
-							))}
-						</ScrollArea>
-					)}
+							))
+						)}
+					</ScrollArea>
+
+					<Separator />
+
+					<div className='flex flex-col bg-surface'>
+						<div className='h-12 flex items-center px-surface gap-surface'>
+							<Pagination
+								page={1}
+								pageSize={10}
+								count={100}
+								onPageChange={() => {}}
+							>
+								<Pagination.Label />
+
+								<div className='flex gap-2'>
+									<Pagination.Prev />
+									<Pagination.Next />
+								</div>
+							</Pagination>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>
