@@ -4,7 +4,7 @@ export const backdropVariants = cva('fixed inset-0 pointer-events-auto', {
 	variants: {
 		tone: {
 			clear: 'bg-transparent',
-			scrim: 'bg-background/80',
+			scrim: 'bg-background/heavy',
 			solid: 'bg-background',
 		},
 	},

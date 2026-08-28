@@ -84,7 +84,13 @@ export function VkIdOneTap() {
 
 			{error && (
 				<span className='absolute inset-0 flex items-center justify-center bg-background/80 pointer-events-none'>
-					<Badge role='alert' size='md' mode='soft' appearance='danger'>
+					<Badge
+						className='backdrop-blur-sm'
+						role='alert'
+						size='md'
+						mode='soft'
+						appearance='danger'
+					>
 						{error}
 					</Badge>
 				</span>

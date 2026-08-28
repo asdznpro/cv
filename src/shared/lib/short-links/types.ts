@@ -1,6 +1,6 @@
 export const SHORT_LINK_HOST = 'go.asdzn.pro'
 export const SHORTENER_PATH = '/admin/shortener'
-export const SHORT_LINKS_PAGE_SIZE = 10
+export const SHORT_LINKS_PAGE_SIZE = 16
 
 export const SHORT_LINK_SORT_FIELDS = [
 	'title',
@@ -123,7 +123,7 @@ export type ShortLinkInput = {
 }
 
 export function shortLinkHref(slug: string) {
-	return `https://${SHORT_LINK_HOST}/${slug}`
+	return `${SHORT_LINK_HOST}/${slug}`
 }
 
 export function stripUrlProtocol(url: string) {

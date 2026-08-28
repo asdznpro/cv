@@ -264,7 +264,7 @@ export function ShortLinkVisitsDialog({
 																	<span className='text-foreground-secondary'>
 																		{
 																			getFormattedDate(click.created_at, {
-																				includeTime: true,
+																				includeTime: false,
 																			}).relative
 																		}
 																	</span>

@@ -6,6 +6,15 @@
 
 	--spacing-app: var(--layout-app);
 
+	/* Opacity */
+
+	--opacity-none: 0%;
+	--opacity-subtle: 10%;
+	--opacity-soft: 20%;
+	--opacity-default: 40%;
+	--opacity-strong: 60%;
+	--opacity-heavy: 80%;
+
 	/* Font */
 
 	--text-2xs: 0.625rem;

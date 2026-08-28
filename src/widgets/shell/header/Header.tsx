@@ -73,8 +73,6 @@ const SOCIAL_ITEMS = [
 ]
 
 export function Header() {
-	const [isOpen, setIsOpen] = useState(false)
-
 	const { bootVisible } = useBoot()
 
 	// for navigation
@@ -88,6 +86,8 @@ export function Header() {
 	const activeLabel = activeItem?.label ?? 'Home'
 
 	// for menu
+
+	const [isOpen, setIsOpen] = useState(false)
 
 	useLockScroll({ enabled: isOpen })
 
@@ -128,7 +128,7 @@ export function Header() {
 				}}
 				className='mx-auto w-full h-full flex items-center pointer-events-auto'
 			>
-				<motion.div className='w-full h-full flex flex-col bg-background border border-separator rounded-[31px] backdrop-blur-3xl overflow-hidden'>
+				<motion.div className='z-1 w-full h-full flex flex-col bg-background border border-separator rounded-[31px] overflow-hidden'>
 					<div className='w-full flex items-center p-2 gap-2'>
 						<span className='w-full flex gap-app'>
 							<Link

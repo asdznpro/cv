@@ -287,15 +287,15 @@ export function ShortenerManager({
 
 					<Separator />
 
-					{count === 0 ? (
-						<div className='min-h-40 flex items-center justify-center p-surface'>
-							<p className='text-center text-sm text-foreground-secondary'>
-								No short links
-							</p>
-						</div>
-					) : (
-						<ScrollArea className='h-[72vh]'>
-							{links.map((link, index) => (
+					<ScrollArea className='h-[72vh]'>
+						{count === 0 ? (
+							<div className='h-full min-h-40 flex items-center justify-center p-surface'>
+								<p className='text-center text-sm text-foreground-secondary'>
+									No short links
+								</p>
+							</div>
+						) : (
+							links.map((link, index) => (
 								<div key={link.id}>
 									<div className='flex p-surface gap-surface'>
 										<div className='flex flex-1 flex-col gap-3 min-w-0'>
@@ -303,7 +303,7 @@ export function ShortenerManager({
 												{link.title && link.title + ': '}
 
 												<a
-													href={shortLinkHref(link.slug)}
+													href={'https://' + shortLinkHref(link.slug)}
 													target='_blank'
 													rel='noopener noreferrer'
 													className={twMerge(
@@ -441,9 +441,9 @@ export function ShortenerManager({
 
 									{index !== links.length - 1 && <Separator />}
 								</div>
-							))}
-						</ScrollArea>
-					)}
+							))
+						)}
+					</ScrollArea>
 
 					<Separator />
 

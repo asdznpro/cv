@@ -41,7 +41,7 @@ export function CommandMenu(props: CommandMenuProps) {
 				<div className='flex flex-col p-2 gap-2'>
 					{NAV_ITEMS.map(section => (
 						<div key={section.id} className='flex flex-col gap-2'>
-							<span className='px-3 pt-2 text-xs text-foreground-secondary select-none'>
+							<span className='px-surface py-1 text-xs text-foreground-secondary select-none'>
 								{section.label}
 							</span>
 
@@ -49,8 +49,8 @@ export function CommandMenu(props: CommandMenuProps) {
 								<button
 									key={item.href}
 									className={twMerge(
-										'group flex flex-1 p-3 gap-3 scroll-m-12',
-										'rounded-md hover:bg-surface-secondary focus-visible:bg-surface-secondary active:scale-98',
+										'group flex flex-1 p-surface gap-surface scroll-m-12',
+										'rounded-md bg-surface-secondary/strong hover:bg-surface-secondary focus-visible:bg-surface-secondary active:scale-98',
 										'transition-all duration-100 ease-in',
 										'select-none cursor-pointer focus-ring-base focus-ring-visible',
 									)}
