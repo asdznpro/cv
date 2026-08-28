@@ -195,14 +195,14 @@ export function Header() {
 														key={group.status}
 														className='flex flex-col gap-2'
 													>
-														<span className='px-surface pt-2 text-xs text-foreground-secondary'>
+														<span className='px-surface py-1 text-xs text-foreground-secondary'>
 															{group.label}
 														</span>
 
 														{group.items.map(notification => (
 															<div
 																key={notification.id}
-																className='group flex flex-1 p-surface gap-surface rounded-md bg-surface-secondary/strong scroll-m-12'
+																className='group flex flex-1 p-surface gap-surface rounded-md bg-surface-secondary/strong'
 															>
 																<Badge
 																	mode='soft'
@@ -219,18 +219,21 @@ export function Header() {
 																	}
 																/>
 
-																<div className='flex flex-1 flex-col gap-2 text-left min-w-0'>
+																<div className='flex flex-1 flex-col gap-2'>
 																	<h3 className='text-lg font-medium font-condensed tracking-tight'>
 																		{notification.title}
 																	</h3>
 
-																	{/* {notification.description && (
-																		<p className='text-sm text-foreground-secondary line-clamp-2'>
+																	{notification.description && (
+																		<p className='text-sm text-foreground-secondary'>
 																			{notification.description}
 																		</p>
-																	)} */}
+																	)}
 
 																	<p className='text-sm text-foreground-secondary'>
+																		{notification.status === 'new' && (
+																			<span className='mr-1.75 mb-0.5 inline-flex size-1.75 bg-accent rounded-full animate-pulse align-middle' />
+																		)}
 																		{
 																			getFormattedDate(notification.createdAt)
 																				.relative
@@ -243,7 +246,7 @@ export function Header() {
 																		<Button
 																			to={notification.href}
 																			size='sm'
-																			mode='secondary'
+																			mode='soft'
 																			appearance='neutral'
 																			suffix={
 																				<Icon28LinkOutline

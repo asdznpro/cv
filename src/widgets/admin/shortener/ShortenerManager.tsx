@@ -303,7 +303,7 @@ export function ShortenerManager({
 												{link.title && link.title + ': '}
 
 												<a
-													href={shortLinkHref(link.slug)}
+													href={'https://' + shortLinkHref(link.slug)}
 													target='_blank'
 													rel='noopener noreferrer'
 													className={twMerge(

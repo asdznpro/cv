@@ -22,8 +22,7 @@ export const NOTIFICATIONS_DATA: AdminNotification[] = [
 		source: 'shortener',
 		status: 'new',
 		createdAt: '2026-08-28T06:00:00.000Z',
-		title: '47 clicks yesterday',
-		description: 'GitHub 21 · Portfolio 14 · VK 12',
+		title: '47 clicks on Aug 27',
 		href: '/admin/shortener',
 	},
 	{
@@ -32,7 +31,6 @@ export const NOTIFICATIONS_DATA: AdminNotification[] = [
 		status: 'new',
 		createdAt: '2026-08-26T06:00:00.000Z',
 		title: '12 clicks on Aug 26',
-		description: 'HeadHunter 7 · Kwork 5',
 		href: '/admin/shortener',
 	},
 	{
@@ -41,7 +39,6 @@ export const NOTIFICATIONS_DATA: AdminNotification[] = [
 		status: 'viewed',
 		createdAt: '2026-08-27T06:00:00.000Z',
 		title: '9 clicks on Aug 27',
-		description: 'LinkedIn 9',
 		href: '/admin/shortener',
 	},
 	{
@@ -50,7 +47,6 @@ export const NOTIFICATIONS_DATA: AdminNotification[] = [
 		status: 'viewed',
 		createdAt: '2026-08-25T06:00:00.000Z',
 		title: '31 clicks on Aug 25',
-		description: 'Portfolio 18 · GitHub 13',
 		href: '/admin/shortener',
 	},
 	{
