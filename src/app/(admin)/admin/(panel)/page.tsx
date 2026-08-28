@@ -3,12 +3,12 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-import { Button, Separator } from 'ui/blocks'
+import { Badge, Button, Separator } from 'ui/blocks'
 import { PixelBlast } from 'ui/effects'
 import { ContextCard, Tooltip } from 'ui/floating'
 import { FormItem } from 'ui/forms'
 
-import { Icon28HelpOutline } from '@vkontakte/icons'
+import { Icon28ChevronUpOutline, Icon28HelpOutline } from '@vkontakte/icons'
 
 const STATUS_OPTIONS = [
 	{ value: 'draft', label: 'Draft' },
@@ -53,6 +53,40 @@ export default function Admin() {
 	return (
 		<>
 			<span />
+
+			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-12'>
+				<div className='grid grid-cols-2 @lg:grid-cols-3 gap-app'>
+					{[...Array(3)].map((_, index) => (
+						<div
+							key={index}
+							className='flex bg-surface border border-separator rounded-surface aspect-square'
+						>
+							<div className='flex flex-1 flex-col p-surface gap-surface'>
+								<div className='flex flex-col gap-2'>
+									<p className='text-xs text-foreground-secondary'>
+										Total requests
+									</p>
+
+									<h3 className='text-xl font-medium font-condensed tracking-tight'>
+										3,2k requests{' '}
+										<Badge
+											className='ml-1'
+											size='sm'
+											mode='soft'
+											appearance='success'
+											prefix={<Icon28ChevronUpOutline width={14} height={14} />}
+										/>
+									</h3>
+								</div>
+
+								<div className='flex flex-1 items-center justify-center'>
+									<p className='text-xs text-foreground-secondary'>No data</p>
+								</div>
+							</div>
+						</div>
+					))}
+				</div>
+			</section>
 
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-12'>
 				<div className='flex flex-col gap-4'>
@@ -452,19 +486,19 @@ export default function Admin() {
 				</div>
 			</section>
 
-			<div className='-z-10 absolute inset-x-0 top-0 w-full h-1/5 flex flex-col overflow-hidden'>
+			{/* <div className='-z-10 absolute inset-x-0 top-0 w-full h-84 flex flex-col overflow-hidden'>
 				<div className='absolute inset-0 -z-10'>
 					<PixelBlast
 						variant='square'
 						pixelSize={2}
 						color='#1212ce'
 						patternScale={1}
-						patternDensity={0.8}
+						patternDensity={1}
 						speed={1}
-						bottomInset={640}
+						bottomInset={320}
 					/>
 				</div>
-			</div>
+			</div> */}
 
 			<span />
 		</>

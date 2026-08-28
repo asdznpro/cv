@@ -10,7 +10,14 @@ import { twMerge } from 'tailwind-merge'
 
 import { getFormattedDate } from 'lib/utils'
 
-import { Badge, Button, Counter, ScrollArea, Separator } from 'ui/blocks'
+import {
+	Badge,
+	Button,
+	Counter,
+	EmptyState,
+	ScrollArea,
+	Separator,
+} from 'ui/blocks'
 import { DropdownMenu } from 'ui/floating'
 import { Backdrop } from 'ui/overlays'
 
@@ -22,6 +29,7 @@ import {
 	Icon28ChainOutline,
 	Icon28Notifications,
 	Icon28LinkOutline,
+	Icon28NotificationDisableOutline,
 } from '@vkontakte/icons'
 
 import { useAdminShell } from '../AdminShellProvider'
@@ -189,127 +197,141 @@ export function Header() {
 										<Separator />
 
 										<ScrollArea className='h-100'>
-											<div className='flex flex-col p-2 gap-2'>
-												{notificationGroups.map(group => (
-													<div
-														key={group.status}
-														className='flex flex-col gap-2'
-													>
-														<span className='px-surface py-1 text-xs text-foreground-secondary'>
-															{group.label}
-														</span>
+											{notificationGroups.length === 0 ? (
+												<EmptyState
+													className='h-full'
+													icon={
+														<Icon28NotificationDisableOutline
+															width={24}
+															height={24}
+														/>
+													}
+													title='No notifications'
+													summary='There are no notifications. You will receive notifications when there are new articles, short links, or other content.'
+												/>
+											) : (
+												<div className='flex flex-col p-2 gap-2'>
+													{notificationGroups.map(group => (
+														<div
+															key={group.status}
+															className='flex flex-col gap-2'
+														>
+															<span className='px-surface py-1 text-xs text-foreground-secondary'>
+																{group.label}
+															</span>
 
-														{group.items.map(notification => (
-															<div
-																key={notification.id}
-																className='group flex flex-1 p-surface gap-surface rounded-md bg-surface-secondary/strong'
-															>
-																<Badge
-																	mode='soft'
-																	appearance={
-																		notification.status === 'new'
-																			? 'accent'
-																			: 'neutral'
-																	}
-																	prefix={
-																		<Icon28ChainOutline
-																			width={16}
-																			height={16}
-																		/>
-																	}
-																/>
-
-																<div className='flex flex-1 flex-col gap-2'>
-																	<h3 className='text-lg font-medium font-condensed tracking-tight'>
-																		{notification.title}
-																	</h3>
-
-																	{notification.description && (
-																		<p className='text-sm text-foreground-secondary'>
-																			{notification.description}
-																		</p>
-																	)}
-
-																	<p className='text-sm text-foreground-secondary'>
-																		{notification.status === 'new' && (
-																			<span className='mr-1.75 mb-0.5 inline-flex size-1.75 bg-accent rounded-full animate-pulse align-middle' />
-																		)}
-																		{
-																			getFormattedDate(notification.createdAt)
-																				.relative
+															{group.items.map(notification => (
+																<div
+																	key={notification.id}
+																	className='group flex flex-1 p-surface gap-surface rounded-md bg-surface-secondary/strong'
+																>
+																	<Badge
+																		mode='soft'
+																		appearance={
+																			notification.status === 'new'
+																				? 'accent'
+																				: 'neutral'
 																		}
-																	</p>
-																</div>
+																		prefix={
+																			<Icon28ChainOutline
+																				width={16}
+																				height={16}
+																			/>
+																		}
+																	/>
 
-																<div className='flex gap-2'>
-																	{notification.href && (
-																		<Button
-																			to={notification.href}
-																			size='sm'
-																			mode='soft'
-																			appearance='neutral'
-																			suffix={
-																				<Icon28LinkOutline
-																					width={16}
-																					height={16}
-																				/>
+																	<div className='flex flex-1 flex-col gap-2'>
+																		<h3 className='text-lg font-medium font-condensed tracking-tight'>
+																			{notification.title}
+																		</h3>
+
+																		{notification.description && (
+																			<p className='text-sm text-foreground-secondary'>
+																				{notification.description}
+																			</p>
+																		)}
+
+																		<p className='text-sm text-foreground-secondary'>
+																			{notification.status === 'new' && (
+																				<span className='mr-1.75 mb-0.5 inline-flex size-1.75 bg-accent rounded-full animate-pulse align-middle' />
+																			)}
+																			{
+																				getFormattedDate(notification.createdAt)
+																					.relative
 																			}
-																		>
-																			View
-																		</Button>
-																	)}
+																		</p>
+																	</div>
 
-																	<DropdownMenu>
-																		<DropdownMenu.Trigger>
+																	<div className='flex gap-2'>
+																		{notification.href && (
 																			<Button
+																				to={notification.href}
 																				size='sm'
-																				mode='ghost'
+																				mode='soft'
 																				appearance='neutral'
-																				prefix={
-																					<Icon28MoreHorizontal
+																				suffix={
+																					<Icon28LinkOutline
 																						width={16}
 																						height={16}
 																					/>
 																				}
-																				iconOnly
-																			/>
-																		</DropdownMenu.Trigger>
+																			>
+																				View
+																			</Button>
+																		)}
 
-																		<DropdownMenu.Content className='w-32'>
-																			<DropdownMenu.Box>
-																				<DropdownMenu.Item
-																					aria-label='Edit toolkit item'
+																		<DropdownMenu>
+																			<DropdownMenu.Trigger>
+																				<Button
+																					size='sm'
+																					mode='ghost'
+																					appearance='neutral'
 																					prefix={
-																						<Icon28EditOutline
-																							width={18}
-																							height={18}
+																						<Icon28MoreHorizontal
+																							width={16}
+																							height={16}
 																						/>
 																					}
-																				>
-																					Edit
-																				</DropdownMenu.Item>
+																					iconOnly
+																				/>
+																			</DropdownMenu.Trigger>
 
-																				<DropdownMenu.Item
-																					aria-label='Delete toolkit item'
-																					appearance='danger'
-																					prefix={
-																						<Icon28DeleteOutline
-																							width={18}
-																							height={18}
-																						/>
-																					}
-																				>
-																					Delete
-																				</DropdownMenu.Item>
-																			</DropdownMenu.Box>
-																		</DropdownMenu.Content>
-																	</DropdownMenu>
+																			<DropdownMenu.Content className='w-32'>
+																				<DropdownMenu.Box>
+																					<DropdownMenu.Item
+																						aria-label='Edit toolkit item'
+																						prefix={
+																							<Icon28EditOutline
+																								width={18}
+																								height={18}
+																							/>
+																						}
+																					>
+																						Edit
+																					</DropdownMenu.Item>
+
+																					<DropdownMenu.Item
+																						aria-label='Delete toolkit item'
+																						appearance='danger'
+																						prefix={
+																							<Icon28DeleteOutline
+																								width={18}
+																								height={18}
+																							/>
+																						}
+																					>
+																						Delete
+																					</DropdownMenu.Item>
+																				</DropdownMenu.Box>
+																			</DropdownMenu.Content>
+																		</DropdownMenu>
+																	</div>
 																</div>
-															</div>
-														))}
-													</div>
-												))}
-											</div>
+															))}
+														</div>
+													))}
+												</div>
+											)}
 										</ScrollArea>
 									</motion.div>
 								)}

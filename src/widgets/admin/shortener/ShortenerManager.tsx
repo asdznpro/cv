@@ -16,7 +16,14 @@ import {
 } from 'lib/short-links'
 import { getFormattedDate } from 'lib/utils'
 
-import { Badge, Button, Pagination, ScrollArea, Separator } from 'ui/blocks'
+import {
+	Badge,
+	Button,
+	EmptyState,
+	Pagination,
+	ScrollArea,
+	Separator,
+} from 'ui/blocks'
 import { Checkbox } from 'ui/forms'
 import { DropdownMenu, Tooltip } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
@@ -289,11 +296,12 @@ export function ShortenerManager({
 
 					<ScrollArea className='h-[72vh]'>
 						{count === 0 ? (
-							<div className='h-full min-h-40 flex items-center justify-center p-surface'>
-								<p className='text-center text-sm text-foreground-secondary'>
-									No short links
-								</p>
-							</div>
+							<EmptyState
+								className='h-full'
+								icon={<Icon28ChainOutline width={24} height={24} />}
+								title='No short links'
+								summary='There are no short links. You can create a new short link by clicking the form above.'
+							/>
 						) : (
 							links.map((link, index) => (
 								<div key={link.id}>
