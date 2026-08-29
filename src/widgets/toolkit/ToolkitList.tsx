@@ -22,8 +22,8 @@ export function ToolkitList({ items }: ToolkitListProps) {
 				<Fragment key={group.area.key}>
 					<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
 						<div className='flex flex-1 flex-col gap-3'>
-							<h2 className='text-3xl font-medium font-condensed tracking-tight'>
-								{group.area.label}
+							<h2 className='text-4xl font-medium font-condensed tracking-tight'>
+								{group.area.label} Toolkit
 							</h2>
 						</div>
 					</div>
