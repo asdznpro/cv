@@ -1,9 +1,14 @@
 'use client'
 
-import { Button, Separator, Kbd } from 'ui/blocks'
+import { Button, Separator, Kbd, Badge } from 'ui/blocks'
 import { FormItem } from 'ui/forms'
 
-import { Icon28ChevronDownOutline } from '@vkontakte/icons'
+import {
+	Icon24SmartphoneOutline,
+	Icon28ChevronDownOutline,
+	Icon24TvOutline,
+	Icon28MoreHorizontal,
+} from '@vkontakte/icons'
 
 export default function Settings() {
 	return (
@@ -26,7 +31,7 @@ export default function Settings() {
 				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
 					<div className='flex flex-col gap-3'>
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
-							Profile information
+							Profile Information
 						</h2>
 					</div>
 				</div>
@@ -35,17 +40,33 @@ export default function Settings() {
 					<div className='flex flex-wrap p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
-								First name
+								Full name
 							</h3>
+
+							<p className='text-sm text-foreground-secondary'>
+								Enter your full name as you would like it to be displayed in the
+								dashboard
+							</p>
 						</div>
 
-						<div className='w-full @xl:w-2/5'>
+						<div className='w-full @xl:w-2/5 flex flex-col gap-2'>
 							<FormItem id='coupon-code'>
 								<FormItem.Input
 									size='md'
 									mode='outline'
 									type='text'
 									value='Andrew'
+									readOnly
+								/>
+							</FormItem>
+
+							<FormItem id='coupon-code'>
+								<FormItem.Input
+									size='md'
+									mode='outline'
+									type='text'
+									value='S.'
+									readOnly
 								/>
 							</FormItem>
 						</div>
@@ -56,17 +77,28 @@ export default function Settings() {
 					<div className='flex flex-wrap p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
-								Last name
+								Primary email
 							</h3>
+
+							<p className='text-sm text-foreground-secondary'>
+								Used for account notifications
+							</p>
 						</div>
 
 						<div className='w-full @xl:w-2/5'>
-							<FormItem id='coupon-code'>
-								<FormItem.Input
+							<FormItem id='short-domain'>
+								<FormItem.Select
 									size='md'
 									mode='outline'
-									type='text'
-									value='S.'
+									options={[
+										{ label: 'andrew@asdzn.pro', value: 'andrew@asdzn.pro' },
+										{
+											label: 'andrew.s@asdzn.pro',
+											value: 'andrew.s@asdzn.pro',
+										},
+									]}
+									value='andrew@asdzn.pro'
+									placeholder='Select email'
 								/>
 							</FormItem>
 						</div>
@@ -77,6 +109,7 @@ export default function Settings() {
 					<div className='flex items-center p-surface gap-surface'>
 						<div className='ml-auto w-full @xl:w-2/5 flex gap-2'>
 							<Button
+								size='sm'
 								className='flex-1'
 								type='button'
 								mode='secondary'
@@ -85,9 +118,68 @@ export default function Settings() {
 								Cancel
 							</Button>
 
-							<Button className='flex-1' type='submit'>
+							<Button size='sm' className='flex-1' type='submit'>
 								Save
 							</Button>
+						</div>
+					</div>
+				</div>
+
+				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+					<div className='flex flex-col gap-3'>
+						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
+							Sign-in Methods
+						</h2>
+
+						<p className='text-sm text-foreground-secondary'>
+							Manage the providers linked to your account and update their
+							details
+						</p>
+					</div>
+				</div>
+
+				<div className='grid grid-cols-2 gap-app'>
+					<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+						<div className='flex flex-wrap p-surface gap-surface'>
+							<Badge
+								mode='soft'
+								appearance='neutral'
+								prefix={<Icon24TvOutline width={16} height={16} />}
+							/>
+
+							<div className='flex flex-1 flex-col gap-3'>
+								<h3 className='text-xl font-medium font-condensed tracking-tight'>
+									VK ID
+								</h3>
+
+								{/* <p className='text-sm text-foreground-secondary'>Browser</p> */}
+							</div>
+
+							<Button
+								size='sm'
+								mode='ghost'
+								appearance='neutral'
+								prefix={<Icon28MoreHorizontal width={16} height={16} />}
+								iconOnly
+							/>
+						</div>
+					</div>
+
+					<div className='flex flex-col bg-surface/soft border border-dashed border-separator rounded-surface'>
+						<div className='flex flex-wrap p-surface gap-surface'>
+							{/* <Badge
+								mode='soft'
+								appearance='neutral'
+								prefix={<Icon24TvOutline width={16} height={16} />}
+							/>
+
+							<div className='flex flex-1 flex-col gap-3'>
+								<h3 className='text-xl font-medium font-condensed tracking-tight'>
+									VK ID
+								</h3>
+
+								<p className='text-sm text-foreground-secondary'>Browser</p>
+							</div> */}
 						</div>
 					</div>
 				</div>
@@ -112,19 +204,21 @@ export default function Settings() {
 							</h3>
 
 							<p className='text-sm text-foreground-secondary'>
-								Choose your preferred sidebar behavior: open, closed, or expand
-								on hover
+								Choose your preferred sidebar behavior: expanded or collapsed
 							</p>
 						</div>
 
 						<div className='w-full @xl:w-2/5'>
-							<FormItem id='coupon-code'>
-								<FormItem.Input
-									mode='outline'
+							<FormItem id='short-domain'>
+								<FormItem.Select
 									size='md'
-									type='text'
-									value='Expanded'
-									suffix={<Icon28ChevronDownOutline width={18} height={18} />}
+									mode='outline'
+									options={[
+										{ label: 'Expanded', value: 'expanded' },
+										{ label: 'Collapsed', value: 'collapsed' },
+									]}
+									value='expanded'
+									placeholder='Select behavior'
 								/>
 							</FormItem>
 						</div>
@@ -153,6 +247,7 @@ export default function Settings() {
 									type='text'
 									value='Expanded'
 									suffix={<Icon28ChevronDownOutline width={18} height={18} />}
+									readOnly
 								/>
 							</FormItem>
 						</div>
@@ -162,7 +257,7 @@ export default function Settings() {
 				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
 					<div className='flex flex-col gap-3'>
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
-							Keyboard shortcuts
+							Keyboard Shortcuts
 						</h2>
 
 						<p className='text-sm text-foreground-secondary'>
@@ -181,9 +276,9 @@ export default function Settings() {
 
 						<Kbd keys={['Ctrl', 'K']} />
 
-						<h3 className='font-medium font-condensed tracking-tight'>
+						<p className='font-medium font-condensed tracking-tight'>
 							*Switch*
-						</h3>
+						</p>
 					</div>
 
 					<Separator />
@@ -197,9 +292,9 @@ export default function Settings() {
 
 						<Kbd keys={['Shift', 'F']} />
 
-						<h3 className='font-medium font-condensed tracking-tight'>
+						<p className='font-medium font-condensed tracking-tight'>
 							*Switch*
-						</h3>
+						</p>
 					</div>
 
 					<Separator />
@@ -207,15 +302,124 @@ export default function Settings() {
 					<div className='flex p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='font-medium font-condensed tracking-tight'>
-								Add project connection
+								Expand/collapse sidebar
 							</h3>
 						</div>
 
-						<Kbd keys={['Shift', 'F']} />
+						<Kbd keys={['Ctrl', 'B']} />
 
-						<h3 className='font-medium font-condensed tracking-tight'>
+						<p className='font-medium font-condensed tracking-tight'>
 							*Switch*
-						</h3>
+						</p>
+					</div>
+
+					<Separator />
+
+					<div className='flex p-surface gap-surface'>
+						<div className='flex flex-1 flex-col gap-3'>
+							<h3 className='font-medium font-condensed tracking-tight'>
+								Open notification center
+							</h3>
+						</div>
+
+						<Kbd keys={['Shift', 'N']} />
+
+						<p className='font-medium font-condensed tracking-tight'>
+							*Switch*
+						</p>
+					</div>
+
+					<Separator />
+
+					<div className='flex p-surface gap-surface'>
+						<div className='flex flex-1 flex-col gap-3'>
+							<h3 className='font-medium font-condensed tracking-tight'>
+								Close something
+							</h3>
+						</div>
+
+						<Kbd keys={['Esc']} />
+
+						<p className='font-medium font-condensed tracking-tight'>
+							*Switch*
+						</p>
+					</div>
+				</div>
+
+				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+					<div className='flex flex-col gap-3'>
+						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
+							Active Sessions
+						</h2>
+
+						<p className='text-balance text-sm text-foreground-secondary'>
+							This is a list of devices that have logged into your account.
+							Revoke any sessions that you do not recognize.
+						</p>
+					</div>
+				</div>
+
+				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+					<div className='flex flex-wrap p-surface gap-surface'>
+						<Badge
+							mode='soft'
+							appearance='neutral'
+							prefix={<Icon24TvOutline width={16} height={16} />}
+						/>
+
+						<div className='flex flex-1 flex-col gap-3'>
+							<h3 className='text-xl font-medium font-condensed tracking-tight'>
+								Windows{' '}
+								<Badge
+									className='ml-1 mb-0.5 align-middle uppercase'
+									size='sm'
+									mode='soft'
+									appearance='success'
+								>
+									Current session
+								</Badge>
+							</h3>
+
+							<p className='text-sm text-foreground-secondary'>
+								Browser: Yandex Browser · IP: 13.143.203.210
+								<br />
+								Login: Aug 23, 2026 08:11:17 · Last seen: a few seconds ago
+								<br />
+								Location: Berlin, DE
+							</p>
+						</div>
+
+						<Button mode='secondary' appearance='danger'>
+							Logout
+						</Button>
+					</div>
+
+					<Separator />
+
+					<div className='flex flex-wrap p-surface gap-surface'>
+						<Badge
+							mode='soft'
+							appearance='neutral'
+							prefix={<Icon24SmartphoneOutline width={16} height={16} />}
+						/>
+
+						<div className='flex flex-1 flex-col gap-3'>
+							<h3 className='text-xl font-medium font-condensed tracking-tight'>
+								Nothing phone (1), A063 · Android
+							</h3>
+
+							<p className='text-sm text-foreground-secondary'>
+								Browser: Chrome Dev · IP: 79.136.250.142
+								<br />
+								Login: Aug 29, 2026 12:11:12 · Last seen: a few seconds ago
+								<br />
+								Location: Berlin, DE
+							</p>
+						</div>
+
+						<Button mode='secondary' appearance='danger'>
+							Revoke
+						</Button>
 					</div>
 				</div>
 			</section>
