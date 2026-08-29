@@ -65,7 +65,7 @@ export function OptionList({
 									tabIndex={isActive ? 0 : -1}
 									aria-selected={isSelected}
 									disabled={option.disabled}
-									mode='ghost'
+									mode={isSelected ? 'secondary' : 'ghost'}
 									appearance='neutral'
 									align='between'
 									className='w-full scroll-m-4 appearance-none'

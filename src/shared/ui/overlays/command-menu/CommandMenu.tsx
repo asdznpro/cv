@@ -37,7 +37,7 @@ export function CommandMenu(props: CommandMenuProps) {
 
 			<Separator />
 
-			<ScrollArea className='max-h-92'>
+			<ScrollArea className='max-h-92 bg-background'>
 				<div className='flex flex-col p-2 gap-2'>
 					{NAV_ITEMS.map(section => (
 						<div key={section.id} className='flex flex-col gap-2'>

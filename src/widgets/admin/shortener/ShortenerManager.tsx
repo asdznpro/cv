@@ -16,14 +16,21 @@ import {
 } from 'lib/short-links'
 import { getFormattedDate } from 'lib/utils'
 
-import { Badge, Button, Pagination, ScrollArea, Separator } from 'ui/blocks'
+import {
+	Badge,
+	Button,
+	CopyButton,
+	EmptyState,
+	Pagination,
+	ScrollArea,
+	Separator,
+} from 'ui/blocks'
 import { Checkbox } from 'ui/forms'
 import { DropdownMenu, Tooltip } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
 
 import {
 	Icon28ChainOutline,
-	Icon28CopyOutline,
 	Icon28UsersOutline,
 	Icon28MoreHorizontal,
 	Icon28EditOutline,
@@ -119,15 +126,6 @@ export function ShortenerManager({
 			/>,
 			{ className: 'max-w-sm' },
 		)
-	}
-
-	async function copyHref(slug: string) {
-		try {
-			await navigator.clipboard.writeText(shortLinkHref(slug))
-			toast.success('Ссылка скопирована')
-		} catch {
-			toast.error('Не удалось скопировать')
-		}
 	}
 
 	return (
@@ -289,11 +287,12 @@ export function ShortenerManager({
 
 					<ScrollArea className='h-[72vh]'>
 						{count === 0 ? (
-							<div className='h-full min-h-40 flex items-center justify-center p-surface'>
-								<p className='text-center text-sm text-foreground-secondary'>
-									No short links
-								</p>
-							</div>
+							<EmptyState
+								className='h-full'
+								icon={<Icon28ChainOutline width={24} height={24} />}
+								title='No short links'
+								summary='There are no short links. You can create a new short link by clicking the form above.'
+							/>
 						) : (
 							links.map((link, index) => (
 								<div key={link.id}>
@@ -368,13 +367,10 @@ export function ShortenerManager({
 										</div>
 
 										<div className='flex gap-2'>
-											<Button
-												onClick={() => copyHref(link.slug)}
+											<CopyButton
+												value={shortLinkHref(link.slug)}
 												aria-label='Copy'
-												mode='soft'
-												appearance='neutral'
-												prefix={<Icon28CopyOutline width={18} height={18} />}
-												iconOnly
+												onCopied={() => toast.success('Ссылка скопирована')}
 											/>
 
 											<DropdownMenu>

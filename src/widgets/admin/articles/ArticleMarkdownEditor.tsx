@@ -3,10 +3,10 @@
 import { useState } from 'react'
 
 import { toast } from 'sonner'
-import { useClipboard, useHotkeys } from '@siberiacancode/reactuse'
+import { useHotkeys } from '@siberiacancode/reactuse'
 
 import {
-	Button,
+	CopyButton,
 	Kbd,
 	ScrollArea,
 	Separator,
@@ -14,8 +14,6 @@ import {
 	useTabState,
 } from 'ui/blocks'
 import { MarkdownPreview } from 'ui/markdown'
-
-import { Icon28DocumentTextOutline } from '@vkontakte/icons'
 
 function getCursorPosition(value: string, selectionStart: number) {
 	const textBefore = value.slice(0, Math.max(0, selectionStart))
@@ -35,7 +33,6 @@ export function ArticleMarkdownEditor({
 	value,
 	onValueChange,
 }: ArticleMarkdownEditorProps) {
-	const { copy } = useClipboard()
 	const { tabState, handleTabSelect } = useTabState(0)
 	const [cursor, setCursor] = useState({ line: 1, column: 1 })
 
@@ -52,26 +49,26 @@ export function ArticleMarkdownEditor({
 		handleTabSelect(tabState === 0 ? 1 : 0)
 	}
 
-	useHotkeys('ctrl+enter, meta+enter', event => {
+	useHotkeys('ctrl+enter, meta+enter', (event) => {
 		event.preventDefault()
 		toggleMode()
 	})
 
 	return (
 		<>
-			<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
-				<div className='flex flex-col gap-3'>
-					<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
+			<div className="flex gap-app not-first-of-type:pt-8 pb-3">
+				<div className="flex flex-col gap-3">
+					<h2 className="flex-1 text-3xl font-medium font-condensed tracking-tight">
 						Content
 					</h2>
 				</div>
 			</div>
 
-			<div className='flex flex-col border border-separator rounded-surface overflow-hidden'>
-				<div className='flex flex-col bg-surface'>
-					<div className='h-12 flex items-center px-surface gap-surface'>
+			<div className="flex flex-col border border-separator rounded-surface overflow-hidden">
+				<div className="flex flex-col bg-surface">
+					<div className="h-12 flex items-center px-surface gap-surface">
 						<Tabs
-							className='border-none'
+							className="border-none"
 							initialIndex={tabState}
 							onTabSelect={handleTabSelect}
 						>
@@ -79,43 +76,38 @@ export function ArticleMarkdownEditor({
 							<Tabs.Item>Preview</Tabs.Item>
 						</Tabs>
 
-						<Button
-							type='button'
-							size='sm'
-							mode='soft'
-							appearance='neutral'
-							prefix={<Icon28DocumentTextOutline width={16} height={16} />}
-							onClick={() => {
-								void copy(value)
-								toast.success('Markdown copied')
-							}}
+						<CopyButton
+							size="sm"
+							value={value}
+							copiedChildren="Copied"
+							onCopied={() => toast.success('Markdown copied')}
 						>
 							Copy Markdown
-						</Button>
+						</CopyButton>
 					</div>
 				</div>
 
 				<Separator />
 
 				{tabState === 0 ? (
-					<div className='flex'>
+					<div className="flex">
 						<textarea
-							className='w-full p-surface resize-none appearance-none outline-none text-xs font-mono placeholder:text-foreground-secondary disabled:placeholder:text-foreground-tertiary'
-							placeholder='Write your article here...'
+							className="w-full p-surface resize-none appearance-none outline-none text-xs font-mono placeholder:text-foreground-secondary disabled:placeholder:text-foreground-tertiary"
+							placeholder="Write your article here..."
 							rows={20}
 							value={value}
-							onChange={event => {
+							onChange={(event) => {
 								onValueChange(event.currentTarget.value)
 								syncCursor(event.currentTarget)
 							}}
-							onClick={event => syncCursor(event.currentTarget)}
-							onKeyUp={event => syncCursor(event.currentTarget)}
-							onSelect={event => syncCursor(event.currentTarget)}
+							onClick={(event) => syncCursor(event.currentTarget)}
+							onKeyUp={(event) => syncCursor(event.currentTarget)}
+							onSelect={(event) => syncCursor(event.currentTarget)}
 						/>
 					</div>
 				) : (
-					<ScrollArea className='max-h-88'>
-						<div className='flex p-surface'>
+					<ScrollArea className="max-h-88">
+						<div className="flex p-surface">
 							<MarkdownPreview>{value}</MarkdownPreview>
 						</div>
 					</ScrollArea>
@@ -123,32 +115,32 @@ export function ArticleMarkdownEditor({
 
 				<Separator />
 
-				<div className='h-12 flex items-center p-surface gap-surface bg-surface'>
+				<div className="h-12 flex items-center p-surface gap-surface bg-surface">
 					{tabState === 0 && (
 						<>
-							<span className='text-xs text-foreground-secondary'>
+							<span className="text-xs text-foreground-secondary">
 								Line {cursor.line}, Column {cursor.column}
 							</span>
 
-							<Separator orientation='vertical' />
+							<Separator orientation="vertical" />
 						</>
 					)}
 
-					<span className='text-xs text-foreground-secondary'>
+					<span className="text-xs text-foreground-secondary">
 						{contentStats.lines} lines
 					</span>
 
-					<Separator orientation='vertical' />
+					<Separator orientation="vertical" />
 
-					<span className='text-xs text-foreground-secondary'>
+					<span className="text-xs text-foreground-secondary">
 						{contentStats.chars.toLocaleString('ru-RU')} characters
 					</span>
 
-					<span className='flex-1' />
+					<span className="flex-1" />
 
-					<span className='flex items-center gap-2'>
-						<Kbd size='sm' keys={['Ctrl', 'Enter']} />
-						<span className='text-xs text-foreground-secondary'>
+					<span className="flex items-center gap-2">
+						<Kbd size="sm" keys={['Ctrl', 'Enter']} />
+						<span className="text-xs text-foreground-secondary">
 							switch mode
 						</span>
 					</span>

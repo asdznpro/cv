@@ -22,6 +22,7 @@ import { getFormattedDate } from 'lib/utils'
 import {
 	Badge,
 	Button,
+	EmptyState,
 	Pagination,
 	PreviewCard,
 	ScrollArea,
@@ -420,11 +421,21 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 
 					<ScrollArea className='h-[72vh]'>
 						{pageArticles.length === 0 ? (
-							<div className='h-full min-h-40 flex items-center justify-center p-surface'>
-								<p className='text-center text-sm text-foreground-secondary'>
-									No articles in this status
-								</p>
-							</div>
+							<EmptyState
+								className='h-full'
+								title='No articles in this status'
+								summary='There are no articles in this status. You can create a new article by clicking the button below.'
+							>
+								<Button
+									to='/admin/articles/new'
+									mode='secondary'
+									appearance='neutral'
+									prefix={<Icon28DocumentPlusOutline width={18} height={18} />}
+									radius='rounded'
+								>
+									Create new article
+								</Button>
+							</EmptyState>
 						) : (
 							pageArticles.map(article => (
 								<div
