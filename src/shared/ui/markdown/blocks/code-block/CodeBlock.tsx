@@ -1,13 +1,9 @@
 'use client'
 
-import { Children, isValidElement, useRef, useState } from 'react'
+import { Children, isValidElement, useRef } from 'react'
 
-import { Button } from 'ui/blocks'
-import {
-	Icon28CopyOutline,
-	Icon28DocumentOutline,
-	Icon28DoneOutline,
-} from '@vkontakte/icons'
+import { CopyButton } from 'ui/blocks'
+import { Icon28DocumentOutline } from '@vkontakte/icons'
 
 function getSlot(children: React.ReactNode, slot: 'title' | 'caption') {
 	return Children.toArray(children).find(
@@ -19,7 +15,6 @@ function getSlot(children: React.ReactNode, slot: 'title' | 'caption') {
 
 export function CodeBlock({ children }: { children: React.ReactNode }) {
 	const bodyRef = useRef<HTMLDivElement>(null)
-	const [copied, setCopied] = useState(false)
 
 	const titleEl = getSlot(children, 'title')
 	const captionEl = getSlot(children, 'caption')
@@ -31,13 +26,8 @@ export function CodeBlock({ children }: { children: React.ReactNode }) {
 		? (titleEl.props as { children: React.ReactNode }).children
 		: null
 
-	const handleCopy = async () => {
-		const code = bodyRef.current?.querySelector('code')?.textContent
-		if (!code) return
-		await navigator.clipboard.writeText(code)
-		setCopied(true)
-		setTimeout(() => setCopied(false), 2000)
-	}
+	const codeValue = () =>
+		bodyRef.current?.querySelector('code')?.textContent ?? ''
 
 	const hasTitle = Boolean(filename)
 
@@ -56,22 +46,7 @@ export function CodeBlock({ children }: { children: React.ReactNode }) {
 							<span className='text-sm truncate'>{filename}</span>
 						</span>
 
-						<Button
-							type='button'
-							onClick={handleCopy}
-							aria-label={copied ? 'Copied' : 'Copy code'}
-							size='sm'
-							mode='soft'
-							appearance={copied ? 'success' : 'neutral'}
-							prefix={
-								copied ? (
-									<Icon28DoneOutline width={16} height={16} />
-								) : (
-									<Icon28CopyOutline width={16} height={16} />
-								)
-							}
-							iconOnly
-						/>
+						<CopyButton value={codeValue} aria-label='Copy code' size='sm' />
 					</div>
 				)}
 
@@ -80,22 +55,11 @@ export function CodeBlock({ children }: { children: React.ReactNode }) {
 					className='overflow-x-auto max-h-144 p-surface text-sm leading-6'
 				>
 					{!hasTitle && (
-						<Button
+						<CopyButton
 							className='absolute top-2 right-2 z-1'
-							type='button'
-							onClick={handleCopy}
-							aria-label={copied ? 'Copied' : 'Copy code'}
+							value={codeValue}
+							aria-label='Copy code'
 							size='sm'
-							mode='soft'
-							appearance={copied ? 'success' : 'neutral'}
-							prefix={
-								copied ? (
-									<Icon28DoneOutline width={16} height={16} />
-								) : (
-									<Icon28CopyOutline width={16} height={16} />
-								)
-							}
-							iconOnly
 						/>
 					)}
 

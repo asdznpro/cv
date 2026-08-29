@@ -19,6 +19,7 @@ import { getFormattedDate } from 'lib/utils'
 import {
 	Badge,
 	Button,
+	CopyButton,
 	EmptyState,
 	Pagination,
 	ScrollArea,
@@ -30,7 +31,6 @@ import { useOverlay } from 'ui/overlays'
 
 import {
 	Icon28ChainOutline,
-	Icon28CopyOutline,
 	Icon28UsersOutline,
 	Icon28MoreHorizontal,
 	Icon28EditOutline,
@@ -126,15 +126,6 @@ export function ShortenerManager({
 			/>,
 			{ className: 'max-w-sm' },
 		)
-	}
-
-	async function copyHref(slug: string) {
-		try {
-			await navigator.clipboard.writeText(shortLinkHref(slug))
-			toast.success('Ссылка скопирована')
-		} catch {
-			toast.error('Не удалось скопировать')
-		}
 	}
 
 	return (
@@ -376,13 +367,10 @@ export function ShortenerManager({
 										</div>
 
 										<div className='flex gap-2'>
-											<Button
-												onClick={() => copyHref(link.slug)}
+											<CopyButton
+												value={shortLinkHref(link.slug)}
 												aria-label='Copy'
-												mode='soft'
-												appearance='neutral'
-												prefix={<Icon28CopyOutline width={18} height={18} />}
-												iconOnly
+												onCopied={() => toast.success('Ссылка скопирована')}
 											/>
 
 											<DropdownMenu>

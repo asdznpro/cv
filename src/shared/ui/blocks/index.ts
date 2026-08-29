@@ -1,5 +1,6 @@
 export * from './badge'
 export * from './button'
+export * from './copy-button'
 export * from './carousel'
 export * from './counter'
 export * from './empty-state'
