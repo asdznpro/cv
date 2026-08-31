@@ -8,7 +8,7 @@ export const typographyClassName = {
 	strong: 'font-semibold',
 	ul: 'my-0! list-disc marker:text-accent pl-8 space-y-2',
 	ol: 'my-0! list-decimal marker:text-accent pl-8 space-y-2',
-	li: 'text-lg pl-1',
+	li: 'text-lg0 pl-1',
 	a: 'underline underline-offset-6 transition-colors hover:text-link focus-visible:text-link rounded',
 	hr: 'mx-auto my-6! max-w-60 w-full border-separator',
 }

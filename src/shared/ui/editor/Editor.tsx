@@ -19,6 +19,13 @@ import {
 	UnderlinePlugin,
 } from '@platejs/basic-nodes/react'
 import { DndPlugin } from '@platejs/dnd'
+import { BulletedListRules, OrderedListRules } from '@platejs/list-classic'
+import {
+	BulletedListPlugin,
+	ListItemPlugin,
+	ListPlugin,
+	NumberedListPlugin,
+} from '@platejs/list-classic/react'
 import { MarkdownPlugin } from '@platejs/markdown'
 import { Plate, PlateContent, usePlateEditor } from 'platejs/react'
 
@@ -31,9 +38,16 @@ import { twMerge } from 'tailwind-merge'
 import { BlockDraggable } from './BlockDraggable'
 import type { EditorProps } from './Editor.interface'
 import { EditorToolbar } from './EditorToolbar'
-import { BlockquoteElement } from './nodes/BlockquoteElement'
-import { H1Element, H2Element } from './nodes/HeadingElement'
-import { HrElement } from './nodes/HrElement'
+
+import {
+	BlockquoteElement,
+	H1Element,
+	H2Element,
+	HrElement,
+	LiElement,
+	OlElement,
+	UlElement,
+} from './nodes'
 
 const defaultMarkdown = `# Notes from the last sprint
 
@@ -43,6 +57,10 @@ A scratch pad for the editor playground. Drag blocks around, toggle marks, and s
 
 The public site still renders Markdown through rehype. This editor is the other tree: same source string, different document model. The point of a longer fixture is to have something to scroll, select, and reorder.
 
+- Convert this list to numbered, then back
+- Press Enter inside an item to add another
+- Tab and Shift+Tab to nest and unnest
+
 Plate treats each block as a node. A wrapped paragraph is still one block. A heading is one block. That is why the drag handle sits on the left of the whole unit, not on every visual line.
 
 > Write for the reader who opens this cold on Monday. If a sentence only makes sense with the Slack thread next to it, it is not done.
@@ -50,6 +68,10 @@ Plate treats each block as a node. A wrapped paragraph is still one block. A hea
 Inline marks should survive a round trip: **bold**, *italic*, \`code\`, and a mix of **bold and *italic***. Underline is a mark in the editor, not in CommonMark, so it may drop on serialize.
 
 ## What to try
+
+1. Deserialize from Markdown
+2. Toggle the type from the toolbar
+3. Drag the whole list — items move together
 
 Select a heading and convert it back to a paragraph. Empty a paragraph and leave the caret there. Undo should restore both the text and the block type.
 
@@ -107,6 +129,16 @@ export function Editor({
 					HorizontalRuleRules.markdown({ variant: '_' }),
 				],
 			}).withComponent(HrElement),
+			ListPlugin.configure({
+				inputRules: [
+					BulletedListRules.markdown({ variant: '-' }),
+					BulletedListRules.markdown({ variant: '*' }),
+					OrderedListRules.markdown({ variant: '.' }),
+				],
+			}),
+			BulletedListPlugin.withComponent(UlElement),
+			NumberedListPlugin.withComponent(OlElement),
+			ListItemPlugin.withComponent(LiElement),
 			MarkdownPlugin.configure({
 				options: {
 					remarkPlugins: [remarkGfm],
