@@ -18,6 +18,7 @@ import {
 	ItalicPlugin,
 	UnderlinePlugin,
 } from '@platejs/basic-nodes/react'
+import { DndPlugin } from '@platejs/dnd'
 import { MarkdownPlugin } from '@platejs/markdown'
 import {
 	Plate,
@@ -26,6 +27,8 @@ import {
 	useEditorSelector,
 	usePlateEditor,
 } from 'platejs/react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import remarkGfm from 'remark-gfm'
 import { twMerge } from 'tailwind-merge'
 
@@ -37,6 +40,7 @@ import {
 	Icon24ArrowUturnLeftOutline,
 	Icon24ArrowUturnRightOutline,
 	Icon24BracketsSlashOutline,
+	Icon24ChevronDown,
 	Icon24Linked,
 	Icon24ListBulletOutline,
 	Icon24ListCheckOutline,
@@ -50,6 +54,7 @@ import {
 	Icon28MoreHorizontal,
 } from '@vkontakte/icons'
 
+import { BlockDraggable } from './BlockDraggable'
 import type { EditorProps } from './Editor.interface'
 import { BlockquoteElement } from './nodes/BlockquoteElement'
 import { H1Element, H2Element } from './nodes/HeadingElement'
@@ -145,6 +150,14 @@ export function Editor({
 			MarkdownPlugin.configure({
 				options: {
 					remarkPlugins: [remarkGfm],
+				},
+			}),
+			DndPlugin.configure({
+				render: {
+					aboveNodes: BlockDraggable,
+					aboveSlate: ({ children }) => (
+						<DndProvider backend={HTML5Backend}>{children}</DndProvider>
+					),
 				},
 			}),
 		],
@@ -338,15 +351,45 @@ export function Editor({
 
 				<Separator className='h-1/2 my-auto' orientation='vertical' />
 
-				<Button
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					prefix={<Icon24ListBulletOutline width={16} height={16} />}
-					radius='rounded'
-					iconOnly
-				/>
-				<Button
+				<DropdownMenu align='start'>
+					<DropdownMenu.Trigger>
+						<Button
+							size='sm'
+							mode='ghost'
+							appearance='neutral'
+							prefix={<Icon24ListBulletOutline width={16} height={16} />}
+							suffix={<Icon24ChevronDown width={16} height={16} />}
+							radius='rounded'
+							iconOnly
+						/>
+					</DropdownMenu.Trigger>
+
+					<DropdownMenu.Content className='w-40'>
+						<DropdownMenu.Box>
+							<DropdownMenu.Heading>Lists</DropdownMenu.Heading>
+
+							<DropdownMenu.Item
+								prefix={<Icon24ListBulletOutline width={18} height={18} />}
+							>
+								Bulleted list
+							</DropdownMenu.Item>
+
+							<DropdownMenu.Item
+								prefix={<Icon24ListNumberOutline width={18} height={18} />}
+							>
+								Numbered list
+							</DropdownMenu.Item>
+
+							<DropdownMenu.Item
+								prefix={<Icon24ListCheckOutline width={18} height={18} />}
+							>
+								To-do list
+							</DropdownMenu.Item>
+						</DropdownMenu.Box>
+					</DropdownMenu.Content>
+				</DropdownMenu>
+
+				{/* <Button
 					size='sm'
 					mode='ghost'
 					appearance='neutral'
@@ -361,7 +404,7 @@ export function Editor({
 					prefix={<Icon24ListCheckOutline width={16} height={16} />}
 					radius='rounded'
 					iconOnly
-				/>
+				/> */}
 
 				<Separator className='h-1/2 my-auto' orientation='vertical' />
 
@@ -378,6 +421,7 @@ export function Editor({
 					mode='ghost'
 					appearance='neutral'
 					prefix={<Icon24Squareshape4GridOutline width={16} height={16} />}
+					suffix={<Icon24ChevronDown width={16} height={16} />}
 					radius='rounded'
 					iconOnly
 				/>
