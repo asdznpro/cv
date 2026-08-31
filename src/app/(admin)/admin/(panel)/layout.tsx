@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 		default: 'Admin',
 		template: '%s — Admin / CV',
 	},
+	robots: { index: false, follow: false },
 }
 
 export default async function AdminLayout({

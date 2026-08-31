@@ -48,7 +48,7 @@ import {
 } from '@floating-ui/react'
 import { twMerge } from 'tailwind-merge'
 
-import { Button, Separator } from 'ui/blocks'
+import { Button, ScrollArea, Separator } from 'ui/blocks'
 import { Icon28ChevronRightOutline } from '@vkontakte/icons'
 
 import { resolveFloatingPlacement } from '../lib'
@@ -374,16 +374,18 @@ function Content({ children, className, style, id }: DropdownMenuContentProps) {
 							className,
 						)}
 					>
-						<ListActiveIndexContext.Provider value={menuActiveIndex}>
-							<FloatingList elementsRef={listRef} labelsRef={labelsRef}>
-								{boxes.map((box, index) => (
-									<div key={box.key ?? index}>
-										{index > 0 && <Separator />}
-										{box}
-									</div>
-								))}
-							</FloatingList>
-						</ListActiveIndexContext.Provider>
+						<ScrollArea className='max-h-84'>
+							<ListActiveIndexContext.Provider value={menuActiveIndex}>
+								<FloatingList elementsRef={listRef} labelsRef={labelsRef}>
+									{boxes.map((box, index) => (
+										<div key={box.key ?? index}>
+											{index > 0 && <Separator />}
+											{box}
+										</div>
+									))}
+								</FloatingList>
+							</ListActiveIndexContext.Provider>
+						</ScrollArea>
 					</div>
 				</div>
 			</FloatingFocusManager>
