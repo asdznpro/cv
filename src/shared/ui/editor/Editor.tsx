@@ -20,92 +20,52 @@ import {
 } from '@platejs/basic-nodes/react'
 import { DndPlugin } from '@platejs/dnd'
 import { MarkdownPlugin } from '@platejs/markdown'
-import {
-	Plate,
-	PlateContent,
-	useEditorRef,
-	useEditorSelector,
-	usePlateEditor,
-} from 'platejs/react'
+import { Plate, PlateContent, usePlateEditor } from 'platejs/react'
+
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+
 import remarkGfm from 'remark-gfm'
 import { twMerge } from 'tailwind-merge'
 
-import { Button, Separator } from 'ui/blocks'
-import { DropdownMenu } from 'ui/floating'
-
-import {
-	Icon24AddOutline,
-	Icon24ArrowUturnLeftOutline,
-	Icon24ArrowUturnRightOutline,
-	Icon24BracketsSlashOutline,
-	Icon24ChevronDown,
-	Icon24Linked,
-	Icon24ListBulletOutline,
-	Icon24ListCheckOutline,
-	Icon24ListNumberOutline,
-	Icon24MinusOutline,
-	Icon24QuoteClosing,
-	Icon24Squareshape4GridOutline,
-	Icon24TextHeading1Outline,
-	Icon24TextHeading2Outline,
-	Icon24TextTtOutline,
-	Icon28MoreHorizontal,
-} from '@vkontakte/icons'
-
 import { BlockDraggable } from './BlockDraggable'
 import type { EditorProps } from './Editor.interface'
+import { EditorToolbar } from './EditorToolbar'
 import { BlockquoteElement } from './nodes/BlockquoteElement'
 import { H1Element, H2Element } from './nodes/HeadingElement'
 import { HrElement } from './nodes/HrElement'
 
-function HistoryButtons() {
-	const editor = useEditorRef()
-	const canUndo = useEditorSelector(
-		current => current.history.undos.length > 0,
-		[],
-	)
-	const canRedo = useEditorSelector(
-		current => current.history.redos.length > 0,
-		[],
-	)
+const defaultMarkdown = `# Notes from the last sprint
 
-	return (
-		<>
-			<Button
-				type='button'
-				size='sm'
-				mode='ghost'
-				appearance='neutral'
-				prefix={<Icon24ArrowUturnLeftOutline width={16} height={16} />}
-				radius='rounded'
-				iconOnly
-				disabled={!canUndo}
-				aria-label='Undo'
-				onClick={() => editor.undo()}
-			/>
-			<Button
-				type='button'
-				size='sm'
-				mode='ghost'
-				appearance='neutral'
-				prefix={<Icon24ArrowUturnRightOutline width={16} height={16} />}
-				radius='rounded'
-				iconOnly
-				disabled={!canRedo}
-				aria-label='Redo'
-				onClick={() => editor.redo()}
-			/>
-		</>
-	)
-}
+A scratch pad for the editor playground. Drag blocks around, toggle marks, and see how headings sit against body copy.
 
-const defaultMarkdown = `## Heading 2
+## Why this draft exists
 
-> This is a quote.
+The public site still renders Markdown through rehype. This editor is the other tree: same source string, different document model. The point of a longer fixture is to have something to scroll, select, and reorder.
 
-With some **bold** text for emphasis!
+Plate treats each block as a node. A wrapped paragraph is still one block. A heading is one block. That is why the drag handle sits on the left of the whole unit, not on every visual line.
+
+> Write for the reader who opens this cold on Monday. If a sentence only makes sense with the Slack thread next to it, it is not done.
+
+Inline marks should survive a round trip: **bold**, *italic*, \`code\`, and a mix of **bold and *italic***. Underline is a mark in the editor, not in CommonMark, so it may drop on serialize.
+
+## What to try
+
+Select a heading and convert it back to a paragraph. Empty a paragraph and leave the caret there. Undo should restore both the text and the block type.
+
+---
+
+The quote below is a blockquote, not a pull quote. Variant metadata from the article pipeline is a different node and is not wired here yet.
+
+> Ship the smallest change that makes the next edit obvious.
+
+## A longer passage
+
+Most of the time the work is not choosing a stack. It is keeping the published article and the admin editor honest with each other. Custom blocks stay presentational. Rehype maps HAST. The editor maps Slate. If those adapters drift, the page looks right and the editor looks empty, or the other way around.
+
+When a paragraph feels too long, split it. When two paragraphs are the same thought, join them. The toolbar is for the cases where the keyboard shortcut is not in your hands yet.
+
+Leave this last line for a new paragraph.
 `
 
 export function Editor({
@@ -172,270 +132,7 @@ export function Editor({
 				onUpdate?.(editor.api.markdown.serialize())
 			}}
 		>
-			<div className='flex flex-wrap p-1.5 gap-1.5 rounded-full bg-surface-secondary'>
-				<HistoryButtons />
-
-				<Separator className='h-1/2 my-auto' orientation='vertical' />
-
-				<DropdownMenu align='start'>
-					<DropdownMenu.Trigger>
-						<Button
-							type='button'
-							size='sm'
-							mode='ghost'
-							appearance='neutral'
-							prefix={<Icon24AddOutline width={16} height={16} />}
-							radius='rounded'
-							iconOnly
-						/>
-					</DropdownMenu.Trigger>
-
-					<DropdownMenu.Content className='w-40'>
-						<DropdownMenu.Box>
-							<DropdownMenu.Heading>Basic blocks</DropdownMenu.Heading>
-
-							<DropdownMenu.Item
-								prefix={<Icon24TextHeading1Outline width={18} height={18} />}
-							>
-								Heading 1
-							</DropdownMenu.Item>
-
-							<DropdownMenu.Item
-								prefix={<Icon24TextHeading2Outline width={18} height={18} />}
-							>
-								Heading 2
-							</DropdownMenu.Item>
-
-							<DropdownMenu.Item
-								prefix={<Icon24TextTtOutline width={18} height={18} />}
-							>
-								Paragraph
-							</DropdownMenu.Item>
-
-							<DropdownMenu.Item
-								onClick={() => editor.tf.blockquote.toggle()}
-								prefix={<Icon24QuoteClosing width={18} height={18} />}
-							>
-								Quote
-							</DropdownMenu.Item>
-
-							<DropdownMenu.Item
-								prefix={<Icon24MinusOutline width={18} height={18} />}
-							>
-								Separator
-							</DropdownMenu.Item>
-
-							<DropdownMenu.Item
-								prefix={
-									<Icon24Squareshape4GridOutline width={18} height={18} />
-								}
-							>
-								Table
-							</DropdownMenu.Item>
-
-							<DropdownMenu.Item
-								prefix={<Icon24BracketsSlashOutline width={18} height={18} />}
-							>
-								Code
-							</DropdownMenu.Item>
-						</DropdownMenu.Box>
-
-						<DropdownMenu.Box>
-							<DropdownMenu.Heading>Lists</DropdownMenu.Heading>
-
-							<DropdownMenu.Item
-								prefix={<Icon24ListBulletOutline width={18} height={18} />}
-							>
-								Bulleted list
-							</DropdownMenu.Item>
-
-							<DropdownMenu.Item
-								prefix={<Icon24ListNumberOutline width={18} height={18} />}
-							>
-								Numbered list
-							</DropdownMenu.Item>
-
-							<DropdownMenu.Item
-								prefix={<Icon24ListCheckOutline width={18} height={18} />}
-							>
-								To-do list
-							</DropdownMenu.Item>
-						</DropdownMenu.Box>
-
-						<DropdownMenu.Box>
-							<DropdownMenu.Heading>Inline</DropdownMenu.Heading>
-
-							<DropdownMenu.Item
-								prefix={<Icon24Linked width={18} height={18} />}
-							>
-								Link
-							</DropdownMenu.Item>
-						</DropdownMenu.Box>
-					</DropdownMenu.Content>
-				</DropdownMenu>
-
-				<Button
-					onClick={() => editor.tf.h1.toggle()}
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					prefix={<Icon24TextHeading1Outline width={16} height={16} />}
-					radius='rounded'
-					iconOnly
-				/>
-				<Button
-					onClick={() => editor.tf.h2.toggle()}
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					prefix={<Icon24TextHeading2Outline width={16} height={16} />}
-					radius='rounded'
-					iconOnly
-				/>
-
-				<Button
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					onClick={() => editor.tf.blockquote.toggle()}
-					prefix={<Icon24QuoteClosing width={16} height={16} />}
-					radius='rounded'
-					iconOnly
-				/>
-
-				<Separator className='h-1/2 my-auto' orientation='vertical' />
-
-				<Button
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					onClick={() => editor.tf.bold.toggle()}
-					prefix={<span className='font-bold'>B</span>}
-					radius='rounded'
-					iconOnly
-				/>
-				<Button
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					onClick={() => editor.tf.italic.toggle()}
-					prefix={<span className='italic'>I</span>}
-					radius='rounded'
-					iconOnly
-				/>
-				<Button
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					onClick={() => editor.tf.underline.toggle()}
-					prefix={<span className='underline'>U</span>}
-					radius='rounded'
-					iconOnly
-				/>
-				<Button
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					prefix={<span className='line-through'>S</span>}
-					radius='rounded'
-					iconOnly
-				/>
-				<Button
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					prefix={<Icon24BracketsSlashOutline width={16} height={16} />}
-					radius='rounded'
-					iconOnly
-				/>
-
-				<Separator className='h-1/2 my-auto' orientation='vertical' />
-
-				<DropdownMenu align='start'>
-					<DropdownMenu.Trigger>
-						<Button
-							size='sm'
-							mode='ghost'
-							appearance='neutral'
-							prefix={<Icon24ListBulletOutline width={16} height={16} />}
-							suffix={<Icon24ChevronDown width={16} height={16} />}
-							radius='rounded'
-							iconOnly
-						/>
-					</DropdownMenu.Trigger>
-
-					<DropdownMenu.Content className='w-40'>
-						<DropdownMenu.Box>
-							<DropdownMenu.Heading>Lists</DropdownMenu.Heading>
-
-							<DropdownMenu.Item
-								prefix={<Icon24ListBulletOutline width={18} height={18} />}
-							>
-								Bulleted list
-							</DropdownMenu.Item>
-
-							<DropdownMenu.Item
-								prefix={<Icon24ListNumberOutline width={18} height={18} />}
-							>
-								Numbered list
-							</DropdownMenu.Item>
-
-							<DropdownMenu.Item
-								prefix={<Icon24ListCheckOutline width={18} height={18} />}
-							>
-								To-do list
-							</DropdownMenu.Item>
-						</DropdownMenu.Box>
-					</DropdownMenu.Content>
-				</DropdownMenu>
-
-				{/* <Button
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					prefix={<Icon24ListNumberOutline width={16} height={16} />}
-					radius='rounded'
-					iconOnly
-				/>
-				<Button
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					prefix={<Icon24ListCheckOutline width={16} height={16} />}
-					radius='rounded'
-					iconOnly
-				/> */}
-
-				<Separator className='h-1/2 my-auto' orientation='vertical' />
-
-				<Button
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					prefix={<Icon24Linked width={16} height={16} />}
-					radius='rounded'
-					iconOnly
-				/>
-				<Button
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					prefix={<Icon24Squareshape4GridOutline width={16} height={16} />}
-					suffix={<Icon24ChevronDown width={16} height={16} />}
-					radius='rounded'
-					iconOnly
-				/>
-
-				<Button
-					className='ml-auto'
-					size='sm'
-					mode='ghost'
-					appearance='neutral'
-					prefix={<Icon28MoreHorizontal width={16} height={16} />}
-					radius='rounded'
-					iconOnly
-				/>
-			</div>
+			<EditorToolbar />
 
 			<PlateContent
 				disabled={!editable}

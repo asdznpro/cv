@@ -37,26 +37,26 @@ function Draggable({ children, element, path }: PlateElementProps) {
 			<div
 				contentEditable={false}
 				className={twMerge(
-					'absolute top-0 -left-8 z-10 flex w-7 h-7 items-center justify-center',
+					'absolute top-0 -left-9 z-10 flex w-7 h-7 items-center justify-center',
 					'opacity-0 transition-opacity group-hover/block:opacity-100',
 					isDragging && 'opacity-100',
 				)}
 			>
-				<Tooltip text='Drag to move' placement='left' tip={false}>
-					<Button
-						ref={handleRef}
-						aria-label='Drag to move'
-						data-plate-prevent-deselect
-						className='cursor-grab active:cursor-grabbing active:scale-100'
-						type='button'
-						size='sm'
-						mode='ghost'
-						appearance='neutral'
-						prefix={<Icon24DotsVertical width={16} height={16} />}
-						radius='rounded'
-						iconOnly
-					/>
-				</Tooltip>
+				{/* <Tooltip text='Drag to move' placement='left' tip={false}> */}
+				<Button
+					ref={handleRef}
+					aria-label='Drag to move'
+					data-plate-prevent-deselect
+					className='cursor-grab active:cursor-grabbing active:scale-100'
+					type='button'
+					size='sm'
+					mode='ghost'
+					appearance='neutral'
+					prefix={<Icon24DotsVertical width={16} height={16} />}
+					radius='rounded'
+					iconOnly
+				/>
+				{/* </Tooltip> */}
 			</div>
 
 			<div ref={nodeRef}>{children}</div>
