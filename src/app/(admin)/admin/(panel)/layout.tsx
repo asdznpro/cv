@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+
 import { getAdminSession } from 'lib/auth'
 
 import {
@@ -6,6 +8,14 @@ import {
 	Header,
 	Sidebar,
 } from 'widgets/admin'
+
+export const metadata: Metadata = {
+	title: {
+		default: 'Admin',
+		template: '%s — Admin / CV',
+	},
+	robots: { index: false, follow: false },
+}
 
 export default async function AdminLayout({
 	children,

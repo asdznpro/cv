@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+
 import { redirect } from 'next/navigation'
 
 import {
@@ -10,6 +12,11 @@ import {
 } from 'lib/short-links'
 
 import { ShortenerManager } from 'widgets/admin'
+
+export const metadata: Metadata = {
+	title: 'URL Shortener',
+	description: 'Manage your URL shortener',
+}
 
 type ShortenerSearchParams = {
 	page?: string | string[]

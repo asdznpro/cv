@@ -9,8 +9,11 @@ import { BootLoader, BootProvider } from 'widgets/shell'
 import { Toaster } from 'ui/blocks'
 
 export const metadata: Metadata = {
-	title:
-		'Andrew S. / CV — Graphic & UI/UX Designer / Frontend Developer (React.js)',
+	title: {
+		default:
+			'Andrew S. / CV — Graphic & UI/UX Designer / Frontend Developer (React.js)',
+		template: '%s — Andrew S. / CV',
+	},
 	description:
 		'Full-cycle Designer & Developer with 7+ years in Gaming & Esports, turning product ideas from Figma concepts into scalable, production-ready features',
 }

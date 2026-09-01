@@ -88,8 +88,8 @@ export const typographyComponents: Pick<
 	),
 
 	table: ({ children }) => (
-		<div className='not-prose my-6! overflow-x-auto rounded-surface border border-separator'>
-			<table className='w-full min-w-160 border-collapse text-sm'>
+		<div className='not-prose my-6! min-w-0 overflow-x-auto rounded-surface border border-separator'>
+			<table className='w-max min-w-full border-collapse text-sm'>
 				{children}
 			</table>
 		</div>
