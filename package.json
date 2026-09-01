@@ -16,6 +16,7 @@
 		"@platejs/dnd": "^53",
 		"@platejs/list-classic": "^53",
 		"@platejs/markdown": "^53.3.3",
+		"@platejs/table": "^53",
 		"@react-three/drei": "^10.7.7",
 		"@react-three/fiber": "^9.6.1",
 		"@react-three/rapier": "^2.2.0",

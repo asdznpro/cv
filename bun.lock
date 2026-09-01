@@ -10,6 +10,7 @@
         "@platejs/dnd": "^53",
         "@platejs/list-classic": "^53",
         "@platejs/markdown": "^53.3.3",
+        "@platejs/table": "^53",
         "@react-three/drei": "^10.7.7",
         "@react-three/fiber": "^9.6.1",
         "@react-three/rapier": "^2.2.0",
@@ -265,7 +266,11 @@
 
     "@platejs/markdown": ["@platejs/markdown@53.3.3", "", { "dependencies": { "@platejs/date": "53.0.0", "lodash": "^4.17.23", "marked": "^15.0.12", "mdast-util-math": "3.0.0", "mdast-util-mdx": "3.0.0", "react-compiler-runtime": "^1.0.0", "remark-mdx": "^3.1.0", "remark-parse": "^11.0.0", "remark-stringify": "^11.0.0", "ts-essentials": "10.1.0", "unified": "^11.0.5", "unist-util-visit": "5.0.0" }, "peerDependencies": { "platejs": ">=53.3.3", "react": ">=18.0.0", "react-dom": ">=18.0.0" } }, "sha512-sdTLEG/gpyNJQUFKzcAs6naUNnaESloWakL3u4PRkmSIYTWAxMBN9CI9WNDVKwu/6Ccw0uirQyCDZj0gE7X47Q=="],
 
+    "@platejs/resizable": ["@platejs/resizable@53.0.0", "", { "dependencies": { "react-compiler-runtime": "^1.0.0" }, "peerDependencies": { "platejs": ">=53.0.0", "react": ">=18.0.0", "react-dom": ">=18.0.0" } }, "sha512-/Wl8DmjByOTib+wKAcEnE3S3PMcpKcrupCOJvUa+vnn/cqXV3cwWzapVZ3bojF6sFWttMsLprvIGhpS/gpl5FQ=="],
+
     "@platejs/slate": ["@platejs/slate@53.3.5", "", { "dependencies": { "@udecode/utils": "^52.3.4", "is-plain-object": "^5.0.0", "lodash": "^4.17.21", "scroll-into-view-if-needed": "^3.1.0", "slate": "0.126.2", "slate-dom": "0.126.0" } }, "sha512-nj5zksuPEcaJffRezJqwsvNi8v9qmAImZpvnUEyZbLO/EgrVcSBum78P23A6NgiRPaSvtymcJPDNsJU4JAWbPw=="],
+
+    "@platejs/table": ["@platejs/table@53.0.9", "", { "dependencies": { "@platejs/resizable": "^53.0.0", "lodash": "^4.17.21", "react-compiler-runtime": "^1.0.0" }, "peerDependencies": { "platejs": ">=53.0.7", "react": ">=18.0.0", "react-dom": ">=18.0.0" } }, "sha512-fie96c0AE8bShfog+SA767rbf/1i5YYAxZFndETCNkXxT+nzc0GKaVyEOkSaVBtwq9OBqHfD/t4ITpadbrTa0Q=="],
 
     "@platejs/utils": ["@platejs/utils@53.3.9", "", { "dependencies": { "@platejs/core": "^53.3.9", "@platejs/slate": "^53.3.5", "@udecode/react-utils": "^52.3.4", "@udecode/utils": "^52.3.4", "clsx": "^2.1.1", "lodash": "^4.17.21", "react-compiler-runtime": "^1.0.0" }, "peerDependencies": { "react": ">=18.0.0", "react-dom": ">=18.0.0" } }, "sha512-NBnsRiKg8VcE/R0lx8EULRgUUJ4ytKVSOTBUHlUCEr2QgHhazQRuQDM7J8DKs1o9kxtlKlXd1sBYga78WxMF3A=="],
 

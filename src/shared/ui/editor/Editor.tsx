@@ -27,6 +27,12 @@ import {
 	NumberedListPlugin,
 } from '@platejs/list-classic/react'
 import { MarkdownPlugin } from '@platejs/markdown'
+import {
+	TableCellHeaderPlugin,
+	TableCellPlugin,
+	TablePlugin,
+	TableRowPlugin,
+} from '@platejs/table/react'
 import { Plate, PlateContent, usePlateEditor } from 'platejs/react'
 
 import { DndProvider } from 'react-dnd'
@@ -46,6 +52,10 @@ import {
 	HrElement,
 	LiElement,
 	OlElement,
+	TableCellElement,
+	TableCellHeaderElement,
+	TableElement,
+	TableRowElement,
 	UlElement,
 } from './nodes'
 
@@ -74,6 +84,31 @@ Inline marks should survive a round trip: **bold**, *italic*, \`code\`, and a mi
 3. Drag the whole list — items move together
 
 Select a heading and convert it back to a paragraph. Empty a paragraph and leave the caret there. Undo should restore both the text and the block type.
+
+## Tables
+
+GFM tables deserialize into \`table > tr > th|td\`. Edit a cell, then serialize — the pipes should come back.
+
+| Block | Markdown | Editor |
+| --- | --- | --- |
+| Heading | \`#\` / \`##\` | H1 / H2 plugins |
+| List | \`-\` / \`1.\` | classic ul / ol |
+| Quote | \`>\` | blockquote |
+| Table | pipes and \`---\` | TablePlugin |
+
+| Surface | Owner | Ships in Markdown |
+| --- | --- | --- |
+| Public article | rehype + \`react-markdown\` | Yes |
+| Admin editor | Plate + MarkdownPlugin | Yes |
+| Custom blocks | presentational UI | Not yet |
+
+Wide tables scroll inside the same bordered shell as the public preview. **Bold** and *italic* in a cell should round-trip.
+
+| Sprint | Theme | Risk | Notes |
+| --- | --- | --- | --- |
+| 12 | Editor playground | Low | Drag, lists, tables |
+| 13 | Article wiring | Medium | Keep MD as source of truth |
+| 14 | Custom nodes | High | Spotify, masonry, pull quotes |
 
 ---
 
@@ -139,6 +174,10 @@ export function Editor({
 			BulletedListPlugin.withComponent(UlElement),
 			NumberedListPlugin.withComponent(OlElement),
 			ListItemPlugin.withComponent(LiElement),
+			TablePlugin.withComponent(TableElement),
+			TableRowPlugin.withComponent(TableRowElement),
+			TableCellPlugin.withComponent(TableCellElement),
+			TableCellHeaderPlugin.withComponent(TableCellHeaderElement),
 			MarkdownPlugin.configure({
 				options: {
 					remarkPlugins: [remarkGfm],

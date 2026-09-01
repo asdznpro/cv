@@ -30,38 +30,38 @@ function HistoryButtons() {
 	const editor = useEditorRef()
 
 	const canUndo = useEditorSelector(
-		(current) => current.history.undos.length > 0,
+		current => current.history.undos.length > 0,
 		[],
 	)
 	const canRedo = useEditorSelector(
-		(current) => current.history.redos.length > 0,
+		current => current.history.redos.length > 0,
 		[],
 	)
 
 	return (
 		<>
 			<Button
-				type="button"
-				size="sm"
-				mode="ghost"
-				appearance="neutral"
+				type='button'
+				size='sm'
+				mode='ghost'
+				appearance='neutral'
 				prefix={<Icon24ArrowUturnLeftOutline width={16} height={16} />}
-				radius="rounded"
+				radius='rounded'
 				iconOnly
 				disabled={!canUndo}
-				aria-label="Undo"
+				aria-label='Undo'
 				onClick={() => editor.undo()}
 			/>
 			<Button
-				type="button"
-				size="sm"
-				mode="ghost"
-				appearance="neutral"
+				type='button'
+				size='sm'
+				mode='ghost'
+				appearance='neutral'
 				prefix={<Icon24ArrowUturnRightOutline width={16} height={16} />}
-				radius="rounded"
+				radius='rounded'
 				iconOnly
 				disabled={!canRedo}
-				aria-label="Redo"
+				aria-label='Redo'
 				onClick={() => editor.redo()}
 			/>
 		</>
@@ -76,25 +76,25 @@ export function EditorToolbar() {
 	}
 
 	return (
-		<div className="flex flex-wrap p-1.5 gap-1.5 rounded-full bg-surface-secondary">
+		<div className='flex flex-wrap p-1.5 gap-1.5 rounded-full bg-surface-secondary'>
 			<HistoryButtons />
 
-			<Separator className="h-1/2 my-auto" orientation="vertical" />
+			<Separator className='h-1/2 my-auto' orientation='vertical' />
 
-			<DropdownMenu align="start">
+			<DropdownMenu align='start'>
 				<DropdownMenu.Trigger>
 					<Button
-						type="button"
-						size="sm"
-						mode="ghost"
-						appearance="neutral"
+						type='button'
+						size='sm'
+						mode='ghost'
+						appearance='neutral'
 						prefix={<Icon24AddOutline width={16} height={16} />}
-						radius="rounded"
+						radius='rounded'
 						iconOnly
 					/>
 				</DropdownMenu.Trigger>
 
-				<DropdownMenu.Content className="w-40">
+				<DropdownMenu.Content className='w-40'>
 					<DropdownMenu.Box>
 						<DropdownMenu.Heading>Basic blocks</DropdownMenu.Heading>
 
@@ -178,95 +178,95 @@ export function EditorToolbar() {
 
 			<Button
 				onClick={() => editor.tf.toggleBlock(KEYS.h1)}
-				size="sm"
-				mode="ghost"
-				appearance="neutral"
+				size='sm'
+				mode='ghost'
+				appearance='neutral'
 				prefix={<Icon24TextHeading1Outline width={16} height={16} />}
-				radius="rounded"
+				radius='rounded'
 				iconOnly
 			/>
 			<Button
 				onClick={() => editor.tf.toggleBlock(KEYS.h2)}
-				size="sm"
-				mode="ghost"
-				appearance="neutral"
+				size='sm'
+				mode='ghost'
+				appearance='neutral'
 				prefix={<Icon24TextHeading2Outline width={16} height={16} />}
-				radius="rounded"
+				radius='rounded'
 				iconOnly
 			/>
 
 			<Button
-				size="sm"
-				mode="ghost"
-				appearance="neutral"
+				size='sm'
+				mode='ghost'
+				appearance='neutral'
 				onClick={() => editor.tf.toggleBlock(KEYS.blockquote)}
 				prefix={<Icon24QuoteClosing width={16} height={16} />}
-				radius="rounded"
+				radius='rounded'
 				iconOnly
 			/>
 
-			<Separator className="h-1/2 my-auto" orientation="vertical" />
+			<Separator className='h-1/2 my-auto' orientation='vertical' />
 
 			<Button
-				size="sm"
-				mode="ghost"
-				appearance="neutral"
+				size='sm'
+				mode='ghost'
+				appearance='neutral'
 				onClick={() => editor.tf.toggleMark(KEYS.bold)}
-				prefix={<span className="font-bold">B</span>}
-				radius="rounded"
+				prefix={<span className='font-bold'>B</span>}
+				radius='rounded'
 				iconOnly
 			/>
 			<Button
-				size="sm"
-				mode="ghost"
-				appearance="neutral"
+				size='sm'
+				mode='ghost'
+				appearance='neutral'
 				onClick={() => editor.tf.toggleMark(KEYS.italic)}
-				prefix={<span className="italic">I</span>}
-				radius="rounded"
+				prefix={<span className='italic'>I</span>}
+				radius='rounded'
 				iconOnly
 			/>
 			<Button
-				size="sm"
-				mode="ghost"
-				appearance="neutral"
+				size='sm'
+				mode='ghost'
+				appearance='neutral'
 				onClick={() => editor.tf.toggleMark(KEYS.underline)}
-				prefix={<span className="underline">U</span>}
-				radius="rounded"
+				prefix={<span className='underline'>U</span>}
+				radius='rounded'
 				iconOnly
 			/>
 			<Button
-				size="sm"
-				mode="ghost"
-				appearance="neutral"
-				prefix={<span className="line-through">S</span>}
-				radius="rounded"
+				size='sm'
+				mode='ghost'
+				appearance='neutral'
+				prefix={<span className='line-through'>S</span>}
+				radius='rounded'
 				iconOnly
 			/>
 			<Button
-				size="sm"
-				mode="ghost"
-				appearance="neutral"
+				size='sm'
+				mode='ghost'
+				appearance='neutral'
 				prefix={<Icon24BracketsSlashOutline width={16} height={16} />}
-				radius="rounded"
+				radius='rounded'
 				iconOnly
 			/>
 
-			<Separator className="h-1/2 my-auto" orientation="vertical" />
+			<Separator className='h-1/2 my-auto' orientation='vertical' />
 
-			<DropdownMenu align="start">
+			<DropdownMenu align='start'>
 				<DropdownMenu.Trigger>
 					<Button
-						size="sm"
-						mode="ghost"
-						appearance="neutral"
+						size='sm'
+						mode='ghost'
+						appearance='neutral'
 						prefix={<Icon24ListBulletOutline width={16} height={16} />}
 						suffix={<Icon24ChevronDown width={16} height={16} />}
-						radius="rounded"
+						radius='rounded'
 						iconOnly
 					/>
 				</DropdownMenu.Trigger>
 
-				<DropdownMenu.Content className="w-40">
+				<DropdownMenu.Content className='w-40'>
 					<DropdownMenu.Box>
 						<DropdownMenu.Heading>Lists</DropdownMenu.Heading>
 
@@ -293,33 +293,33 @@ export function EditorToolbar() {
 				</DropdownMenu.Content>
 			</DropdownMenu>
 
-			<Separator className="h-1/2 my-auto" orientation="vertical" />
+			<Separator className='h-1/2 my-auto' orientation='vertical' />
 
 			<Button
-				size="sm"
-				mode="ghost"
-				appearance="neutral"
+				size='sm'
+				mode='ghost'
+				appearance='neutral'
 				prefix={<Icon24Linked width={16} height={16} />}
-				radius="rounded"
+				radius='rounded'
 				iconOnly
 			/>
 			<Button
-				size="sm"
-				mode="ghost"
-				appearance="neutral"
+				size='sm'
+				mode='ghost'
+				appearance='neutral'
 				prefix={<Icon24Squareshape4GridOutline width={16} height={16} />}
 				suffix={<Icon24ChevronDown width={16} height={16} />}
-				radius="rounded"
+				radius='rounded'
 				iconOnly
 			/>
 
 			<Button
-				className="ml-auto"
-				size="sm"
-				mode="ghost"
-				appearance="neutral"
+				className='ml-auto'
+				size='sm'
+				mode='ghost'
+				appearance='neutral'
 				prefix={<Icon28MoreHorizontal width={16} height={16} />}
-				radius="rounded"
+				radius='rounded'
 				iconOnly
 			/>
 		</div>
