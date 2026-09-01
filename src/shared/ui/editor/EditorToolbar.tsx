@@ -83,7 +83,7 @@ export function EditorToolbar() {
 	}
 
 	return (
-		<div className='mb-6 z-10 flex flex-wrap p-1.5 gap-1.5 rounded-full bg-surface-secondary'>
+		<div className='mb-6 flex flex-wrap p-1.5 gap-1.5 rounded-full bg-surface-secondary'>
 			<HistoryButtons />
 
 			<Separator className='h-1/2 my-auto' orientation='vertical' />
