@@ -19,12 +19,17 @@ import {
 	UnderlinePlugin,
 } from '@platejs/basic-nodes/react'
 import { DndPlugin } from '@platejs/dnd'
-import { BulletedListRules, OrderedListRules } from '@platejs/list-classic'
+import {
+	BulletedListRules,
+	OrderedListRules,
+	TaskListRules,
+} from '@platejs/list-classic'
 import {
 	BulletedListPlugin,
 	ListItemPlugin,
 	ListPlugin,
 	NumberedListPlugin,
+	TaskListPlugin,
 } from '@platejs/list-classic/react'
 import { MarkdownPlugin } from '@platejs/markdown'
 import {
@@ -56,8 +61,10 @@ import {
 	TableCellHeaderElement,
 	TableElement,
 	TableRowElement,
+	TaskListElement,
 	UlElement,
 } from './nodes'
+import { listMarkdownRules } from './list.markdown'
 
 const defaultMarkdown = `# Notes from the last sprint
 
@@ -70,6 +77,12 @@ The public site still renders Markdown through rehype. This editor is the other 
 - Convert this list to numbered, then back
 - Press Enter inside an item to add another
 - Tab and Shift+Tab to nest and unnest
+
+## To-do
+
+- [ ] Wire this editor into the article form
+- [x] Bullet and numbered lists
+- [ ] Custom Spotify / masonry nodes
 
 Plate treats each block as a node. A wrapped paragraph is still one block. A heading is one block. That is why the drag handle sits on the left of the whole unit, not on every visual line.
 
@@ -169,10 +182,13 @@ export function Editor({
 					BulletedListRules.markdown({ variant: '-' }),
 					BulletedListRules.markdown({ variant: '*' }),
 					OrderedListRules.markdown({ variant: '.' }),
+					TaskListRules.markdown({ checked: false }),
+					TaskListRules.markdown({ checked: true }),
 				],
 			}),
 			BulletedListPlugin.withComponent(UlElement),
 			NumberedListPlugin.withComponent(OlElement),
+			TaskListPlugin.withComponent(TaskListElement),
 			ListItemPlugin.withComponent(LiElement),
 			TablePlugin.withComponent(TableElement),
 			TableRowPlugin.withComponent(TableRowElement),
@@ -181,6 +197,7 @@ export function Editor({
 			MarkdownPlugin.configure({
 				options: {
 					remarkPlugins: [remarkGfm],
+					rules: listMarkdownRules,
 				},
 			}),
 			DndPlugin.configure({

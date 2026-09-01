@@ -71,12 +71,19 @@ function HistoryButtons() {
 export function EditorToolbar() {
 	const editor = useEditorRef()
 
-	const toggleList = (type: typeof KEYS.ulClassic | typeof KEYS.olClassic) => {
+	const toggleList = (
+		type: typeof KEYS.ulClassic | typeof KEYS.olClassic | typeof KEYS.taskList,
+	) => {
+		if (type === KEYS.taskList) {
+			editor.getTransforms(ListPlugin).toggle.taskList()
+			return
+		}
+
 		editor.getTransforms(ListPlugin).toggle.list({ type })
 	}
 
 	return (
-		<div className='flex flex-wrap p-1.5 gap-1.5 rounded-full bg-surface-secondary'>
+		<div className='mb-6 z-10 flex flex-wrap p-1.5 gap-1.5 rounded-full bg-surface-secondary'>
 			<HistoryButtons />
 
 			<Separator className='h-1/2 my-auto' orientation='vertical' />
@@ -149,20 +156,21 @@ export function EditorToolbar() {
 							onClick={() => toggleList(KEYS.ulClassic)}
 							prefix={<Icon24ListBulletOutline width={18} height={18} />}
 						>
-							Bulleted list
+							Bulleted
 						</DropdownMenu.Item>
 
 						<DropdownMenu.Item
 							onClick={() => toggleList(KEYS.olClassic)}
 							prefix={<Icon24ListNumberOutline width={18} height={18} />}
 						>
-							Numbered list
+							Numbered
 						</DropdownMenu.Item>
 
 						<DropdownMenu.Item
+							onClick={() => toggleList(KEYS.taskList)}
 							prefix={<Icon24ListCheckOutline width={18} height={18} />}
 						>
-							To-do list
+							To-do
 						</DropdownMenu.Item>
 					</DropdownMenu.Box>
 
@@ -274,20 +282,21 @@ export function EditorToolbar() {
 							onClick={() => toggleList(KEYS.ulClassic)}
 							prefix={<Icon24ListBulletOutline width={18} height={18} />}
 						>
-							Bulleted list
+							Bulleted
 						</DropdownMenu.Item>
 
 						<DropdownMenu.Item
 							onClick={() => toggleList(KEYS.olClassic)}
 							prefix={<Icon24ListNumberOutline width={18} height={18} />}
 						>
-							Numbered list
+							Numbered
 						</DropdownMenu.Item>
 
 						<DropdownMenu.Item
+							onClick={() => toggleList(KEYS.taskList)}
 							prefix={<Icon24ListCheckOutline width={18} height={18} />}
 						>
-							To-do list
+							To-do
 						</DropdownMenu.Item>
 					</DropdownMenu.Box>
 				</DropdownMenu.Content>
