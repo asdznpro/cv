@@ -26,11 +26,11 @@ const NAV_ITEMS = [
 		href: '/articles',
 	},
 	{
-		label: 'Articles / About',
+		label: 'Article / About',
 		href: '/articles/about',
 	},
 	{
-		label: 'Articles / Experience',
+		label: 'Article / Experience',
 		href: '/articles?category=experience',
 	},
 	{

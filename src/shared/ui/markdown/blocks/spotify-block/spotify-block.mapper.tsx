@@ -2,7 +2,8 @@ import type { ExtraProps } from 'react-markdown'
 import type { ComponentPropsWithoutRef } from 'react'
 import type { Element as HastElement } from 'hast'
 
-import { isSpotifyType } from '../../lib/parse-spotify.util'
+import { isSpotifyType } from 'ui/blocks'
+
 import { SpotifyBlock } from './SpotifyBlock'
 
 type DivProps = ComponentPropsWithoutRef<'div'> &
