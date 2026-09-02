@@ -38,10 +38,6 @@ function visitAgent(visit: ShortLinkVisit) {
 	return parts.join(' · ')
 }
 
-function isTelegramVisit(visit: ShortLinkVisit) {
-	return (visit.as_org ?? '').toLowerCase().includes('telegram')
-}
-
 const LIST_MIN_HEIGHT = 160
 const LIST_HEIGHT_TRANSITION = {
 	type: 'tween' as const,
@@ -189,15 +185,15 @@ export function ShortLinkVisitsDialog({
 														}
 													</Badge>
 
-													{isTelegramVisit(visit) && (
-														<Badge size='md' mode='soft' appearance='neutral'>
-															Telegram
-														</Badge>
-													)}
-
 													{agent && (
 														<Badge size='md' mode='soft' appearance='neutral'>
 															{agent}
+														</Badge>
+													)}
+
+													{visit.as_org && (
+														<Badge size='md' mode='soft' appearance='neutral'>
+															{visit.as_org}
 														</Badge>
 													)}
 												</span>
