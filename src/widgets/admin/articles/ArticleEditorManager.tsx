@@ -793,7 +793,18 @@ export function ArticleEditorManager({
 				)}
 			</section>
 
-			<section className='sticky bottom-app mx-auto max-w-sm w-full flex flex-col px-app gap-app'>
+			<motion.section
+				initial={false}
+				animate={{
+					maxWidth: isDirty ? '24rem' : '16rem',
+				}}
+				transition={{
+					type: 'spring',
+					stiffness: 300,
+					damping: 20,
+				}}
+				className='sticky bottom-app mx-auto max-w-sm w-full flex flex-col px-app gap-app'
+			>
 				<div className='flex flex-col bg-background border border-separator rounded-full overflow-hidden'>
 					<div className='flex items-center p-2 gap-2'>
 						<Tooltip text='Back to articles'>
@@ -840,43 +851,44 @@ export function ArticleEditorManager({
 							</AnimatePresence>
 						)}
 
-						<span className='flex-1' />
-
-						{article ? (
-							<Button
-								type='button'
-								radius='rounded'
-								onClick={() => save()}
-								disabled={pending || !isDirty}
-							>
-								Save changes
-							</Button>
-						) : (
-							<>
-								<Button
-									type='button'
-									mode='ghost'
-									appearance='neutral'
-									radius='rounded'
-									onClick={() => save('draft')}
-									disabled={pending}
-								>
-									Save draft
-								</Button>
-
+						<div className='flex flex-1 justify-end gap-2'>
+							{article ? (
 								<Button
 									type='button'
 									radius='rounded'
-									onClick={() => save('published')}
-									disabled={pending}
+									onClick={() => save()}
+									disabled={pending || !isDirty}
 								>
-									Publish
+									Save changes
 								</Button>
-							</>
-						)}
+							) : (
+								<>
+									<Button
+										className='flex-1'
+										type='button'
+										mode='ghost'
+										appearance='neutral'
+										radius='rounded'
+										onClick={() => save('draft')}
+										disabled={pending}
+									>
+										Save draft
+									</Button>
+
+									<Button
+										type='button'
+										radius='rounded'
+										onClick={() => save('published')}
+										disabled={pending}
+									>
+										Publish
+									</Button>
+								</>
+							)}
+						</div>
 					</div>
 				</div>
-			</section>
+			</motion.section>
 		</>
 	)
 }
