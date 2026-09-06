@@ -243,7 +243,7 @@ export default function Admin() {
 			</section>
 
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
-				<div className='flex flex-wrap items-center gap-app not-first-of-type:pt-8 pb-3'>
+				<div className='flex flex-wrap items-center gap-app not-first-of-type:pt-8 pb-app'>
 					<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 						Overview
 					</h2>
@@ -344,7 +344,7 @@ export default function Admin() {
 					</div>
 				</div>
 
-				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+				<div className='flex gap-app not-first-of-type:pt-8 pb-app'>
 					<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 						Account Management
 					</h2>

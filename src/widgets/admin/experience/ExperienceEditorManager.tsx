@@ -327,7 +327,7 @@ export function ExperienceEditorManager({
 	return (
 		<>
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
-				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+				<div className='flex gap-app not-first-of-type:pt-8 pb-app'>
 					<div className='flex flex-col gap-3'>
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 							General
@@ -726,7 +726,7 @@ export function ExperienceEditorManager({
 
 				{experienceId && (
 					<>
-						<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+						<div className='flex gap-app not-first-of-type:pt-8 pb-app'>
 							<div className='flex flex-col gap-3'>
 								<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 									Danger zone

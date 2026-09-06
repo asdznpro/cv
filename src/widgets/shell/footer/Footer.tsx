@@ -1,7 +1,10 @@
+'use client'
+
 import { twMerge } from 'tailwind-merge'
 
 import { StickerPeel } from 'ui/effects'
 import { Badge } from 'ui/blocks'
+
 import { Icon28GlobeCrossOutline, Icon28LinkOutline } from '@vkontakte/icons'
 
 const SOCIAL_ITEMS = [
@@ -136,7 +139,7 @@ export function Footer() {
 					&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV
 				</span>
 
-				<span>v2.1.35, 1.9.26</span>
+				<span>v2.1.37, 6.9.26</span>
 			</div>
 		</footer>
 	)

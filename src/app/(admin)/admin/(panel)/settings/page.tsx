@@ -28,7 +28,7 @@ export default function Settings() {
 			</section>
 
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
-				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+				<div className='flex gap-app not-first-of-type:pt-8 pb-app'>
 					<div className='flex flex-col gap-3'>
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 							Profile Information
@@ -125,7 +125,7 @@ export default function Settings() {
 					</div>
 				</div>
 
-				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+				<div className='flex gap-app not-first-of-type:pt-8 pb-app'>
 					<div className='flex flex-col gap-3'>
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 							Sign-in Methods
@@ -151,8 +151,6 @@ export default function Settings() {
 								<h3 className='text-xl font-medium font-condensed tracking-tight'>
 									VK ID
 								</h3>
-
-								{/* <p className='text-sm text-foreground-secondary'>Browser</p> */}
 							</div>
 
 							<Button
@@ -184,7 +182,7 @@ export default function Settings() {
 					</div>
 				</div>
 
-				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+				<div className='flex gap-app not-first-of-type:pt-8 pb-app'>
 					<div className='flex flex-col gap-3'>
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 							Appearance
@@ -254,7 +252,7 @@ export default function Settings() {
 					</div>
 				</div>
 
-				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+				<div className='flex gap-app not-first-of-type:pt-8 pb-app'>
 					<div className='flex flex-col gap-3'>
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 							Keyboard Shortcuts
@@ -346,7 +344,7 @@ export default function Settings() {
 					</div>
 				</div>
 
-				<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+				<div className='flex gap-app not-first-of-type:pt-8 pb-app'>
 					<div className='flex flex-col gap-3'>
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 							Active Sessions
