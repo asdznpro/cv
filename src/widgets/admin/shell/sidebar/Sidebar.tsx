@@ -182,6 +182,7 @@ export function Sidebar() {
 										<Button
 											key={item.href}
 											to={item.href}
+											// prefetch
 											size='lg'
 											mode={isActiveRoute(item.href) ? 'soft' : 'ghost'}
 											appearance={

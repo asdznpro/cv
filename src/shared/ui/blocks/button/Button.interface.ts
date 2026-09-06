@@ -17,5 +17,6 @@ export interface ButtonProps extends Omit<
 	suffix?: React.ReactNode
 
 	to?: LinkProps['href']
+	prefetch?: LinkProps['prefetch']
 	target?: React.HTMLAttributeAnchorTarget | undefined
 }

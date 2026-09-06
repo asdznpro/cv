@@ -26,6 +26,7 @@ export const Button = forwardRef<
 		suffix,
 		className,
 		to,
+		prefetch,
 		href,
 		target,
 		...restProps
@@ -52,7 +53,7 @@ export const Button = forwardRef<
 		}
 	} else if (to) {
 		Component = Link
-		additionalProps = { href: to, target }
+		additionalProps = { href: to, target, prefetch }
 	} else if (as === 'span') {
 		Component = 'span'
 		additionalProps = {
