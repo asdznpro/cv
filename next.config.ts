@@ -1,7 +1,6 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-	/* config options here */
 	reactCompiler: true,
 	images: {
 		remotePatterns: [
@@ -12,7 +11,6 @@ const nextConfig: NextConfig = {
 		],
 	},
 	experimental: {
-		viewTransition: true,
 		staleTimes: {
 			dynamic: 30,
 		},

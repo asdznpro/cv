@@ -1,5 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 'use client'
+
+import '../silence-upstream-deprecations'
+
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
 	Canvas,
