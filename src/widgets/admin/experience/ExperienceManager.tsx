@@ -50,7 +50,7 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 
 	return (
 		<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
-			<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+			<div className='flex gap-app not-first-of-type:pt-8 pb-app'>
 				<div className='flex flex-1 flex-col gap-3'>
 					<h1 className='text-3xl font-medium font-condensed tracking-tight'>
 						Experience Manager

@@ -68,7 +68,7 @@ export function ToolkitManager({ items }: ToolkitManagerProps) {
 
 					return (
 						<Fragment key={area.key}>
-							<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+							<div className='flex gap-app not-first-of-type:pt-8 pb-app'>
 								<div className='flex flex-1 flex-col gap-3'>
 									<h2 className='text-3xl font-medium font-condensed tracking-tight'>
 										{area.label}

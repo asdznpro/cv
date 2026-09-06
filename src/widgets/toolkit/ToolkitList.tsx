@@ -20,7 +20,7 @@ export function ToolkitList({ items }: ToolkitListProps) {
 		<>
 			{grouped.map(group => (
 				<Fragment key={group.area.key}>
-					<div className='flex gap-app not-first-of-type:pt-8 pb-3'>
+					<div className='flex gap-app not-first-of-type:pt-8 pb-app'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h2 className='text-4xl font-medium font-condensed tracking-tight'>
 								{group.area.label} Toolkit

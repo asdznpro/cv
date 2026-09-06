@@ -24,7 +24,11 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang='en' className='h-full antialiased'>
+		<html
+			lang='en'
+			className='h-full antialiased'
+			data-scroll-behavior='smooth'
+		>
 			<head>
 				<meta name='apple-mobile-web-app-title' content='Andrew S. / CV' />
 				<meta name='yandex-verification' content='506eca3509ce4857' />
