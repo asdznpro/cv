@@ -167,10 +167,37 @@ export function ShortenerManager({
 								{count > 0 ? `${count} links` : 'No links'}
 							</span>
 
-							<div className='flex gap-2'>
+							{/* <div className='flex'>
+								<Button
+									className='rounded-r-none border-r-0'
+									type='button'
+									size='sm'
+									mode='outline'
+									appearance='neutral'
+									prefix={<Icon28SortOutline width={16} height={16} />}
+								>
+									Order
+								</Button>
+
+								<Separator orientation='vertical' />
+
+								<Button
+									className='rounded-l-none border-l-0'
+									type='button'
+									size='sm'
+									mode='outline'
+									appearance='neutral'
+									prefix={<Icon28SortOutline width={16} height={16} />}
+								>
+									Sort
+								</Button>
+							</div> */}
+
+							<div className='flex'>
 								<DropdownMenu>
 									<DropdownMenu.Trigger>
 										<Button
+											className='rounded-r-none'
 											type='button'
 											size='sm'
 											mode='secondary'
@@ -204,9 +231,15 @@ export function ShortenerManager({
 									</DropdownMenu.Content>
 								</DropdownMenu>
 
+								<Separator
+									className='z-1 -ml-px h-2/3 bg-foreground/subtle'
+									orientation='vertical'
+								/>
+
 								<DropdownMenu>
 									<DropdownMenu.Trigger>
 										<Button
+											className='rounded-l-none'
 											type='button'
 											size='sm'
 											mode='secondary'
