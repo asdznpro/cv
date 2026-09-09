@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 
@@ -15,32 +15,18 @@ import {
 	type AdminNotification,
 	type NotificationStatus,
 } from 'lib/notifications'
-import { getFormattedDate } from 'lib/utils'
 
-import {
-	Badge,
-	Button,
-	Counter,
-	EmptyState,
-	ScrollArea,
-	Separator,
-} from 'ui/blocks'
-import { DropdownMenu } from 'ui/floating'
+import { Button, Counter, ScrollArea, Separator } from 'ui/blocks'
 import { Backdrop } from 'ui/overlays'
 
 import {
-	Icon28DeleteOutline,
-	Icon28DoneOutline,
 	Icon28HorizontalRectangle2VerticalLeftOutline,
-	Icon28MoreHorizontal,
-	Icon28ChainOutline,
 	Icon28Notifications,
-	Icon28LinkOutline,
-	Icon28NotificationDisableOutline,
 } from '@vkontakte/icons'
 
 import { useAdminShell } from '../AdminShellProvider'
 import { AnimatedLabel } from './AnimatedLabel'
+import { NotificationList } from './NotificationList'
 
 import { NAV_ITEMS } from '../sidebar'
 
@@ -87,23 +73,6 @@ export function Header({ notifications: initialNotifications }: HeaderProps) {
 	// for notifications
 
 	const unreadCount = notifications.filter(item => item.status === 'new').length
-
-	const notificationGroups = useMemo(
-		() =>
-			[
-				{
-					status: 'new' as const,
-					label: 'New',
-					items: notifications.filter(item => item.status === 'new'),
-				},
-				{
-					status: 'viewed' as const,
-					label: 'Viewed',
-					items: notifications.filter(item => item.status === 'viewed'),
-				},
-			].filter(group => group.items.length > 0),
-		[notifications],
-	)
 
 	function patchNotification(id: string, next: Partial<AdminNotification>) {
 		setNotifications(items =>
@@ -252,182 +221,13 @@ export function Header({ notifications: initialNotifications }: HeaderProps) {
 										<Separator />
 
 										<ScrollArea className='h-120'>
-											{notificationGroups.length === 0 ? (
-												<EmptyState
-													className='h-full'
-													icon={
-														<Icon28NotificationDisableOutline
-															width={24}
-															height={24}
-														/>
-													}
-													title='No notifications'
-													summary='There are no notifications. You will receive notifications when there are new articles, short links, or other content.'
-												/>
-											) : (
-												<div className='flex flex-col p-2 gap-2'>
-													{notificationGroups.map(group => (
-														<div
-															key={group.status}
-															className='flex flex-col gap-2'
-														>
-															<span className='px-surface py-1 text-xs text-foreground-secondary'>
-																{group.label}
-															</span>
-
-															{group.items.map(notification => (
-																<div
-																	key={notification.id}
-																	className='group flex flex-1 p-surface gap-surface rounded-md bg-surface-secondary/strong'
-																>
-																	<Badge
-																		mode='soft'
-																		appearance={
-																			notification.status === 'new'
-																				? 'accent'
-																				: 'neutral'
-																		}
-																		prefix={
-																			<Icon28ChainOutline
-																				width={16}
-																				height={16}
-																			/>
-																		}
-																	/>
-
-																	<div className='flex flex-1 flex-col gap-2'>
-																		<h3 className='text-lg font-medium font-condensed tracking-tight'>
-																			{notification.title}
-																		</h3>
-
-																		{notification.description && (
-																			<p className='text-sm text-foreground-secondary'>
-																				{notification.description}
-																			</p>
-																		)}
-
-																		<p className='text-sm text-foreground-secondary'>
-																			{notification.status === 'new' && (
-																				<span className='mr-1.75 mb-0.5 inline-flex size-1.75 bg-accent rounded-full animate-pulse align-middle' />
-																			)}
-																			{
-																				getFormattedDate(
-																					notification.createdAt,
-																					{ includeTime: false },
-																				).relative
-																			}
-																		</p>
-																	</div>
-
-																	<div className='flex gap-2'>
-																		{notification.href && (
-																			<Button
-																				to={notification.href}
-																				size='sm'
-																				mode='soft'
-																				appearance='neutral'
-																				onClick={() => {
-																					if (notification.status === 'new') {
-																						void setStatus(
-																							notification.id,
-																							'viewed',
-																						)
-																					}
-																				}}
-																				suffix={
-																					<Icon28LinkOutline
-																						width={16}
-																						height={16}
-																					/>
-																				}
-																			>
-																				View
-																			</Button>
-																		)}
-
-																		<DropdownMenu>
-																			<DropdownMenu.Trigger>
-																				<Button
-																					size='sm'
-																					mode='ghost'
-																					appearance='neutral'
-																					prefix={
-																						<Icon28MoreHorizontal
-																							width={16}
-																							height={16}
-																						/>
-																					}
-																					iconOnly
-																				/>
-																			</DropdownMenu.Trigger>
-
-																			<DropdownMenu.Content className='w-44'>
-																				<DropdownMenu.Box>
-																					{notification.status === 'new' ? (
-																						<DropdownMenu.Item
-																							aria-label='Mark notification as viewed'
-																							onClick={() =>
-																								void setStatus(
-																									notification.id,
-																									'viewed',
-																								)
-																							}
-																							prefix={
-																								<Icon28DoneOutline
-																									width={18}
-																									height={18}
-																								/>
-																							}
-																						>
-																							Mark as viewed
-																						</DropdownMenu.Item>
-																					) : (
-																						<DropdownMenu.Item
-																							aria-label='Mark notification as new'
-																							onClick={() =>
-																								void setStatus(
-																									notification.id,
-																									'new',
-																								)
-																							}
-																							prefix={
-																								<Icon28Notifications
-																									width={18}
-																									height={18}
-																								/>
-																							}
-																						>
-																							Mark as new
-																						</DropdownMenu.Item>
-																					)}
-
-																					<DropdownMenu.Item
-																						aria-label='Delete notification'
-																						appearance='danger'
-																						onClick={() =>
-																							void removeNotification(
-																								notification.id,
-																							)
-																						}
-																						prefix={
-																							<Icon28DeleteOutline
-																								width={18}
-																								height={18}
-																							/>
-																						}
-																					>
-																						Delete
-																					</DropdownMenu.Item>
-																				</DropdownMenu.Box>
-																			</DropdownMenu.Content>
-																		</DropdownMenu>
-																	</div>
-																</div>
-															))}
-														</div>
-													))}
-												</div>
-											)}
+											<NotificationList
+												notifications={notifications}
+												onStatusChange={(id, status) =>
+													void setStatus(id, status)
+												}
+												onDelete={id => void removeNotification(id)}
+											/>
 										</ScrollArea>
 									</motion.div>
 								)}
