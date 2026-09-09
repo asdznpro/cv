@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 import { getAdminSession } from 'lib/auth'
+import { listAdminNotifications } from 'lib/notifications'
 
 import {
 	AdminCommandMenuHost,
@@ -22,7 +23,10 @@ export default async function AdminLayout({
 }: {
 	children: React.ReactNode
 }) {
-	const user = await getAdminSession()
+	const [user, notificationsPage] = await Promise.all([
+		getAdminSession(),
+		listAdminNotifications(),
+	])
 
 	return (
 		<AdminShellProvider user={user}>
@@ -32,7 +36,7 @@ export default async function AdminLayout({
 				<Sidebar />
 
 				<div className='@container relative min-w-0 w-full flex flex-col'>
-					<Header />
+					<Header notificationsPage={notificationsPage} />
 
 					<main className='overflow-x-clip w-full h-full flex flex-1 flex-col gap-12 @2xl:gap-20'>
 						{children}

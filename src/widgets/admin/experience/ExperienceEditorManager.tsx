@@ -763,7 +763,18 @@ export function ExperienceEditorManager({
 				)}
 			</section>
 
-			<section className='sticky bottom-app mx-auto max-w-sm w-full flex flex-col px-app gap-app'>
+			<motion.section
+				initial={false}
+				animate={{
+					maxWidth: isDirty && experienceId ? '24rem' : '16rem',
+				}}
+				transition={{
+					type: 'spring',
+					stiffness: 300,
+					damping: 20,
+				}}
+				className='sticky bottom-app mx-auto max-w-sm w-full flex flex-col px-app gap-app'
+			>
 				<div className='flex flex-col bg-background border border-separator rounded-full overflow-hidden'>
 					<div className='flex items-center p-2 gap-2'>
 						<Tooltip text='Back to experiences'>
@@ -810,19 +821,19 @@ export function ExperienceEditorManager({
 							</AnimatePresence>
 						)}
 
-						<span className='flex-1' />
-
-						<Button
-							type='button'
-							radius='rounded'
-							onClick={save}
-							disabled={pending || (Boolean(experienceId) && !isDirty)}
-						>
-							{experienceId ? 'Save changes' : 'Create experience'}
-						</Button>
+						<div className='flex flex-1 justify-end gap-2'>
+							<Button
+								type='button'
+								radius='rounded'
+								onClick={save}
+								disabled={pending || (Boolean(experienceId) && !isDirty)}
+							>
+								{experienceId ? 'Save changes' : 'Create experience'}
+							</Button>
+						</div>
 					</div>
 				</div>
-			</section>
+			</motion.section>
 		</>
 	)
 }
