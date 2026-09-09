@@ -2,19 +2,13 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 import { useLockScroll, useHotkeys } from '@siberiacancode/reactuse'
 import { motion, AnimatePresence } from 'motion/react'
-import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
 
-import {
-	deleteAdminNotification,
-	updateAdminNotificationStatus,
-	type AdminNotification,
-	type NotificationStatus,
-} from 'lib/notifications'
+import type { AdminNotificationPage } from 'lib/notifications'
 
 import { Button, Counter, ScrollArea, Separator } from 'ui/blocks'
 import { Backdrop } from 'ui/overlays'
@@ -31,21 +25,20 @@ import { NotificationList } from './NotificationList'
 import { NAV_ITEMS } from '../sidebar'
 
 type HeaderProps = {
-	notifications: AdminNotification[]
+	notificationsPage: AdminNotificationPage
 }
 
-export function Header({ notifications: initialNotifications }: HeaderProps) {
+export function Header({ notificationsPage }: HeaderProps) {
 	const { open, toggle } = useAdminShell()
-	const router = useRouter()
 
 	// for menu
 
 	const [isOpen, setIsOpen] = useState(false)
-	const [notifications, setNotifications] = useState(initialNotifications)
+	const [unreadCount, setUnreadCount] = useState(notificationsPage.unreadCount)
 
 	useEffect(() => {
-		setNotifications(initialNotifications)
-	}, [initialNotifications])
+		setUnreadCount(notificationsPage.unreadCount)
+	}, [notificationsPage.unreadCount])
 
 	useLockScroll({ enabled: isOpen })
 
@@ -69,44 +62,6 @@ export function Header({ notifications: initialNotifications }: HeaderProps) {
 		NAV_ITEMS.flatMap(section => section.items).find(
 			item => item.href === activeHref,
 		)?.label ?? 'Overview'
-
-	// for notifications
-
-	const unreadCount = notifications.filter(item => item.status === 'new').length
-
-	function patchNotification(id: string, next: Partial<AdminNotification>) {
-		setNotifications(items =>
-			items.map(item => (item.id === id ? { ...item, ...next } : item)),
-		)
-	}
-
-	async function setStatus(id: string, status: NotificationStatus) {
-		const previous = notifications
-		patchNotification(id, { status })
-
-		const result = await updateAdminNotificationStatus(id, status)
-		if (!result.ok) {
-			setNotifications(previous)
-			toast.error(result.error)
-			return
-		}
-
-		router.refresh()
-	}
-
-	async function removeNotification(id: string) {
-		const previous = notifications
-		setNotifications(items => items.filter(item => item.id !== id))
-
-		const result = await deleteAdminNotification(id)
-		if (!result.ok) {
-			setNotifications(previous)
-			toast.error(result.error)
-			return
-		}
-
-		router.refresh()
-	}
 
 	return (
 		<>
@@ -222,11 +177,8 @@ export function Header({ notifications: initialNotifications }: HeaderProps) {
 
 										<ScrollArea className='h-120'>
 											<NotificationList
-												notifications={notifications}
-												onStatusChange={(id, status) =>
-													void setStatus(id, status)
-												}
-												onDelete={id => void removeNotification(id)}
+												initialPage={notificationsPage}
+												onUnreadCountChange={setUnreadCount}
 											/>
 										</ScrollArea>
 									</motion.div>

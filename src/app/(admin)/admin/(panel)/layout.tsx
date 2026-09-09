@@ -23,7 +23,7 @@ export default async function AdminLayout({
 }: {
 	children: React.ReactNode
 }) {
-	const [user, notifications] = await Promise.all([
+	const [user, notificationsPage] = await Promise.all([
 		getAdminSession(),
 		listAdminNotifications(),
 	])
@@ -36,7 +36,7 @@ export default async function AdminLayout({
 				<Sidebar />
 
 				<div className='@container relative min-w-0 w-full flex flex-col'>
-					<Header notifications={notifications} />
+					<Header notificationsPage={notificationsPage} />
 
 					<main className='overflow-x-clip w-full h-full flex flex-1 flex-col gap-12 @2xl:gap-20'>
 						{children}

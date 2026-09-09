@@ -1,11 +1,21 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import type { AdminNotification, NotificationStatus } from 'lib/notifications'
+import { toast } from 'sonner'
+
+import {
+	deleteAdminNotification,
+	listAdminNotifications,
+	sortNotifications,
+	updateAdminNotificationStatus,
+	type AdminNotification,
+	type AdminNotificationPage,
+	type NotificationStatus,
+} from 'lib/notifications'
 import { getFormattedDate } from 'lib/utils'
 
-import { Badge, Button, EmptyState } from 'ui/blocks'
+import { Badge, Button, EmptyState, Spinner } from 'ui/blocks'
 import { DropdownMenu } from 'ui/floating'
 
 import {
@@ -24,24 +34,136 @@ const GROUPS: { status: NotificationStatus; label: string }[] = [
 ]
 
 type NotificationListProps = {
-	notifications: AdminNotification[]
-	onStatusChange: (id: string, status: NotificationStatus) => void
-	onDelete: (id: string) => void
+	initialPage: AdminNotificationPage
+	onUnreadCountChange?: (count: number) => void
 }
 
 export function NotificationList({
-	notifications,
-	onStatusChange,
-	onDelete,
+	initialPage,
+	onUnreadCountChange,
 }: NotificationListProps) {
+	const [items, setItems] = useState(initialPage.items)
+	const [nextOffset, setNextOffset] = useState(initialPage.nextOffset)
+	const [hasMore, setHasMore] = useState(initialPage.hasMore)
+	const [unreadCount, setUnreadCount] = useState(initialPage.unreadCount)
+	const [loading, setLoading] = useState(false)
+
+	const loadingRef = useRef(false)
+	const hasMoreRef = useRef(hasMore)
+	const nextOffsetRef = useRef(nextOffset)
+
+	hasMoreRef.current = hasMore
+	nextOffsetRef.current = nextOffset
+
+	useEffect(() => {
+		setItems(initialPage.items)
+		setNextOffset(initialPage.nextOffset)
+		setHasMore(initialPage.hasMore)
+		setUnreadCount(initialPage.unreadCount)
+	}, [initialPage])
+
+	useEffect(() => {
+		onUnreadCountChange?.(unreadCount)
+	}, [unreadCount, onUnreadCountChange])
+
 	const groups = useMemo(
 		() =>
 			GROUPS.map(group => ({
 				...group,
-				items: notifications.filter(item => item.status === group.status),
+				items: items.filter(item => item.status === group.status),
 			})).filter(group => group.items.length > 0),
-		[notifications],
+		[items],
 	)
+
+	const loadMore = useCallback(async () => {
+		if (loadingRef.current || !hasMoreRef.current) return
+
+		loadingRef.current = true
+		setLoading(true)
+
+		try {
+			const page = await listAdminNotifications({
+				offset: nextOffsetRef.current,
+			})
+
+			setItems(current => {
+				const seen = new Set(current.map(item => item.id))
+				return [...current, ...page.items.filter(item => !seen.has(item.id))]
+			})
+			setNextOffset(page.nextOffset)
+			setHasMore(page.hasMore)
+			setUnreadCount(page.unreadCount)
+		} catch (error) {
+			const message = error instanceof Error ? error.message : 'Unknown error'
+			toast.error(message)
+		} finally {
+			loadingRef.current = false
+			setLoading(false)
+		}
+	}, [])
+
+	const [sentinel, setSentinel] = useState<HTMLDivElement | null>(null)
+
+	useEffect(() => {
+		if (!sentinel || !hasMore) return
+
+		const observer = new IntersectionObserver(
+			entries => {
+				if (entries.some(entry => entry.isIntersecting)) void loadMore()
+			},
+			{ rootMargin: '80px' },
+		)
+
+		observer.observe(sentinel)
+		return () => observer.disconnect()
+	}, [sentinel, hasMore, loadMore, items.length])
+
+	function patchItem(id: string, next: Partial<AdminNotification>) {
+		setItems(current =>
+			sortNotifications(
+				current.map(item => (item.id === id ? { ...item, ...next } : item)),
+			),
+		)
+	}
+
+	async function setStatus(id: string, status: NotificationStatus) {
+		const previous = items
+		const previousUnread = unreadCount
+		const current = items.find(item => item.id === id)
+		if (!current || current.status === status) return
+
+		patchItem(id, { status })
+		setUnreadCount(count => Math.max(0, count + (status === 'new' ? 1 : -1)))
+
+		const result = await updateAdminNotificationStatus(id, status)
+		if (!result.ok) {
+			setItems(previous)
+			setUnreadCount(previousUnread)
+			toast.error(result.error)
+		}
+	}
+
+	async function removeItem(id: string) {
+		const previous = items
+		const previousUnread = unreadCount
+		const previousOffset = nextOffset
+		const current = items.find(item => item.id === id)
+		if (!current) return
+
+		setItems(list => list.filter(item => item.id !== id))
+		setNextOffset(offset => Math.max(0, offset - 1))
+		if (current.status === 'new') {
+			setUnreadCount(count => Math.max(0, count - 1))
+		}
+
+		const result = await deleteAdminNotification(id)
+		if (!result.ok) {
+			setItems(previous)
+			setNextOffset(previousOffset)
+			setUnreadCount(previousUnread)
+			toast.error(result.error)
+		}
+	}
 
 	if (groups.length === 0) {
 		return (
@@ -66,12 +188,20 @@ export function NotificationList({
 						<NotificationItem
 							key={notification.id}
 							notification={notification}
-							onStatusChange={onStatusChange}
-							onDelete={onDelete}
+							onStatusChange={setStatus}
+							onDelete={removeItem}
 						/>
 					))}
 				</div>
 			))}
+
+			{hasMore && (
+				<div ref={setSentinel} className='flex justify-center p-app'>
+					{loading && (
+						<Spinner size={20} className='text-foreground-secondary' />
+					)}
+				</div>
+			)}
 		</div>
 	)
 }

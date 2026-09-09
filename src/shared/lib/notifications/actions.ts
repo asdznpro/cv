@@ -6,8 +6,10 @@ import { requireAdminSession } from 'lib/auth'
 import { createAdminClient } from 'lib/supabase/admin'
 
 import {
-	sortNotifications,
+	EMPTY_NOTIFICATION_PAGE,
+	NOTIFICATIONS_PAGE_SIZE,
 	type AdminNotification,
+	type AdminNotificationPage,
 	type NotificationKind,
 	type NotificationSource,
 	type NotificationStatus,
@@ -59,34 +61,64 @@ function mapNotification(row: Record<string, unknown>): AdminNotification {
 	}
 }
 
-export async function listAdminNotifications(): Promise<AdminNotification[]> {
+export async function listAdminNotifications(input?: {
+	offset?: number
+	limit?: number
+}): Promise<AdminNotificationPage> {
 	if (!(await assertAdmin())) {
-		return []
+		return EMPTY_NOTIFICATION_PAGE
 	}
 
+	const limit = Math.max(1, Math.min(input?.limit ?? NOTIFICATIONS_PAGE_SIZE, 50))
+	const offset = Math.max(0, input?.offset ?? 0)
 	const supabase = createAdminClient()
-	const { error: digestError } = await supabase.rpc(
-		'ensure_shortener_daily_digests',
-		{ p_days: 30 },
-	)
 
-	if (digestError) {
-		console.error('[ensure_shortener_daily_digests]', digestError.message)
+	if (offset === 0) {
+		const { error: digestError } = await supabase.rpc(
+			'ensure_shortener_daily_digests',
+			{ p_days: 30 },
+		)
+
+		if (digestError) {
+			console.error('[ensure_shortener_daily_digests]', digestError.message)
+		}
 	}
 
-	const { data, error } = await supabase
-		.from('admin_notifications')
-		.select(NOTIFICATION_SELECT)
-		.order('created_at', { ascending: false })
-		.limit(50)
+	const [listResult, unreadResult] = await Promise.all([
+		supabase
+			.from('admin_notifications')
+			.select(NOTIFICATION_SELECT, { count: 'exact' })
+			.order('status', { ascending: true })
+			.order('created_at', { ascending: false })
+			.order('id', { ascending: false })
+			.range(offset, offset + limit - 1),
+		supabase
+			.from('admin_notifications')
+			.select('id', { count: 'exact', head: true })
+			.eq('status', 'new'),
+	])
 
-	if (error) {
-		throw new Error(error.message)
+	if (listResult.error) {
+		throw new Error(listResult.error.message)
 	}
 
-	return sortNotifications(
-		(data ?? []).map(row => mapNotification(row as Record<string, unknown>)),
+	if (unreadResult.error) {
+		throw new Error(unreadResult.error.message)
+	}
+
+	const items = (listResult.data ?? []).map(row =>
+		mapNotification(row as Record<string, unknown>),
 	)
+	const totalCount = listResult.count ?? 0
+	const nextOffset = offset + items.length
+
+	return {
+		items,
+		nextOffset,
+		hasMore: nextOffset < totalCount,
+		unreadCount: unreadResult.count ?? 0,
+		totalCount,
+	}
 }
 
 export async function updateAdminNotificationStatus(
