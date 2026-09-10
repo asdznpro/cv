@@ -5,7 +5,6 @@ import 'styles/globals.css'
 
 import { Providers } from 'providers'
 
-import { BootLoader, BootProvider } from 'widgets/shell'
 import { Toaster } from 'ui/blocks'
 
 export const metadata: Metadata = {
@@ -92,13 +91,9 @@ export default function RootLayout({
 			<body className='isolate relative min-h-full flex flex-col'>
 				<div className='@container min-w-0 flex flex-1 flex-col items-center'>
 					<Providers>
-						{/* <BootProvider> */}
-						{/* <BootLoader /> */}
 						<Toaster />
 
 						{children}
-
-						{/* </BootProvider> */}
 					</Providers>
 				</div>
 			</body>

@@ -10,7 +10,7 @@ import { twMerge } from 'tailwind-merge'
 
 import type { AdminNotificationPage } from 'lib/notifications'
 
-import { Button, Counter, ScrollArea, Separator } from 'ui/blocks'
+import { Button, Counter, ScrollArea, Separator, AnimatedLabel } from 'ui/blocks'
 import { Backdrop } from 'ui/overlays'
 
 import {
@@ -19,7 +19,6 @@ import {
 } from '@vkontakte/icons'
 
 import { useAdminShell } from '../AdminShellProvider'
-import { AnimatedLabel } from './AnimatedLabel'
 import { NotificationList } from './NotificationList'
 
 import { NAV_ITEMS } from '../sidebar'
