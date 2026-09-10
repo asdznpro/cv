@@ -5,6 +5,7 @@ export {
 } from './ChartBrush'
 export {
 	BRUSH_BORDER_OPACITY,
+	BRUSH_TRACK_RADIUS,
 	DEFAULT_BRUSH_HEIGHT,
 } from './ChartBrush.interface'
 export type {

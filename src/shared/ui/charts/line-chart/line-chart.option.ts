@@ -31,6 +31,7 @@ import {
 import type { ChartTooltipSlot } from '../tooltip'
 import type { ChartLegendSlot } from '../legend'
 import type { ChartBrushZoomRange } from '../brush'
+
 import {
 	AXIS_FONT_FAMILY,
 	AXIS_POINTER_OPACITY,
@@ -148,7 +149,7 @@ export function shimmerWindowStops(
 		center + half,
 		1,
 	]
-		.filter((x) => x >= 0 && x <= 1)
+		.filter(x => x >= 0 && x <= 1)
 		.sort((a, b) => a - b)
 
 	const stops: { offset: number; color: string }[] = []
@@ -280,7 +281,7 @@ function createTooltipFormatter(ctx: LineChartOptionBuildContext) {
 
 		const seen = new Set<string>()
 		const body = rows
-			.map((param) => {
+			.map(param => {
 				const p = param as {
 					seriesId?: string
 					seriesName?: string
@@ -379,7 +380,7 @@ export function buildBrushOption(
 
 	const miniYAxis: YAxisOption = { type: 'value', gridIndex: 1, show: false }
 
-	const miniSeries: LineSeriesOption[] = lines.map((line) => {
+	const miniSeries: LineSeriesOption[] = lines.map(line => {
 		const key = line.dataKey
 		const base = (ctx.resolved.series[key] ?? [])[0] ?? 'rgba(120, 120, 120, 1)'
 		const curve = curveConfig(line.curveType ?? curveType)
@@ -390,7 +391,7 @@ export function buildBrushOption(
 			type: 'line',
 			xAxisIndex: 1,
 			yAxisIndex: 1,
-			data: data.map((row) => Number(row[key]) || 0),
+			data: data.map(row => Number(row[key]) || 0),
 			smooth: curve.smooth,
 			step: curve.step,
 			connectNulls: line.connectNulls,
@@ -487,7 +488,7 @@ export function buildLineSeries(
 		const restingVisible = line.dotVariant !== 'none'
 		const dotOpacity = opacity.dot
 
-		const values = data.map((row) => Number(row[key]) || 0)
+		const values = data.map(row => Number(row[key]) || 0)
 		const n = values.length
 		const reveal = enableHoverReveal
 		const buffer = !reveal && line.enableBufferLine && n >= 2

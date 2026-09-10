@@ -188,7 +188,7 @@ function LineChartRoot<TData extends Record<string, unknown>>({
 	const showBrush = brushSlot.present
 	const brushHeight = brushSlot.height ?? DEFAULT_BRUSH_HEIGHT
 
-	const seriesKeys = useMemo(() => lines.map((line) => line.dataKey), [lines])
+	const seriesKeys = useMemo(() => lines.map(line => line.dataKey), [lines])
 
 	const xCategoryKey = useMemo(() => {
 		if (xAxisSlot.dataKey) return xAxisSlot.dataKey
@@ -196,7 +196,7 @@ function LineChartRoot<TData extends Record<string, unknown>>({
 		const firstRow = data[0]
 		if (firstRow) {
 			const claimed = new Set(seriesKeys)
-			const found = Object.keys(firstRow).find((key) => !claimed.has(key))
+			const found = Object.keys(firstRow).find(key => !claimed.has(key))
 			if (found) return found
 		}
 		return ''
@@ -210,9 +210,7 @@ function LineChartRoot<TData extends Record<string, unknown>>({
 
 	const clickableKeys = useMemo(
 		() =>
-			new Set(
-				lines.filter((line) => line.isClickable).map((line) => line.dataKey),
-			),
+			new Set(lines.filter(line => line.isClickable).map(line => line.dataKey)),
 		[lines],
 	)
 
@@ -243,7 +241,7 @@ function LineChartRoot<TData extends Record<string, unknown>>({
 				live.hoveredKey = null
 				setHoveredDataKey(null)
 			}
-			setSelectedDataKey((prev) => {
+			setSelectedDataKey(prev => {
 				const next = prev === key ? null : key
 				onSelectionChange?.(next)
 				return next
@@ -292,7 +290,7 @@ function LineChartRoot<TData extends Record<string, unknown>>({
 		const resolved = live.resolved
 		if (!resolved) return {}
 
-		const categories = data.map((row) => String(row[xCategoryKey]))
+		const categories = data.map(row => String(row[xCategoryKey]))
 		live.categories = categories
 
 		const revealSink: Record<string, unknown[]> = {}
@@ -345,7 +343,7 @@ function LineChartRoot<TData extends Record<string, unknown>>({
 		const series = [...buildLineSeries(ctx), ...(brush?.miniSeries ?? [])]
 		if (enableHoverReveal) live.revealValues = revealSink
 
-		live.seriesKeyByIndex = series.map((s) => {
+		live.seriesKeyByIndex = series.map(s => {
 			const id = String(s.id ?? '')
 			return id && !id.startsWith('__') ? id : undefined
 		})
@@ -426,7 +424,7 @@ function LineChartRoot<TData extends Record<string, unknown>>({
 			attributeFilter: ['class'],
 		})
 
-		chart.on('click', (params) => {
+		chart.on('click', params => {
 			const { clickableKeys: clickable } = live.handlers
 			const p = params as { seriesId?: string; seriesIndex?: number }
 			const id =
@@ -437,7 +435,7 @@ function LineChartRoot<TData extends Record<string, unknown>>({
 			if (typeof id === 'string' && clickable.has(id)) toggleSelection(id)
 		})
 
-		chart.on('mouseover', (params) => {
+		chart.on('mouseover', params => {
 			const { enableHoverHighlight: hoverOn, enableHoverReveal: revealOn } =
 				live.handlers
 			if (!hoverOn || revealOn) return
@@ -483,7 +481,7 @@ function LineChartRoot<TData extends Record<string, unknown>>({
 			const on = idx !== null
 			chart.setOption(
 				{
-					series: keys.flatMap((key) => [
+					series: keys.flatMap(key => [
 						{
 							id: key,
 							data: on
@@ -666,10 +664,10 @@ function LineChartRoot<TData extends Record<string, unknown>>({
 		if (!chart || isLoading) return
 		const animatedKeys = lines
 			.filter(
-				(line) =>
+				line =>
 					line.strokeVariant === 'animated-dashed' && !line.enableBufferLine,
 			)
-			.map((line) => line.dataKey)
+			.map(line => line.dataKey)
 		if (animatedKeys.length === 0 || hasSelection) return
 
 		let raf = 0
@@ -680,7 +678,7 @@ function LineChartRoot<TData extends Record<string, unknown>>({
 				const offset = -(((now - loopStart) / 1000) % 1) * 6
 				chart.setOption(
 					{
-						series: animatedKeys.map((id) => ({
+						series: animatedKeys.map(id => ({
 							id,
 							lineStyle: { dashOffset: offset },
 						})),
@@ -777,8 +775,8 @@ function LineChartRoot<TData extends Record<string, unknown>>({
 			{/* biome-ignore lint/security/noDangerouslySetInnerHtml: chart CSS variables from config */}
 			<style dangerouslySetInnerHTML={{ __html: css }} />
 
-			<div className="relative min-h-0 w-full flex-1">
-				<div ref={mountRef} className="h-full min-h-0 w-full" />
+			<div className='relative min-h-0 w-full flex-1'>
+				<div ref={mountRef} className='h-full min-h-0 w-full' />
 			</div>
 
 			{legendSlot.present && !isLoading && (
@@ -797,12 +795,12 @@ function LineChartRoot<TData extends Record<string, unknown>>({
 			)}
 
 			{isLoading && (
-				<div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+				<div className='pointer-events-none absolute inset-0 z-20 flex items-center justify-center'>
 					<motion.div
 						initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.92 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.25, ease: 'easeOut' }}
-						className="text-foreground bg-surface border border-separator rounded-md px-2 py-0.5 text-sm font-condensed flex items-center gap-2"
+						className='text-foreground bg-surface border border-separator rounded-md px-2 py-0.5 text-sm font-condensed flex items-center gap-2'
 					>
 						<Spinner size={16} />
 						<span>Loading</span>

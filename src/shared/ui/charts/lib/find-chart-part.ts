@@ -11,7 +11,7 @@ export function findChartPart<P>(
 ): P | undefined {
 	let found: P | undefined
 
-	Children.forEach(children, (child) => {
+	Children.forEach(children, child => {
 		if (isValidElement(child) && child.type === type) {
 			found = child.props as P
 		}
@@ -26,7 +26,7 @@ export function findChartParts<P>(
 ): P[] {
 	const found: P[] = []
 
-	Children.forEach(children, (child) => {
+	Children.forEach(children, child => {
 		if (isValidElement(child) && child.type === type) {
 			found.push(child.props as P)
 		}

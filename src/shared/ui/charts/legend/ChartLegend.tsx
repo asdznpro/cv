@@ -3,11 +3,7 @@
 import type { CSSProperties, FC, ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-import {
-	findChartPart,
-	getColorsCount,
-	indicatorBackground,
-} from '../lib'
+import { findChartPart, getColorsCount, indicatorBackground } from '../lib'
 import type {
 	ChartLegendIndicatorProps,
 	ChartLegendOverlayProps,
@@ -103,7 +99,7 @@ export function ChartLegendOverlay(props: ChartLegendOverlayProps) {
 
 	return (
 		<div style={style} className={legendOverlayVariants({ align })}>
-			{seriesKeys.map((key) => {
+			{seriesKeys.map(key => {
 				const item = config[key]
 				const colorsCount = item ? getColorsCount(item) : 1
 				const isActive =

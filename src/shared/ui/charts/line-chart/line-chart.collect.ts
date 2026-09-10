@@ -61,7 +61,7 @@ export function collectLineChartConfig(
 	children: ReactNode,
 ): CollectedLineChartConfig {
 	const lineProps = findChartParts(children, LineChartLine)
-	const lines: CollectedLineSeries[] = lineProps.map((props) => {
+	const lines: CollectedLineSeries[] = lineProps.map(props => {
 		const { variant, activeVariant } = readDotSlot(props.children)
 
 		return {

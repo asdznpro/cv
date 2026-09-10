@@ -35,3 +35,4 @@ export type ChartBrushOverlayParams = {
 
 export const DEFAULT_BRUSH_HEIGHT = 56
 export const BRUSH_BORDER_OPACITY = 1
+export const BRUSH_TRACK_RADIUS = 6

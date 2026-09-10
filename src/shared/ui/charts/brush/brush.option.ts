@@ -6,12 +6,60 @@ import type {
 	ChartBrushOverlayParams,
 	ChartBrushZoomRange,
 } from './ChartBrush.interface'
-import { BRUSH_BORDER_OPACITY } from './ChartBrush.interface'
+import {
+	BRUSH_BORDER_OPACITY,
+	BRUSH_TRACK_RADIUS,
+} from './ChartBrush.interface'
 
 type EChartsInstance = ReturnType<typeof echarts.init>
 type ZrRect = InstanceType<typeof echarts.graphic.Rect>
 type ZrCircle = InstanceType<typeof echarts.graphic.Circle>
 type ZrText = InstanceType<typeof echarts.graphic.Text>
+
+const BrushCornerMask = echarts.graphic.extendShape({
+	type: 'chart-brush-corner-mask',
+	shape: {
+		x: 0,
+		y: 0,
+		width: 0,
+		height: 0,
+		r: BRUSH_TRACK_RADIUS,
+	},
+	buildPath(
+		ctx: CanvasRenderingContext2D,
+		shape: {
+			x: number
+			y: number
+			width: number
+			height: number
+			r: number
+		},
+	) {
+		const { x, y, width: w, height: h } = shape
+		const r = Math.min(shape.r, w / 2, h / 2)
+		if (r <= 0) return
+
+		ctx.moveTo(x, y)
+		ctx.lineTo(x + r, y)
+		ctx.arc(x + r, y + r, r, -Math.PI / 2, Math.PI, true)
+		ctx.closePath()
+
+		ctx.moveTo(x + w, y)
+		ctx.lineTo(x + w - r, y)
+		ctx.arc(x + w - r, y + r, r, -Math.PI / 2, 0, false)
+		ctx.closePath()
+
+		ctx.moveTo(x + w, y + h)
+		ctx.lineTo(x + w, y + h - r)
+		ctx.arc(x + w - r, y + h - r, r, 0, Math.PI / 2, false)
+		ctx.closePath()
+
+		ctx.moveTo(x, y + h)
+		ctx.lineTo(x, y + h - r)
+		ctx.arc(x + r, y + h - r, r, Math.PI, Math.PI / 2, false)
+		ctx.closePath()
+	},
+})
 
 export type ChartBrushOverlayElements = {
 	dimLeft: ZrRect
@@ -22,10 +70,11 @@ export type ChartBrushOverlayElements = {
 	grips: ZrCircle[]
 	labelStart: ZrText
 	labelEnd: ZrText
+	cornerMask: InstanceType<typeof BrushCornerMask>
 }
 
 const LABEL_FONT =
-	'500 9px "TT Interphases Pro Condensed", system-ui, sans-serif'
+	'500 10px "TT Interphases Pro Condensed", system-ui, sans-serif'
 
 export function syncBrushOverlay(
 	chart: EChartsInstance,
@@ -38,7 +87,7 @@ export function syncBrushOverlay(
 	if (!params) {
 		if (store.brushOverlay) {
 			const { grips, ...rest } = store.brushOverlay
-			;[...Object.values(rest), ...grips].forEach((el) => zr.remove(el))
+			;[...Object.values(rest), ...grips].forEach(el => zr.remove(el))
 			store.brushOverlay = null
 		}
 		return
@@ -57,11 +106,12 @@ export function syncBrushOverlay(
 				{ length: 6 },
 				() => new echarts.graphic.Circle({ silent: true, z: 103, shape: {} }),
 			),
-			labelStart: new echarts.graphic.Text({ silent: true, z: 104 }),
-			labelEnd: new echarts.graphic.Text({ silent: true, z: 104 }),
+			labelStart: new echarts.graphic.Text({ silent: true, z: 106 }),
+			labelEnd: new echarts.graphic.Text({ silent: true, z: 106 }),
+			cornerMask: new BrushCornerMask({ silent: true, z: 105, shape: {} }),
 		}
 		const { grips, ...rest } = els
-		;[...Object.values(rest), ...grips].forEach((el) => zr.add(el))
+		;[...Object.values(rest), ...grips].forEach(el => zr.add(el))
 		store.brushOverlay = els
 	}
 
@@ -77,11 +127,13 @@ export function syncBrushOverlay(
 	const selectionRight = trackLeft + (trackWidth * range.end) / 100
 
 	const dimFill = withAlpha(tokens.background, 0.7)
+	const radius = BRUSH_TRACK_RADIUS
 	els.dimLeft.setShape({
 		x: trackLeft,
 		y: top,
 		width: Math.max(selectionLeft - trackLeft, 0),
 		height: geom.height,
+		r: [radius, 0, 0, radius],
 	})
 	els.dimLeft.setStyle({ fill: dimFill })
 	els.dimRight.setShape({
@@ -89,6 +141,7 @@ export function syncBrushOverlay(
 		y: top,
 		width: Math.max(trackRight - selectionRight, 0),
 		height: geom.height,
+		r: [0, radius, radius, 0],
 	})
 	els.dimRight.setStyle({ fill: dimFill })
 
@@ -97,13 +150,14 @@ export function syncBrushOverlay(
 		y: top,
 		width: Math.max(selectionRight - selectionLeft, 0),
 		height: geom.height,
-		r: 6,
+		r: radius,
 	})
 	els.frame.setStyle({
 		fill: 'none',
 		stroke: withAlpha(tokens.separator, BRUSH_BORDER_OPACITY),
 		lineWidth: 1,
 	})
+	els.cornerMask.setStyle({ fill: tokens.surface })
 
 	const pill = (el: ZrRect, x: number, hovered: boolean) => {
 		el.setShape({ x: x - 3, y: centerY - 8, width: 6, height: 16, r: 3 })
@@ -136,14 +190,14 @@ export function syncBrushOverlay(
 			text,
 			x:
 				align === 'left'
-					? Math.max(x + 6, trackLeft + 2)
-					: Math.min(x - 6, trackRight - 2),
-			y: top + geom.height,
+					? Math.max(x + 8, trackLeft + 2)
+					: Math.min(x - 8, trackRight - 2),
+			y: top + geom.height - 4,
 			align,
 			verticalAlign: 'middle',
 			fill: tokens.background,
 			backgroundColor: tokens.foreground,
-			padding: [2, 5],
+			padding: [2, 4],
 			borderRadius: 4,
 			font: LABEL_FONT,
 		})

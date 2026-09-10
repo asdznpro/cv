@@ -17,7 +17,7 @@ export function readDotSlot(children: ReactNode): ChartDotSlot {
 	let variant: ChartDotSlot['variant'] = 'none'
 	let activeVariant: ChartDotSlot['activeVariant'] = 'none'
 
-	Children.forEach(children, (child) => {
+	Children.forEach(children, child => {
 		if (!isValidElement(child)) return
 		if (child.type === ChartDot) {
 			variant = (child.props as ChartDotProps).variant ?? 'default'

@@ -11,4 +11,9 @@ export type {
 	ChartDotStyle,
 	ChartDotVariant,
 } from './ChartDot.interface'
-export { DOT_SIZES, dotItemStyle, dotStyle, sampleGradient } from './dots.option'
+export {
+	DOT_SIZES,
+	dotItemStyle,
+	dotStyle,
+	sampleGradient,
+} from './dots.option'
