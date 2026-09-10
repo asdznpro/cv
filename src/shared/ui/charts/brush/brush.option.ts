@@ -1,0 +1,251 @@
+import type { DataZoomComponentOption } from 'echarts/components'
+import * as echarts from 'echarts/core'
+
+import { withAlpha } from '../lib'
+import type {
+	ChartBrushOverlayParams,
+	ChartBrushZoomRange,
+} from './ChartBrush.interface'
+import {
+	BRUSH_BORDER_OPACITY,
+	BRUSH_TRACK_RADIUS,
+} from './ChartBrush.interface'
+
+type EChartsInstance = ReturnType<typeof echarts.init>
+type ZrRect = InstanceType<typeof echarts.graphic.Rect>
+type ZrCircle = InstanceType<typeof echarts.graphic.Circle>
+type ZrText = InstanceType<typeof echarts.graphic.Text>
+
+const BrushCornerMask = echarts.graphic.extendShape({
+	type: 'chart-brush-corner-mask',
+	shape: {
+		x: 0,
+		y: 0,
+		width: 0,
+		height: 0,
+		r: BRUSH_TRACK_RADIUS,
+	},
+	buildPath(
+		ctx: CanvasRenderingContext2D,
+		shape: {
+			x: number
+			y: number
+			width: number
+			height: number
+			r: number
+		},
+	) {
+		const { x, y, width: w, height: h } = shape
+		const r = Math.min(shape.r, w / 2, h / 2)
+		if (r <= 0) return
+
+		ctx.moveTo(x, y)
+		ctx.lineTo(x + r, y)
+		ctx.arc(x + r, y + r, r, -Math.PI / 2, Math.PI, true)
+		ctx.closePath()
+
+		ctx.moveTo(x + w, y)
+		ctx.lineTo(x + w - r, y)
+		ctx.arc(x + w - r, y + r, r, -Math.PI / 2, 0, false)
+		ctx.closePath()
+
+		ctx.moveTo(x + w, y + h)
+		ctx.lineTo(x + w, y + h - r)
+		ctx.arc(x + w - r, y + h - r, r, 0, Math.PI / 2, false)
+		ctx.closePath()
+
+		ctx.moveTo(x, y + h)
+		ctx.lineTo(x, y + h - r)
+		ctx.arc(x + r, y + h - r, r, Math.PI, Math.PI / 2, false)
+		ctx.closePath()
+	},
+})
+
+export type ChartBrushOverlayElements = {
+	dimLeft: ZrRect
+	dimRight: ZrRect
+	frame: ZrRect
+	pillLeft: ZrRect
+	pillRight: ZrRect
+	grips: ZrCircle[]
+	labelStart: ZrText
+	labelEnd: ZrText
+	cornerMask: InstanceType<typeof BrushCornerMask>
+}
+
+const LABEL_FONT =
+	'500 10px "TT Interphases Pro Condensed", system-ui, sans-serif'
+
+export function syncBrushOverlay(
+	chart: EChartsInstance,
+	store: { brushOverlay: ChartBrushOverlayElements | null },
+	params: ChartBrushOverlayParams | null,
+) {
+	const zr = chart.getZr()
+	if (!zr) return
+
+	if (!params) {
+		if (store.brushOverlay) {
+			const { grips, ...rest } = store.brushOverlay
+			;[...Object.values(rest), ...grips].forEach(el => zr.remove(el))
+			store.brushOverlay = null
+		}
+		return
+	}
+
+	if (!store.brushOverlay) {
+		const rect = (z: number) =>
+			new echarts.graphic.Rect({ silent: true, z, shape: {} })
+		const els: ChartBrushOverlayElements = {
+			dimLeft: rect(100),
+			dimRight: rect(100),
+			frame: rect(101),
+			pillLeft: rect(102),
+			pillRight: rect(102),
+			grips: Array.from(
+				{ length: 6 },
+				() => new echarts.graphic.Circle({ silent: true, z: 103, shape: {} }),
+			),
+			labelStart: new echarts.graphic.Text({ silent: true, z: 106 }),
+			labelEnd: new echarts.graphic.Text({ silent: true, z: 106 }),
+			cornerMask: new BrushCornerMask({ silent: true, z: 105, shape: {} }),
+		}
+		const { grips, ...rest } = els
+		;[...Object.values(rest), ...grips].forEach(el => zr.add(el))
+		store.brushOverlay = els
+	}
+
+	const els = store.brushOverlay
+	const { range, geom, size, tokens, labels, showLabels, hover } = params
+
+	const trackLeft = 8
+	const trackRight = Math.max(size.width - 8, trackLeft)
+	const trackWidth = trackRight - trackLeft
+	const top = size.height - geom.bottom - geom.height
+	const centerY = top + geom.height / 2
+	const selectionLeft = trackLeft + (trackWidth * range.start) / 100
+	const selectionRight = trackLeft + (trackWidth * range.end) / 100
+
+	const dimFill = withAlpha(tokens.background, 0.72)
+	const radius = BRUSH_TRACK_RADIUS
+	els.dimLeft.setShape({
+		x: trackLeft,
+		y: top,
+		width: Math.max(selectionLeft - trackLeft, 0),
+		height: geom.height,
+		r: [radius, 0, 0, radius],
+	})
+	els.dimLeft.setStyle({ fill: dimFill })
+	els.dimRight.setShape({
+		x: selectionRight,
+		y: top,
+		width: Math.max(trackRight - selectionRight, 0),
+		height: geom.height,
+		r: [0, radius, radius, 0],
+	})
+	els.dimRight.setStyle({ fill: dimFill })
+
+	els.frame.setShape({
+		x: selectionLeft,
+		y: top,
+		width: Math.max(selectionRight - selectionLeft, 0),
+		height: geom.height,
+		r: radius,
+	})
+	els.frame.setStyle({
+		fill: 'none',
+		stroke: withAlpha(tokens.separator, BRUSH_BORDER_OPACITY),
+		lineWidth: 1,
+	})
+	els.cornerMask.setStyle({ fill: tokens.surface })
+
+	const pill = (el: ZrRect, x: number, hovered: boolean) => {
+		el.setShape({ x: x - 3, y: centerY - 8, width: 6, height: 16, r: 3 })
+		el.setStyle({
+			fill: hovered ? tokens.foreground : tokens.foregroundSecondary,
+		})
+	}
+	pill(els.pillLeft, selectionLeft, hover.left)
+	pill(els.pillRight, selectionRight, hover.right)
+
+	const gripFill = withAlpha(tokens.background, 0.72)
+	;[-4, 0, 4].forEach((offset, i) => {
+		els.grips[i].setShape({ cx: selectionLeft, cy: centerY + offset, r: 1 })
+		els.grips[i].setStyle({ fill: gripFill })
+		els.grips[i + 3].setShape({
+			cx: selectionRight,
+			cy: centerY + offset,
+			r: 1,
+		})
+		els.grips[i + 3].setStyle({ fill: gripFill })
+	})
+
+	const label = (
+		el: ZrText,
+		text: string,
+		x: number,
+		align: 'left' | 'right',
+	) => {
+		el.setStyle({
+			text,
+			x:
+				align === 'left'
+					? Math.max(x + 8, trackLeft + 2)
+					: Math.min(x - 8, trackRight - 2),
+			y: top + geom.height - 4,
+			align,
+			verticalAlign: 'middle',
+			fill: tokens.background,
+			backgroundColor: tokens.foreground,
+			padding: [2, 4],
+			borderRadius: 4,
+			font: LABEL_FONT,
+		})
+		el.attr('invisible', !showLabels || !text)
+	}
+	label(els.labelStart, labels?.start ?? '', selectionLeft, 'left')
+	label(els.labelEnd, labels?.end ?? '', selectionRight, 'right')
+}
+
+export function buildBrushDataZoom(params: {
+	brushBottom: number
+	brushHeight: number
+	brushRange: ChartBrushZoomRange
+	fillerColor: string
+}): DataZoomComponentOption[] {
+	const { brushBottom, brushHeight, brushRange, fillerColor } = params
+
+	return [
+		{
+			type: 'slider',
+			show: true,
+			xAxisIndex: [0],
+			left: 8,
+			right: 8,
+			bottom: brushBottom,
+			height: brushHeight,
+			start: brushRange.start,
+			end: brushRange.end,
+			brushSelect: false,
+			showDetail: false,
+			backgroundColor: 'transparent',
+			borderColor: 'transparent',
+			fillerColor,
+			dataBackground: {
+				lineStyle: { opacity: 0 },
+				areaStyle: { opacity: 0 },
+			},
+			selectedDataBackground: {
+				lineStyle: { opacity: 0 },
+				areaStyle: { opacity: 0 },
+			},
+			handleIcon:
+				'path://M -3 -5 L -3 5 A 3 3 0 0 0 3 5 L 3 -5 A 3 3 0 0 0 -3 -5 Z',
+			handleSize: '35%',
+			handleStyle: { opacity: 0 },
+			moveHandleSize: 0,
+			emphasis: { handleStyle: { opacity: 0 } },
+		},
+		{ type: 'inside', xAxisIndex: [0] },
+	]
+}

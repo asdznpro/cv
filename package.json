@@ -28,6 +28,7 @@
 		"@vkontakte/icons": "^3.62.0",
 		"boneyard-js": "^1.10.0",
 		"class-variance-authority": "^0.7.1",
+		"echarts": "^6.1.0",
 		"embla-carousel-auto-scroll": "^8.6.0",
 		"embla-carousel-autoplay": "^8.6.0",
 		"embla-carousel-react": "^8.6.0",

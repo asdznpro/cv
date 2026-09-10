@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 import { Badge, Button, Separator } from 'ui/blocks'
+import { AreaChart, LineChart, type ChartConfig } from 'ui/charts'
 import { PixelBlast } from 'ui/effects'
 import { ContextCard, Tooltip } from 'ui/floating'
 import { FormItem } from 'ui/forms'
@@ -28,6 +29,32 @@ const COMPANY_OPTIONS = [
 	{ value: 'team-spirit', label: 'Team Spirit' },
 	{ value: 'navi', label: 'Natus Vincere' },
 ]
+
+const TRAFFIC_DATA = [
+	{ month: 'January', desktop: 342, mobile: 184 },
+	{ month: 'February', desktop: 876, mobile: 491 },
+	{ month: 'March', desktop: 512, mobile: 290 },
+	{ month: 'April', desktop: 629, mobile: 391 },
+	{ month: 'May', desktop: 458, mobile: 309 },
+	{ month: 'June', desktop: 781, mobile: 449 },
+	{ month: 'July', desktop: 394, mobile: 234 },
+	{ month: 'August', desktop: 925, mobile: 557 },
+	{ month: 'September', desktop: 647, mobile: 367 },
+	{ month: 'October', desktop: 532, mobile: 357 },
+	{ month: 'November', desktop: 803, mobile: 515 },
+	{ month: 'December', desktop: 271, mobile: 149 },
+]
+
+const TRAFFIC_CONFIG = {
+	desktop: {
+		label: 'Desktop',
+		colors: ['#6366f1'],
+	},
+	mobile: {
+		label: 'Mobile',
+		colors: ['#f43f5e'],
+	},
+} satisfies ChartConfig
 
 const TAG_OPTIONS = [
 	{ value: 'cs2', label: 'CS2' },
@@ -66,8 +93,8 @@ export default function Admin() {
 							key={index}
 							className='flex bg-surface border border-separator rounded-surface aspect-square'
 						>
-							<div className='flex flex-1 flex-col p-surface gap-surface'>
-								<div className='flex flex-col gap-2'>
+							<div className='flex flex-1 flex-col'>
+								<div className='flex flex-col p-surface gap-2'>
 									<p className='text-xs text-foreground-secondary'>
 										Total requests
 									</p>
@@ -90,6 +117,91 @@ export default function Admin() {
 							</div>
 						</div>
 					))}
+				</div>
+
+				<div className='flex flex-col bg-background border border-separator rounded-surface overflow-hidden'>
+					<div className='h-12 flex items-center px-surface gap-surface bg-surface'>
+						<span className='flex-1 text-foreground-secondary text-sm truncate'>
+							Traffic
+						</span>
+					</div>
+
+					<Separator />
+
+					<div className='flex flex-col p-app gap-app'>
+						<LineChart
+							data={TRAFFIC_DATA}
+							config={TRAFFIC_CONFIG}
+							className='h-80 w-full'
+							xDataKey='month'
+						>
+							<LineChart.XAxis
+								dataKey='month'
+								tickFormatter={value => value.substring(0, 3)}
+							/>
+							<LineChart.YAxis />
+							<LineChart.Grid />
+
+							<LineChart.Brush
+								formatLabel={value => String(value).substring(0, 3)}
+							/>
+							<LineChart.Legend isClickable />
+							<LineChart.Tooltip />
+
+							<LineChart.Line
+								dataKey='desktop'
+								strokeVariant='dashed'
+								isClickable
+							>
+								<LineChart.Dot variant='border' />
+								<LineChart.ActiveDot variant='colored-border' />
+							</LineChart.Line>
+
+							<LineChart.Line
+								dataKey='mobile'
+								strokeVariant='solid'
+								isClickable
+							>
+								<LineChart.Dot variant='border' />
+								<LineChart.ActiveDot variant='colored-border' />
+							</LineChart.Line>
+						</LineChart>
+					</div>
+
+					<Separator />
+
+					<div className='flex flex-col p-app gap-app'>
+						<AreaChart
+							data={TRAFFIC_DATA}
+							config={TRAFFIC_CONFIG}
+							className='h-80 w-full'
+							xDataKey='month'
+							stackType='stacked'
+						>
+							<AreaChart.XAxis
+								dataKey='month'
+								tickFormatter={value => value.substring(0, 3)}
+							/>
+							<AreaChart.YAxis />
+							<AreaChart.Grid />
+
+							<AreaChart.Brush
+								formatLabel={value => String(value).substring(0, 3)}
+							/>
+							<AreaChart.Legend isClickable />
+							<AreaChart.Tooltip />
+
+							<AreaChart.Area dataKey='desktop' variant='hatched' isClickable>
+								<AreaChart.Dot variant='border' />
+								<AreaChart.ActiveDot variant='colored-border' />
+							</AreaChart.Area>
+
+							<AreaChart.Area dataKey='mobile' variant='dotted' isClickable>
+								<AreaChart.Dot variant='border' />
+								<AreaChart.ActiveDot variant='colored-border' />
+							</AreaChart.Area>
+						</AreaChart>
+					</div>
 				</div>
 			</section>
 
