@@ -93,8 +93,8 @@ export default function Admin() {
 							key={index}
 							className='flex bg-surface border border-separator rounded-surface aspect-square'
 						>
-							<div className='flex flex-1 flex-col p-surface gap-surface'>
-								<div className='flex flex-col gap-2'>
+							<div className='flex flex-1 flex-col'>
+								<div className='flex flex-col p-surface gap-2'>
 									<p className='text-xs text-foreground-secondary'>
 										Total requests
 									</p>
@@ -150,7 +150,7 @@ export default function Admin() {
 
 							<LineChart.Line
 								dataKey='desktop'
-								strokeVariant='solid'
+								strokeVariant='dashed'
 								isClickable
 							>
 								<LineChart.Dot variant='border' />
@@ -191,12 +191,12 @@ export default function Admin() {
 							<AreaChart.Legend isClickable />
 							<AreaChart.Tooltip />
 
-							<AreaChart.Area dataKey='desktop' variant='gradient' isClickable>
+							<AreaChart.Area dataKey='desktop' variant='hatched' isClickable>
 								<AreaChart.Dot variant='border' />
 								<AreaChart.ActiveDot variant='colored-border' />
 							</AreaChart.Area>
 
-							<AreaChart.Area dataKey='mobile' variant='gradient' isClickable>
+							<AreaChart.Area dataKey='mobile' variant='dotted' isClickable>
 								<AreaChart.Dot variant='border' />
 								<AreaChart.ActiveDot variant='colored-border' />
 							</AreaChart.Area>

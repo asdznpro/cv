@@ -126,7 +126,7 @@ export function syncBrushOverlay(
 	const selectionLeft = trackLeft + (trackWidth * range.start) / 100
 	const selectionRight = trackLeft + (trackWidth * range.end) / 100
 
-	const dimFill = withAlpha(tokens.background, 0.7)
+	const dimFill = withAlpha(tokens.background, 0.72)
 	const radius = BRUSH_TRACK_RADIUS
 	els.dimLeft.setShape({
 		x: trackLeft,
@@ -168,7 +168,7 @@ export function syncBrushOverlay(
 	pill(els.pillLeft, selectionLeft, hover.left)
 	pill(els.pillRight, selectionRight, hover.right)
 
-	const gripFill = withAlpha(tokens.background, 0.7)
+	const gripFill = withAlpha(tokens.background, 0.72)
 	;[-4, 0, 4].forEach((offset, i) => {
 		els.grips[i].setShape({ cx: selectionLeft, cy: centerY + offset, r: 1 })
 		els.grips[i].setStyle({ fill: gripFill })

@@ -19,7 +19,7 @@ import {
 } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-import { Spinner } from 'ui/blocks'
+import { FlickerSpinner, Spinner } from 'ui/blocks'
 
 import { ChartLegendOverlay } from '../legend'
 import {
@@ -901,10 +901,13 @@ export function CartesianChart<
 						initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.92 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.25, ease: 'easeOut' }}
-						className='text-foreground bg-surface border border-separator rounded-md px-2 py-0.5 text-sm font-condensed flex items-center gap-2'
+						className='flex'
+						// className='flex items-center px-2 py-1 gap-2 bg-surface border border-separator rounded-full'
 					>
-						<Spinner size={16} />
-						<span>Loading</span>
+						<FlickerSpinner className='text-foreground-secondary' size={24} />
+
+						{/* <Spinner className='text-foreground-secondary' size={16} />
+						<span className='text-sm'>Loading</span> */}
 					</motion.div>
 				</div>
 			)}

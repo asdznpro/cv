@@ -359,6 +359,7 @@ export function buildBrushFrame(
 		bottom: brushBottom,
 		height: brushHeight,
 		outerBoundsMode: 'none',
+		backgroundColor: tokens.surface,
 	}
 
 	const miniXAxis: CartesianXAxisOption = {
