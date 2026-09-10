@@ -8,37 +8,40 @@ import {
 } from '../cartesian'
 import { readDotSlot, type ChartDotVariant } from '../dots'
 import { findChartParts } from '../lib'
+import type { AreaChartFillVariant } from './area-chart.constants'
 import type {
-	LineChartAnimationType,
-	LineChartCurveType,
-	LineChartStrokeVariant,
-} from './LineChart.interface'
-import { LineChartLine } from './LineChart.parts'
+	AreaChartAnimationType,
+	AreaChartCurveType,
+	AreaChartStrokeVariant,
+} from './AreaChart.interface'
+import { AreaChartArea } from './AreaChart.parts'
 
-export type CollectedLineSeries = CartesianSeriesBase & {
-	strokeVariant: LineChartStrokeVariant
-	curveType?: LineChartCurveType
-	animationType?: LineChartAnimationType
+export type CollectedAreaSeries = CartesianSeriesBase & {
+	fillVariant: AreaChartFillVariant
+	strokeVariant: AreaChartStrokeVariant
+	curveType?: AreaChartCurveType
+	animationType?: AreaChartAnimationType
 	dotVariant: ChartDotVariant
 	activeDotVariant: ChartDotVariant
 }
 
-export type CollectedLineChartConfig = CollectedCartesianSlots & {
-	lines: CollectedLineSeries[]
+export type CollectedAreaChartConfig = CollectedCartesianSlots & {
+	areas: CollectedAreaSeries[]
 }
 
-export function collectLineChartConfig(
+export function collectAreaChartConfig(
 	children: ReactNode,
-): CollectedLineChartConfig {
-	const lines: CollectedLineSeries[] = findChartParts(
+): CollectedAreaChartConfig {
+	const areas: CollectedAreaSeries[] = findChartParts(
 		children,
-		LineChartLine,
+		AreaChartArea,
 	).map(props => {
 		const { variant, activeVariant } = readDotSlot(props.children)
 
 		return {
 			dataKey: props.dataKey,
-			strokeVariant: props.strokeVariant ?? 'solid',
+			fillVariant: props.variant ?? 'gradient',
+			strokeVariant: props.strokeVariant ?? 'dashed',
 			strokeWidth: props.strokeWidth ?? STROKE_WIDTH,
 			curveType: props.curveType,
 			animationType: props.animationType,
@@ -51,7 +54,7 @@ export function collectLineChartConfig(
 	})
 
 	return {
-		lines,
+		areas,
 		...collectCartesianSlots(children),
 	}
 }

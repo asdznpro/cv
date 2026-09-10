@@ -1,3 +1,4 @@
+export * from './area-chart'
 export * from './brush'
 export * from './dots'
 export * from './legend'

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 import { Badge, Button, Separator } from 'ui/blocks'
-import { LineChart, type ChartConfig } from 'ui/charts'
+import { AreaChart, LineChart, type ChartConfig } from 'ui/charts'
 import { PixelBlast } from 'ui/effects'
 import { ContextCard, Tooltip } from 'ui/floating'
 import { FormItem } from 'ui/forms'
@@ -119,12 +119,16 @@ export default function Admin() {
 					))}
 				</div>
 
-				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
-					<div className='flex flex-col p-surface gap-surface'>
-						<h3 className='text-xl font-medium font-condensed tracking-tight'>
+				<div className='flex flex-col bg-background border border-separator rounded-surface overflow-hidden'>
+					<div className='h-12 flex items-center px-surface gap-surface bg-surface'>
+						<span className='flex-1 text-foreground-secondary text-sm truncate'>
 							Traffic
-						</h3>
+						</span>
+					</div>
 
+					<Separator />
+
+					<div className='flex flex-col p-app gap-app'>
 						<LineChart
 							data={TRAFFIC_DATA}
 							config={TRAFFIC_CONFIG}
@@ -162,6 +166,41 @@ export default function Admin() {
 								<LineChart.ActiveDot variant='colored-border' />
 							</LineChart.Line>
 						</LineChart>
+					</div>
+
+					<Separator />
+
+					<div className='flex flex-col p-app gap-app'>
+						<AreaChart
+							data={TRAFFIC_DATA}
+							config={TRAFFIC_CONFIG}
+							className='h-80 w-full'
+							xDataKey='month'
+							stackType='stacked'
+						>
+							<AreaChart.XAxis
+								dataKey='month'
+								tickFormatter={value => value.substring(0, 3)}
+							/>
+							<AreaChart.YAxis />
+							<AreaChart.Grid />
+
+							<AreaChart.Brush
+								formatLabel={value => String(value).substring(0, 3)}
+							/>
+							<AreaChart.Legend isClickable />
+							<AreaChart.Tooltip />
+
+							<AreaChart.Area dataKey='desktop' variant='gradient' isClickable>
+								<AreaChart.Dot variant='border' />
+								<AreaChart.ActiveDot variant='colored-border' />
+							</AreaChart.Area>
+
+							<AreaChart.Area dataKey='mobile' variant='gradient' isClickable>
+								<AreaChart.Dot variant='border' />
+								<AreaChart.ActiveDot variant='colored-border' />
+							</AreaChart.Area>
+						</AreaChart>
 					</div>
 				</div>
 			</section>

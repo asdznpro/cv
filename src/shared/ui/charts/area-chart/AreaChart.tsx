@@ -7,30 +7,30 @@ import { ChartBrush } from '../brush'
 import { ChartActiveDot, ChartDot } from '../dots'
 import { ChartLegend } from '../legend'
 import { ChartTooltip } from '../tooltip'
-import { collectLineChartConfig } from './line-chart.collect'
-import { lineChartAdapter } from './line-chart.option'
-import type { LineChartProps } from './LineChart.interface'
-import { LineChartLine } from './LineChart.parts'
+import { collectAreaChartConfig } from './area-chart.collect'
+import { areaChartAdapter } from './area-chart.option'
+import type { AreaChartProps } from './AreaChart.interface'
+import { AreaChartArea } from './AreaChart.parts'
 
-function LineChartRoot<TData extends Record<string, unknown>>({
+function AreaChartRoot<TData extends Record<string, unknown>>({
 	children,
 	...props
-}: LineChartProps<TData>) {
-	const collected = useMemo(() => collectLineChartConfig(children), [children])
-	const { lines, ...slots } = collected
+}: AreaChartProps<TData>) {
+	const collected = useMemo(() => collectAreaChartConfig(children), [children])
+	const { areas, ...slots } = collected
 
 	return (
 		<CartesianChart
 			{...props}
-			series={lines}
+			series={areas}
 			slots={slots}
-			adapter={lineChartAdapter}
+			adapter={areaChartAdapter}
 		/>
 	)
 }
 
-export const LineChart = Object.assign(LineChartRoot, {
-	Line: LineChartLine,
+export const AreaChart = Object.assign(AreaChartRoot, {
+	Area: AreaChartArea,
 	Dot: ChartDot,
 	ActiveDot: ChartActiveDot,
 	XAxis: ChartXAxis,

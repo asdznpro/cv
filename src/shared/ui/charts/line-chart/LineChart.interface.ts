@@ -2,25 +2,19 @@ import type { ReactNode } from 'react'
 
 import type { ChartConfig } from '../lib'
 import type { EChartsRenderer } from '../lib/echarts'
+import type {
+	ChartAnimationType,
+	ChartCurveType,
+	ChartStrokeVariant,
+	ChartXAxisProps,
+	ChartYAxisProps,
+} from '../cartesian'
 
-export type LineChartStrokeVariant = 'solid' | 'dashed' | 'animated-dashed'
-
-export type LineChartAnimationType =
-	| 'none'
-	| 'left-to-right'
-	| 'right-to-left'
-	| 'center-out'
-	| 'edges-in'
-
-export type LineChartCurveType =
-	| 'linear'
-	| 'smooth'
-	| 'bump'
-	| 'monotone'
-	| 'monotoneX'
-	| 'monotoneY'
-	| 'natural'
-	| 'step'
+export type LineChartStrokeVariant = ChartStrokeVariant
+export type LineChartAnimationType = ChartAnimationType
+export type LineChartCurveType = ChartCurveType
+export type LineChartXAxisProps = ChartXAxisProps
+export type LineChartYAxisProps = ChartYAxisProps
 
 export interface LineChartProps<TData extends Record<string, unknown>> {
 	data: TData[]
@@ -51,18 +45,4 @@ export interface LineChartLineProps {
 	isClickable?: boolean
 	enableBufferLine?: boolean
 	children?: ReactNode
-}
-
-export interface LineChartXAxisProps {
-	dataKey?: string
-	tickFormatter?: (value: string, index: number) => string
-	label?: string
-	hideDots?: boolean
-}
-
-export interface LineChartYAxisProps {
-	dataKey?: string
-	tickFormatter?: (value: number, index: number) => string
-	label?: string
-	hideDots?: boolean
 }
