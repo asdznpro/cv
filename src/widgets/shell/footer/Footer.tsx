@@ -101,7 +101,6 @@ export function Footer() {
 											prefix={
 												<Icon28GlobeCrossOutline width={14} height={14} />
 											}
-											// className='text-danger'
 										/>
 									)}
 
@@ -139,7 +138,7 @@ export function Footer() {
 					&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV
 				</span>
 
-				<span>v2.1.37, 6.9.26</span>
+				<span>v2.1.38, 10.9.26</span>
 			</div>
 		</footer>
 	)

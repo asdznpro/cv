@@ -10,7 +10,7 @@ import { twMerge } from 'tailwind-merge'
 
 import { useBoot } from 'widgets/shell'
 
-import { Badge, Button, Separator } from 'ui/blocks'
+import { Badge, Button, Separator, AnimatedLabel } from 'ui/blocks'
 import { Logo } from 'ui/brand'
 import { Backdrop } from 'ui/overlays'
 
@@ -135,23 +135,17 @@ export function Header() {
 								href='/'
 								className='flex rounded-full transition-all focus-ring-base focus-ring-visible'
 							>
-								{/* <ViewTransition name='brand-logo'> */}
-								<Logo.Sign size={44} />
-								{/* </ViewTransition> */}
+								{bootVisible ? (
+									<Logo.Sign size={44} />
+								) : (
+									<ViewTransition name='brand-logo'>
+										<Logo.Sign size={44} />
+									</ViewTransition>
+								)}
 							</Link>
 						</span>
 
-						<motion.span
-							layout='position'
-							transition={{
-								layout: {
-									type: 'spring',
-									stiffness: 350,
-									damping: 30,
-								},
-							}}
-							className='text-2xl font-medium font-condensed tracking-tight whitespace-nowrap'
-						>
+						<span className='text-2xl font-medium font-condensed tracking-tight whitespace-nowrap'>
 							<Link
 								href='/'
 								className='text-foreground-tertiary hover:text-foreground transition-all'
@@ -159,28 +153,8 @@ export function Header() {
 								CV
 							</Link>{' '}
 							<span className='text-foreground-tertiary select-none'>/</span>{' '}
-							<motion.span
-								layout
-								transition={{
-									layout: {
-										type: 'spring',
-										stiffness: 350,
-										damping: 30,
-									},
-								}}
-								className='relative inline-flex overflow-hidden align-bottom'
-							>
-								<AnimatePresence initial={false} mode='popLayout'>
-									<motion.span
-										key={activeLabel}
-										transition={{ duration: 0.12 }}
-										className='inline-block'
-									>
-										{activeLabel}
-									</motion.span>
-								</AnimatePresence>
-							</motion.span>
-						</motion.span>
+							<AnimatedLabel label={activeLabel} />
+						</span>
 
 						<span className='w-full flex justify-end gap-2'>
 							{/* <Button

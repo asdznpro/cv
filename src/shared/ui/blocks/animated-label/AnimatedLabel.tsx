@@ -2,8 +2,15 @@
 
 import { useLayoutEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
+import { twMerge } from 'tailwind-merge'
 
-export function AnimatedLabel({ label }: { label: string }) {
+import type AnimatedLabelProps from './AnimatedLabel.interface'
+
+export function AnimatedLabel({
+	label,
+	className,
+	...restProps
+}: AnimatedLabelProps) {
 	const measureRef = useRef<HTMLSpanElement>(null)
 	const [width, setWidth] = useState<number | null>(null)
 	const canSpring = useRef(false)
@@ -20,7 +27,10 @@ export function AnimatedLabel({ label }: { label: string }) {
 	}, [width])
 
 	return (
-		<span className='relative inline-block align-bottom'>
+		<span
+			{...restProps}
+			className={twMerge('relative inline-block align-bottom', className)}
+		>
 			<span
 				ref={measureRef}
 				aria-hidden

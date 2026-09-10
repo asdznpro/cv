@@ -1,6 +1,6 @@
 import { ViewTransition } from 'react'
 
-import { Header, Footer } from 'widgets/shell'
+import { BootLoader, BootProvider, Header, Footer } from 'widgets/shell'
 
 export default function PublicLayout({
 	children,
@@ -9,15 +9,19 @@ export default function PublicLayout({
 }) {
 	return (
 		<>
-			<Header />
+			<BootProvider>
+				<BootLoader />
 
-			<main className='overflow-x-clip w-full h-full flex flex-1 flex-col gap-12 @2xl:gap-24'>
-				{/* <ViewTransition name='main' update='page-update' default='none'> */}
-				{children}
-				{/* </ViewTransition> */}
-			</main>
+				<Header />
 
-			<Footer />
+				<main className='overflow-x-clip w-full h-full flex flex-1 flex-col gap-12 @2xl:gap-24'>
+					{/* <ViewTransition name='main' update='page-update' default='none'> */}
+					{children}
+					{/* </ViewTransition> */}
+				</main>
+
+				<Footer />
+			</BootProvider>
 		</>
 	)
 }

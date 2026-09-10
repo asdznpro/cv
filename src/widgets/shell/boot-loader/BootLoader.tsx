@@ -64,11 +64,11 @@ export function BootLoader() {
 							size='xl'
 							appearance='neutral'
 							value={value}
-							// className='absolute inset-0 [&_[data-gauge-path]]:transition-none'
+							className='absolute inset-0 **:data-gauge-path:transition-none'
 						/>
 
 						<ViewTransition name='brand-logo'>
-							<Logo.Sign width={120} height={120} />
+							<Logo.Sign size={72} />
 						</ViewTransition>
 					</div>
 				</div>
