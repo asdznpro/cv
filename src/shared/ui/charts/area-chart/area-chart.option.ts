@@ -5,11 +5,9 @@ import {
 	BUFFER_DASH,
 	BUFFER_PREFIX,
 	BRUSH_STROKE_OPACITY,
-	REVEAL_PREFIX,
 	curveConfig,
 	expandedValues,
-	sliceFrom,
-	sliceToNull,
+	revealLinearGradient,
 	type CartesianChartAdapter,
 	type CartesianOptionContext,
 	type EChartsInstance,
@@ -26,7 +24,7 @@ import {
 	BUFFERFILL_PREFIX,
 	LOADING_SHIMMER_MAX_OPACITY,
 } from './area-chart.constants'
-import { fillPaint } from './area-chart.fill'
+import { fillPaint, clipFillAtX } from './area-chart.fill'
 import type { CollectedAreaSeries } from './area-chart.collect'
 
 type AreaPoint =
@@ -105,6 +103,7 @@ export function buildAreaSeries(
 		enableHoverHighlight,
 		enableHoverReveal,
 		revealIndex,
+		revealSplitX,
 		revealSink,
 		resolved,
 		rendererSize,
@@ -131,13 +130,21 @@ export function buildAreaSeries(
 		const n = values.length
 		const reveal = enableHoverReveal
 		const buffer = !reveal && area.enableBufferLine && n >= 2
-		const revealActive = reveal && revealIndex !== null
+		const revealActive =
+			reveal && revealIndex !== null && revealSplitX !== null
 
 		const mainDash: 'solid' | [number, number] =
 			buffer || area.strokeVariant === 'solid' ? 'solid' : [3, 3]
 
-		const strokePaint =
-			reveal && multiColor
+		const baseColor = slots[0] ?? 'rgba(120, 120, 120, 1)'
+		const strokePaint = revealActive
+			? revealLinearGradient(
+					revealSplitX,
+					rendererSize.width,
+					typeof paint === 'string' ? paint : baseColor,
+					alpha(typeof paint === 'string' ? paint : baseColor, 0.3),
+				)
+			: reveal && multiColor
 				? new echarts.graphic.LinearGradient(
 						8,
 						0,
@@ -187,11 +194,10 @@ export function buildAreaSeries(
 
 		const mainValues: (number | null)[] = buffer
 			? values.map((v, i) => (i === n - 1 ? null : v))
-			: revealActive
-				? sliceToNull(values, revealIndex as number)
-				: values
+			: values
 
 		const z = isSelected ? 3 : hasSelection ? 1 : 2
+		const fill = fillPaint(area.fillVariant, showUnselected, slots, rendererSize)
 
 		const mainSeries: LineSeriesOption = {
 			id: key,
@@ -222,7 +228,9 @@ export function buildAreaSeries(
 						opacity: dotOpacity,
 					},
 			areaStyle: {
-				color: fillPaint(area.fillVariant, showUnselected, slots, rendererSize),
+				color: revealActive
+					? clipFillAtX(fill, revealSplitX, rendererSize)
+					: fill,
 				opacity: opacity.fill,
 			},
 			emphasis: {
@@ -242,33 +250,6 @@ export function buildAreaSeries(
 				areaStyle: { opacity: 0.1 },
 				itemStyle: { opacity: 0.3 },
 			},
-		}
-
-		if (reveal) {
-			const muted = resolved.tokens.foregroundSecondary
-			const revealBase: LineSeriesOption = {
-				id: `${REVEAL_PREFIX}${key}`,
-				type: 'line',
-				data: revealActive ? sliceFrom(values, revealIndex as number) : values,
-				stack: isStacked ? '__reveal-total' : undefined,
-				smooth: curve.smooth,
-				step: curve.step,
-				connectNulls: false,
-				silent: true,
-				showSymbol: false,
-				symbol: 'circle',
-				z: z - 1,
-				lineStyle: {
-					color: muted,
-					width: area.strokeWidth,
-					type: mainDash,
-					opacity: revealActive ? 0.3 : 0,
-				},
-				emphasis: { disabled: true },
-				blur: { lineStyle: { opacity: revealActive ? 0.3 : 0 } },
-				tooltip: { show: false },
-			}
-			return [revealBase, mainSeries]
 		}
 
 		if (!buffer) return [mainSeries]
@@ -391,7 +372,7 @@ export function resolveAreaAtPixel(
 
 export const areaChartAdapter: CartesianChartAdapter<CollectedAreaSeries> = {
 	hoverMode: 'band',
-	companionIds: (area, { dataLength, enableHoverReveal }) => {
+	companionIds: (area, { dataLength }) => {
 		const ids: string[] = []
 		if (area.enableBufferLine && dataLength >= 2) {
 			ids.push(
@@ -399,13 +380,14 @@ export const areaChartAdapter: CartesianChartAdapter<CollectedAreaSeries> = {
 				`${BUFFERFILL_PREFIX}${area.dataKey}`,
 			)
 		}
-		if (enableHoverReveal) ids.push(`${REVEAL_PREFIX}${area.dataKey}`)
 		return ids
 	},
 	buildSeries: buildAreaSeries,
 	buildBrushMiniSeries,
 	loadingSeriesExtra: ctx => ({
-		areaStyle: { color: alpha(ctx.resolved.tokens.foreground, 0) },
+		areaStyle: {
+			color: alpha(ctx.resolved.tokens.foregroundSecondary, 0),
+		},
 	}),
 	loadingShimmerExtra: clip => ({
 		areaStyle: { color: clip(LOADING_SHIMMER_MAX_OPACITY) },

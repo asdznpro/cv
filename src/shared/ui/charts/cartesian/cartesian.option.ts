@@ -4,6 +4,7 @@ import type {
 	GridComponentOption,
 	TooltipComponentOption,
 } from 'echarts/components'
+import * as echarts from 'echarts/core'
 import type { ComposeOption } from 'echarts/core'
 
 import { buildBrushDataZoom } from '../brush'
@@ -76,6 +77,7 @@ export type CartesianOptionContext<TSeries extends CartesianSeriesBase> = {
 	enableHoverHighlight: boolean
 	enableHoverReveal: boolean
 	revealIndex: number | null
+	revealSplitX: number | null
 	revealSink: Record<string, unknown[]>
 	resolved: ChartResolvedColors
 	rendererSize: { width: number; height: number }
@@ -217,6 +219,8 @@ export function buildMainAxes(
 			show: !isLoading && xAxisSlot.present,
 			...axisLabelStyle,
 			margin: 8,
+			alignMinLabel: 'left',
+			alignMaxLabel: 'right',
 			formatter: xTickFormatter
 				? (value: string, index: number) => xTickFormatter(value, index)
 				: undefined,
@@ -414,7 +418,10 @@ export function buildLoadingOption(
 				step: curve.step,
 				showSymbol: false,
 				silent: true,
-				lineStyle: { color: withAlpha(tokens.foreground, 0), width: 1 },
+				lineStyle: {
+					color: withAlpha(tokens.foregroundSecondary, 0),
+					width: 1,
+				},
 				z: 1,
 				...extra,
 			},
@@ -428,6 +435,35 @@ export function sliceToNull<T>(vals: readonly T[], idx: number): (T | null)[] {
 
 export function sliceFrom<T>(vals: readonly T[], idx: number): (T | null)[] {
 	return vals.map((v, i) => (i < idx ? null : v))
+}
+
+export function revealLinearGradient(
+	splitX: number,
+	width: number,
+	before: string,
+	after: string,
+) {
+	const span = Math.max(width, 1)
+	const t = Math.min(Math.max(splitX / span, 0), 1)
+	const stops =
+		t <= 0
+			? [
+					{ offset: 0, color: after },
+					{ offset: 1, color: after },
+				]
+			: t >= 1
+				? [
+						{ offset: 0, color: before },
+						{ offset: 1, color: before },
+					]
+				: [
+						{ offset: 0, color: before },
+						{ offset: t, color: before },
+						{ offset: t, color: after },
+						{ offset: 1, color: after },
+					]
+
+	return new echarts.graphic.LinearGradient(0, 0, span, 0, stops, true)
 }
 
 export function expandedValues(

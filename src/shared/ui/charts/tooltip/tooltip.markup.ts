@@ -83,6 +83,8 @@ export function tooltipBaseOption(params: {
 		axisPointer: cursor
 			? {
 					type: 'line',
+					// Series default z is 2; ECharts axisPointer default is 50.
+					z: 1,
 					lineStyle: {
 						color: axisPointerColor,
 						width: strokeWidth,

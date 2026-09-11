@@ -17,6 +17,39 @@ export type ShortLinkSortOrder = 'asc' | 'desc'
 export const DEFAULT_SHORT_LINK_SORT: ShortLinkSortField = 'views_24h'
 export const DEFAULT_SHORT_LINK_ORDER: ShortLinkSortOrder = 'desc'
 
+export const SHORTENER_STATS_RANGES = ['day', 'week', 'month'] as const
+export type ShortenerStatsRange = (typeof SHORTENER_STATS_RANGES)[number]
+export const DEFAULT_SHORTENER_STATS_RANGE: ShortenerStatsRange = 'week'
+
+export const SHORTENER_STATS_RANGE_LABELS: Record<ShortenerStatsRange, string> =
+	{
+		day: 'Day',
+		week: 'Week',
+		month: 'Month',
+	}
+
+export type ShortenerStatsPoint = {
+	key: string
+	label: string
+	clicks: number
+	visitors: number
+}
+
+export type ShortenerStats = {
+	range: ShortenerStatsRange
+	points: ShortenerStatsPoint[]
+	clicks: number
+	visitors: number
+}
+
+export function parseShortenerStatsRange(
+	value: string | null | undefined,
+): ShortenerStatsRange {
+	return SHORTENER_STATS_RANGES.includes(value as ShortenerStatsRange)
+		? (value as ShortenerStatsRange)
+		: DEFAULT_SHORTENER_STATS_RANGE
+}
+
 export type ShortLink = {
 	id: string
 	slug: string

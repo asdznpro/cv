@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { Temporal } from 'temporal-polyfill'
 
 import { requireAdminSession } from 'lib/auth'
 import { createAdminClient } from 'lib/supabase/admin'
@@ -8,9 +9,13 @@ import { createClient } from 'lib/supabase/server'
 
 import {
 	generateShortSlug,
+	parseShortenerStatsRange,
 	parseShortLinkOrder,
 	parseShortLinkPage,
 	parseShortLinkSort,
+	type ShortenerStats,
+	type ShortenerStatsPoint,
+	type ShortenerStatsRange,
 	type ShortLink,
 	type ShortLinkClick,
 	type ShortLinkInput,
@@ -187,6 +192,168 @@ export async function listShortLinkVisits(
 					clicksByHash.get(String(row.visitor_hash ?? '')) ?? [],
 				),
 			),
+		}
+	} catch (error) {
+		const message = error instanceof Error ? error.message : 'Unknown error'
+		return { ok: false, error: message }
+	}
+}
+
+const STATS_TIME_ZONE = 'Asia/Bangkok'
+const MONTH_SHORT = [
+	'Jan',
+	'Feb',
+	'Mar',
+	'Apr',
+	'May',
+	'Jun',
+	'Jul',
+	'Aug',
+	'Sep',
+	'Oct',
+	'Nov',
+	'Dec',
+]
+const WEEKDAY_SHORT = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
+type StatsBucket = {
+	key: string
+	label: string
+	startMs: number
+	endMs: number
+}
+
+function pad2(value: number) {
+	return String(value).padStart(2, '0')
+}
+
+function buildStatsBuckets(
+	range: ShortenerStatsRange,
+	now: Temporal.ZonedDateTime,
+): StatsBucket[] {
+	if (range === 'day') {
+		const currentHour = now.with({
+			minute: 0,
+			second: 0,
+			millisecond: 0,
+			microsecond: 0,
+			nanosecond: 0,
+		})
+		const first = currentHour.subtract({ hours: 23 })
+
+		return Array.from({ length: 24 }, (_, index) => {
+			const start = first.add({ hours: index })
+
+			return {
+				key: start.toInstant().epochMilliseconds.toString(),
+				label: `${pad2(start.hour)}:00`,
+				startMs: start.toInstant().epochMilliseconds,
+				endMs: start.add({ hours: 1 }).toInstant().epochMilliseconds,
+			}
+		})
+	}
+
+	const days = range === 'week' ? 7 : 30
+	const first = now.toPlainDate().subtract({ days: days - 1 })
+
+	return Array.from({ length: days }, (_, index) => {
+		const day = first.add({ days: index })
+		const start = day.toZonedDateTime(STATS_TIME_ZONE)
+
+		return {
+			key: day.toString(),
+			label:
+				range === 'week'
+					? `${WEEKDAY_SHORT[day.dayOfWeek - 1]} ${day.day}`
+					: `${MONTH_SHORT[day.month - 1]} ${day.day}`,
+			startMs: start.toInstant().epochMilliseconds,
+			endMs: start.add({ days: 1 }).toInstant().epochMilliseconds,
+		}
+	})
+}
+
+function aggregateStats(
+	events: { created_at: string; visitor_hash: string }[],
+	buckets: StatsBucket[],
+	range: ShortenerStatsRange,
+): ShortenerStats {
+	const points: ShortenerStatsPoint[] = buckets.map(bucket => ({
+		key: bucket.key,
+		label: bucket.label,
+		clicks: 0,
+		visitors: 0,
+	}))
+	const hashes = buckets.map(() => new Set<string>())
+	const allHashes = new Set<string>()
+
+	for (const event of events) {
+		const at = Date.parse(event.created_at)
+		if (Number.isNaN(at)) continue
+
+		const hash = event.visitor_hash
+		if (hash) allHashes.add(hash)
+
+		for (let index = 0; index < buckets.length; index++) {
+			const bucket = buckets[index]
+			if (at < bucket.startMs || at >= bucket.endMs) continue
+
+			points[index].clicks += 1
+			if (hash) hashes[index].add(hash)
+			break
+		}
+	}
+
+	for (let index = 0; index < points.length; index++) {
+		points[index].visitors = hashes[index].size
+	}
+
+	return {
+		range,
+		points,
+		clicks: events.length,
+		visitors: allHashes.size,
+	}
+}
+
+export async function listShortenerStats(
+	range?: string | null,
+): Promise<{ ok: true; stats: ShortenerStats } | { ok: false; error: string }> {
+	if (!(await assertAdmin())) {
+		return { ok: false, error: 'Unauthorized' }
+	}
+
+	const parsedRange = parseShortenerStatsRange(range)
+
+	try {
+		const now = Temporal.Now.zonedDateTimeISO(STATS_TIME_ZONE)
+		const buckets = buildStatsBuckets(parsedRange, now)
+		const since = new Date(buckets[0].startMs).toISOString()
+
+		const supabase = createAdminClient()
+		const { data, error } = await supabase
+			.from('short_link_events')
+			.select('created_at, visitor_hash')
+			.gte('created_at', since)
+			.order('created_at', { ascending: true })
+			.limit(10_000)
+
+		if (error) {
+			return { ok: false, error: error.message }
+		}
+
+		const events = (data ?? []).flatMap(row => {
+			const created_at =
+				typeof row.created_at === 'string' ? row.created_at : ''
+			const visitor_hash =
+				typeof row.visitor_hash === 'string' ? row.visitor_hash : ''
+
+			if (!created_at) return []
+			return [{ created_at, visitor_hash }]
+		})
+
+		return {
+			ok: true,
+			stats: aggregateStats(events, buckets, parsedRange),
 		}
 	} catch (error) {
 		const message = error instanceof Error ? error.message : 'Unknown error'
