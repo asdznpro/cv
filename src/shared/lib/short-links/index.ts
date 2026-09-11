@@ -2,11 +2,15 @@ export type { ActionResult } from './actions'
 export {
 	createShortLink,
 	deleteShortLink,
+	listShortenerStats,
 	listShortLinkVisits,
 	listShortLinks,
 	updateShortLink,
 } from './actions'
 export type {
+	ShortenerStats,
+	ShortenerStatsPoint,
+	ShortenerStatsRange,
 	ShortLink,
 	ShortLinkClick,
 	ShortLinkInput,
@@ -17,14 +21,18 @@ export type {
 	ShortLinkVisit,
 } from './types'
 export {
+	DEFAULT_SHORTENER_STATS_RANGE,
 	DEFAULT_SHORT_LINK_ORDER,
 	DEFAULT_SHORT_LINK_SORT,
 	SHORTENER_PATH,
+	SHORTENER_STATS_RANGE_LABELS,
+	SHORTENER_STATS_RANGES,
 	SHORT_LINK_HOST,
 	SHORT_LINKS_PAGE_SIZE,
 	SHORT_LINK_SORT_FIELDS,
 	generateShortSlug,
 	normalizeShortLinkInput,
+	parseShortenerStatsRange,
 	parseShortLinkOrder,
 	parseShortLinkPage,
 	parseShortLinkSort,

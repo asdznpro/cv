@@ -188,3 +188,66 @@ export function fillPaint(
 			return withAlpha(base, 0.1)
 	}
 }
+
+export function clipFillAtX(
+	fill: ReturnType<typeof fillPaint>,
+	splitX: number,
+	size: { width: number; height: number },
+): ReturnType<typeof fillPaint> {
+	if (typeof document === 'undefined' || size.width < 1 || size.height < 1) {
+		return fill
+	}
+
+	const w = Math.ceil(size.width)
+	const h = Math.ceil(size.height)
+	const canvas = document.createElement('canvas')
+	canvas.width = w
+	canvas.height = h
+	const ctx = canvas.getContext('2d')
+	if (!ctx) return fill
+
+	if (typeof fill === 'string') {
+		ctx.fillStyle = fill
+		ctx.fillRect(0, 0, w, h)
+	} else if ('image' in fill) {
+		const tile = fill.image
+		if (
+			!(tile instanceof HTMLCanvasElement || tile instanceof HTMLImageElement)
+		) {
+			return fill
+		}
+		if (fill.repeat === 'no-repeat') {
+			ctx.drawImage(tile, 0, 0, w, h)
+		} else {
+			const pattern = ctx.createPattern(tile, 'repeat')
+			if (!pattern) return fill
+			ctx.fillStyle = pattern
+			ctx.fillRect(0, 0, w, h)
+		}
+	} else if (fill instanceof echarts.graphic.LinearGradient) {
+		const x1 = fill.global ? fill.x : fill.x * w
+		const y1 = fill.global ? fill.y : fill.y * h
+		const x2 = fill.global ? fill.x2 : fill.x2 * w
+		const y2 = fill.global ? fill.y2 : fill.y2 * h
+		const gradient = ctx.createLinearGradient(x1, y1, x2, y2)
+		for (const stop of fill.colorStops) {
+			gradient.addColorStop(stop.offset, stop.color)
+		}
+		ctx.fillStyle = gradient
+		ctx.fillRect(0, 0, w, h)
+	} else {
+		return fill
+	}
+
+	const t = Math.min(Math.max(splitX / w, 0), 1)
+	const fade = ctx.createLinearGradient(0, 0, w, 0)
+	fade.addColorStop(0, 'rgba(0,0,0,1)')
+	fade.addColorStop(t, 'rgba(0,0,0,1)')
+	fade.addColorStop(t, 'rgba(0,0,0,0)')
+	fade.addColorStop(1, 'rgba(0,0,0,0)')
+	ctx.globalCompositeOperation = 'destination-in'
+	ctx.fillStyle = fade
+	ctx.fillRect(0, 0, w, h)
+
+	return { image: canvas, repeat: 'no-repeat' }
+}

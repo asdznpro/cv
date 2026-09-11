@@ -41,7 +41,6 @@ import {
 	LOADING_SHIMMER_BAND,
 	LOADING_STROKE_OPACITY,
 	REVEAL_DURATION,
-	REVEAL_PREFIX,
 } from './cartesian.constants'
 import {
 	buildBrushFrame,
@@ -51,8 +50,6 @@ import {
 	buildTooltipOption,
 	getLoadingData,
 	shimmerWindowStops,
-	sliceFrom,
-	sliceToNull,
 	type CartesianOptionContext,
 } from './cartesian.option'
 import type {
@@ -298,6 +295,25 @@ export function CartesianChart<
 
 		const revealSink: Record<string, unknown[]> = {}
 		const currentAdapter = adapterRef.current
+		const chart = echartsRef.current
+		let revealSplitX: number | null = null
+		if (enableHoverReveal && live.revealIndex !== null && chart) {
+			try {
+				const pixel = chart.convertToPixel({ gridIndex: 0 }, [
+					live.revealIndex,
+					0,
+				])
+				if (Array.isArray(pixel) && Number.isFinite(pixel[0])) {
+					revealSplitX = pixel[0]
+				}
+			} catch {
+				revealSplitX = null
+			}
+			if (revealSplitX === null) {
+				const last = Math.max(categories.length - 1, 1)
+				revealSplitX = (live.revealIndex / last) * chart.getWidth()
+			}
+		}
 
 		const ctx = {
 			data,
@@ -320,6 +336,7 @@ export function CartesianChart<
 			enableHoverHighlight,
 			enableHoverReveal,
 			revealIndex: live.revealIndex,
+			revealSplitX,
 			revealSink,
 			resolved,
 			rendererSize: {
@@ -555,28 +572,9 @@ export function CartesianChart<
 
 		const zrHover = chart.getZr()
 		const pushReveal = (idx: number | null) => {
+			live.repush()
 			const keys = live.handlers.seriesKeys
 			const on = idx !== null
-			chart.setOption(
-				{
-					series: keys.flatMap(key => [
-						{
-							id: key,
-							data: on
-								? sliceToNull(live.revealValues[key] ?? [], idx)
-								: (live.revealValues[key] ?? []),
-						},
-						{
-							id: `${REVEAL_PREFIX}${key}`,
-							data: on
-								? sliceFrom(live.revealValues[key] ?? [], idx)
-								: (live.revealValues[key] ?? []),
-							lineStyle: { opacity: on ? 0.3 : 0 },
-						},
-					]),
-				},
-				{ silent: true },
-			)
 			for (const key of keys) {
 				chart.dispatchAction(
 					on
@@ -814,7 +812,8 @@ export function CartesianChart<
 			lastPhase = phase
 
 			const foreground =
-				live.resolved?.tokens.foreground ?? 'rgba(120, 120, 120, 1)'
+				live.resolved?.tokens.foregroundSecondary ??
+				'rgba(120, 120, 120, 1)'
 			const w = chart.getWidth()
 			const h = chart.getHeight()
 			if (!w || !h) {

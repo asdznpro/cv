@@ -38,6 +38,7 @@ export {
 	curveConfig,
 	expandedValues,
 	getLoadingData,
+	revealLinearGradient,
 	shimmerWindowStops,
 	sliceFrom,
 	sliceToNull,

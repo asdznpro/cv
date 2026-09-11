@@ -39,11 +39,14 @@ import {
 	Icon28HandPointUpOutline,
 	Icon28SortOutline,
 	Icon28DoneOutline,
+	Icon28SortArrowDown,
+	Icon28SortArrowUp,
 } from '@vkontakte/icons'
 
 import { CreateShortLinkForm } from './CreateShortLinkForm'
 import { DeleteShortLinkDialog } from './DeleteShortLinkDialog'
 import { ShortLinkFormDialog } from './ShortLinkFormDialog'
+import { ShortenerStatsDialog } from './ShortenerStatsDialog'
 import { ShortLinkVisitsDialog } from './ShortLinkVisitsDialog'
 
 function sortItemProps(active: boolean) {
@@ -51,7 +54,7 @@ function sortItemProps(active: boolean) {
 		mode: (active ? 'secondary' : 'ghost') as 'secondary' | 'ghost',
 		suffix: (
 			<Icon28DoneOutline
-				className={twMerge(!active && 'opacity-0 group-hover:opacity-40')}
+				className={twMerge(!active && 'opacity-0 group-hover:opacity-strong')}
 				width={18}
 				height={18}
 			/>
@@ -97,6 +100,12 @@ export function ShortenerManager({
 
 	const openVisits = (link: ShortLink) => {
 		open(<ShortLinkVisitsDialog link={link} onClose={() => close()} />, {
+			className: 'max-w-xl',
+		})
+	}
+
+	const openStats = () => {
+		open(<ShortenerStatsDialog onClose={() => close()} />, {
 			className: 'max-w-xl',
 		})
 	}
@@ -193,143 +202,161 @@ export function ShortenerManager({
 								</Button>
 							</div> */}
 
-							<div className='flex'>
-								<DropdownMenu>
-									<DropdownMenu.Trigger>
-										<Button
-											className='rounded-r-none'
-											type='button'
-											size='sm'
-											mode='secondary'
-											appearance='neutral'
-											prefix={<Icon28SortOutline width={16} height={16} />}
-										>
-											Order
-										</Button>
-									</DropdownMenu.Trigger>
+							<div className='flex gap-2'>
+								<Button
+									type='button'
+									size='sm'
+									mode='secondary'
+									appearance='neutral'
+									prefix={<Icon28StatisticsOutline width={16} height={16} />}
+									onClick={openStats}
+								>
+									Stats
+								</Button>
 
-									<DropdownMenu.Content className='w-40'>
-										<DropdownMenu.Box>
-											<DropdownMenu.Heading>Order by</DropdownMenu.Heading>
-
-											<DropdownMenu.Item
-												aria-label='Increasing'
-												onClick={() => changeOrder('asc')}
-												{...sortItemProps(order === 'asc')}
+								<div className='flex'>
+									<DropdownMenu>
+										<DropdownMenu.Trigger>
+											<Button
+												className='rounded-r-none'
+												type='button'
+												size='sm'
+												mode='secondary'
+												appearance='neutral'
+												prefix={<Icon28SortOutline width={16} height={16} />}
 											>
-												Ascending
-											</DropdownMenu.Item>
+												Sort
+											</Button>
+										</DropdownMenu.Trigger>
 
-											<DropdownMenu.Item
-												aria-label='Decreasing'
-												onClick={() => changeOrder('desc')}
-												{...sortItemProps(order === 'desc')}
-											>
-												Descending
-											</DropdownMenu.Item>
-										</DropdownMenu.Box>
-									</DropdownMenu.Content>
-								</DropdownMenu>
+										<DropdownMenu.Content className='w-40'>
+											<DropdownMenu.Box>
+												<DropdownMenu.Heading>Sort by</DropdownMenu.Heading>
 
-								<Separator
-									className='z-1 -ml-px h-2/3 bg-foreground/subtle'
-									orientation='vertical'
-								/>
-
-								<DropdownMenu>
-									<DropdownMenu.Trigger>
-										<Button
-											className='rounded-l-none'
-											type='button'
-											size='sm'
-											mode='secondary'
-											appearance='neutral'
-											prefix={<Icon28SortOutline width={16} height={16} />}
-										>
-											Sort
-										</Button>
-									</DropdownMenu.Trigger>
-
-									<DropdownMenu.Content className='w-40'>
-										<DropdownMenu.Box>
-											<DropdownMenu.Heading>Sort by</DropdownMenu.Heading>
-
-											<DropdownMenu.Item
-												aria-label='By title'
-												onClick={() => changeSort('title')}
-												{...sortItemProps(sort === 'title')}
-											>
-												Title (slug)
-											</DropdownMenu.Item>
-
-											<DropdownMenu.Item
-												aria-label='By date'
-												onClick={() => changeSort('date')}
-												{...sortItemProps(sort === 'date')}
-											>
-												Date
-											</DropdownMenu.Item>
-
-											<DropdownMenu.Sub>
-												<DropdownMenu.SubTrigger
-													aria-label='By views'
-													mode={viewsSelected ? 'secondary' : 'ghost'}
+												<DropdownMenu.Item
+													aria-label='By title'
+													onClick={() => changeSort('title')}
+													{...sortItemProps(sort === 'title')}
 												>
-													Views
-												</DropdownMenu.SubTrigger>
+													Title (slug)
+												</DropdownMenu.Item>
 
-												<DropdownMenu.SubContent className='w-40'>
-													<DropdownMenu.Box>
-														<DropdownMenu.Item
-															aria-label='By total views'
-															onClick={() => changeSort('views')}
-															{...sortItemProps(sort === 'views')}
-														>
-															Default
-														</DropdownMenu.Item>
-
-														<DropdownMenu.Item
-															aria-label='By views in last 24h'
-															onClick={() => changeSort('views_24h')}
-															{...sortItemProps(sort === 'views_24h')}
-														>
-															Last 24h first
-														</DropdownMenu.Item>
-													</DropdownMenu.Box>
-												</DropdownMenu.SubContent>
-											</DropdownMenu.Sub>
-
-											<DropdownMenu.Sub>
-												<DropdownMenu.SubTrigger
-													aria-label='By visitors'
-													mode={visitorsSelected ? 'secondary' : 'ghost'}
+												<DropdownMenu.Item
+													aria-label='By date'
+													onClick={() => changeSort('date')}
+													{...sortItemProps(sort === 'date')}
 												>
-													Visitors
-												</DropdownMenu.SubTrigger>
+													Date
+												</DropdownMenu.Item>
 
-												<DropdownMenu.SubContent className='w-40'>
-													<DropdownMenu.Box>
-														<DropdownMenu.Item
-															aria-label='By total visitors'
-															onClick={() => changeSort('visitors')}
-															{...sortItemProps(sort === 'visitors')}
-														>
-															Default
-														</DropdownMenu.Item>
+												<DropdownMenu.Sub>
+													<DropdownMenu.SubTrigger
+														aria-label='By views'
+														mode={viewsSelected ? 'secondary' : 'ghost'}
+													>
+														Views
+													</DropdownMenu.SubTrigger>
 
-														<DropdownMenu.Item
-															aria-label='By visitors in last 24h'
-															onClick={() => changeSort('visitors_24h')}
-															{...sortItemProps(sort === 'visitors_24h')}
-														>
-															Last 24h first
-														</DropdownMenu.Item>
-													</DropdownMenu.Box>
-												</DropdownMenu.SubContent>
-											</DropdownMenu.Sub>
-										</DropdownMenu.Box>
-									</DropdownMenu.Content>
-								</DropdownMenu>
+													<DropdownMenu.SubContent className='w-40'>
+														<DropdownMenu.Box>
+															<DropdownMenu.Item
+																aria-label='By total views'
+																onClick={() => changeSort('views')}
+																{...sortItemProps(sort === 'views')}
+															>
+																Default
+															</DropdownMenu.Item>
+
+															<DropdownMenu.Item
+																aria-label='By views in last 24h'
+																onClick={() => changeSort('views_24h')}
+																{...sortItemProps(sort === 'views_24h')}
+															>
+																Last 24h first
+															</DropdownMenu.Item>
+														</DropdownMenu.Box>
+													</DropdownMenu.SubContent>
+												</DropdownMenu.Sub>
+
+												<DropdownMenu.Sub>
+													<DropdownMenu.SubTrigger
+														aria-label='By visitors'
+														mode={visitorsSelected ? 'secondary' : 'ghost'}
+													>
+														Visitors
+													</DropdownMenu.SubTrigger>
+
+													<DropdownMenu.SubContent className='w-40'>
+														<DropdownMenu.Box>
+															<DropdownMenu.Item
+																aria-label='By total visitors'
+																onClick={() => changeSort('visitors')}
+																{...sortItemProps(sort === 'visitors')}
+															>
+																Default
+															</DropdownMenu.Item>
+
+															<DropdownMenu.Item
+																aria-label='By visitors in last 24h'
+																onClick={() => changeSort('visitors_24h')}
+																{...sortItemProps(sort === 'visitors_24h')}
+															>
+																Last 24h first
+															</DropdownMenu.Item>
+														</DropdownMenu.Box>
+													</DropdownMenu.SubContent>
+												</DropdownMenu.Sub>
+											</DropdownMenu.Box>
+										</DropdownMenu.Content>
+									</DropdownMenu>
+
+									<Separator
+										className='z-1 -ml-px h-2/3 bg-foreground/subtle'
+										orientation='vertical'
+									/>
+
+									<DropdownMenu>
+										<DropdownMenu.Trigger>
+											<Button
+												className='rounded-l-none'
+												type='button'
+												size='sm'
+												mode='secondary'
+												appearance='neutral'
+												prefix={
+													order === 'asc' ? (
+														<Icon28SortArrowUp width={16} height={16} />
+													) : (
+														<Icon28SortArrowDown width={16} height={16} />
+													)
+												}
+												iconOnly
+											/>
+										</DropdownMenu.Trigger>
+
+										<DropdownMenu.Content className='w-40'>
+											<DropdownMenu.Box>
+												<DropdownMenu.Heading>Order by</DropdownMenu.Heading>
+
+												<DropdownMenu.Item
+													aria-label='Increasing'
+													onClick={() => changeOrder('asc')}
+													{...sortItemProps(order === 'asc')}
+												>
+													Ascending
+												</DropdownMenu.Item>
+
+												<DropdownMenu.Item
+													aria-label='Decreasing'
+													onClick={() => changeOrder('desc')}
+													{...sortItemProps(order === 'desc')}
+												>
+													Descending
+												</DropdownMenu.Item>
+											</DropdownMenu.Box>
+										</DropdownMenu.Content>
+									</DropdownMenu>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -438,18 +465,6 @@ export function ShortenerManager({
 
 												<DropdownMenu.Content className='w-32'>
 													<DropdownMenu.Box>
-														<DropdownMenu.Item
-															aria-label='Stats of short link'
-															prefix={
-																<Icon28StatisticsOutline
-																	width={18}
-																	height={18}
-																/>
-															}
-														>
-															Stats
-														</DropdownMenu.Item>
-
 														<DropdownMenu.Item
 															onClick={() => openVisits(link)}
 															aria-label='Visits of short link'

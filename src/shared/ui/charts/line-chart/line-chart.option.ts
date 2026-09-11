@@ -5,10 +5,8 @@ import {
 	BUFFER_DASH,
 	BUFFER_PREFIX,
 	BRUSH_STROKE_OPACITY,
-	REVEAL_PREFIX,
 	curveConfig,
-	sliceFrom,
-	sliceToNull,
+	revealLinearGradient,
 	type CartesianChartAdapter,
 	type CartesianOptionContext,
 } from '../cartesian'
@@ -18,7 +16,7 @@ import {
 	sampleGradient,
 	type ChartDotItemStyle,
 } from '../dots'
-import { seriesPaint as paintSlots } from '../lib'
+import { seriesPaint as paintSlots, withAlpha as alpha } from '../lib'
 import type { CollectedLineSeries } from './line-chart.collect'
 
 type LinePoint =
@@ -82,6 +80,7 @@ export function buildLineSeries(
 		enableHoverHighlight,
 		enableHoverReveal,
 		revealIndex,
+		revealSplitX,
 		revealSink,
 		resolved,
 		rendererSize,
@@ -106,13 +105,21 @@ export function buildLineSeries(
 		const n = values.length
 		const reveal = enableHoverReveal
 		const buffer = !reveal && line.enableBufferLine && n >= 2
-		const revealActive = reveal && revealIndex !== null
+		const revealActive =
+			reveal && revealIndex !== null && revealSplitX !== null
 
 		const mainDash: 'solid' | [number, number] =
 			buffer || line.strokeVariant === 'solid' ? 'solid' : [3, 3]
 
-		const strokePaint =
-			reveal && multiColor
+		const baseColor = slots[0] ?? 'rgba(120, 120, 120, 1)'
+		const strokePaint = revealActive
+			? revealLinearGradient(
+					revealSplitX,
+					rendererSize.width,
+					typeof paint === 'string' ? paint : baseColor,
+					alpha(typeof paint === 'string' ? paint : baseColor, 0.3),
+				)
+			: reveal && multiColor
 				? new echarts.graphic.LinearGradient(
 						8,
 						0,
@@ -162,9 +169,7 @@ export function buildLineSeries(
 
 		const mainValues: (number | null)[] = buffer
 			? values.map((v, i) => (i === n - 1 ? null : v))
-			: revealActive
-				? sliceToNull(values, revealIndex as number)
-				: values
+			: values
 
 		const z = isSelected ? 3 : hasSelection ? 1 : 2
 
@@ -213,32 +218,6 @@ export function buildLineSeries(
 			},
 		}
 
-		if (reveal) {
-			const muted = resolved.tokens.foregroundSecondary
-			const revealBase: LineSeriesOption = {
-				id: `${REVEAL_PREFIX}${key}`,
-				type: 'line',
-				data: revealActive ? sliceFrom(values, revealIndex as number) : values,
-				smooth: curve.smooth,
-				step: curve.step,
-				connectNulls: false,
-				silent: true,
-				showSymbol: false,
-				symbol: 'circle',
-				z: z - 1,
-				lineStyle: {
-					color: muted,
-					width: line.strokeWidth,
-					type: mainDash,
-					opacity: revealActive ? 0.3 : 0,
-				},
-				emphasis: { disabled: true },
-				blur: { lineStyle: { opacity: revealActive ? 0.3 : 0 } },
-				tooltip: { show: false },
-			}
-			return [revealBase, mainSeries]
-		}
-
 		if (!buffer) return [mainSeries]
 
 		const bufferValues: (number | null)[] = values.map((v, i) =>
@@ -283,12 +262,11 @@ export function buildLineSeries(
 
 export const lineChartAdapter: CartesianChartAdapter<CollectedLineSeries> = {
 	hoverMode: 'series',
-	companionIds: (line, { dataLength, enableHoverReveal }) => {
+	companionIds: (line, { dataLength }) => {
 		const ids: string[] = []
 		if (line.enableBufferLine && dataLength >= 2) {
 			ids.push(`${BUFFER_PREFIX}${line.dataKey}`)
 		}
-		if (enableHoverReveal) ids.push(`${REVEAL_PREFIX}${line.dataKey}`)
 		return ids
 	},
 	buildSeries: buildLineSeries,
