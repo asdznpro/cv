@@ -21,15 +21,10 @@ import { DropdownMenu } from 'ui/floating'
 import {
 	Icon28ChainOutline,
 	Icon28DeleteOutline,
-	Icon28DoneOutline,
-	Icon28HideOutline,
-	Icon28LinkOutline,
 	Icon28MoreHorizontal,
-	Icon28NotificationAddOutline,
 	Icon28NotificationCheckOutline,
 	Icon28NotificationDisableOutline,
 	Icon28Notifications,
-	Icon28ViewOutline,
 } from '@vkontakte/icons'
 
 const GROUPS: { status: NotificationStatus; label: string }[] = [
