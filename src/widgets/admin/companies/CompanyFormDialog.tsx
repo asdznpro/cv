@@ -92,7 +92,7 @@ export function CompanyFormDialog({
 					toast.error(
 						uploaded.ok === false
 							? uploaded.error
-							: 'Не удалось загрузить логотип',
+							: 'Could not upload logo',
 					)
 					return
 				}
@@ -101,7 +101,7 @@ export function CompanyFormDialog({
 			}
 
 			if (!logo) {
-				toast.error('Загрузите логотип')
+				toast.error('Upload a logo')
 				return
 			}
 
@@ -122,7 +122,7 @@ export function CompanyFormDialog({
 				return
 			}
 
-			toast.success(editingId ? 'Компания обновлена' : 'Компания создана')
+			toast.success(editingId ? 'Company updated' : 'Company created')
 			onSuccess()
 		})
 	}
@@ -162,8 +162,8 @@ export function CompanyFormDialog({
 						onReject={reason => {
 							toast.error(
 								reason === 'size'
-									? 'Файл больше 10MB'
-									: 'Допустимы PNG, JPG, GIF, WebP, SVG',
+									? 'File is larger than 10MB'
+									: 'PNG, JPG, GIF, WebP or SVG only',
 							)
 						}}
 					/>

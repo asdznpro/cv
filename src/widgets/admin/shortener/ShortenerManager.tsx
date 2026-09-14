@@ -448,7 +448,9 @@ export function ShortenerManager({
 											<CopyButton
 												value={shortLinkHref(link.slug)}
 												aria-label='Copy'
-												onCopied={() => toast.success('Ссылка скопирована')}
+												onCopied={() =>
+													toast.success(`${link.title} link copied`)
+												}
 											/>
 
 											<DropdownMenu>

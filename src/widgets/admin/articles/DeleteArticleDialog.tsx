@@ -29,7 +29,7 @@ export function DeleteArticleDialog({
 				return
 			}
 
-			toast.success('Статья удалена')
+			toast.success('Article deleted')
 			onSuccess()
 		})
 	}

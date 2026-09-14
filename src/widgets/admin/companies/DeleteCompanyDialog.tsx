@@ -29,7 +29,7 @@ export function DeleteCompanyDialog({
 				return
 			}
 
-			toast.success('Компания удалена')
+			toast.success('Company deleted')
 			onSuccess()
 		})
 	}

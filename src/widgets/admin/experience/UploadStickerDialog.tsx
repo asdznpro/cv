@@ -87,8 +87,8 @@ export function UploadStickerDialog({
 							onReject={reason => {
 								toast.error(
 									reason === 'size'
-										? 'Файл больше 10MB'
-										: 'Допустимы PNG, JPG, GIF, WebP, SVG',
+										? 'File is larger than 10MB'
+										: 'PNG, JPG, GIF, WebP or SVG only',
 								)
 							}}
 						/>

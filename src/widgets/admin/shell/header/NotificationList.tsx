@@ -22,10 +22,14 @@ import {
 	Icon28ChainOutline,
 	Icon28DeleteOutline,
 	Icon28DoneOutline,
+	Icon28HideOutline,
 	Icon28LinkOutline,
 	Icon28MoreHorizontal,
+	Icon28NotificationAddOutline,
+	Icon28NotificationCheckOutline,
 	Icon28NotificationDisableOutline,
 	Icon28Notifications,
+	Icon28ViewOutline,
 } from '@vkontakte/icons'
 
 const GROUPS: { status: NotificationStatus; label: string }[] = [
@@ -248,7 +252,7 @@ function NotificationItem({
 			</div>
 
 			<div className='flex gap-2'>
-				{notification.href && (
+				{/* {notification.href && (
 					<Button
 						to={notification.href}
 						size='sm'
@@ -261,7 +265,25 @@ function NotificationItem({
 					>
 						View
 					</Button>
-				)}
+				)} */}
+
+				{/* {isNew ? (
+					<Button
+						onClick={() => onStatusChange(notification.id, 'viewed')}
+						size='sm'
+						mode='soft'
+						appearance='neutral'
+						prefix={<Icon28ViewOutline width={16} height={16} />}
+					/>
+				) : (
+					<Button
+						onClick={() => onStatusChange(notification.id, 'new')}
+						size='sm'
+						mode='soft'
+						appearance='neutral'
+						prefix={<Icon28HideOutline width={16} height={16} />}
+					/>
+				)} */}
 
 				<DropdownMenu>
 					<DropdownMenu.Trigger>
@@ -274,13 +296,15 @@ function NotificationItem({
 						/>
 					</DropdownMenu.Trigger>
 
-					<DropdownMenu.Content className='w-44'>
+					<DropdownMenu.Content className='w-40'>
 						<DropdownMenu.Box>
 							{isNew ? (
 								<DropdownMenu.Item
 									aria-label='Mark notification as viewed'
 									onClick={() => onStatusChange(notification.id, 'viewed')}
-									prefix={<Icon28DoneOutline width={18} height={18} />}
+									prefix={
+										<Icon28NotificationCheckOutline width={18} height={18} />
+									}
 								>
 									Mark as viewed
 								</DropdownMenu.Item>
