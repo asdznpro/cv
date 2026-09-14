@@ -61,7 +61,7 @@ export function ShortLinkFormDialog({
 				return
 			}
 
-			toast.success('Ссылка обновлена')
+			toast.success('Link updated')
 			onSuccess()
 		})
 	}

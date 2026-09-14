@@ -209,7 +209,7 @@ export function ToolkitFormDialog({
 					toast.error(
 						uploaded.ok === false
 							? uploaded.error
-							: 'Не удалось загрузить lockup',
+							: 'Could not upload lockup',
 					)
 					return
 				}
@@ -226,7 +226,7 @@ export function ToolkitFormDialog({
 					toast.error(
 						uploaded.ok === false
 							? uploaded.error
-							: 'Не удалось загрузить иконку',
+							: 'Could not upload icon',
 					)
 					return
 				}
@@ -234,12 +234,12 @@ export function ToolkitFormDialog({
 			}
 
 			if (!lockup_url) {
-				toast.error('Загрузите lockup')
+				toast.error('Upload a lockup')
 				return
 			}
 
 			if (!icon_url) {
-				toast.error('Загрузите иконку')
+				toast.error('Upload an icon')
 				return
 			}
 
@@ -267,7 +267,7 @@ export function ToolkitFormDialog({
 				return
 			}
 
-			toast.success(editingId ? 'Инструмент обновлён' : 'Инструмент создан')
+			toast.success(editingId ? 'Toolkit item updated' : 'Toolkit item created')
 			onSuccess()
 		})
 	}
@@ -316,8 +316,8 @@ export function ToolkitFormDialog({
 								onReject={reason => {
 									toast.error(
 										reason === 'size'
-											? 'Файл больше 10MB'
-											: 'Допустимы PNG, JPG, GIF, WebP, SVG',
+											? 'File is larger than 10MB'
+											: 'PNG, JPG, GIF, WebP or SVG only',
 									)
 								}}
 							/>
@@ -338,8 +338,8 @@ export function ToolkitFormDialog({
 								onReject={reason => {
 									toast.error(
 										reason === 'size'
-											? 'Файл больше 10MB'
-											: 'Допустимы PNG, JPG, GIF, WebP, SVG',
+											? 'File is larger than 10MB'
+											: 'PNG, JPG, GIF, WebP or SVG only',
 									)
 								}}
 							/>

@@ -72,7 +72,7 @@ export function CreateShortLinkForm({ sort, order }: CreateShortLinkFormProps) {
 				return
 			}
 
-			toast.success('Ссылка создана')
+			toast.success('Link created')
 			resetForm()
 			router.push(shortenerListHref(pathname, { page: 1, sort, order }))
 			router.refresh()

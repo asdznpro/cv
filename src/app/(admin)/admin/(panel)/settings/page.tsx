@@ -8,6 +8,7 @@ import {
 	Icon28ChevronDownOutline,
 	Icon24TvOutline,
 	Icon28MoreHorizontal,
+	Icon28AddOutline,
 } from '@vkontakte/icons'
 
 export default function Settings() {
@@ -138,12 +139,12 @@ export default function Settings() {
 					</div>
 				</div>
 
-				<div className='grid grid-cols-2 gap-app'>
+				<div className='grid grid-cols-1 @md:grid-cols-2 gap-app'>
 					<div className='flex flex-col bg-surface border border-separator rounded-surface'>
-						<div className='flex flex-wrap p-surface gap-surface'>
+						<div className='flex p-surface gap-surface'>
 							<Badge
 								mode='soft'
-								appearance='neutral'
+								appearance='success'
 								prefix={<Icon24TvOutline width={16} height={16} />}
 							/>
 
@@ -163,9 +164,9 @@ export default function Settings() {
 						</div>
 					</div>
 
-					<div className='flex flex-col bg-surface/soft border border-dashed border-separator rounded-surface'>
-						<div className='flex flex-wrap p-surface gap-surface'>
-							{/* <Badge
+					<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+						<div className='flex p-surface gap-surface'>
+							<Badge
 								mode='soft'
 								appearance='neutral'
 								prefix={<Icon24TvOutline width={16} height={16} />}
@@ -173,13 +174,31 @@ export default function Settings() {
 
 							<div className='flex flex-1 flex-col gap-3'>
 								<h3 className='text-xl font-medium font-condensed tracking-tight'>
-									VK ID
+									Yandex ID
 								</h3>
+							</div>
 
-								<p className='text-sm text-foreground-secondary'>Browser</p>
-							</div> */}
+							<Button
+								size='sm'
+								mode='ghost'
+								appearance='neutral'
+								prefix={<Icon28MoreHorizontal width={16} height={16} />}
+								iconOnly
+							/>
 						</div>
 					</div>
+
+					<button className='flex flex-col bg-surface/soft hover:bg-surface border border-dashed border-separator rounded-surface cursor-pointer transition-all focus-ring-base focus-ring-visible active:scale-98'>
+						<div className='flex justify-center p-surface gap-surface'>
+							<Badge
+								mode='ghost'
+								appearance='neutral'
+								prefix={<Icon28AddOutline width={16} height={16} />}
+							>
+								Add new provider
+							</Badge>
+						</div>
+					</button>
 				</div>
 
 				<div className='flex gap-app not-first-of-type:pt-8 pb-app'>

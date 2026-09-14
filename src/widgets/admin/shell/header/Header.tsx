@@ -10,7 +10,13 @@ import { twMerge } from 'tailwind-merge'
 
 import type { AdminNotificationPage } from 'lib/notifications'
 
-import { Button, Counter, ScrollArea, Separator, AnimatedLabel } from 'ui/blocks'
+import {
+	Button,
+	Counter,
+	ScrollArea,
+	Separator,
+	AnimatedLabel,
+} from 'ui/blocks'
 import { Backdrop } from 'ui/overlays'
 
 import {
@@ -174,7 +180,7 @@ export function Header({ notificationsPage }: HeaderProps) {
 									>
 										<Separator />
 
-										<ScrollArea className='h-120'>
+										<ScrollArea className='h-128'>
 											<NotificationList
 												initialPage={notificationsPage}
 												onUnreadCountChange={setUnreadCount}

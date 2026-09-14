@@ -29,7 +29,7 @@ export function DeleteToolkitDialog({
 				return
 			}
 
-			toast.success('Инструмент удалён')
+			toast.success('Toolkit item deleted')
 			onSuccess()
 		})
 	}

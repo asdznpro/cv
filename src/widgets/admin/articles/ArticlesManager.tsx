@@ -104,7 +104,7 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 				setAllExistingSelected(true)
 			} catch (error) {
 				toast.error(
-					error instanceof Error ? error.message : 'Не удалось выбрать все',
+					error instanceof Error ? error.message : 'Could not select all',
 				)
 			}
 		})
@@ -117,7 +117,7 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 		startTransition(async () => {
 			const result = await action()
 			if (!result.ok) {
-				toast.error(result.error ?? 'Ошибка')
+				toast.error(result.error ?? 'Error')
 				return
 			}
 			toast.success(success)
@@ -130,23 +130,23 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 	function onBulkStatus(status: ArticleStatus) {
 		runBulk(
 			() => updateArticlesStatus(selectedIds, status),
-			`Обновлено: ${selectedIds.length}`,
+			`Updated: ${selectedIds.length}`,
 		)
 	}
 
 	function onBulkDelete() {
-		runBulk(() => deleteArticles(selectedIds), `Удалено: ${selectedIds.length}`)
+		runBulk(() => deleteArticles(selectedIds), `Deleted: ${selectedIds.length}`)
 	}
 
 	function onDuplicate(id: string) {
 		startTransition(async () => {
 			const result = await duplicateArticle(id)
 			if (!result.ok) {
-				toast.error(result.error ?? 'Ошибка')
+				toast.error(result.error ?? 'Error')
 				return
 			}
 
-			toast.success('Статья скопирована')
+			toast.success('Article copied')
 			if (result.article) {
 				router.push(`/admin/articles/${result.article.id}`)
 				return
@@ -661,7 +661,7 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 																				[article.id],
 																				'archived',
 																			),
-																		'Статья в архиве',
+																		'Article archived',
 																	)
 																}
 															>
@@ -683,7 +683,7 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 																				[article.id],
 																				'published',
 																			),
-																		'Статья восстановлена',
+																		'Article restored',
 																	)
 																}
 															>
@@ -700,7 +700,7 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 															onClick={() =>
 																runBulk(
 																	() => deleteArticles([article.id]),
-																	'Статья удалена',
+																	'Article deleted',
 																)
 															}
 														>

@@ -29,7 +29,7 @@ export function DeleteShortLinkDialog({
 				return
 			}
 
-			toast.success('Ссылка удалена')
+			toast.success('Link deleted')
 			onSuccess()
 		})
 	}
@@ -43,7 +43,8 @@ export function DeleteShortLinkDialog({
 					</h3>
 
 					<p className='text-sm text-foreground-secondary'>
-						«{shortLinkHref(link.slug)}» will stop redirecting.
+						<span className='italic'>{shortLinkHref(link.slug)}</span> will stop
+						redirecting
 					</p>
 				</div>
 
