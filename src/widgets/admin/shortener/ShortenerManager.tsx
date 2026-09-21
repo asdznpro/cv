@@ -41,10 +41,12 @@ import {
 	Icon28DoneOutline,
 	Icon28SortArrowDown,
 	Icon28SortArrowUp,
+	Icon28RefreshOutline,
 } from '@vkontakte/icons'
 
 import { CreateShortLinkForm } from './CreateShortLinkForm'
 import { DeleteShortLinkDialog } from './DeleteShortLinkDialog'
+import { ResetShortLinkDialog } from './ResetShortLinkDialog'
 import { ShortLinkFormDialog } from './ShortLinkFormDialog'
 import { ShortenerStatsDialog } from './ShortenerStatsDialog'
 import { ShortLinkVisitsDialog } from './ShortLinkVisitsDialog'
@@ -126,6 +128,20 @@ export function ShortenerManager({
 	const openDelete = (link: ShortLink) => {
 		open(
 			<DeleteShortLinkDialog
+				link={link}
+				onCancel={() => close()}
+				onSuccess={() => {
+					close()
+					router.refresh()
+				}}
+			/>,
+			{ className: 'max-w-sm' },
+		)
+	}
+
+	const openReset = (link: ShortLink) => {
+		open(
+			<ResetShortLinkDialog
 				link={link}
 				onCancel={() => close()}
 				onSuccess={() => {
@@ -485,6 +501,19 @@ export function ShortenerManager({
 															}
 														>
 															Edit
+														</DropdownMenu.Item>
+													</DropdownMenu.Box>
+
+													<DropdownMenu.Box>
+														<DropdownMenu.Item
+															onClick={() => openReset(link)}
+															aria-label='Reset data of short link'
+															appearance='danger'
+															prefix={
+																<Icon28RefreshOutline width={18} height={18} />
+															}
+														>
+															Reset data
 														</DropdownMenu.Item>
 
 														<DropdownMenu.Item

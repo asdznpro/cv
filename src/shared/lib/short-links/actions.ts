@@ -13,6 +13,7 @@ import {
 	parseShortLinkOrder,
 	parseShortLinkPage,
 	parseShortLinkSort,
+	type ShortenerResetRange,
 	type ShortenerStats,
 	type ShortenerStatsPoint,
 	type ShortenerStatsRange,
@@ -23,6 +24,7 @@ import {
 	type ShortLinkSortField,
 	type ShortLinkSortOrder,
 	type ShortLinkVisit,
+	SHORTENER_RESET_RANGES,
 	SHORT_LINKS_PAGE_SIZE,
 	validateShortLinkInput,
 } from './types'
@@ -466,6 +468,40 @@ export async function deleteShortLink(id: string): Promise<ActionResult> {
 	try {
 		const supabase = createAdminClient()
 		const { error } = await supabase.from('short_links').delete().eq('id', id)
+
+		if (error) {
+			return { ok: false, error: error.message }
+		}
+
+		revalidatePath('/admin/shortener')
+		return { ok: true }
+	} catch (error) {
+		return toActionError(error)
+	}
+}
+
+export async function resetShortLinkStats(
+	id: string,
+	range: ShortenerResetRange,
+): Promise<ActionResult> {
+	if (!(await assertAdmin())) {
+		return { ok: false, error: 'Unauthorized' }
+	}
+
+	if (!id) {
+		return { ok: false, error: 'Не указан id ссылки' }
+	}
+
+	if (!SHORTENER_RESET_RANGES.includes(range)) {
+		return { ok: false, error: 'Некорректный период' }
+	}
+
+	try {
+		const supabase = createAdminClient()
+		const { error } = await supabase.rpc('reset_short_link_stats', {
+			p_link_id: id,
+			p_range: range,
+		})
 
 		if (error) {
 			return { ok: false, error: error.message }

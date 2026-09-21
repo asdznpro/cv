@@ -50,6 +50,32 @@ export function parseShortenerStatsRange(
 		: DEFAULT_SHORTENER_STATS_RANGE
 }
 
+export const SHORTENER_RESET_RANGES = ['day', 'week', 'all'] as const
+export type ShortenerResetRange = (typeof SHORTENER_RESET_RANGES)[number]
+export const DEFAULT_SHORTENER_RESET_RANGE: ShortenerResetRange = 'day'
+
+export const SHORTENER_RESET_RANGE_LABELS: Record<ShortenerResetRange, string> =
+	{
+		day: 'Day',
+		week: 'Week',
+		all: 'All',
+	}
+
+export const SHORTENER_RESET_RANGE_HINTS: Record<ShortenerResetRange, string> =
+	{
+		day: 'Last 24 hours',
+		week: 'Last 7 days',
+		all: 'Entire history',
+	}
+
+export function parseShortenerResetRange(
+	value: string | null | undefined,
+): ShortenerResetRange {
+	return SHORTENER_RESET_RANGES.includes(value as ShortenerResetRange)
+		? (value as ShortenerResetRange)
+		: DEFAULT_SHORTENER_RESET_RANGE
+}
+
 export type ShortLink = {
 	id: string
 	slug: string
