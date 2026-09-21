@@ -5,9 +5,11 @@ export {
 	listShortenerStats,
 	listShortLinkVisits,
 	listShortLinks,
+	resetShortLinkStats,
 	updateShortLink,
 } from './actions'
 export type {
+	ShortenerResetRange,
 	ShortenerStats,
 	ShortenerStatsPoint,
 	ShortenerStatsRange,
@@ -21,10 +23,14 @@ export type {
 	ShortLinkVisit,
 } from './types'
 export {
+	DEFAULT_SHORTENER_RESET_RANGE,
 	DEFAULT_SHORTENER_STATS_RANGE,
 	DEFAULT_SHORT_LINK_ORDER,
 	DEFAULT_SHORT_LINK_SORT,
 	SHORTENER_PATH,
+	SHORTENER_RESET_RANGE_HINTS,
+	SHORTENER_RESET_RANGE_LABELS,
+	SHORTENER_RESET_RANGES,
 	SHORTENER_STATS_RANGE_LABELS,
 	SHORTENER_STATS_RANGES,
 	SHORT_LINK_HOST,
@@ -32,6 +38,7 @@ export {
 	SHORT_LINK_SORT_FIELDS,
 	generateShortSlug,
 	normalizeShortLinkInput,
+	parseShortenerResetRange,
 	parseShortenerStatsRange,
 	parseShortLinkOrder,
 	parseShortLinkPage,
