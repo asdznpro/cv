@@ -81,7 +81,7 @@ export function Header({ notificationsPage }: HeaderProps) {
 				)}
 			</AnimatePresence>
 
-			<header className='sticky top-0 inset-x-0 z-20 w-full pointer-events-none'>
+			<header className='sticky top-0 inset-x-0 z-sticky w-full pointer-events-none'>
 				<motion.div
 					onClickCapture={event => {
 						const target = event.target

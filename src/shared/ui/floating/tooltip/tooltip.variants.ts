@@ -2,7 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 export const tooltipVariants = cva(
 	[
-		'z-50 relative max-w-xs w-max px-3 py-2',
+		'relative max-w-xs w-max px-3 py-2',
 		'text-sm font-condensed font-semibold text-start',
 		'rounded-md shadow-xl shadow-background/40',
 		'pointer-events-none select-none',

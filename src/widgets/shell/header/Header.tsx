@@ -98,7 +98,7 @@ export function Header() {
 	})
 
 	return (
-		<header className='fixed top-0 z-20 w-full max-h-screen p-app pointer-events-none'>
+		<header className='fixed top-0 z-sticky w-full max-h-screen p-app pointer-events-none'>
 			<AnimatePresence>
 				{isOpen && (
 					<Backdrop

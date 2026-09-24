@@ -119,7 +119,10 @@ export function Tooltip(props: TooltipProps) {
 		<>
 			<span
 				ref={refs.setReference}
-				className={twMerge('max-w-full inline-flex align-middle', triggerClassName)}
+				className={twMerge(
+					'max-w-full inline-flex align-middle',
+					triggerClassName,
+				)}
 				{...referenceProps}
 			>
 				{children as ReactNode}
@@ -130,6 +133,7 @@ export function Tooltip(props: TooltipProps) {
 					<div
 						ref={refs.setFloating}
 						style={floatingStyles}
+						className='z-floating'
 						data-placement={resolvedPlacement}
 						{...getFloatingProps()}
 					>
@@ -143,8 +147,8 @@ export function Tooltip(props: TooltipProps) {
 								<Arrow
 									ref={arrowRef}
 									context={context}
-									mode='plain'
 									fill={fill}
+									mode='plain'
 								/>
 							)}
 						</div>

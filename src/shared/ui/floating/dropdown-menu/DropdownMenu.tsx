@@ -360,7 +360,7 @@ function Content({ children, className, style, id }: DropdownMenuContentProps) {
 					ref={refs.setFloating}
 					id={id}
 					style={floatingStyles}
-					className='z-80 outline-none'
+					className='z-popover outline-none'
 					{...getFloatingProps()}
 				>
 					<div

@@ -190,6 +190,7 @@ function ContextCardStandalone(props: ContextCardProps) {
 					<div
 						ref={refs.setFloating}
 						style={floatingStyles}
+						className='z-popover'
 						data-placement={resolvedPlacement}
 						{...getFloatingProps()}
 					>

@@ -193,7 +193,7 @@ export function Select(props: SelectProps) {
 								{...getFloatingProps()}
 								ref={refs.setFloating}
 								style={floatingStyles}
-								className='z-80 outline-none'
+								className='z-popover outline-none'
 							>
 								<OptionList
 									options={options}
