@@ -14,11 +14,16 @@ import {
 	type ShortenerStatsRange,
 } from 'lib/short-links'
 
-import { Button, Separator, Spinner } from 'ui/blocks'
+import { Badge, Button, Separator, Spinner } from 'ui/blocks'
 import { AreaChart, type ChartConfig } from 'ui/charts'
-import { DropdownMenu } from 'ui/floating'
+import { DropdownMenu, Tooltip } from 'ui/floating'
 
-import { Icon28CalendarOutline, Icon28DoneOutline } from '@vkontakte/icons'
+import {
+	Icon28CalendarOutline,
+	Icon28ChevronDownOutline,
+	Icon28ChevronUpOutline,
+	Icon28DoneOutline,
+} from '@vkontakte/icons'
 
 type ShortenerStatsDialogProps = {
 	onClose: () => void
@@ -41,6 +46,40 @@ const RANGE_COPY: Record<ShortenerStatsRange, string> = {
 	month: 'Daily traffic across every short link',
 }
 
+const RANGE_COMPARE: Record<ShortenerStatsRange, string> = {
+	day: 'Compared with the previous day',
+	week: 'Compared with the previous week',
+	month: 'Compared with the previous month',
+}
+
+function formatChange(current: number, previous: number) {
+	const delta = current - previous
+
+	if (previous === 0) {
+		if (delta === 0) {
+			return { label: '0%', appearance: 'neutral' as const, up: false }
+		}
+
+		return {
+			label: `+${delta.toLocaleString('en-US')}`,
+			appearance: 'success' as const,
+			up: true,
+		}
+	}
+
+	const percent = Math.round((delta / previous) * 100)
+	if (percent === 0) {
+		return { label: '0%', appearance: 'neutral' as const, up: false }
+	}
+
+	const up = percent > 0
+	return {
+		label: `${up ? '+' : ''}${percent}%`,
+		appearance: up ? ('success' as const) : ('danger' as const),
+		up,
+	}
+}
+
 function sortItemProps(active: boolean) {
 	return {
 		mode: (active ? 'secondary' : 'ghost') as 'secondary' | 'ghost',
@@ -58,6 +97,35 @@ function loadingPointsFor(range: ShortenerStatsRange) {
 	if (range === 'day') return 24
 	if (range === 'week') return 7
 	return 30
+}
+
+function StatsChange({
+	current,
+	previous,
+	range,
+}: {
+	current: number
+	previous: number
+	range: ShortenerStatsRange
+}) {
+	const change = formatChange(current, previous)
+	const Icon = change.up ? Icon28ChevronUpOutline : Icon28ChevronDownOutline
+
+	return (
+		<Tooltip text={RANGE_COMPARE[range]}>
+			<Badge
+				className='ml-1 mb-1 align-middle'
+				size='sm'
+				mode='soft'
+				appearance={change.appearance}
+				prefix={
+					change.label === '0%' ? undefined : <Icon width={14} height={14} />
+				}
+			>
+				{change.label}
+			</Badge>
+		</Tooltip>
+	)
 }
 
 function formatTick(
@@ -94,6 +162,8 @@ export function ShortenerStatsDialog({ onClose }: ShortenerStatsDialogProps) {
 					points: [],
 					clicks: 0,
 					visitors: 0,
+					previousClicks: 0,
+					previousVisitors: 0,
 				})
 				return
 			}
@@ -149,13 +219,18 @@ export function ShortenerStatsDialog({ onClose }: ShortenerStatsDialogProps) {
 
 			<div className='flex flex-col bg-background'>
 				<div className='flex p-surface gap-surface'>
-					<div className='w-full grid grid-cols-2 gap-app'>
+					<div className='w-full grid @2xs:grid-cols-2 @lg:grid-cols-3 gap-app'>
 						<div className='flex flex-col gap-2'>
 							{loading ? (
 								<Spinner size={28} className='my-1 text-foreground-secondary' />
 							) : (
 								<span className='text-3xl font-medium font-condensed tracking-tight tabular-nums'>
-									{(stats?.clicks ?? 0).toLocaleString('en-US')}
+									{(stats?.clicks ?? 0).toLocaleString('en-US')}{' '}
+									<StatsChange
+										current={stats?.clicks ?? 0}
+										previous={stats?.previousClicks ?? 0}
+										range={range}
+									/>
 								</span>
 							)}
 
@@ -167,7 +242,12 @@ export function ShortenerStatsDialog({ onClose }: ShortenerStatsDialogProps) {
 								<Spinner size={28} className='my-1 text-foreground-secondary' />
 							) : (
 								<span className='text-3xl font-medium font-condensed tracking-tight tabular-nums'>
-									{(stats?.visitors ?? 0).toLocaleString('en-US')}
+									{(stats?.visitors ?? 0).toLocaleString('en-US')}{' '}
+									<StatsChange
+										current={stats?.visitors ?? 0}
+										previous={stats?.previousVisitors ?? 0}
+										range={range}
+									/>
 								</span>
 							)}
 

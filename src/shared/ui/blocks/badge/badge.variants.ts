@@ -32,7 +32,7 @@ export const badgeVariants = cva(
 				warning: '',
 			},
 			size: {
-				sm: 'h-5 min-h-5 min-w-5 px-1.5 [&_.in]:gap-0.5 text-2xs rounded-xs',
+				sm: 'h-5 min-h-5 min-w-5 px-1 [&_.in]:gap-0 text-xs rounded-xs',
 				md: 'h-6 min-h-6 min-w-6 px-1.5 [&_.in]:gap-0.75 text-xs rounded',
 				lg: 'h-7 min-h-7 min-w-7 px-2 [&_.in]:gap-1 text-sm rounded',
 			},

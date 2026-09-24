@@ -293,14 +293,16 @@ function aggregateStats(
 		if (Number.isNaN(at)) continue
 
 		const hash = event.visitor_hash
-		if (hash) allHashes.add(hash)
 
 		for (let index = 0; index < buckets.length; index++) {
 			const bucket = buckets[index]
 			if (at < bucket.startMs || at >= bucket.endMs) continue
 
 			points[index].clicks += 1
-			if (hash) hashes[index].add(hash)
+			if (hash) {
+				hashes[index].add(hash)
+				allHashes.add(hash)
+			}
 			break
 		}
 	}
@@ -312,9 +314,20 @@ function aggregateStats(
 	return {
 		range,
 		points,
-		clicks: events.length,
+		clicks: points.reduce((sum, point) => sum + point.clicks, 0),
 		visitors: allHashes.size,
+		previousClicks: 0,
+		previousVisitors: 0,
 	}
+}
+
+function previousStatsAnchor(
+	range: ShortenerStatsRange,
+	now: Temporal.ZonedDateTime,
+) {
+	if (range === 'day') return now.subtract({ hours: 24 })
+	if (range === 'week') return now.subtract({ days: 7 })
+	return now.subtract({ days: 30 })
 }
 
 export async function listShortenerStats(
@@ -329,7 +342,11 @@ export async function listShortenerStats(
 	try {
 		const now = Temporal.Now.zonedDateTimeISO(STATS_TIME_ZONE)
 		const buckets = buildStatsBuckets(parsedRange, now)
-		const since = new Date(buckets[0].startMs).toISOString()
+		const previousBuckets = buildStatsBuckets(
+			parsedRange,
+			previousStatsAnchor(parsedRange, now),
+		)
+		const since = new Date(previousBuckets[0].startMs).toISOString()
 
 		const supabase = createAdminClient()
 		const { data, error } = await supabase
@@ -337,7 +354,7 @@ export async function listShortenerStats(
 			.select('created_at, visitor_hash')
 			.gte('created_at', since)
 			.order('created_at', { ascending: true })
-			.limit(10_000)
+			.limit(20_000)
 
 		if (error) {
 			return { ok: false, error: error.message }
@@ -353,9 +370,16 @@ export async function listShortenerStats(
 			return [{ created_at, visitor_hash }]
 		})
 
+		const stats = aggregateStats(events, buckets, parsedRange)
+		const previous = aggregateStats(events, previousBuckets, parsedRange)
+
 		return {
 			ok: true,
-			stats: aggregateStats(events, buckets, parsedRange),
+			stats: {
+				...stats,
+				previousClicks: previous.clicks,
+				previousVisitors: previous.visitors,
+			},
 		}
 	} catch (error) {
 		const message = error instanceof Error ? error.message : 'Unknown error'

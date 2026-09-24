@@ -40,6 +40,9 @@ export type ShortenerStats = {
 	points: ShortenerStatsPoint[]
 	clicks: number
 	visitors: number
+	/** Totals for the window immediately before `points`. */
+	previousClicks: number
+	previousVisitors: number
 }
 
 export function parseShortenerStatsRange(
