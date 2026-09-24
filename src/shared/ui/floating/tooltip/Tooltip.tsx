@@ -133,7 +133,7 @@ export function Tooltip(props: TooltipProps) {
 					<div
 						ref={refs.setFloating}
 						style={floatingStyles}
-						className='z-80'
+						className='z-floating'
 						data-placement={resolvedPlacement}
 						{...getFloatingProps()}
 					>

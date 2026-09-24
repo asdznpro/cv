@@ -270,7 +270,7 @@ export function Combobox(props: ComboboxProps) {
 								{...getFloatingProps()}
 								ref={refs.setFloating}
 								style={floatingStyles}
-								className='z-80 outline-none'
+								className='z-popover outline-none'
 							>
 								<OptionList
 									options={filtered}

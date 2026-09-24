@@ -15,6 +15,14 @@
 	--opacity-strong: 60%;
 	--opacity-heavy: 80%;
 
+	/* Z-index */
+
+	--z-index-sticky: 20;
+	--z-index-backdrop: 50;
+	--z-index-overlay: 60;
+	--z-index-popover: 70;
+	--z-index-floating: 80;
+
 	/* Font */
 
 	--text-2xs: 0.625rem;

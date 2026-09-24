@@ -36,7 +36,7 @@ export function OverlayPortal({ stack, onDismiss }: OverlayPortalProps) {
 				{stack.length > 0 && (
 					<Backdrop
 						key='overlay-backdrop'
-						className='z-50'
+						className='z-backdrop'
 						onClick={dismissible ? onDismiss : undefined}
 					/>
 				)}
@@ -44,7 +44,7 @@ export function OverlayPortal({ stack, onDismiss }: OverlayPortalProps) {
 
 			<div
 				role='presentation'
-				className='fixed inset-0 z-60 flex items-center justify-center p-app pointer-events-none'
+				className='fixed inset-0 z-overlay flex items-center justify-center p-app pointer-events-none'
 			>
 				<AnimatePresence mode='wait' initial={false}>
 					{top && (

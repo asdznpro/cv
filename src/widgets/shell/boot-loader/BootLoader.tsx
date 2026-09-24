@@ -49,13 +49,13 @@ export function BootLoader() {
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.5, ease: 'easeOut' }}
-						className='fixed inset-0 z-50 bg-background'
+						className='fixed inset-0 z-overlay bg-background'
 					/>
 				)}
 			</AnimatePresence>
 
 			{bootVisible && (
-				<div className='fixed inset-0 z-50 flex items-center justify-center pointer-events-none'>
+				<div className='fixed inset-0 z-overlay flex items-center justify-center pointer-events-none'>
 					<div
 						className='relative flex items-center justify-center'
 						style={{ width: SIZE, height: SIZE }}
