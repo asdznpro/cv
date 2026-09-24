@@ -46,20 +46,55 @@ export function OverlayPortal({ stack, onDismiss }: OverlayPortalProps) {
 				role='presentation'
 				className='fixed inset-0 z-overlay flex items-center justify-center p-app pointer-events-none'
 			>
-				<AnimatePresence mode='wait' initial={false}>
+				<AnimatePresence>
 					{top && (
 						<motion.div
-							key={top.id}
+							key='overlay-stack'
 							initial={{ opacity: 0, scale: 0.96 }}
 							animate={{ opacity: 1, scale: 1 }}
 							exit={{ opacity: 0, scale: 0.96 }}
 							transition={TRANSITION}
 							className={twMerge(
-								'@container/overlay pointer-events-auto max-w-lg w-full',
+								'@container/overlay relative pointer-events-auto max-w-lg w-full',
 								top.className,
 							)}
 						>
-							{top.content}
+							<AnimatePresence mode='wait' initial={false}>
+								<motion.div
+									key={top.id}
+									initial={{ opacity: 0, scale: 0.96 }}
+									animate={{ opacity: 1, scale: 1 }}
+									exit={{ opacity: 0, scale: 0.96 }}
+									transition={TRANSITION}
+									className='relative'
+								>
+									{top.content}
+
+									<AnimatePresence>
+										{stack.slice(0, -1).map((entry, index) => {
+											const level = stack.length - 1 - index
+
+											return (
+												<motion.span
+													key={entry.id}
+													aria-hidden
+													initial={{ y: '0%' }}
+													animate={{ y: `${level * 100}%` }}
+													exit={{ y: '0%' }}
+													transition={TRANSITION}
+													className='absolute bottom-0 inset-x-0 h-3 pointer-events-none transition-[padding-inline] duration-150 ease-out'
+													style={{
+														zIndex: -level,
+														paddingInline: `calc(var(--spacing-app) * ${level})`,
+													}}
+												>
+													<span className='flex size-full rounded-b-full border border-separator border-t-0 bg-surface' />
+												</motion.span>
+											)
+										})}
+									</AnimatePresence>
+								</motion.div>
+							</AnimatePresence>
 						</motion.div>
 					)}
 				</AnimatePresence>
