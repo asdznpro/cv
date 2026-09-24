@@ -31,10 +31,29 @@ function visitPlace(visit: ShortLinkVisit) {
 	return parts.length > 0 ? parts.join(' · ') : 'Unknown location'
 }
 
-function visitAgent(visit: ShortLinkVisit) {
-	const parts = [visit.browser, visit.os, visit.device].filter(
-		value => value && value !== 'Unknown',
+const AS_ORG_ALIASES = [
+	{ match: 'headhunter', label: 'HeadHunter' },
+	{ match: 'telegram', label: 'Telegram' },
+	{ match: 'linkedin', label: 'LinkedIn' },
+	{ match: 'yandex', label: 'Yandex' },
+] as const
+
+function visitOrg(asOrg: string) {
+	const normalized = asOrg.toLocaleLowerCase()
+	return (
+		AS_ORG_ALIASES.find(alias => normalized.includes(alias.match))?.label ??
+		asOrg
 	)
+}
+
+function visitAgent(visit: ShortLinkVisit) {
+	const parts = [
+		visit.browser,
+		visit.os,
+		visit.device
+			? visit.device[0].toLocaleUpperCase() + visit.device.slice(1)
+			: visit.device,
+	].filter(value => value && value !== 'Unknown')
 	return parts.join(' · ')
 }
 
@@ -193,7 +212,7 @@ export function ShortLinkVisitsDialog({
 
 													{visit.as_org && (
 														<Badge size='md' mode='soft' appearance='neutral'>
-															{visit.as_org}
+															{visitOrg(visit.as_org)}
 														</Badge>
 													)}
 												</span>
