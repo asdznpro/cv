@@ -44,3 +44,8 @@ next-env.d.ts
 
 /supabase
 /workers
+
+# cloudflare worker
+/worker/node_modules
+/worker/.wrangler
+/worker/.dev.vars

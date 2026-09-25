@@ -1,0 +1,13 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "go-asdzn",
+	"main": "src/index.js",
+	"compatibility_date": "2026-09-01",
+	"workers_dev": false,
+	// Один скрипт на все хосты. Новый домен зоны в этом аккаунте — ещё один custom domain.
+	"routes": [{ "pattern": "go.asdzn.pro", "custom_domain": true }],
+	"vars": {
+		"FALLBACK_URL": "https://cv.asdzn.pro/",
+		"SUPABASE_URL": "https://edpjtbsqujetwkbtuodh.supabase.co",
+	},
+}
