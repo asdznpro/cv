@@ -43,7 +43,6 @@ next-env.d.ts
 # local
 
 /supabase
-/workers
 
 # cloudflare worker
 /worker/node_modules
