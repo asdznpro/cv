@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 import { AnimatePresence, motion } from 'motion/react'
 import { toast } from 'sonner'
@@ -15,11 +16,15 @@ import {
 import { getFormattedDate } from 'lib/utils'
 
 import { Badge, Button, ScrollArea, Separator, Spinner } from 'ui/blocks'
+import { useOverlay } from 'ui/overlays'
 
 import {
+	Icon28CancelOutline,
 	Icon28ChevronDownOutline,
 	Icon28HandPointUpOutline,
 } from '@vkontakte/icons'
+
+import { DeleteShortLinkVisitDialog } from './DeleteShortLinkVisitDialog'
 
 type ShortLinkVisitsDialogProps = {
 	link: ShortLink
@@ -75,6 +80,8 @@ export function ShortLinkVisitsDialog({
 	link,
 	onClose,
 }: ShortLinkVisitsDialogProps) {
+	const { open, close } = useOverlay()
+	const router = useRouter()
 	const [visits, setVisits] = useState<ShortLinkVisit[] | null>(null)
 	const [openId, setOpenId] = useState<string | null>(null)
 	const listRef = useRef<HTMLDivElement>(null)
@@ -113,6 +120,21 @@ export function ShortLinkVisitsDialog({
 			cancelled = true
 		}
 	}, [link.id])
+
+	function openDelete(visit: ShortLinkVisit) {
+		open(
+			<DeleteShortLinkVisitDialog
+				link={link}
+				visit={visit}
+				onCancel={() => close()}
+				onSuccess={() => {
+					close()
+					router.refresh()
+				}}
+			/>,
+			{ className: 'max-w-sm' },
+		)
+	}
 
 	return (
 		<div className='flex flex-col bg-surface border border-separator rounded-surface'>
@@ -177,9 +199,47 @@ export function ShortLinkVisitsDialog({
 											}
 										>
 											<div className='flex flex-1 flex-col gap-3 min-w-0'>
-												<p className='text-balance text-xl font-medium font-condensed tracking-tight'>
-													{visitPlace(visit)}
-												</p>
+												<div className='flex gap-3'>
+													<p className='flex-1 text-balance text-xl font-medium font-condensed tracking-tight'>
+														{visitPlace(visit)}
+													</p>
+
+													<div className='flex gap-2'>
+														<Button
+															type='button'
+															size='sm'
+															mode='soft'
+															appearance='danger'
+															aria-label='Delete visitor'
+															prefix={
+																<Icon28CancelOutline width={16} height={16} />
+															}
+															iconOnly
+															onClick={event => {
+																event.stopPropagation()
+																openDelete(visit)
+															}}
+														/>
+
+														<Button
+															type='button'
+															size='sm'
+															mode='ghost'
+															appearance='neutral'
+															prefix={
+																<Icon28ChevronDownOutline
+																	className={twMerge(
+																		'transition-transform duration-200',
+																		open && 'rotate-180',
+																	)}
+																	width={16}
+																	height={16}
+																/>
+															}
+															iconOnly
+														/>
+													</div>
+												</div>
 
 												<span className='flex flex-wrap gap-1'>
 													<Badge
@@ -217,23 +277,6 @@ export function ShortLinkVisitsDialog({
 													)}
 												</span>
 											</div>
-
-											<Button
-												type='button'
-												mode='ghost'
-												appearance='neutral'
-												prefix={
-													<Icon28ChevronDownOutline
-														className={twMerge(
-															'transition-transform duration-200',
-															open && 'rotate-180',
-														)}
-														width={18}
-														height={18}
-													/>
-												}
-												iconOnly
-											/>
 										</div>
 
 										<AnimatePresence initial={false}>

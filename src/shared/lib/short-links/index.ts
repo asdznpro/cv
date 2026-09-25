@@ -2,6 +2,7 @@ export type { ActionResult } from './actions'
 export {
 	createShortLink,
 	deleteShortLink,
+	deleteShortLinkVisitor,
 	listShortenerStats,
 	listShortLinkVisits,
 	listShortLinks,

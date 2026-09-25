@@ -504,6 +504,40 @@ export async function deleteShortLink(id: string): Promise<ActionResult> {
 	}
 }
 
+export async function deleteShortLinkVisitor(
+	linkId: string,
+	visitId: string,
+): Promise<ActionResult> {
+	if (!(await assertAdmin())) {
+		return { ok: false, error: 'Unauthorized' }
+	}
+
+	if (!linkId) {
+		return { ok: false, error: 'Не указан id ссылки' }
+	}
+
+	if (!visitId) {
+		return { ok: false, error: 'Не указан id визитора' }
+	}
+
+	try {
+		const supabase = createAdminClient()
+		const { error } = await supabase.rpc('delete_short_link_visitor', {
+			p_link_id: linkId,
+			p_visit_id: visitId,
+		})
+
+		if (error) {
+			return { ok: false, error: error.message }
+		}
+
+		revalidatePath('/admin/shortener')
+		return { ok: true }
+	} catch (error) {
+		return toActionError(error)
+	}
+}
+
 export async function resetShortLinkStats(
 	id: string,
 	range: ShortenerResetRange,

@@ -21,6 +21,7 @@ import {
 	Icon28GlobeOutline,
 	Icon28HashtagOutline,
 	Icon28InfoCircleOutline,
+	Icon28SettingsOutline,
 } from '@vkontakte/icons'
 
 type CreateFormState = {
@@ -193,8 +194,8 @@ export function CreateShortLinkForm({ sort, order }: CreateShortLinkFormProps) {
 					</p>
 				</div>
 
-				<div className='w-full @xl:w-2/5'>
-					<FormItem id='short-domain'>
+				<div className='w-full @xl:w-2/5 flex gap-2'>
+					<FormItem id='short-domain' className='flex-1'>
 						<FormItem.Select
 							size='md'
 							mode='outline'
@@ -204,6 +205,13 @@ export function CreateShortLinkForm({ sort, order }: CreateShortLinkFormProps) {
 							placeholder='Select domain'
 						/>
 					</FormItem>
+
+					<Button
+						mode='secondary'
+						appearance='neutral'
+						prefix={<Icon28SettingsOutline width={18} height={18} />}
+						iconOnly
+					/>
 				</div>
 			</div>
 
