@@ -1,8 +1,15 @@
+import type { Metadata } from 'next'
+
 import { VkIdOneTap } from 'widgets/auth'
 
 import { Button, Separator } from 'ui/blocks'
 import { PixelBlast } from 'ui/effects'
 import { Icon28ArrowLeftOutline } from '@vkontakte/icons'
+
+export const metadata: Metadata = {
+	title: 'Login',
+	description: 'Login to admin',
+}
 
 export default function Login() {
 	return (

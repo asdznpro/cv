@@ -8,14 +8,11 @@ import { AreaChart, LineChart, type ChartConfig } from 'ui/charts'
 import { PixelBlast } from 'ui/effects'
 import { ContextCard, Tooltip } from 'ui/floating'
 import { FormItem } from 'ui/forms'
-import { Editor } from 'ui/editor'
 
 import {
 	Icon12Cancel,
 	Icon12Check,
-	Icon28ChainOutline,
 	Icon28ChevronDownOutline,
-	Icon28ChevronRightOutline,
 	Icon28ChevronUpOutline,
 	Icon28HelpOutline,
 } from '@vkontakte/icons'
@@ -118,10 +115,6 @@ export default function Admin() {
 	return (
 		<>
 			<span />
-
-			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-app'>
-				<Editor />
-			</section>
 
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-12'>
 				<div className='grid grid-cols-2 @lg:grid-cols-3 gap-app'>

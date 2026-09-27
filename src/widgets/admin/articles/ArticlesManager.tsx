@@ -174,6 +174,14 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 							iconOnly
 						/>
 					</Tooltip>
+
+					<Button
+						to='/admin/articles/editor'
+						mode='secondary'
+						appearance='neutral'
+						prefix={<Icon28EditOutline width={18} height={18} />}
+						iconOnly
+					/>
 				</div>
 			</div>
 
