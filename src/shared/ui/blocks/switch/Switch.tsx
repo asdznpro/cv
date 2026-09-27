@@ -58,21 +58,21 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
 						'thumb pointer-events-none absolute top-0.5 left-0.5 size-4',
 						'inline-flex items-center justify-center overflow-hidden',
 						'rounded-full bg-white',
-						'transition-[translate,color] duration-120 ease-in',
+						'transition-[translate,color] duration-200 ease-in',
 					)}
 				>
 					{icon != null && checkedIcon != null ? (
 						<span
 							className={twMerge(
 								'icons absolute inset-y-0 left-0 flex w-8',
-								'transition-[translate] duration-120 ease-in',
+								'transition-[translate] duration-200 ease-in',
 							)}
 						>
 							<span className='inline-flex size-4 shrink-0 items-center justify-center'>
-								{icon}
+								{checkedIcon}
 							</span>
 							<span className='inline-flex size-4 shrink-0 items-center justify-center'>
-								{checkedIcon}
+								{icon}
 							</span>
 						</span>
 					) : (

@@ -9,7 +9,7 @@ export const switchVariants = cva(
 		'has-disabled:cursor-not-allowed has-disabled:opacity-60',
 		'[&_.thumb]:translate-x-0 has-[:checked]:[&_.thumb]:translate-x-4',
 		'[&_.thumb]:text-foreground-inverse',
-		'[&_.icons]:translate-x-0 has-[:checked]:[&_.icons]:-translate-x-4',
+		'[&_.icons]:-translate-x-4 has-[:checked]:[&_.icons]:translate-x-0',
 		'[&_.icon-on]:hidden has-[:checked]:[&_.icon-on]:inline-flex',
 	],
 

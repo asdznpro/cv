@@ -1,9 +1,9 @@
 'use client'
 
 import { useMemo, useState, useTransition } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 
 import { AnimatePresence, motion } from 'motion/react'
 import { toast } from 'sonner'
@@ -463,8 +463,9 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 											inner={
 												<span className='z-1 absolute inset-0 w-full h-full'>
 													{article.status === 'draft' && (
-														<span className='size-full flex items-center justify-center bg-surface/60'>
+														<span className='size-full flex p-2 bg-surface/60'>
 															<Badge
+																size='md'
 																appearance='neutral'
 																prefix={
 																	<Icon28EditOutline width={16} height={16} />
@@ -474,8 +475,9 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 													)}
 
 													{article.status === 'archived' && (
-														<span className='size-full flex items-center justify-center bg-surface/60'>
+														<span className='size-full flex p-2 bg-surface/60'>
 															<Badge
+																size='md'
 																appearance='neutral'
 																prefix={
 																	<Icon28ArchiveOutline
