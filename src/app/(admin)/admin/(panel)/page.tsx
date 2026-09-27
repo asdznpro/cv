@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-import { Badge, Button, Separator, Switch } from 'ui/blocks'
+import { Chip, Button, Separator, Switch } from 'ui/blocks'
 import { AreaChart, LineChart, type ChartConfig } from 'ui/charts'
 import { PixelBlast } from 'ui/effects'
 import { ContextCard, Tooltip } from 'ui/floating'
@@ -107,7 +107,7 @@ export default function Admin() {
 
 									<h3 className='text-xl font-medium font-condensed tracking-tight'>
 										3,2k requests{' '}
-										<Badge
+										<Chip
 											className='ml-1'
 											size='sm'
 											mode='soft'

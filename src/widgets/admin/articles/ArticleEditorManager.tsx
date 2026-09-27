@@ -25,7 +25,7 @@ import {
 } from 'lib/articles'
 import type { Company } from 'lib/companies'
 
-import { Badge, Button, Separator } from 'ui/blocks'
+import { Chip, Button, Separator } from 'ui/blocks'
 import { FormItem } from 'ui/forms'
 import { Tooltip } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
@@ -726,7 +726,7 @@ export function ArticleEditorManager({
 												/>
 											</FormItem>
 
-											<Badge
+											<Chip
 												size='sm'
 												mode='secondary'
 												appearance='neutral'

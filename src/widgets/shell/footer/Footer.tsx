@@ -3,7 +3,7 @@
 import { twMerge } from 'tailwind-merge'
 
 import { StickerPeel } from 'ui/effects'
-import { Badge } from 'ui/blocks'
+import { Chip } from 'ui/blocks'
 
 import { Icon28GlobeCrossOutline, Icon28LinkOutline } from '@vkontakte/icons'
 
@@ -93,7 +93,7 @@ export function Footer() {
 							>
 								<span className='absolute top-2 right-2 flex gap-1'>
 									{item.restrictedIn && (
-										<Badge
+										<Chip
 											title='Может быть недоступен в РФ'
 											aria-label='Ограничен в РФ'
 											size='md'
@@ -104,7 +104,7 @@ export function Footer() {
 										/>
 									)}
 
-									<Badge
+									<Chip
 										size='md'
 										appearance='neutral'
 										prefix={<Icon28LinkOutline width={14} height={14} />}
@@ -138,7 +138,7 @@ export function Footer() {
 					&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV
 				</span>
 
-				<span>v2.1.39, 14.9.26</span>
+				<span>v2.1.42, 27.9.26</span>
 			</div>
 		</footer>
 	)

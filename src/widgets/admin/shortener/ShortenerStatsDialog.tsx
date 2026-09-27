@@ -14,7 +14,7 @@ import {
 	type ShortenerStatsRange,
 } from 'lib/short-links'
 
-import { Badge, Button, Separator, Spinner } from 'ui/blocks'
+import { Chip, Button, Separator, Spinner } from 'ui/blocks'
 import { AreaChart, type ChartConfig } from 'ui/charts'
 import { DropdownMenu, Tooltip } from 'ui/floating'
 
@@ -113,7 +113,7 @@ function StatsChange({
 
 	return (
 		<Tooltip text={RANGE_COMPARE[range]}>
-			<Badge
+			<Chip
 				className='ml-1 mb-1 align-middle'
 				size='sm'
 				mode='soft'
@@ -123,7 +123,7 @@ function StatsChange({
 				}
 			>
 				{change.label}
-			</Badge>
+			</Chip>
 		</Tooltip>
 	)
 }

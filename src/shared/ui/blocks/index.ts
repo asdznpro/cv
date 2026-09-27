@@ -1,5 +1,5 @@
 export * from './animated-label'
-export * from './badge'
+export * from './chip'
 export * from './button'
 export * from './copy-button'
 export * from './carousel'

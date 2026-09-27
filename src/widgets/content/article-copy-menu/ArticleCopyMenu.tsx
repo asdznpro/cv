@@ -1,6 +1,6 @@
 'use client'
 
-import { Badge } from 'ui/blocks'
+import { Chip } from 'ui/blocks'
 import { DropdownMenu } from 'ui/floating'
 
 import {
@@ -23,13 +23,13 @@ export function ArticleCopyMenu({
 	return (
 		<DropdownMenu align='center'>
 			<DropdownMenu.Trigger className={className}>
-				<Badge
+				<Chip
 					mode='outline'
 					appearance='neutral'
 					suffix={<Icon28ChevronDownOutline width={16} height={16} />}
 				>
 					Copy
-				</Badge>
+				</Chip>
 			</DropdownMenu.Trigger>
 
 			<DropdownMenu.Content className='w-44'>

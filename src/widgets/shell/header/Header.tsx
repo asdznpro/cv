@@ -10,7 +10,7 @@ import { twMerge } from 'tailwind-merge'
 
 import { useBoot } from 'widgets/shell'
 
-import { Badge, Button, Separator, AnimatedLabel } from 'ui/blocks'
+import { Chip, Button, Separator, AnimatedLabel } from 'ui/blocks'
 import { Logo } from 'ui/brand'
 import { Backdrop } from 'ui/overlays'
 
@@ -249,7 +249,7 @@ export function Header() {
 												item.className,
 											)}
 										>
-											<Badge
+											<Chip
 												className='absolute top-2 right-2'
 												size='md'
 												appearance='neutral'

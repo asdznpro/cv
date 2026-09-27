@@ -2,7 +2,7 @@
 
 import { twMerge } from 'tailwind-merge'
 
-import { Badge, Kbd, ScrollArea, Separator } from 'ui/blocks'
+import { Chip, Kbd, ScrollArea, Separator } from 'ui/blocks'
 import {
 	Icon20ArrowTurnRightOutline,
 	Icon28PollSquareOutline,
@@ -55,13 +55,13 @@ export function CommandMenu(props: CommandMenuProps) {
 										'select-none cursor-pointer focus-ring-base focus-ring-visible',
 									)}
 								>
-									<Badge
+									<Chip
 										mode='soft'
 										appearance='neutral'
 										prefix={<Icon28PollSquareOutline width={16} height={16} />}
 									/>
 
-									<Badge
+									<Chip
 										className='my-auto order-last scale-0 group-hover:scale-100 group-focus-visible:scale-100'
 										mode='ghost'
 										appearance='neutral'

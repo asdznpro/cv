@@ -20,7 +20,7 @@ import {
 import { getFormattedDate } from 'lib/utils'
 
 import {
-	Badge,
+	Chip,
 	Button,
 	EmptyState,
 	Pagination,
@@ -464,7 +464,7 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 												<span className='z-1 absolute inset-0 w-full h-full'>
 													{article.status === 'draft' && (
 														<span className='size-full flex p-2 bg-surface/60'>
-															<Badge
+															<Chip
 																size='md'
 																appearance='neutral'
 																prefix={
@@ -476,7 +476,7 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 
 													{article.status === 'archived' && (
 														<span className='size-full flex p-2 bg-surface/60'>
-															<Badge
+															<Chip
 																size='md'
 																appearance='neutral'
 																prefix={
@@ -515,7 +515,7 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 											</Link>
 
 											<span className='flex flex-wrap gap-1'>
-												<Badge
+												<Chip
 													size='md'
 													mode='soft'
 													appearance={
@@ -535,9 +535,9 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 												>
 													{article.views}
 													{article.views_24h > 0 && ' +' + article.views_24h}
-												</Badge>
+												</Chip>
 
-												<Badge
+												<Chip
 													size='md'
 													mode='soft'
 													appearance={
@@ -549,23 +549,23 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 													{article.unique_visitors}
 													{article.uniques_24h > 0 &&
 														' +' + article.uniques_24h}
-												</Badge>
+												</Chip>
 
-												<Badge size='md' mode='soft' appearance='neutral'>
+												<Chip size='md' mode='soft' appearance='neutral'>
 													{getFormattedDate(article.created_at).short}
-												</Badge>
+												</Chip>
 
-												<Badge
+												<Chip
 													className='capitalize'
 													size='md'
 													mode='soft'
 													appearance='neutral'
 												>
 													{article.category}
-												</Badge>
+												</Chip>
 
 												{article.type === 'link' && (
-													<Badge
+													<Chip
 														size='md'
 														mode='soft'
 														appearance='neutral'
@@ -574,7 +574,7 @@ export function ArticlesManager({ articles }: ArticlesManagerProps) {
 														}
 													>
 														External
-													</Badge>
+													</Chip>
 												)}
 											</span>
 										</div>

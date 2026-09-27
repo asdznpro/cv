@@ -10,7 +10,7 @@ import {
 } from 'lib/experience'
 import { formatEmploymentDuration, getFormattedDate } from 'lib/utils'
 
-import { Badge, Button, PreviewCard, Separator } from 'ui/blocks'
+import { Chip, Button, PreviewCard, Separator } from 'ui/blocks'
 import { StickerPeel } from 'ui/effects'
 import { DropdownMenu, Tooltip } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
@@ -112,7 +112,7 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 
 										<span className='flex flex-wrap gap-1'>
 											{item.company?.slug && (
-												<Badge
+												<Chip
 													size='sm'
 													mode='soft'
 													appearance='neutral'
@@ -121,18 +121,18 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 													}
 												>
 													{item.company.slug}
-												</Badge>
+												</Chip>
 											)}
 
 											{item.company?.url && (
-												<Badge
+												<Chip
 													size='sm'
 													mode='soft'
 													appearance='neutral'
 													prefix={<Icon28GlobeOutline width={12} height={12} />}
 												>
 													{item.company.url.split('/')[2]}
-												</Badge>
+												</Chip>
 											)}
 										</span>
 									</div>
@@ -246,14 +246,14 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 
 										<div className='col-span-3 flex flex-wrap gap-1'>
 											{item.skills.map(skill => (
-												<Badge
+												<Chip
 													key={skill}
 													size='sm'
 													mode='soft'
 													appearance='neutral'
 												>
 													{skill}
-												</Badge>
+												</Chip>
 											))}
 										</div>
 									</div>

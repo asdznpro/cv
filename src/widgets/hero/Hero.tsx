@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import type { ToolkitItem } from 'lib/toolkit'
 
-import { Badge, Carousel } from 'ui/blocks'
+import { Chip, Carousel } from 'ui/blocks'
 import { Lanyard, PixelBlast } from 'ui/effects'
 
 import { Icon28WrenchOutline } from '@vkontakte/icons'
@@ -17,13 +17,13 @@ export function Hero({ items }: HeroProps) {
 	return (
 		<div className='w-full h-screen flex flex-col p-2 gap-2'>
 			<div className='relative z-0 w-full h-full rounded-xl border border-separator bg-blue-950/40 overflow-hidden'>
-				<Badge
+				<Chip
 					className='absolute bottom-app right-1/2 translate-x-1/2'
 					appearance='danger'
 					prefix={<Icon28WrenchOutline width={18} height={18} />}
 				>
 					In the process of active development
-				</Badge>
+				</Chip>
 
 				<div className='absolute inset-0'>
 					<Lanyard

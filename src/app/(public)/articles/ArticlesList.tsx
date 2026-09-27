@@ -10,7 +10,7 @@ import { getFormattedDate } from 'lib/utils'
 import { ArticleItem } from 'widgets/content'
 import { EmptyStateScreen } from 'widgets/shell'
 
-import { Badge, Button } from 'ui/blocks'
+import { Chip, Button } from 'ui/blocks'
 import { Icon24ExternalLinkOutline, Icon28Play } from '@vkontakte/icons'
 
 function formatCategory(value: string) {
@@ -75,13 +75,13 @@ export function ArticlesList({
 							>
 								<span className='z-1 absolute top-0 left-0 w-full flex p-2 gap-1.5 uppercase'>
 									{status && (
-										<Badge size='md' mode='secondary' appearance='neutral'>
+										<Chip size='md' mode='secondary' appearance='neutral'>
 											{status}
-										</Badge>
+										</Chip>
 									)}
 
 									{externalUrl && (
-										<Badge
+										<Chip
 											className='ml-auto'
 											size='md'
 											mode='secondary'

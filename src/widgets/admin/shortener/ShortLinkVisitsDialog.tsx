@@ -15,7 +15,7 @@ import {
 } from 'lib/short-links'
 import { getFormattedDate } from 'lib/utils'
 
-import { Badge, Button, ScrollArea, Separator, Spinner } from 'ui/blocks'
+import { Chip, Button, ScrollArea, Separator, Spinner } from 'ui/blocks'
 import { useOverlay } from 'ui/overlays'
 
 import {
@@ -242,7 +242,7 @@ export function ShortLinkVisitsDialog({
 												</div>
 
 												<span className='flex flex-wrap gap-1'>
-													<Badge
+													<Chip
 														size='md'
 														mode='soft'
 														appearance='neutral'
@@ -254,26 +254,26 @@ export function ShortLinkVisitsDialog({
 														}
 													>
 														{visit.hits}
-													</Badge>
+													</Chip>
 
-													<Badge size='md' mode='soft' appearance='neutral'>
+													<Chip size='md' mode='soft' appearance='neutral'>
 														{
 															getFormattedDate(visit.last_seen_at, {
 																includeTime: true,
 															}).relative
 														}
-													</Badge>
+													</Chip>
 
 													{agent && (
-														<Badge size='md' mode='soft' appearance='neutral'>
+														<Chip size='md' mode='soft' appearance='neutral'>
 															{agent}
-														</Badge>
+														</Chip>
 													)}
 
 													{visit.as_org && (
-														<Badge size='md' mode='soft' appearance='neutral'>
+														<Chip size='md' mode='soft' appearance='neutral'>
 															{visitOrg(visit.as_org)}
-														</Badge>
+														</Chip>
 													)}
 												</span>
 											</div>

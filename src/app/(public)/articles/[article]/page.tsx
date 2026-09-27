@@ -17,7 +17,7 @@ import { getFormattedDate } from 'lib/utils'
 import { ArticleCopyMenu, ArticleToc } from 'widgets/content'
 import { BackToTop } from 'widgets/shell'
 
-import { Badge, PreviewCard, Separator } from 'ui/blocks'
+import { Chip, PreviewCard, Separator } from 'ui/blocks'
 import { MarkdownContent } from 'ui/markdown'
 import { Icon20ArrowTurnRightOutline } from '@vkontakte/icons'
 
@@ -97,18 +97,18 @@ export default async function ArticlePage({
 
 						<div className='flex flex-wrap gap-1.5'>
 							{article.status !== 'published' && (
-								<Badge mode='outline' appearance='neutral'>
+								<Chip mode='outline' appearance='neutral'>
 									{article.status === 'draft' ? 'Draft' : 'Archived'}
-								</Badge>
+								</Chip>
 							)}
 
-							<Badge mode='outline' appearance='neutral'>
+							<Chip mode='outline' appearance='neutral'>
 								{getFormattedDate(article.created_at, false).full}
-							</Badge>
+							</Chip>
 
-							<Badge mode='outline' appearance='neutral'>
+							<Chip mode='outline' appearance='neutral'>
 								{readMinutes} min read
-							</Badge>
+							</Chip>
 
 							<ArticleCopyMenu markdown={content} />
 						</div>
@@ -187,7 +187,7 @@ export default async function ArticlePage({
 											rel={isExternal ? 'noopener noreferrer' : undefined}
 											className='group relative flex gap-3 transition-all hover:underline underline-offset-4 outline-none'
 										>
-											<Badge
+											<Chip
 												mode='ghost'
 												appearance='neutral'
 												prefix={
@@ -211,14 +211,14 @@ export default async function ArticlePage({
 					{article.tags.length > 0 && (
 						<div className='flex gap-1.5'>
 							{article.tags.map(tag => (
-								<Badge
+								<Chip
 									key={tag}
 									to={`/articles?tag=${tag}`}
 									mode='outline'
 									appearance='neutral'
 								>
 									#{tag}
-								</Badge>
+								</Chip>
 							))}
 						</div>
 					)}
