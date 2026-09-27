@@ -22,7 +22,7 @@ import {
 import { getFormattedDate } from 'lib/utils'
 
 import {
-	Badge,
+	Chip,
 	Button,
 	MiddleTruncate,
 	PreviewCard,
@@ -816,9 +816,9 @@ export function AssetsManager({ initial }: AssetsManagerProps) {
 												</button>
 
 												<span className='flex flex-wrap gap-1'>
-													<Badge size='sm' mode='soft' appearance='neutral'>
+													<Chip size='sm' mode='soft' appearance='neutral'>
 														Folder
-													</Badge>
+													</Chip>
 												</span>
 											</div>
 
@@ -907,14 +907,14 @@ export function AssetsManager({ initial }: AssetsManagerProps) {
 												</a>
 
 												<span className='flex flex-wrap gap-1'>
-													<Badge size='sm' mode='soft' appearance='neutral'>
+													<Chip size='sm' mode='soft' appearance='neutral'>
 														{formatBytes(file.size)}
-													</Badge>
+													</Chip>
 
 													{file.lastModified && (
-														<Badge size='sm' mode='soft' appearance='neutral'>
+														<Chip size='sm' mode='soft' appearance='neutral'>
 															{getFormattedDate(file.lastModified).short}
-														</Badge>
+														</Chip>
 													)}
 												</span>
 											</div>

@@ -17,7 +17,7 @@ import {
 import { getFormattedDate } from 'lib/utils'
 
 import {
-	Badge,
+	Chip,
 	Button,
 	CopyButton,
 	EmptyState,
@@ -410,7 +410,7 @@ export function ShortenerManager({
 
 											<span className='flex flex-wrap gap-1'>
 												<Tooltip text='Clicks (last 24h in parentheses)'>
-													<Badge
+													<Chip
 														size='md'
 														mode='soft'
 														appearance={
@@ -425,11 +425,11 @@ export function ShortenerManager({
 													>
 														{link.clicks}
 														{link.clicks_24h > 0 && ' +' + link.clicks_24h}
-													</Badge>
+													</Chip>
 												</Tooltip>
 
 												<Tooltip text='Unique visitors (last 24h in parentheses)'>
-													<Badge
+													<Chip
 														size='md'
 														mode='soft'
 														appearance={
@@ -441,14 +441,14 @@ export function ShortenerManager({
 													>
 														{link.unique_visitors ?? 0}
 														{link.uniques_24h > 0 && ' +' + link.uniques_24h}
-													</Badge>
+													</Chip>
 												</Tooltip>
 
-												<Badge size='md' mode='soft' appearance='neutral'>
+												<Chip size='md' mode='soft' appearance='neutral'>
 													{getFormattedDate(link.created_at, false).short}
-												</Badge>
+												</Chip>
 
-												<Badge
+												<Chip
 													className='max-w-52'
 													size='md'
 													mode='soft'
@@ -456,7 +456,7 @@ export function ShortenerManager({
 													prefix={<Icon28ChainOutline width={14} height={14} />}
 												>
 													{stripUrlProtocol(link.target_url)}
-												</Badge>
+												</Chip>
 											</span>
 										</div>
 

@@ -9,7 +9,7 @@ import {
 } from 'lib/experience'
 import { getFormattedDate } from 'lib/utils'
 
-import { Badge, Button, PreviewCard } from 'ui/blocks'
+import { Chip, Button, PreviewCard } from 'ui/blocks'
 import { DropdownMenu, Tooltip } from 'ui/floating'
 
 import { Icon28MoreHorizontal } from '@vkontakte/icons'

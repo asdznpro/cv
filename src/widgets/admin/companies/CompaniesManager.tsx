@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 
 import { type Company } from 'lib/companies'
 
-import { Badge, Button, PreviewCard } from 'ui/blocks'
+import { Chip, Button, PreviewCard } from 'ui/blocks'
 import { DropdownMenu, Tooltip } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
 
@@ -104,7 +104,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 									// inner={
 									// 	<span className='z-1 absolute inset-0 w-full h-full'>
 									// 		<span className='size-full flex items-center justify-center bg-surface/60'>
-									// 			<Badge
+									// 			<Chip
 									// 				appearance='neutral'
 									// 				prefix={<Icon24DotsVertical width={16} height={16} />}
 									// 			/>
@@ -125,24 +125,24 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 									)}
 
 									<span className='flex flex-wrap gap-1'>
-										<Badge
+										<Chip
 											size='sm'
 											mode='soft'
 											appearance='neutral'
 											prefix={<Icon28HashtagOutline width={12} height={12} />}
 										>
 											{company.slug}
-										</Badge>
+										</Chip>
 
 										{company.url && (
-											<Badge
+											<Chip
 												size='sm'
 												mode='soft'
 												appearance='neutral'
 												prefix={<Icon28GlobeOutline width={12} height={12} />}
 											>
 												{company.url.split('/')[2]}
-											</Badge>
+											</Chip>
 										)}
 									</span>
 								</div>

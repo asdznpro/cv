@@ -98,14 +98,14 @@ export function ImageLightbox() {
 								}}
 							>
 								{/* {active.caption && (
-										<Badge
+										<Chip
 											className='z-1 absolute bottom-2 left-1/2 -translate-x-1/2 max-w-[calc(100%-1rem)] truncate pointer-events-none'
 											appearance='neutral'
 											size='md'
 											radius='smooth'
 										>
 											{active.caption}
-										</Badge>
+										</Chip>
 									)} */}
 							</PreviewCard>
 						) : (

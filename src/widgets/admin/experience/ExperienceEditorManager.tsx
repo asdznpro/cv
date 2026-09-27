@@ -27,7 +27,7 @@ import {
 	type ExperienceSticker,
 } from 'lib/experience'
 
-import { Badge, Button, Separator } from 'ui/blocks'
+import { Chip, Button, Separator } from 'ui/blocks'
 import { Checkbox, FormItem } from 'ui/forms'
 import { Tooltip } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
@@ -421,7 +421,7 @@ export function ExperienceEditorManager({
 										</FormItem>
 
 										{index > 0 && (
-											<Badge
+											<Chip
 												size='sm'
 												mode='secondary'
 												appearance='neutral'
@@ -625,7 +625,7 @@ export function ExperienceEditorManager({
 													style={{ transform: `rotate(${sticker.rotate}deg)` }}
 												/>
 
-												<Badge
+												<Chip
 													className='absolute top-1 right-1'
 													size='sm'
 													mode='secondary'

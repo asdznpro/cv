@@ -15,7 +15,7 @@ import {
 } from 'lib/notifications'
 import { getFormattedDate } from 'lib/utils'
 
-import { Badge, Button, EmptyState, Spinner } from 'ui/blocks'
+import { Chip, Button, EmptyState, Spinner } from 'ui/blocks'
 import { DropdownMenu } from 'ui/floating'
 
 import {
@@ -218,7 +218,7 @@ function NotificationItem({
 
 	return (
 		<div className='group flex flex-1 p-surface gap-surface rounded-md bg-surface-secondary/strong'>
-			<Badge
+			<Chip
 				mode='soft'
 				appearance={isNew ? 'accent' : 'neutral'}
 				prefix={<Icon28ChainOutline width={16} height={16} />}

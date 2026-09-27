@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { motion } from 'motion/react'
 
-import { Badge, PreviewCard, type PreviewCardProps } from 'ui/blocks'
+import { Chip, PreviewCard, type PreviewCardProps } from 'ui/blocks'
 
 import { useLightbox } from '../image-lightbox'
 
@@ -92,14 +92,14 @@ export function ImageBlock({
 							sizes='(max-width: 768px) 100vw, 50vw'
 						>
 							{masonry && caption && (
-								<Badge
+								<Chip
 									className='z-1 absolute bottom-2 left-1/2 -translate-x-1/2 max-w-[calc(100%-1rem)] truncate pointer-events-none'
 									appearance='neutral'
 									size='md'
 									radius='smooth'
 								>
 									{caption}
-								</Badge>
+								</Chip>
 							)}
 						</PreviewCard>
 					) : (

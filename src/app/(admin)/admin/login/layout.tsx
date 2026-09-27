@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 import Link from 'next/link'
 
-import { Badge } from 'ui/blocks'
+import { Chip } from 'ui/blocks'
 import { Logo } from 'ui/brand'
 
 export const metadata: Metadata = {
@@ -35,13 +35,13 @@ export default function PublicLayout({
 			<footer className='mt-auto w-full flex flex-col py-12'>
 				<div className='mx-auto max-w-md w-full flex px-app text-xl text-blue-200'>
 					<span className='mx-auto'>
-						<Badge
+						<Chip
 							className='backdrop-blur-sm'
 							mode='secondary'
 							appearance='neutral'
 						>
 							&copy; {new Date().getFullYear()}, Andrew Sukhushin / CV
-						</Badge>
+						</Chip>
 					</span>
 				</div>
 			</footer>

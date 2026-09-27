@@ -4,7 +4,7 @@ import { formatEmploymentDuration, getFormattedDate } from 'lib/utils'
 import { PORTFOLIO_ITEMS } from 'shared/data'
 
 import {
-	Badge,
+	Chip,
 	Button,
 	PreviewCard,
 	Separator,
@@ -136,14 +136,14 @@ export default async function Portfolio() {
 
 									<div className='col-span-3 flex flex-wrap gap-1'>
 										{experience.skills.map(skill => (
-											<Badge
+											<Chip
 												key={skill}
 												size='md'
 												mode='soft'
 												appearance='neutral'
 											>
 												{skill}
-											</Badge>
+											</Chip>
 										))}
 									</div>
 								</div>

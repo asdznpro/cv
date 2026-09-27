@@ -5,12 +5,12 @@ import { forwardRef } from 'react'
 
 import { twMerge } from 'tailwind-merge'
 
-import { badgeVariants } from './badge.variants'
-import type BadgeProps from './Badge.interface'
+import { chipVariants } from './chip.variants'
+import type ChipProps from './Chip.interface'
 
-type BadgeElement = HTMLSpanElement | HTMLButtonElement | HTMLAnchorElement
+type ChipElement = HTMLSpanElement | HTMLButtonElement | HTMLAnchorElement
 
-export const Badge = forwardRef<BadgeElement, BadgeProps>((props, ref) => {
+export const Chip = forwardRef<ChipElement, ChipProps>((props, ref) => {
 	const {
 		children,
 		mode,
@@ -70,7 +70,7 @@ export const Badge = forwardRef<BadgeElement, BadgeProps>((props, ref) => {
 			data-interactive={!disabled && isInteractive ? true : undefined}
 			className={twMerge(
 				'root',
-				badgeVariants({
+				chipVariants({
 					mode,
 					appearance,
 					size,

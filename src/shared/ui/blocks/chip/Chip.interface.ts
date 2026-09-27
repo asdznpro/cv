@@ -1,6 +1,6 @@
 import { LinkProps } from 'next/link'
 
-export default interface BadgeProps extends Omit<
+export default interface ChipProps extends Omit<
 	React.AllHTMLAttributes<HTMLElement>,
 	'prefix' | 'size'
 > {

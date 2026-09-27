@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Separator, Kbd, Badge } from 'ui/blocks'
+import { Button, Separator, Kbd, Chip, Switch } from 'ui/blocks'
 import { FormItem } from 'ui/forms'
 
 import {
@@ -9,6 +9,8 @@ import {
 	Icon24TvOutline,
 	Icon28MoreHorizontal,
 	Icon28AddOutline,
+	Icon12Check,
+	Icon12Cancel,
 } from '@vkontakte/icons'
 
 export default function Settings() {
@@ -142,7 +144,7 @@ export default function Settings() {
 				<div className='grid grid-cols-1 @md:grid-cols-2 gap-app'>
 					<div className='flex flex-col bg-surface border border-separator rounded-surface'>
 						<div className='flex p-surface gap-surface'>
-							<Badge
+							<Chip
 								mode='soft'
 								appearance='success'
 								prefix={<Icon24TvOutline width={16} height={16} />}
@@ -166,7 +168,7 @@ export default function Settings() {
 
 					<div className='flex flex-col bg-surface border border-separator rounded-surface'>
 						<div className='flex p-surface gap-surface'>
-							<Badge
+							<Chip
 								mode='soft'
 								appearance='neutral'
 								prefix={<Icon24TvOutline width={16} height={16} />}
@@ -190,13 +192,13 @@ export default function Settings() {
 
 					<button className='flex flex-col bg-surface/soft hover:bg-surface border border-dashed border-separator rounded-surface cursor-pointer transition-all focus-ring-base focus-ring-visible active:scale-98'>
 						<div className='flex justify-center p-surface gap-surface'>
-							<Badge
+							<Chip
 								mode='ghost'
 								appearance='neutral'
 								prefix={<Icon28AddOutline width={16} height={16} />}
 							>
 								Add new provider
-							</Badge>
+							</Chip>
 						</div>
 					</button>
 				</div>
@@ -293,9 +295,12 @@ export default function Settings() {
 
 						<Kbd keys={['Ctrl', 'K']} />
 
-						<p className='font-medium font-condensed tracking-tight'>
-							*Switch*
-						</p>
+						<Switch
+							className='my-auto'
+							icon={<Icon12Cancel />}
+							checkedIcon={<Icon12Check />}
+							aria-label='Icon swaps on toggle'
+						/>
 					</div>
 
 					<Separator />
@@ -309,9 +314,12 @@ export default function Settings() {
 
 						<Kbd keys={['Shift', 'F']} />
 
-						<p className='font-medium font-condensed tracking-tight'>
-							*Switch*
-						</p>
+						<Switch
+							className='my-auto'
+							icon={<Icon12Cancel />}
+							checkedIcon={<Icon12Check />}
+							aria-label='Icon swaps on toggle'
+						/>
 					</div>
 
 					<Separator />
@@ -325,9 +333,12 @@ export default function Settings() {
 
 						<Kbd keys={['Ctrl', 'B']} />
 
-						<p className='font-medium font-condensed tracking-tight'>
-							*Switch*
-						</p>
+						<Switch
+							className='my-auto'
+							icon={<Icon12Cancel />}
+							checkedIcon={<Icon12Check />}
+							aria-label='Icon swaps on toggle'
+						/>
 					</div>
 
 					<Separator />
@@ -341,9 +352,12 @@ export default function Settings() {
 
 						<Kbd keys={['Shift', 'N']} />
 
-						<p className='font-medium font-condensed tracking-tight'>
-							*Switch*
-						</p>
+						<Switch
+							className='my-auto'
+							icon={<Icon12Cancel />}
+							checkedIcon={<Icon12Check />}
+							aria-label='Icon swaps on toggle'
+						/>
 					</div>
 
 					<Separator />
@@ -357,9 +371,12 @@ export default function Settings() {
 
 						<Kbd keys={['Esc']} />
 
-						<p className='font-medium font-condensed tracking-tight'>
-							*Switch*
-						</p>
+						<Switch
+							className='my-auto'
+							icon={<Icon12Cancel />}
+							checkedIcon={<Icon12Check />}
+							aria-label='Icon swaps on toggle'
+						/>
 					</div>
 				</div>
 
@@ -378,7 +395,7 @@ export default function Settings() {
 
 				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
 					<div className='flex flex-wrap p-surface gap-surface'>
-						<Badge
+						<Chip
 							mode='soft'
 							appearance='neutral'
 							prefix={<Icon24TvOutline width={16} height={16} />}
@@ -387,14 +404,14 @@ export default function Settings() {
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
 								Windows{' '}
-								<Badge
+								<Chip
 									className='ml-1 mb-0.5 align-middle uppercase'
 									size='sm'
 									mode='soft'
 									appearance='success'
 								>
 									Current session
-								</Badge>
+								</Chip>
 							</h3>
 
 							<p className='text-sm text-foreground-secondary'>
@@ -414,7 +431,7 @@ export default function Settings() {
 					<Separator />
 
 					<div className='flex flex-wrap p-surface gap-surface'>
-						<Badge
+						<Chip
 							mode='soft'
 							appearance='neutral'
 							prefix={<Icon24SmartphoneOutline width={16} height={16} />}

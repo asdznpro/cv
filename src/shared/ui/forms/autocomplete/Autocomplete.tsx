@@ -19,7 +19,7 @@ import {
 } from '@floating-ui/react'
 import { twMerge } from 'tailwind-merge'
 
-import { Badge } from 'ui/blocks'
+import { Chip } from 'ui/blocks'
 import { Icon28CancelOutline } from '@vkontakte/icons'
 
 import { FieldSurface } from '../_components/field-surface'
@@ -187,7 +187,7 @@ export function Autocomplete(props: AutocompleteProps) {
 
 						<span className='autocomplete w-full flex flex-wrap items-center gap-1'>
 							{selectedOptions.map(option => (
-								<Badge
+								<Chip
 									key={option.value}
 									mode='secondary'
 									appearance='neutral'
@@ -206,7 +206,7 @@ export function Autocomplete(props: AutocompleteProps) {
 									}}
 								>
 									{option.label}
-								</Badge>
+								</Chip>
 							))}
 
 							<input

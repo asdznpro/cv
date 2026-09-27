@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import * as VKID from '@vkid/sdk'
 
-import { Badge } from 'ui/blocks'
+import { Chip } from 'ui/blocks'
 
 export function VkIdOneTap() {
 	const ref = useRef<HTMLDivElement>(null)
@@ -84,7 +84,7 @@ export function VkIdOneTap() {
 
 			{error && (
 				<span className='absolute inset-0 flex items-center justify-center bg-background/80 pointer-events-none'>
-					<Badge
+					<Chip
 						className='backdrop-blur-sm'
 						role='alert'
 						size='md'
@@ -92,7 +92,7 @@ export function VkIdOneTap() {
 						appearance='danger'
 					>
 						{error}
-					</Badge>
+					</Chip>
 				</span>
 			)}
 		</div>

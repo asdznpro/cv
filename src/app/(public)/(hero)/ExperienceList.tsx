@@ -7,7 +7,7 @@ import {
 } from 'lib/experience'
 import { formatEmploymentDuration, getFormattedDate } from 'lib/utils'
 
-import { Badge, Button, PreviewCard, Separator } from 'ui/blocks'
+import { Chip, Button, PreviewCard, Separator } from 'ui/blocks'
 import { Tooltip } from 'ui/floating'
 import { StickerPeel } from 'ui/effects'
 
@@ -89,13 +89,13 @@ export function ExperienceList({ experiences }: ExperienceListProps) {
 										{item.skills.length > 0 && (
 											<div className='flex flex-wrap gap-1.5'>
 												{item.skills.map(skill => (
-													<Badge
+													<Chip
 														key={skill}
 														mode='secondary'
 														appearance='neutral'
 													>
 														{skill}
-													</Badge>
+													</Chip>
 												))}
 											</div>
 										)}

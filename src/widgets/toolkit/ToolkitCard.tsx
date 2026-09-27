@@ -10,7 +10,7 @@ import {
 	type ToolkitItem,
 } from 'lib/toolkit'
 
-import { Badge, Separator } from 'ui/blocks'
+import { Chip, Separator } from 'ui/blocks'
 import { Tooltip } from 'ui/floating'
 
 import {
@@ -44,7 +44,7 @@ export function ToolkitCard({ item, action }: ToolkitCardProps) {
 							text={formatToolkitProficiency(item.proficiency)}
 							triggerClassName='ml-1 align-baseline'
 						>
-							<Badge
+							<Chip
 								size='sm'
 								mode='soft'
 								appearance={
@@ -96,7 +96,7 @@ export function ToolkitCard({ item, action }: ToolkitCardProps) {
 				{item.tags.length > 0 && (
 					<span className='flex flex-wrap gap-1'>
 						{item.tags.map(tag => (
-							<Badge
+							<Chip
 								key={tag}
 								size='sm'
 								mode='soft'
@@ -104,7 +104,7 @@ export function ToolkitCard({ item, action }: ToolkitCardProps) {
 								prefix={<Icon28HashtagOutline width={12} height={12} />}
 							>
 								{formatToolkitTag(tag)}
-							</Badge>
+							</Chip>
 						))}
 					</span>
 				)}
