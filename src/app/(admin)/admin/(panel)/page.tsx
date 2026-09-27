@@ -3,14 +3,19 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-import { Badge, Button, Separator } from 'ui/blocks'
+import { Badge, Button, Separator, Switch } from 'ui/blocks'
 import { AreaChart, LineChart, type ChartConfig } from 'ui/charts'
 import { PixelBlast } from 'ui/effects'
 import { ContextCard, Tooltip } from 'ui/floating'
 import { FormItem } from 'ui/forms'
 import { Editor } from 'ui/editor'
 
-import { Icon28ChevronUpOutline, Icon28HelpOutline } from '@vkontakte/icons'
+import {
+	Icon12Cancel,
+	Icon12Check,
+	Icon28ChevronUpOutline,
+	Icon28HelpOutline,
+} from '@vkontakte/icons'
 
 const STATUS_OPTIONS = [
 	{ value: 'draft', label: 'Draft' },
@@ -77,6 +82,7 @@ export default function Admin() {
 	const [category, setCategory] = useState('')
 	const [company, setCompany] = useState('')
 	const [tags, setTags] = useState<string[]>(['cs2'])
+	const [echoCancellation, setEchoCancellation] = useState(true)
 
 	return (
 		<>
@@ -321,7 +327,7 @@ export default function Admin() {
 
 					<Separator />
 
-					<div className='flex flex-col p-surface gap-surface'>
+					<div className='flex p-surface gap-surface'>
 						<div className='flex flex-1 flex-col gap-3'>
 							<h3 className='text-xl font-medium font-condensed tracking-tight'>
 								Hardware / Software echo cancellation
@@ -333,6 +339,16 @@ export default function Admin() {
 								software algorithm is used.
 							</p>
 						</div>
+
+						<Switch
+							checked={echoCancellation}
+							onChange={event =>
+								setEchoCancellation(event.currentTarget.checked)
+							}
+							icon={<Icon12Cancel />}
+							checkedIcon={<Icon12Check />}
+							aria-label='Echo cancellation'
+						/>
 					</div>
 
 					<Separator />

@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Separator, Kbd, Badge } from 'ui/blocks'
+import { Button, Separator, Kbd, Badge, Switch } from 'ui/blocks'
 import { FormItem } from 'ui/forms'
 
 import {
@@ -9,6 +9,8 @@ import {
 	Icon24TvOutline,
 	Icon28MoreHorizontal,
 	Icon28AddOutline,
+	Icon12Check,
+	Icon12Cancel,
 } from '@vkontakte/icons'
 
 export default function Settings() {
@@ -293,9 +295,12 @@ export default function Settings() {
 
 						<Kbd keys={['Ctrl', 'K']} />
 
-						<p className='font-medium font-condensed tracking-tight'>
-							*Switch*
-						</p>
+						<Switch
+							className='my-auto'
+							icon={<Icon12Cancel />}
+							checkedIcon={<Icon12Check />}
+							aria-label='Icon swaps on toggle'
+						/>
 					</div>
 
 					<Separator />
@@ -309,9 +314,12 @@ export default function Settings() {
 
 						<Kbd keys={['Shift', 'F']} />
 
-						<p className='font-medium font-condensed tracking-tight'>
-							*Switch*
-						</p>
+						<Switch
+							className='my-auto'
+							icon={<Icon12Cancel />}
+							checkedIcon={<Icon12Check />}
+							aria-label='Icon swaps on toggle'
+						/>
 					</div>
 
 					<Separator />
@@ -325,9 +333,12 @@ export default function Settings() {
 
 						<Kbd keys={['Ctrl', 'B']} />
 
-						<p className='font-medium font-condensed tracking-tight'>
-							*Switch*
-						</p>
+						<Switch
+							className='my-auto'
+							icon={<Icon12Cancel />}
+							checkedIcon={<Icon12Check />}
+							aria-label='Icon swaps on toggle'
+						/>
 					</div>
 
 					<Separator />
@@ -341,9 +352,12 @@ export default function Settings() {
 
 						<Kbd keys={['Shift', 'N']} />
 
-						<p className='font-medium font-condensed tracking-tight'>
-							*Switch*
-						</p>
+						<Switch
+							className='my-auto'
+							icon={<Icon12Cancel />}
+							checkedIcon={<Icon12Check />}
+							aria-label='Icon swaps on toggle'
+						/>
 					</div>
 
 					<Separator />
@@ -357,9 +371,12 @@ export default function Settings() {
 
 						<Kbd keys={['Esc']} />
 
-						<p className='font-medium font-condensed tracking-tight'>
-							*Switch*
-						</p>
+						<Switch
+							className='my-auto'
+							icon={<Icon12Cancel />}
+							checkedIcon={<Icon12Check />}
+							aria-label='Icon swaps on toggle'
+						/>
 					</div>
 				</div>
 
