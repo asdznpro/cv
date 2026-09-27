@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import Link from 'next/link'
 
-import { Chip, Button, Separator, Switch } from 'ui/blocks'
+import { Accordion, Chip, Button, Separator, Switch } from 'ui/blocks'
 import { AreaChart, LineChart, type ChartConfig } from 'ui/charts'
 import { PixelBlast } from 'ui/effects'
 import { ContextCard, Tooltip } from 'ui/floating'
@@ -13,6 +13,9 @@ import { Editor } from 'ui/editor'
 import {
 	Icon12Cancel,
 	Icon12Check,
+	Icon28ChainOutline,
+	Icon28ChevronDownOutline,
+	Icon28ChevronRightOutline,
 	Icon28ChevronUpOutline,
 	Icon28HelpOutline,
 } from '@vkontakte/icons'
@@ -60,6 +63,34 @@ const TRAFFIC_CONFIG = {
 		colors: ['#f43f5e'],
 	},
 } satisfies ChartConfig
+
+const FAQ_ITEMS = [
+	{
+		value: 'animate',
+		title: 'Should count changes be animated?',
+		body: 'Animate the digit only when the value actually changes. A static badge should stay still, otherwise the motion reads as noise next to the label.',
+	},
+	{
+		value: 'when',
+		title: 'When should I use circular count badges?',
+		body: 'Use a circular badge for a short count on an icon or avatar. Switch to a lozenge once the label needs to sit beside the number.',
+	},
+	{
+		value: 'where',
+		title: 'Where should circular count badges be positioned?',
+		body: 'Pin the badge to the top-end corner of the target, with a small overlap. Keep it clear of the label so the count stays readable at a glance.',
+	},
+	{
+		value: 'overflow',
+		title: 'What happens when the count no longer fits?',
+		body: 'Cap the label at 99+. The badge grows horizontally just enough for the text, then stays circular only while the count is a single digit.',
+	},
+	{
+		value: 'empty',
+		title: 'Should a zero count stay visible?',
+		body: 'Hide the badge at zero. An empty circle still pulls attention, and the absence of a count is the clearer signal.',
+	},
+]
 
 const TAG_OPTIONS = [
 	{ value: 'cs2', label: 'CS2' },
@@ -544,14 +575,55 @@ export default function Admin() {
 						</Button>
 					</div>
 				</div>
+
+				<div className='flex gap-app not-first-of-type:pt-8 pb-app'>
+					<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
+						FAQ
+					</h2>
+				</div>
+
+				<Accordion.Root collapsible defaultValue='when'>
+					<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+						{FAQ_ITEMS.map((item, index) => (
+							<Fragment key={item.value}>
+								{index > 0 && <Separator />}
+
+								<Accordion.Item value={item.value}>
+									<div className='flex flex-col p-surface gap-surface'>
+										<div className='flex flex-1 flex-col'>
+											<Accordion.Trigger className='flex gap-2 text-start cursor-pointer [&_svg]:transition-transform [&_svg]:duration-200 data-[state=open]:[&_svg]:rotate-180'>
+												<h3 className='flex-1 text-xl font-medium font-condensed tracking-tight'>
+													{item.title}
+												</h3>
+
+												<Button
+													as='span'
+													size='sm'
+													mode='ghost'
+													appearance='neutral'
+													prefix={
+														<Icon28ChevronDownOutline width={18} height={18} />
+													}
+													iconOnly
+												/>
+											</Accordion.Trigger>
+
+											<Accordion.Content>
+												<p className='pt-3 text-sm text-foreground-secondary'>
+													{item.body}
+												</p>
+											</Accordion.Content>
+										</div>
+									</div>
+								</Accordion.Item>
+							</Fragment>
+						))}
+					</div>
+				</Accordion.Root>
 			</section>
 
 			<section className='mx-auto max-w-2xl w-full flex flex-col px-app gap-12'>
 				<div className='flex flex-col gap-6'>
-					<h1 className='text-3xl font-medium font-condensed tracking-tight'>
-						Admin Panel
-					</h1>
-
 					<p className='text-lg text-foreground-secondary'>
 						Looking for a starting point or more instructions? Head over to{' '}
 						<a

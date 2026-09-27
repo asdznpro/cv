@@ -1,3 +1,4 @@
+export * from './accordion'
 export * from './animated-label'
 export * from './chip'
 export * from './button'
