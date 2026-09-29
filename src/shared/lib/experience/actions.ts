@@ -55,7 +55,7 @@ function toActionError(error: unknown): ActionResult {
 function parseStickers(value: unknown): ExperienceSticker[] {
 	if (!Array.isArray(value)) return []
 	return value
-		.map((item) => {
+		.map(item => {
 			if (!item || typeof item !== 'object') return null
 			const row = item as { url?: unknown; rotate?: unknown }
 			const url = typeof row.url === 'string' ? row.url.trim() : ''
@@ -97,6 +97,7 @@ function mapExperience(row: Record<string, unknown>): Experience {
 			article && typeof article === 'object'
 				? (article as Experience['article'])
 				: null,
+		hidden: Boolean(row.hidden),
 		priority: Number(row.priority ?? 0),
 		created_at: String(row.created_at),
 		updated_at: String(row.updated_at),
@@ -106,6 +107,8 @@ function mapExperience(row: Record<string, unknown>): Experience {
 function revalidateExperience(id?: string) {
 	revalidatePath('/admin/experience')
 	revalidatePath('/')
+	revalidatePath('/portfolio')
+	revalidatePath('/portfolio/[collection]', 'page')
 	if (id) revalidatePath(`/admin/experience/${id}`)
 }
 
@@ -114,13 +117,12 @@ export async function listExperiences(): Promise<Experience[]> {
 	const { data, error } = await supabase
 		.from('experiences')
 		.select(EXPERIENCE_SELECT)
+		.eq('hidden', false)
 		.order('priority', { ascending: false })
 		.order('start_on', { ascending: false })
 
 	if (error) throw new Error(error.message)
-	return (data ?? []).map((row) =>
-		mapExperience(row as Record<string, unknown>),
-	)
+	return (data ?? []).map(row => mapExperience(row as Record<string, unknown>))
 }
 
 export async function listAdminExperiences(): Promise<Experience[]> {
@@ -136,9 +138,7 @@ export async function listAdminExperiences(): Promise<Experience[]> {
 		.order('start_on', { ascending: false })
 
 	if (error) throw new Error(error.message)
-	return (data ?? []).map((row) =>
-		mapExperience(row as Record<string, unknown>),
-	)
+	return (data ?? []).map(row => mapExperience(row as Record<string, unknown>))
 }
 
 export async function getAdminExperience(
@@ -270,8 +270,8 @@ export async function applyExperiencePlacement(
 		if (error) return { ok: false, error: error.message }
 
 		const others = (data ?? [])
-			.map((row) => row.id as string)
-			.filter((id) => id !== experienceId)
+			.map(row => row.id as string)
+			.filter(id => id !== experienceId)
 
 		let ordered: string[]
 		if (!placeAfterId) {

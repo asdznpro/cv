@@ -114,7 +114,7 @@ export default async function Portfolio() {
 												includeTime: false,
 												includeDay: false,
 											}).full
-										: 'по н.в.'}{' '}
+										: 'present'}{' '}
 									(
 									{formatEmploymentDuration(
 										experience.start_on,

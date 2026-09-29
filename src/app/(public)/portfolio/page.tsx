@@ -48,7 +48,7 @@ export default async function Portfolio() {
 													includeTime: false,
 													includeDay: false,
 												}).short
-											: 'по н.в.')}
+											: 'present')}
 								</span> */}
 							</p>
 
@@ -101,7 +101,7 @@ export default async function Portfolio() {
 												includeTime: false,
 												includeDay: false,
 											}).full
-										: 'по н.в.')}
+										: 'present')}
 							</p> */}
 
 							<p className='text-foreground-secondary line-clamp-2'>

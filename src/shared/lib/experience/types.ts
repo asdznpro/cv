@@ -60,6 +60,7 @@ export type Experience = {
 	skills: string[]
 	article_id: string | null
 	article: ExperienceArticle | null
+	hidden: boolean
 	priority: number
 	created_at: string
 	updated_at: string
@@ -75,6 +76,7 @@ export type ExperienceInput = {
 	stickers?: ExperienceSticker[]
 	skills?: string[]
 	article_id?: string | null
+	hidden?: boolean
 	priority?: number
 }
 
@@ -97,7 +99,9 @@ function isEmploymentType(value: string): value is EmploymentType {
 	return EMPLOYMENT_TYPES.some(item => item.key === value)
 }
 
-export function isExperiencePosition(value: string): value is ExperiencePosition {
+export function isExperiencePosition(
+	value: string,
+): value is ExperiencePosition {
 	return EXPERIENCE_POSITIONS.some(item => item.key === value)
 }
 
@@ -129,7 +133,9 @@ function normalizeStickers(input: ExperienceSticker[] | undefined) {
 		const rotate = Number(item.rotate)
 		next.push({
 			url,
-			rotate: Number.isFinite(rotate) ? Math.min(180, Math.max(-180, rotate)) : 0,
+			rotate: Number.isFinite(rotate)
+				? Math.min(180, Math.max(-180, rotate))
+				: 0,
 		})
 		if (next.length === 3) break
 	}
@@ -137,7 +143,9 @@ function normalizeStickers(input: ExperienceSticker[] | undefined) {
 	return next
 }
 
-export function normalizeExperienceInput(input: ExperienceInput): ExperienceInput {
+export function normalizeExperienceInput(
+	input: ExperienceInput,
+): ExperienceInput {
 	const company_id = input.company_id.trim()
 	const employment_type = input.employment_type
 	const positions = [
@@ -147,8 +155,11 @@ export function normalizeExperienceInput(input: ExperienceInput): ExperienceInpu
 	const start_on = input.start_on.trim()
 	const end_on = input.end_on?.trim() || null
 	const stickers = normalizeStickers(input.stickers)
-	const skills = [...new Set((input.skills ?? []).map(item => item.trim()).filter(Boolean))]
+	const skills = [
+		...new Set((input.skills ?? []).map(item => item.trim()).filter(Boolean)),
+	]
 	const article_id = input.article_id?.trim() || null
+	const hidden = Boolean(input.hidden)
 	const priority = Number.isFinite(input.priority) ? Number(input.priority) : 0
 
 	return {
@@ -161,6 +172,7 @@ export function normalizeExperienceInput(input: ExperienceInput): ExperienceInpu
 		stickers,
 		skills,
 		article_id,
+		hidden,
 		priority,
 	}
 }
@@ -173,7 +185,8 @@ export function validateExperienceInput(input: ExperienceInput) {
 	if (!isEmploymentType(data.employment_type)) {
 		errors.employment_type = 'Некорректный тип занятости'
 	}
-	if (data.positions.length === 0) errors.positions = 'Укажите хотя бы одну должность'
+	if (data.positions.length === 0)
+		errors.positions = 'Укажите хотя бы одну должность'
 	if (!/^\d{4}-\d{2}-01$/.test(data.start_on)) {
 		errors.start_on = 'Укажите месяц и год начала'
 	}
