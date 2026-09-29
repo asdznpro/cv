@@ -219,7 +219,7 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 														includeTime: false,
 														includeDay: false,
 													}).full
-												: 'по н.в.'}{' '}
+												: 'present'}{' '}
 											({formatEmploymentDuration(item.start_on, item.end_on)})
 										</p>
 									</div>

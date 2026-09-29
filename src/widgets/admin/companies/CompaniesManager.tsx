@@ -119,7 +119,7 @@ export function CompaniesManager({ companies }: CompaniesManagerProps) {
 									</p>
 
 									{company.summary && (
-										<p className='text-sm text-foreground-secondary line-clamp-2'>
+										<p className='text-sm text-foreground-secondary'>
 											{company.summary}
 										</p>
 									)}
