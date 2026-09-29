@@ -18,6 +18,7 @@ import { useOverlay } from 'ui/overlays'
 import {
 	Icon28HashtagOutline,
 	Icon28GlobeOutline,
+	Icon28Hide,
 	Icon28MoreHorizontal,
 	Icon28EditOutline,
 	Icon28DeleteOutline,
@@ -111,6 +112,17 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 										</h2>
 
 										<span className='flex flex-wrap gap-1'>
+											{item.hidden && (
+												<Chip
+													size='sm'
+													mode='soft'
+													appearance='warning'
+													prefix={<Icon28Hide width={12} height={12} />}
+												>
+													Hidden
+												</Chip>
+											)}
+
 											{item.company?.slug && (
 												<Chip
 													size='sm'
@@ -215,7 +227,11 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 									<div className='flex flex-col @md:grid grid-cols-4 gap-x-app gap-y-2'>
 										<p className='text-foreground-secondary'>Summary:</p>
 
-										<p className='col-span-3 line-clamp-3'>{item.summary}</p>
+										<p className='col-span-3 line-clamp-3'>
+											{item.summary || (
+												<span className='text-foreground-tertiary'>—</span>
+											)}
+										</p>
 									</div>
 
 									<div className='flex flex-col @md:grid grid-cols-4 gap-x-app gap-y-2'>
@@ -236,7 +252,7 @@ export function ExperienceManager({ experiences }: ExperienceManagerProps) {
 													{item.article.title}
 												</Link>
 											) : (
-												<span className='text-foreground-secondary'>—</span>
+												<span className='text-foreground-tertiary'>—</span>
 											)}
 										</div>
 									</div>

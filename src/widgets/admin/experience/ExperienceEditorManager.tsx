@@ -27,7 +27,7 @@ import {
 	type ExperienceSticker,
 } from 'lib/experience'
 
-import { Chip, Button, Separator } from 'ui/blocks'
+import { Chip, Button, Separator, Switch } from 'ui/blocks'
 import { Checkbox, FormItem } from 'ui/forms'
 import { Tooltip } from 'ui/floating'
 import { useOverlay } from 'ui/overlays'
@@ -38,6 +38,8 @@ import {
 	Icon28CancelOutline,
 	Icon28DeleteOutline,
 	Icon28EditOutline,
+	Icon28Hide,
+	Icon28View,
 } from '@vkontakte/icons'
 
 import { DeleteExperienceDialog } from './DeleteExperienceDialog'
@@ -65,6 +67,7 @@ type FormState = {
 	stickers: Array<ExperienceSticker | null>
 	skills: string[]
 	article_id: string
+	hidden: boolean
 }
 
 const ORDER_TOP = '__top__'
@@ -111,6 +114,7 @@ function toFormState(experience: Experience): FormState {
 		stickers: padStickers(experience.stickers),
 		skills: experience.skills,
 		article_id: experience.article_id ?? ARTICLE_NONE,
+		hidden: experience.hidden,
 	}
 }
 
@@ -126,6 +130,7 @@ const EMPTY_FORM: FormState = {
 	stickers: EMPTY_STICKERS,
 	skills: [],
 	article_id: ARTICLE_NONE,
+	hidden: false,
 }
 
 function toInput(
@@ -149,6 +154,7 @@ function toInput(
 			form.article_id && form.article_id !== ARTICLE_NONE
 				? form.article_id
 				: null,
+		hidden: form.hidden,
 	}
 }
 
@@ -332,6 +338,36 @@ export function ExperienceEditorManager({
 						<h2 className='flex-1 text-3xl font-medium font-condensed tracking-tight'>
 							General
 						</h2>
+					</div>
+				</div>
+
+				<div className='flex flex-col bg-surface border border-separator rounded-surface'>
+					<div className='flex flex-wrap p-surface gap-surface'>
+						<div className='flex flex-1 flex-col gap-3'>
+							<h3 className='text-xl font-medium font-condensed tracking-tight'>
+								Visibility
+							</h3>
+							<p className='text-sm text-foreground-secondary @xl:text-balance'>
+								Keep the eye open, and this role stays on the public timeline.
+								Close it, and the chapter waits backstage — still saved, just
+								not for visitors.
+							</p>
+						</div>
+
+						<Switch
+							checked={!form.hidden}
+							onChange={event =>
+								setField('hidden', !event.currentTarget.checked)
+							}
+							icon={<Icon28Hide width={12} height={12} />}
+							checkedIcon={<Icon28View width={12} height={12} />}
+							aria-label={
+								form.hidden
+									? 'Hidden from the public timeline'
+									: 'Visible on the public timeline'
+							}
+							disabled={pending}
+						/>
 					</div>
 				</div>
 
