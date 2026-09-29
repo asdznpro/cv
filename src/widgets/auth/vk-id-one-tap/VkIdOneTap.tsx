@@ -10,7 +10,8 @@ export function VkIdOneTap() {
 	const [error, setError] = useState<string | null>(null)
 
 	useEffect(() => {
-		if (!ref.current) return
+		const container = ref.current
+		if (!container) return
 
 		const appId = Number(process.env.NEXT_PUBLIC_VK_APP_ID)
 		const redirectUrl = process.env.NEXT_PUBLIC_VK_REDIRECT_URL
@@ -27,55 +28,72 @@ export function VkIdOneTap() {
 			scope: '',
 		})
 
-		const oneTap = new VKID.OneTap()
+		let oneTap: VKID.OneTap | null = null
+		let cancelled = false
 
-		oneTap
-			.render({
-				container: ref.current,
-				scheme: VKID.Scheme.DARK,
-				lang: VKID.Languages.ENG,
-				showAlternativeLogin: true,
-			})
-			.on(VKID.WidgetEvents.ERROR, (err: unknown) => {
-				console.error(err)
-				setError('VK ID widget error')
-			})
-			.on(
-				VKID.OneTapInternalEvents.LOGIN_SUCCESS,
-				async (payload: VKID.AuthResponse) => {
-					try {
-						setError(null)
+		// Dev Strict Mode runs the effect, cleans it up, then runs it again
+		// in the same turn. The SDK paints the button on a timeout, so a
+		// synchronous render+close leaves a second button behind.
+		const timer = window.setTimeout(() => {
+			if (cancelled || !container.isConnected) return
 
-						const tokens = await VKID.Auth.exchangeCode(
-							payload.code,
-							payload.device_id,
-						)
+			container.replaceChildren()
+			oneTap = new VKID.OneTap()
 
-						const res = await fetch('/api/auth/vk/session', {
-							method: 'POST',
-							headers: { 'Content-Type': 'application/json' },
-							body: JSON.stringify({ accessToken: tokens.access_token }),
-						})
+			oneTap
+				.render({
+					container,
+					scheme: VKID.Scheme.DARK,
+					lang: VKID.Languages.ENG,
+					showAlternativeLogin: true,
+				})
+				.on(VKID.WidgetEvents.ERROR, (err: unknown) => {
+					console.error(err)
+					setError('VK ID widget error')
+				})
+				.on(
+					VKID.OneTapInternalEvents.LOGIN_SUCCESS,
+					async (payload: VKID.AuthResponse) => {
+						try {
+							setError(null)
 
-						if (!res.ok) {
-							const data = (await res.json().catch(() => null)) as {
-								error?: string
-							} | null
-							setError(
-								res.status === 403
-									? 'Access denied'
-									: data?.error || 'Login failed',
+							const tokens = await VKID.Auth.exchangeCode(
+								payload.code,
+								payload.device_id,
 							)
-							return
-						}
 
-						window.location.href = '/admin'
-					} catch (err) {
-						console.error(err)
-						setError('Login failed')
-					}
-				},
-			)
+							const res = await fetch('/api/auth/vk/session', {
+								method: 'POST',
+								headers: { 'Content-Type': 'application/json' },
+								body: JSON.stringify({ accessToken: tokens.access_token }),
+							})
+
+							if (!res.ok) {
+								const data = (await res.json().catch(() => null)) as {
+									error?: string
+								} | null
+								setError(
+									res.status === 403
+										? 'Access denied'
+										: data?.error || 'Login failed',
+								)
+								return
+							}
+
+							window.location.href = '/admin'
+						} catch (err) {
+							console.error(err)
+							setError('Login failed')
+						}
+					},
+				)
+		}, 0)
+
+		return () => {
+			cancelled = true
+			window.clearTimeout(timer)
+			oneTap?.close()
+		}
 	}, [])
 
 	return (
